@@ -1,0 +1,185 @@
+﻿@{
+    ViewData["NonSixOs"] = true;
+}
+@{
+    Layout = null;
+}
+@{
+    var jsonHTTT = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSHTTT);
+    var jsonNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSNhanVien);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap/dist/css/bootstrap.min.css")" /> <!---->
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/toastr/toastr.min.css")" />
+
+</head>
+<body>
+    <div class="card p-1">
+        <div class="container_BangKeThu">
+            <div class="container_BangKeThu left">
+                <div class="row" style="padding:0; margin: 5px;">
+                    <div style="width: 100%; padding:0;">
+                        <label class="form-label">Giai đoạn</label>
+                        <select id="selectGiaiDoan" class="form-select">
+                            <option value="Nam">Năm</option>
+                            <option value="Quy">Quý</option>
+                            <option value="Thang">Tháng</option>
+                            <option value="Ngay" selected>Ngày</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class ="select-row" id="selectContainer"
+                        style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
+                </div>
+
+                <div class="row" style="padding:0; margin: 5px;">
+                    <div style="width: 100%;padding:0;">
+                        <label class="form-label">Từ ngày</label>
+                        <div class="input-group" id="datepicker">
+                            <input type="text"
+                                   class="form-control date-input"
+                                   id="ngayTuNgay"
+                                   name="TuNgay"
+                                   value='@DateTime.Now.ToString("dd-MM-yyyy")'
+                                   placeholder="dd-mm-yyyy"
+                                   autocomplete="off" />
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="datepicker-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div style="width: 100%; margin: 5px 0px;padding:0;">
+                        <label class="form-label">Đến ngày</label>
+                        <div class="input-group" id="datepicker2">
+                            <input type="text"
+                                   class="form-control date-input"
+                                   id="ngayDenNgay"
+                                   name="DenNgay"
+                                   value='@DateTime.Now.ToString("dd-MM-yyyy")'
+                                   placeholder="dd-mm-yyyy"
+                                   autocomplete="off" />
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="datepicker-icon2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-3 input-wrapper">
+                        <label for="NhanVien" class="form-label">Nhân viên</label>
+                        <input type="text" class="form-control" id="comboBox2" name="tenNhanVien" data-value="@ViewBag.tenNhanVien">
+                        <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
+                        <div class="dropdownList" id="dropdownList2"></div>
+                    </div>
+
+                    <div style="width: 100%;padding:0;margin: 5px 0px;" class="mb-3 input-wrapper">
+                        <label for="HTTT" class="form-label">Hình thức thanh toán</label>
+                        <input type="text" class="form-control" id="comboBox" name="tenHTTT" data-value="@ViewBag.tenHTTT">
+                        <input type="hidden" id="IDHTTT" name="IDHTTT" data-value="@ViewBag.IDHTTT" />
+                        <div class="dropdownList" id="dropdownList"></div>
+                    </div>
+
+                    <label style="padding:0; margin: 5px 0px;">
+                        <button id="btnFilter" class="btn btn-outline-primary mb-3">
+                            <i class="bi bi-funnel"></i> Lọc danh sách
+                        </button>
+                    </label>
+
+                </div>
+                <div style="padding:0; margin: 5px;" class="row export-buttons">
+                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
+                    </button>
+
+                    <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                        <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                    </button>
+                </div>
+            </div>
+
+            <div class="container_BangKeThu right">
+                <!-- Thêm spinner -->
+                <div id="loadingSpinner" class="text-center" style="display: none; margin: 20px 0;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Đang tải dữ liệu...</p>
+                </div>
+
+                <div class="table-wrapper">
+                    <table style="width:98%; margin: auto; table-layout: fixed;" cellpadding="8">
+                        <thead>
+                            <tr class="mau_header">
+                                <th style="width: 5%;">STT</th>
+                                <th style="width: 10%;">Mã y tế</th>
+                                <th style="width: 20%;">Họ và tên</th>
+                                <th style="width: 10%;">Quyển sổ</th>
+                                <th style="width: 10%;">Số biên lai</th>
+                                <th style="width: 5%;">Loại</th>
+                                <th style="width: 10%;">Ngày thu</th>
+                                <th style="width: 10%;">Hủy</th>
+                                <th style="width: 10%;">Hoàn</th>
+                                <th style="width: 10%;">Số tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="phan_trang">
+                    <div class="d-flex">
+                        <label class="form-label" style="font-size:1rem !important;">Số bản ghi mỗi trang:</label>
+                        <select id="pageSizeSelect" style="font-size:1rem !important;" class="form-select">
+                            <option value="10">10</option>
+                            <option value="20" selected>20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; align-items:center; ">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center" id="pagination">
+                            </ul>
+                        </nav>
+                        <div class="text-center" style="margin-left: 2px">
+                            <span id="pageInfo"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let provincesDataHTTT = @Html.Raw(ViewBag.DSHTTT ?? "[]");
+        let provincesDataNhanVien = @Html.Raw(ViewBag.DSNhanVien ?? "[]");
+
+        if (typeof provincesDataHTTT === "string") {
+            provincesDataHTTT = JSON.parse(provincesDataHTTT);
+        }
+        if (typeof provincesDataNhanVien === "string") {
+            provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
+        }
+
+    </script>
+    <script src="~/dist/libs/jquery/dist/jquery.min.js" defer></script> <!---->
+    <script src="~/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script> <!---->
+    <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
+    <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
+    <script src="~/dist/libs/toastr/toastr.min.js" defer></script>
+    <script src="@Url.Content("~/dist/js/J0304/BienChung.js")" defer></script>
+    <script src="@Url.Content("~/dist/js/J0304/J0304_Report.js")" defer></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\models\\m0304b\\m0304bbchoadondientudv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\models\\m0304b\\m0304bbchoadondientudv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\pdfdocument\\p0304\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\models\\m0304\\m0304bangkethu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\models\\m0304\\m0304bangkethu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\pdfdocument\\p0304b\\p0304bhuy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304b\\p0304bhuy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\pdfdocument\\p0304b\\p0304bhuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304b\\p0304bhuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "M0304BBCHoaDonDienTuDV.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304B\\M0304BBCHoaDonDienTuDV.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304B\\M0304BBCHoaDonDienTuDV.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304B\\M0304BBCHoaDonDienTuDV.cs",
+              "RelativeToolTip": "0304Huy_Report\\Models\\M0304B\\M0304BBCHoaDonDienTuDV.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:18:00.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "M0304BangKeThu.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304\\M0304BangKeThu.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304\\M0304BangKeThu.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304\\M0304BangKeThu.cs",
+              "RelativeToolTip": "0304Huy_Report\\Models\\M0304\\M0304BangKeThu.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAkwBIAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:17:53.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "P0304Huy_ReportExcel.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304\\P0304Huy_ReportExcel.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304\\P0304Huy_ReportExcel.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304\\P0304Huy_ReportExcel.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304\\P0304Huy_ReportExcel.cs",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAYwKYAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:17:01.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "P0304BHuy_ReportExcel.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_ReportExcel.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_ReportExcel.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_ReportExcel.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_ReportExcel.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAYwHkAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:14:41.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "P0304BHuy_Report.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_Report.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_Report.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_Report.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304B\\P0304BHuy_Report.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAkwIUAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:13:08.779Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
