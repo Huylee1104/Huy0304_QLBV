@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 
 public class P0304ExcelReportTemplate
 {

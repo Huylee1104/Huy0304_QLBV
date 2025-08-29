@@ -1,5 +1,5 @@
 ﻿using _0304Huy_Report.Models;
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 using S0304BangKeThu.Services;
 using M0304.Models.BangKeThu;
 using Microsoft.AspNetCore.Mvc;

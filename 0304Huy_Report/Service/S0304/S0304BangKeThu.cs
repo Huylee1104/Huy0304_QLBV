@@ -1,4 +1,4 @@
-﻿using M0304.Models.ThongTinDOanhNghiep;
+﻿using M0304.Models.ThongTinDoanhNghiep;
 using C0304.Db.Models;
 using M0304.Models.BangKeThu;
 using M0304NhanVien.Models;

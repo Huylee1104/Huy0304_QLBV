@@ -1,4 +1,4 @@
-﻿using M0304.Models.ThongTinDOanhNghiep;
+﻿using M0304.Models.ThongTinDoanhNghiep;
 using M0304NhanVien.Models;
 using System.ComponentModel.DataAnnotations;
 

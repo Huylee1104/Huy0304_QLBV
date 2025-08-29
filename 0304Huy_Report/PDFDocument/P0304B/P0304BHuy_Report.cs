@@ -1,5 +1,5 @@
 ﻿using H0304.NumberToText.Helpers;
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 using M0304B.Models.BCHoaDonDienTuDV;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;

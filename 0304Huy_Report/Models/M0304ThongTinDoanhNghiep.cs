@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace M0304.Models.ThongTinDOanhNghiep
+namespace M0304.Models.ThongTinDoanhNghiep
 {
 
     public class M0304ThongTinDoanhNghiep

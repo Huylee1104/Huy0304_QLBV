@@ -1,4 +1,4 @@
-﻿using M0304.Models.ThongTinDOanhNghiep;
+﻿using M0304.Models.ThongTinDoanhNghiep;
 using C0304.Db.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
 ﻿using C0304.Db.Models;
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 using M0304B.Models.BCHoaDonDienTuDV;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

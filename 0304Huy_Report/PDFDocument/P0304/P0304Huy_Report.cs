@@ -7,7 +7,7 @@ using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 
 namespace P0304.PDFDocument
 {

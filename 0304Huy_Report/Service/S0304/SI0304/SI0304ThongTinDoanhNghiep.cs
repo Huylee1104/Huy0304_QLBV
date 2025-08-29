@@ -1,4 +1,4 @@
-using M0304.Models.ThongTinDOanhNghiep;
+using M0304.Models.ThongTinDoanhNghiep;
 
 public interface I0304ThongTinDoanhNghiep
 {
