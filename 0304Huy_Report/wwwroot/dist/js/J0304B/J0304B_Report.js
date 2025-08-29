@@ -348,7 +348,7 @@ $('#btnExportExcel').off('click').on('click', function (e) {
     const den = $('#ngayDenNgay').val();
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idHTTT, idNhanVien)
+        fetchAllFilteredData(tu, den)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);

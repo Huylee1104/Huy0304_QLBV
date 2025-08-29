@@ -91,15 +91,17 @@ namespace P0304.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
-                            columns.ConstantColumn(70);
+                            columns.ConstantColumn(55);
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(65);
+                            columns.ConstantColumn(45);
+                            columns.RelativeColumn(1);
+                            columns.ConstantColumn(30);
                             columns.RelativeColumn(2);
                             columns.ConstantColumn(60);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(40);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(40);
-                            columns.ConstantColumn(40);
-                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(65);
+                            columns.ConstantColumn(45);
                         });
 
                         table.Header(header =>
@@ -141,19 +143,41 @@ namespace P0304.PDFDocument
                         var tongGiaTri = _data.Sum(x => x.GiaTri ?? 0);
                         var tongGiaTriHDDT = _data.Sum(x => x.GiaTriHDDT ?? 0);
 
-                        // Dòng tổng
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // STT (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Số chứng từ (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Ngày thu (trống)
-                        table.Cell().Element(CellStyle).AlignRight().Text($"{tongGiaTri:N0}"); // Tổng Giá trị
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Mã bệnh nhân (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Tên bệnh nhân (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Năm sinh (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Địa chỉ (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Ngày tạo HDDT (trống)
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // E_InvoiceNo (trống)
-                        table.Cell().Element(CellStyle).AlignRight().Text($"{tongGiaTriHDDT:N0}"); // Tổng Giá trị HDDT
-                        table.Cell().Element(CellStyle).AlignCenter().Text(""); // Mã tra cứu (trống)
+                        table.Cell().ColumnSpan(12).Border(1).Element(cell =>
+                        {
+                            cell.Row(row =>
+                            {
+                                CellTong(row.ConstantItem(30)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(60)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}");
+                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                CellTong(row.RelativeItem(1)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(30)).AlignCenter().Text("");
+                                CellTong(row.RelativeItem(2)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(60)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}");
+                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                            });
+                        });
+
+                        col.Item().Height(10);
+                        col.Item().EnsureSpace()
+                            .Column(cuoi =>
+                            {
+                                cuoi.Item().Row(row =>
+                                {
+                                    row.RelativeItem().Text("");
+                                    row.ConstantItem(200).Column(right =>
+                                    {
+                                        right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                        right.Item().AlignCenter().Text("Người lập bảng").Bold();
+                                        right.Item().Height(40);
+                                        right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
+                                    });
+                                });
+                            });
                     });
                 });
 
@@ -179,6 +203,11 @@ namespace P0304.PDFDocument
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
+                .Padding(4)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(9));
+        static IContainer CellTong(IContainer container) =>
+            container
                 .Padding(4)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.FontSize(9));

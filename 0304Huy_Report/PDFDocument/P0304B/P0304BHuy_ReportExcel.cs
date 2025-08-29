@@ -48,32 +48,32 @@ public class P0304BExcelReportTemplate
                 ws.Row(1).Height = 0;
             }
 
-            ws.Range(1, 3, 1, 10).Merge();
+            ws.Range(1, 3, 1, 12).Merge();
             ws.Cell(1, 3).Value = _dataDN.TenCSKCB ?? "";
             ws.Cell(1, 3).Style.Font.FontSize = 9;
 
-            ws.Range(2, 3, 2, 10).Merge();
+            ws.Range(2, 3, 2, 12).Merge();
             ws.Cell(2, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
             ws.Cell(2, 3).Style.Font.FontSize = 9;
 
-            ws.Range(3, 3, 3, 10).Merge();
+            ws.Range(3, 3, 3, 12).Merge();
             ws.Cell(3, 3).Value = _dataDN.DiaChi ?? "";
             ws.Cell(3, 3).Style.Font.FontSize = 9;
 
-            ws.Range(4, 3, 4, 10).Merge();
+            ws.Range(4, 3, 4, 12).Merge();
             ws.Cell(4, 3).Value = _dataDN.DienThoai ?? "";
             ws.Cell(4, 3).Style.Font.FontSize = 9;
 
             currentRow += 5;
 
-            ws.Range(currentRow, 1, currentRow, 10).Merge();
-            ws.Cell(currentRow, 1).Value = "BẢNG KÊ THU TIỀN NGOẠI TRÚ THEO BL/HĐ";
+            ws.Range(currentRow, 1, currentRow, 12).Merge();
+            ws.Cell(currentRow, 1).Value = "BÁO CÁO HÓA ĐƠN ĐIỆN TỬ DỊCH VỤ";
             ws.Cell(currentRow, 1).Style.Font.Bold = true;
             ws.Cell(currentRow, 1).Style.Font.FontSize = 14;
             ws.Cell(currentRow, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             currentRow++;
 
-            ws.Range(currentRow, 1, currentRow, 10).Merge();
+            ws.Range(currentRow, 1, currentRow, 12).Merge();
             DateTime dtStart, dtEnd;
             if (DateTime.TryParse(_ngayBatDau, out dtStart) && DateTime.TryParse(_ngayKetThuc, out dtEnd))
             {
@@ -96,9 +96,7 @@ public class P0304BExcelReportTemplate
             {
                 ws.Cell(currentRow, i + 1).Value = headers[i];
                 ws.Cell(currentRow, i + 1).Style.Font.Bold = true;
-                ws.Cell(currentRow, i + 1).Style.Fill.BackgroundColor = XLColor.LightGray;
                 ws.Cell(currentRow, i + 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Cell(currentRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
             }
 
             int stt = 1;
@@ -109,28 +107,18 @@ public class P0304BExcelReportTemplate
             {
                 int col = 1;
 
-                ws.Cell(currentRow, col++).Value = stt++; // STT
+                ws.Cell(currentRow, col++).Value = stt++;
                 ws.Cell(currentRow, col++).Value = item.SoChungTu ?? "";
-                ws.Cell(currentRow, col++).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
-                ws.Cell(currentRow, col++).Value = item.GiaTri ?? 0;
+                SetDateCell(ws.Cell(currentRow, col++), item.NgayThu);
+                SetNumberCell(ws.Cell(currentRow, col++), item.GiaTri);
                 ws.Cell(currentRow, col++).Value = item.MaBenhNhan ?? "";
                 ws.Cell(currentRow, col++).Value = item.TenBenhNhan ?? "";
-                ws.Cell(currentRow, col++).Value = item.NamSinh?.ToString() ?? "";
+                SetCenterCell(ws.Cell(currentRow, col++), item.NamSinh?.ToString() ?? "");
                 ws.Cell(currentRow, col++).Value = item.DiaChi ?? "";
-                ws.Cell(currentRow, col++).Value = item.NgayTaoHDDT?.ToString("dd/MM/yyyy") ?? "";
-                ws.Cell(currentRow, col++).Value = item.E_InvoiceNo ?? 0;
-                ws.Cell(currentRow, col++).Value = item.GiaTriHDDT ?? 0;
-                ws.Cell(currentRow, col++).Value = item.MaTraCuu ?? 0;
-
-                // Style từng dòng
-                for (int i = 1; i <= headers.Length; i++)
-                {
-                    ws.Cell(currentRow, i).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(currentRow, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
-                    if (i == 1 || i == 4 || i == 11) // STT, Giá trị, Giá trị HDDT -> canh phải/giữa
-                        ws.Cell(currentRow, i).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                }
-
+                SetDateCell(ws.Cell(currentRow, col++), item.NgayTaoHDDT);
+                SetCenterCell(ws.Cell(currentRow, col++), item.E_InvoiceNo);
+                SetNumberCell(ws.Cell(currentRow, col++), item.GiaTriHDDT);
+                SetCenterCell(ws.Cell(currentRow, col++), item.MaTraCuu);
                 currentRow++;
             }
 
@@ -138,29 +126,61 @@ public class P0304BExcelReportTemplate
             var tongGiaTriHDDT = _data.Sum(x => x.GiaTriHDDT ?? 0);
 
             int colIndex = 4;
-            ws.Cell(currentRow, colIndex++).Value = tongGiaTri;
-
+            SetNumberCell(ws.Cell(currentRow, colIndex++), tongGiaTri);
             colIndex = 11;
-            ws.Cell(currentRow, colIndex).Value = tongGiaTriHDDT;
+            SetNumberCell(ws.Cell(currentRow, colIndex), tongGiaTriHDDT);
+
+            int firstRow = 8;
+            int lastRow = currentRow;
+            int firstCol = 1;
+            int lastCol = 12;
+
+            var fullRange = ws.Range(firstRow, firstCol, lastRow, lastCol);
+            fullRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
 
             currentRow++;
-            ws.Range(currentRow, 7, currentRow + 5, 10).Merge();
-            ws.Cell(currentRow, 7).Value =
+            ws.Range(currentRow, 9, currentRow + 5, 12).Merge();
+            ws.Cell(currentRow, 9).Value =
                 $"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n" +
                 "Người lập bảng\n\n\n" +
                 "Trần Thanh Thảo";
-            ws.Cell(currentRow, 7).Style.Font.Bold = true;
-            ws.Cell(currentRow, 7).Style.Alignment.WrapText = true;
-            ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(currentRow, 7).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            ws.Cell(currentRow, 9).Style.Alignment.WrapText = true;
+            ws.Cell(currentRow, 9).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(currentRow, 9).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
             ws.Columns().AdjustToContents();
-
 
             using (var ms = new MemoryStream())
             {
                 wb.SaveAs(ms);
                 return ms.ToArray();
+            }
+
+            void SetDateCell(IXLCell cell, DateTime? date)
+            {
+                if (date.HasValue)
+                {
+                    cell.Value = date.Value;
+                    cell.Style.DateFormat.Format = "dd/MM/yyyy";
+                }
+                else
+                {
+                    cell.Value = "";
+                }
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            }
+
+            void SetNumberCell(IXLCell cell, decimal? number)
+            {
+                cell.Value = number ?? 0;
+                cell.Style.NumberFormat.Format = "#,##0";
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            }
+
+            void SetCenterCell(IXLCell cell, string? value)
+            {
+                cell.Value = value ?? "";
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             }
         }
     }

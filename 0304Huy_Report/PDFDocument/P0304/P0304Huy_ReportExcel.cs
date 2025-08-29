@@ -157,13 +157,13 @@ public class P0304ExcelReportTemplate
                     {
                         if (item.SoTien > 0)
                         {
-                            ws.Cell(currentRow, 1).Value = stt++;
-                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
+                            ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
                             ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                            ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
+                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                            ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
                             ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                             ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                             ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -201,13 +201,13 @@ public class P0304ExcelReportTemplate
                     {
                         if (item.Huy > 0)
                         {
-                            ws.Cell(currentRow, 1).Value = stt++;
-                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
-                            ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                            ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                            ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
+                            ws.Cell(currentRow, 3).Value = item.HoVaTen ?? ""; 
+                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
+                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                            ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
                             ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                             ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                             ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -245,13 +245,13 @@ public class P0304ExcelReportTemplate
                     {
                         if (item.Hoan > 0)
                         {
-                            ws.Cell(currentRow, 1).Value = stt++;
-                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
+                            ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                            ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
                             ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                            ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                            ws.Cell(currentRow, 4).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
+                            ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                            ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                            ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
                             ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                             ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                             ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -293,13 +293,13 @@ public class P0304ExcelReportTemplate
                 {
                     if (item.SoTien > 0)
                     {
-                        ws.Cell(currentRow, 1).Value = stt++;
-                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
+                        ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
                         ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                        ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
+                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                        ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";  AlignCellCenter(ws.Cell(currentRow, 7));
                         ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                         ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                         ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -337,13 +337,13 @@ public class P0304ExcelReportTemplate
                 {
                     if (item.Huy > 0)
                     {
-                        ws.Cell(currentRow, 1).Value = stt++;
-                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
+                        ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
                         ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                        ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
+                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                        ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
                         ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                         ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                         ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -381,13 +381,13 @@ public class P0304ExcelReportTemplate
                 {
                     if (item.Hoan > 0)
                     {
-                        ws.Cell(currentRow, 1).Value = stt++;
-                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? "";
+                        ws.Cell(currentRow, 1).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 1));
+                        ws.Cell(currentRow, 2).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 2));
                         ws.Cell(currentRow, 3).Value = item.HoVaTen ?? "";
-                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";
-                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? "";
-                        ws.Cell(currentRow, 6).Value = item.Loai ?? "";
-                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? "";
+                        ws.Cell(currentRow, 4).Value = item.QuyenSo ?? "";  AlignCellCenter(ws.Cell(currentRow, 4));
+                        ws.Cell(currentRow, 5).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+                        ws.Cell(currentRow, 6).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+                        ws.Cell(currentRow, 7).Value = item.NgayThu?.ToString("dd/MM/yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
                         ws.Cell(currentRow, 8).Value = item.Huy ?? (decimal?)null;
                         ws.Cell(currentRow, 9).Value = item.Hoan ?? (decimal?)null;
                         ws.Cell(currentRow, 10).Value = item.SoTien ?? (decimal?)null;
@@ -453,6 +453,12 @@ public class P0304ExcelReportTemplate
             {
                 wb.SaveAs(ms);
                 return ms.ToArray();
+            }
+
+            void AlignCellCenter(IXLCell cell)
+            {
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
             }
         }
     }

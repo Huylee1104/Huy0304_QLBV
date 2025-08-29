@@ -3,12 +3,23 @@
     overflow-x: auto;
     height: 74vh;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
+    scrollbar-width: auto; 
+    -ms-overflow-style: auto; 
 }
 
+    /* Chrome, Edge, Safari */
     .table-wrapper::-webkit-scrollbar {
-        display: none; 
+        width: 8px; /* độ rộng scrollbar ngang/dọc */
+        height: 8px; /* chỉ dùng cho scrollbar ngang */
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.5); /* màu thanh cuộn */
+        border-radius: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+        background-color: rgba(0,0,0,0.1); /* nền track */
     }
 
 
@@ -17,17 +28,18 @@
 }
 
 .table-wrapper table {
-    border-collapse: separate; 
+    border-collapse: separate;
     border-spacing: 0;
-    width: 100%;
-    min-width: 600px; 
+    /*    width: 100%;*/
+    min-width: 1200px;
     table-layout: fixed;
+    white-space: nowrap;
 }
 
 .table-wrapper th,
 .table-wrapper td {
     border: 1px solid #ccc;
-    padding: 6px;
+    padding: 3px;
     text-align: center;
 }
 
@@ -73,12 +85,12 @@ label {
 
     .container_BangKeThu.left {
         display: block;
-        width: 14%;
+        width: 16%;
         justify-content: space-between;
     }
 
 .container_BangKeThu.right {
-    width: 87%;
+    width: 84%;
     display: block;
 }
 

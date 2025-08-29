@@ -325,10 +325,10 @@ namespace P0304.PDFDocument
                                     row.RelativeItem().Text("");
                                     row.ConstantItem(200).Column(right =>
                                     {
-                                        right.Item().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
-                                        right.Item().Text("Người lập bảng").Bold();
+                                        right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                        right.Item().AlignCenter().Text("Người lập bảng").Bold();
                                         right.Item().Height(40);
-                                        right.Item().Text("Trần Thị Hồng Châu");
+                                        right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
                                     });
                                 });
                             });

@@ -43,7 +43,7 @@ namespace C0304BangKeThu.Controllers
                 Them = true,
                 Sua = true,
                 Xoa = true,
-                Xuat = false,
+                Xuat = true,
                 CaNhan = true,
                 Xem = true,
             };

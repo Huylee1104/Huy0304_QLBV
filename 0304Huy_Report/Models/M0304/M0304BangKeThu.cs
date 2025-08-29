@@ -7,7 +7,7 @@ namespace M0304.Models.BangKeThu
     public class M0304BangKeThu
     {
         [Key]
-        public int STT { get; set; }
+        public int Id { get; set; }
         public string? MaYTe { get; set; }
         public string? HoVaTen { get; set; }
         public string? QuyenSo { get; set; }
