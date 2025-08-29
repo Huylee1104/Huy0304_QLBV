@@ -99,6 +99,14 @@ public class P0304BExcelReportTemplate
                 ws.Cell(currentRow, i + 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             }
 
+            currentRow++;
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                ws.Cell(currentRow, i + 1).Value = i+1;
+                ws.Cell(currentRow, i + 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            }
+
             int stt = 1;
 
             currentRow++;
@@ -161,7 +169,7 @@ public class P0304BExcelReportTemplate
                 if (date.HasValue)
                 {
                     cell.Value = date.Value;
-                    cell.Style.DateFormat.Format = "dd/MM/yyyy";
+                    cell.Style.DateFormat.Format = "dd-MM-yyyy";
                 }
                 else
                 {

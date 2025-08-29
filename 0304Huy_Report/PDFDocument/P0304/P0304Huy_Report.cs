@@ -165,7 +165,7 @@ namespace P0304.PDFDocument
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
@@ -188,7 +188,7 @@ namespace P0304.PDFDocument
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
@@ -211,7 +211,7 @@ namespace P0304.PDFDocument
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                         table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
@@ -238,7 +238,7 @@ namespace P0304.PDFDocument
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
@@ -264,7 +264,7 @@ namespace P0304.PDFDocument
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
@@ -290,7 +290,7 @@ namespace P0304.PDFDocument
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
                                     table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy") ?? "");
+                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
                                     table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");

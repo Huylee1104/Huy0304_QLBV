@@ -120,18 +120,32 @@ namespace P0304.PDFDocument
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Mã truy cứu");
                         });
 
+                        // Dòng số thứ tự cột
+                        table.Cell().Element(CellStyle).AlignCenter().Text("1");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("2");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("3");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("4");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("5");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("6");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("7");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("8");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("9");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("10");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("11");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("12");
+
                         int stt = 1;
                         foreach (var item in _data)
                         {
                             table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString()); 
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.SoChungTu ?? string.Empty);      
-                            table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd/MM/yyyy"));
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy"));
                             table.Cell().Element(CellStyle).AlignRight().Text(item.GiaTri?.ToString("N0") ?? "0");  
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.MaBenhNhan ?? string.Empty);    
                             table.Cell().Element(CellStyle).AlignLeft().Text(item.TenBenhNhan ?? string.Empty);    
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.NamSinh?.ToString() ?? "");    
                             table.Cell().Element(CellStyle).AlignLeft().Text(item.DiaChi ?? string.Empty);           
-                            table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayTaoHDDT?.ToString("dd/MM/yyyy")); 
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayTaoHDDT?.ToString("dd-MM-yyyy")); 
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.E_InvoiceNo?.ToString() ?? "");  
                             table.Cell().Element(CellStyle).AlignRight().Text(item.GiaTriHDDT?.ToString("N0") ?? "0"); 
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.MaTraCuu?.ToString() ?? "");     
