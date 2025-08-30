@@ -27,7 +27,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
             _env = env;
         }
 
-        public async Task<M0304BBCHoaDonDienTuDVResponse> GetBCHoaDonDIenTuDV(string ngayBatDau, string ngayKetThuc, long idCN, int page = 1, int pageSize = 0)
+        public async Task<M0304BBCHoaDonDienTuDVResponse> GetBCHoaDonDIenTuDV(string ngayBatDau, string ngayKetThuc, long idCN, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
 
@@ -126,7 +126,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
                 DienThoai = ""
             };
         }
-        public async Task<byte[]> ExportBaoCaoGoiKhamPdfAsync(ExportRequest request, ISession session)
+        public async Task<byte[]> ExportBaoCaoHDDTDVPdfAsync(ExportRequest request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
@@ -137,7 +137,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
         }
-        public async Task<byte[]> ExportBaoCaoGoiKhamExcelAsync(ExportRequest request, ISession session)
+        public async Task<byte[]> ExportBaoCaoHDDTDVExcelAsync(ExportRequest request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");

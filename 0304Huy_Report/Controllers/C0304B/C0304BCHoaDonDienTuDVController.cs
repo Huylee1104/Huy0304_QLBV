@@ -7,7 +7,7 @@ namespace C0304BCHoaDonDienTuDV.Controllers
     [Route("bao_cao_hoa_don_dien_tu_dich_vu")]
     public class C0304BCHoaDonDienTuDVController : Controller
     {
-        //private string _maChucNang = "/bang_ke_thu_ngoai_tru";
+        //private string _maChucNang = "/bao_cao_hoa_don_dien_tu_dich_vu";
         //private IMemoryCachingServices _memoryCache;
 
         private readonly I0304BBCHoaDonDienTuDVService _service;
@@ -76,7 +76,7 @@ namespace C0304BCHoaDonDienTuDV.Controllers
         [HttpPost("export/pdf")]
         public async Task<IActionResult> ExportToPDF([FromBody] ExportRequest request)
         {
-            var pdfBytes = await _service.ExportBaoCaoGoiKhamPdfAsync(request, HttpContext.Session);
+            var pdfBytes = await _service.ExportBaoCaoHDDTDVPdfAsync(request, HttpContext.Session);
 
             string fileName = $"BaoCaoHoaDonDienTuDichVu_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
             return File(pdfBytes, "application/pdf", fileName);
@@ -85,7 +85,7 @@ namespace C0304BCHoaDonDienTuDV.Controllers
         [HttpPost("export/excel")]
         public async Task<IActionResult> ExportToExcel([FromBody] ExportRequest request)
         {
-            var excelBytes = await _service.ExportBaoCaoGoiKhamExcelAsync(request, HttpContext.Session);
+            var excelBytes = await _service.ExportBaoCaoHDDTDVExcelAsync(request, HttpContext.Session);
 
             string fileName = $"BaoCaoHoaDonDienTuDichVu_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);

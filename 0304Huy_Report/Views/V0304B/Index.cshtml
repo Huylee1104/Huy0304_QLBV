@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>Index</title>
-    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" /> <!--Dùng chung file css với C0304-->
     <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap/dist/css/bootstrap.min.css")" /> <!---->
     <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
@@ -104,18 +104,18 @@
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
-                                <th style="width: 5%;">STT</th>
-                                <th style="width: 10%;">Số chứng từ</th>
-                                <th style="width: 10%;">Ngày thu</th>
-                                <th style="width: 10%;">Giá trị</th>
-                                <th style="width: 10%;">Mã bệnh nhân</th>
-                                <th style="width: 20%;">Tên bệnh nhân</th>
-                                <th style="width: 10%;">Năm sinh</th>
-                                <th style="width: 20%;">Địa chỉ</th>
-                                <th style="width: 10%;">Ngày tạo HDDT</th>
-                                <th style="width: 10%;">E_Invoice No</th>
-                                <th style="width: 10%;">Giá trị HDDT</th>
-                                <th style="width: 10%;">Mã tra cứu</th>
+                                <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap">Số chứng từ</th>
+                                <th class="text-center text-nowrap">Ngày thu</th>
+                                <th class="text-center text-nowrap">Giá trị</th>
+                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
+                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
+                                <th class="text-center text-nowrap">Năm sinh</th>
+                                <th class="text-center text-nowrap">Địa chỉ</th>
+                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
+                                <th class="text-center text-nowrap">E_Invoice No</th>
+                                <th class="text-center text-nowrap">Giá trị HDDT</th>
+                                <th class="text-center text-nowrap">Mã tra cứu</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,7 +150,7 @@
     <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
     <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
     <script src="~/dist/libs/toastr/toastr.min.js" defer></script>
-    <script src="@Url.Content("~/dist/js/J0304/BienChung.js")" defer></script>
-    <script src="@Url.Content("~/dist/js/J0304B/J0304B_Report.js")" defer></script>
+    <script src="@Url.Content("~/dist/js/J0304/BienChung.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304B/J0304B_Report.js")" defer asp-append-version="true"></script>
 </body>
 </html>

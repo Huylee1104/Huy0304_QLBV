@@ -15,9 +15,9 @@ namespace M0304B.Models.BCHoaDonDienTuDV
         public int? NamSinh { get; set; }
         public string DiaChi { get; set; }
         public DateTime? NgayTaoHDDT { get; set; }
-        public string E_InvoiceNo { get; set; }
+        public string? E_InvoiceNo { get; set; }
         public decimal? GiaTriHDDT { get; set; }
-        public string MaTraCuu { get; set; }
+        public string? MaTraCuu { get; set; }
     }
 
     public class M0304BPagedResult<T>

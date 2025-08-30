@@ -33,6 +33,11 @@ namespace _0304Huy_Report.Controllers
             return RedirectToAction("Index", "C0304BCHoaDonDienTuDV");
         }
 
+        public IActionResult BaoCaoThuDichVu()
+        {
+            return RedirectToAction("Index", "C0304CBaoCaoThuDichVu");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

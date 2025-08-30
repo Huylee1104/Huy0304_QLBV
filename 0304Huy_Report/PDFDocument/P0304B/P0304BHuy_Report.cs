@@ -72,7 +72,7 @@ namespace P0304.PDFDocument
                     col.Item().AlignCenter().Column(center =>
                     {
                         center.Item()
-                            .Text("BẢNG KÊ THU TIỀN NGOẠI TRÚ THEO BL/HĐ")
+                            .Text("BÁO CÁO HÓA ĐƠN ĐIỆN TỬ DỊCH VỤ")
                             .Bold()
                             .FontSize(12);
 
@@ -164,14 +164,14 @@ namespace P0304.PDFDocument
                                 CellTong(row.ConstantItem(30)).AlignCenter().Text("");
                                 CellTong(row.ConstantItem(55)).AlignCenter().Text("");
                                 CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}");
+                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
                                 CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                                 CellTong(row.RelativeItem(1)).AlignCenter().Text("");
                                 CellTong(row.ConstantItem(30)).AlignCenter().Text("");
                                 CellTong(row.RelativeItem(2)).AlignCenter().Text("");
                                 CellTong(row.ConstantItem(60)).AlignCenter().Text("");
                                 CellTong(row.ConstantItem(45)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}");
+                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
                                 CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                             });
                         });

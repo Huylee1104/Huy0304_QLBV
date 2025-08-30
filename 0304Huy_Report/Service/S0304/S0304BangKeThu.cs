@@ -33,7 +33,7 @@ namespace S0304BangKeThu.Services
         }
 
         public async Task<M0304BangKeThuResponse> GetBangKeThu(string ngayBatDau, string ngayKetThuc, long idCN, long? idHTTT = null,
-            long? idNhanVien = null, int page = 1, int pageSize = 10)
+            long? idNhanVien = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
 

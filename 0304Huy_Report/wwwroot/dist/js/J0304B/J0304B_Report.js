@@ -190,7 +190,7 @@ function filterData(isPagination = false) {
                     firstLoad = false;
                 }
             } else {
-                toastr.error("Không thể tải dữ liệu");
+                toastr.error("Không có dữ liệu");
             }
         },
         complete: function () {
@@ -465,24 +465,23 @@ function updateTable(response) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
 
-    if (data.length > 0) { // Cần chỉnh lại chỗ này
+    if (data.length > 0) {
         data.forEach((item, index) => {
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
-                    <td style="width: 5%; text-align:center;">${stt}</td>
-                    <td style="width: 10%; text-align:center;">${item.soChungTu || item.SoChungTu || ''}</td>
-                    <td style="width: 10%; text-align:center;">${formatDate(item.ngayThu || item.NgayThu)}</td>
-                    <td style="width: 10%; text-align:right;">${formatCurrency(item.giaTri || item.GiaTri)}</td>
-                    <td style="width: 10%; text-align:center;">${item.maBenhNhan || item.MaBenhNhan || ''}</td>
-                    <td style="width: 20%; text-align:left;">${item.tenBenhNhan || item.TenBenhNhan || ''}</td>
-                    <td style="width: 10%; text-align:center;">${item.namSinh || item.NamSinh || ''}</td>
-                    <td style="width: 20%; text-align:left;">${item.diaChi || item.DiaChi || ''}</td>
-                    <td style="width: 10%; text-align:center;">${formatDate(item.ngayTaoHDDT || item.NgayTaoHDDT)}</td>
-                    <td style="width: 10%; text-align:center;">${item.e_InvoiceNo || item.E_InvoiceNo || ''}</td>
-                    <td style="width: 10%; text-align:right;">${formatCurrency(item.giaTriHDDT || item.GiaTriHDDT)}</td>
-                    <td style="width: 10%; text-align:center;">${item.maTraCuu || item.MaTraCuu || ''}</td>
-
+                    <td class="text-center text-nowrap">${stt}</td>
+                    <td class="text-start text-nowrap">${item.soChungTu || item.SoChungTu || ''}</td>
+                    <td class="text-center text-nowrap">${formatDate(item.ngayThu || item.NgayThu)}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(item.giaTri || item.GiaTri || '')}</td>
+                    <td class="text-start text-nowrap">${item.maBenhNhan || item.MaBenhNhan || ''}</td>
+                    <td class="text-start text-nowrap">${item.tenBenhNhan || item.TenBenhNhan || ''}</td>
+                    <td class="text-center text-nowrap">${item.namSinh || item.NamSinh || ''}</td>
+                    <td class="text-start" style ="min-width: 500px; max-width: 500px;">${item.diaChi || item.DiaChi || ''}</td>
+                    <td class="text-center text-nowrap">${formatDate(item.ngayTaoHDDT || item.NgayTaoHDDT)}</td>
+                    <td class="text-start text-nowrap">${item.e_InvoiceNo || item.E_InvoiceNo || ''}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(item.giaTriHDDT || item.GiaTriHDDT)}</td>
+                    <td class="text-start text-nowrap">${item.maTraCuu || item.MaTraCuu || ''}</td>
                 </tr>
             `;
             tbody.append(row);

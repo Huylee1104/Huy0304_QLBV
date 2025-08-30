@@ -1,10 +1,10 @@
-wwwroot\dist\css\C0304\C0304_Report.css
+wwwroot\dist\js\J0304\J0304_Report.js
 wwwroot\dist\css\site.css
 wwwroot\dist\data\json\DM_HTTT.json
 wwwroot\dist\data\json\Dm_NhanVien.json
 wwwroot\dist\img\logo.png
 wwwroot\dist\js\J0304\BienChung.js
-wwwroot\dist\js\J0304\J0304_Report.js
+wwwroot\dist\js\J0304B\J0304B_Report.js
 wwwroot\dist\js\site.js
 wwwroot\dist\libs\bootstrap-datepicker\css\bootstrap-datepicker.css
 wwwroot\dist\libs\bootstrap-datepicker\css\bootstrap-datepicker.css.map
@@ -4466,4 +4466,5 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
-wwwroot\dist\js\J0304B\J0304B_Report.js
+wwwroot\dist\css\C0304\C0304_Report.css
+wwwroot\dist\js\J0304C\J0304C_Report.js

@@ -388,7 +388,7 @@ function filterData(isPagination = false) {
                     firstLoad = false;
                 }
             } else {
-                toastr.error("Không thể tải dữ liệu");
+                toastr.error("Không có dữ liệu");
             }
         },
         complete: function () {

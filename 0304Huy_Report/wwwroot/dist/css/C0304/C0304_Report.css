@@ -7,20 +7,19 @@
     -ms-overflow-style: auto; 
 }
 
-    /* Chrome, Edge, Safari */
-    .table-wrapper::-webkit-scrollbar {
-        width: 8px; /* độ rộng scrollbar ngang/dọc */
-        height: 8px; /* chỉ dùng cho scrollbar ngang */
-    }
+.table-wrapper::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px;
+}
 
-    .table-wrapper::-webkit-scrollbar-thumb {
-        background-color: rgba(0,0,0,0.5); /* màu thanh cuộn */
-        border-radius: 6px;
-    }
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.5); 
+    border-radius: 6px;
+}
 
-    .table-wrapper::-webkit-scrollbar-track {
-        background-color: rgba(0,0,0,0.1); /* nền track */
-    }
+.table-wrapper::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.1); 
+}
 
 
 .column-toggle-dropdown:hover .dropdown-menu {
@@ -30,10 +29,8 @@
 .table-wrapper table {
     border-collapse: separate;
     border-spacing: 0;
-    /*    width: 100%;*/
     min-width: 1200px;
     table-layout: fixed;
-    white-space: nowrap;
 }
 
 .table-wrapper th,
