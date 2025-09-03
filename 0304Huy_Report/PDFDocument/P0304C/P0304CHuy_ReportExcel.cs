@@ -144,7 +144,7 @@ public class P0304CExcelReportTemplate
             int colFirst = 2;
             int colLast = 6; 
 
-            ws.Range(currentRow, colFirst, currentRow, colFirst + 2).Merge();
+            ws.Range(currentRow, colFirst, currentRow, colFirst + 3).Merge();
 
             var cellLabel = ws.Cell(currentRow, colFirst);
             cellLabel.Value = "Tổng Cộng";
@@ -152,12 +152,11 @@ public class P0304CExcelReportTemplate
             cellLabel.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             cellLabel.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-            ws.Cell(currentRow, colFirst + 3).Value = "";
-
             // Cột 7: tổng giá trị
-            SetNumberCell(ws.Cell(currentRow, colLast), tongTatCaHoaDon);
+            var setCellTong = ws.Cell(currentRow, colLast);
+            SetNumberCell(setCellTong, tongTatCaHoaDon);
+            setCellTong.Style.Font.Bold = true;
 
-            // Kẻ border cho cả dòng
             ws.Range(8, 2, currentRow, 6).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
             ws.Range(8, 2, currentRow, 6).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 

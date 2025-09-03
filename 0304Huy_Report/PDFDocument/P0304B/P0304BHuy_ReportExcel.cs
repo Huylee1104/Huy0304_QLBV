@@ -161,7 +161,7 @@ public class P0304BExcelReportTemplate
             var tongGiaTri = _data.Sum(x => x.GiaTri ?? 0);
             var tongGiaTriHDDT = _data.Sum(x => x.GiaTriHDDT ?? 0);
 
-            int colIndex = 4;
+            int colIndex = 5;
             var cellTongGT = ws.Cell(currentRow, colIndex++);
             SetNumberCell(cellTongGT, tongGiaTri);
             cellTongGT.Style.Font.Bold = true;
