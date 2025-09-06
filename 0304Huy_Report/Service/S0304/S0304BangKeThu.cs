@@ -92,7 +92,7 @@ namespace S0304BangKeThu.Services
             {
                 BangKeThu = new M0304PagedResult<M0304BangKeThu>
                 {
-                    Success = pagedData.Any(),
+                    Success = true,
                     Message = message,
                     Data = pagedData,
                     TotalRecords = totalRecords,

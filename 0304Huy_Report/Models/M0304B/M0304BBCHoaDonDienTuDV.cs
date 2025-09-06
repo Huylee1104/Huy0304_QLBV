@@ -7,13 +7,13 @@ namespace M0304B.Models.BCHoaDonDienTuDV
     {
         [Key]
         public long ID { get; set; }
-        public string SoChungTu { get; set; }
+        public string? SoChungTu { get; set; }
         public DateTime? NgayThu { get; set; }
         public decimal? GiaTri { get; set; }
-        public string MaBenhNhan { get; set; }
-        public string TenBenhNhan { get; set; }
+        public string? MaBenhNhan { get; set; }
+        public string? TenBenhNhan { get; set; }
         public int? NamSinh { get; set; }
-        public string DiaChi { get; set; }
+        public string? DiaChi { get; set; }
         public DateTime? NgayTaoHDDT { get; set; }
         public string? E_InvoiceNo { get; set; }
         public decimal? GiaTriHDDT { get; set; }

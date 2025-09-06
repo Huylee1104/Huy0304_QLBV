@@ -166,7 +166,7 @@ public class P0304BExcelReportTemplate
             SetNumberCell(cellTongGT, tongGiaTri);
             cellTongGT.Style.Font.Bold = true;
 
-            colIndex = 11;
+            colIndex = 12;
             var cellTongGTHDDT = ws.Cell(currentRow, colIndex++);
             SetNumberCell(cellTongGTHDDT, tongGiaTriHDDT);
             cellTongGTHDDT.Style.Font.Bold = true;

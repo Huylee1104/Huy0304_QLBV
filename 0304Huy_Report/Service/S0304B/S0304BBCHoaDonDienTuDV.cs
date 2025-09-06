@@ -84,7 +84,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
             {
                 BCHoaDonDienTuDV = new M0304BPagedResult<M0304BBCHoaDonDienTuDV>
                 {
-                    Success = pagedData.Any(),
+                    Success = true,
                     Message = message,
                     Data = pagedData,
                     TotalRecords = totalRecords,

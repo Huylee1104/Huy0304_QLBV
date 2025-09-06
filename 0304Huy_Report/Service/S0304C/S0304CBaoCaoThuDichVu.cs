@@ -84,7 +84,7 @@ namespace S0304CBaoCaoThuDichVu.Services
             {
                 BaoCaoThuDichVu = new M0304CPagedResult<M0304CBaoCaoThuDichVu>
                 {
-                    Success = pagedData.Any(),
+                    Success = true,
                     Message = message,
                     Data = pagedData,
                     TotalRecords = totalRecords,

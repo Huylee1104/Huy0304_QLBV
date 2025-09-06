@@ -1,21 +1,6 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Index</title>
-    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" /> <!--Dùng chung file css với C0304-->
-    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap/dist/css/bootstrap.min.css")" /> <!---->
-    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/dist/libs/toastr/toastr.min.css")" />
-
-</head>
-<body>
     <div class="card p-1">
         <div class="container_BangKeThu">
             <div class="container_BangKeThu left">
@@ -144,13 +129,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="~/dist/libs/jquery/dist/jquery.min.js" defer></script> <!---->
-    <script src="~/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script> <!---->
-    <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
-    <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
-    <script src="~/dist/libs/toastr/toastr.min.js" defer></script>
-    <script src="@Url.Content("~/dist/js/J0304/BienChung.js")" defer asp-append-version="true"></script>
-    <script src="@Url.Content("~/dist/js/J0304B/J0304B_Report.js")" defer asp-append-version="true"></script>
-</body>
-</html>
+    </div>   
+    @section Scripts {
+        <script src="@Url.Content("~/dist/js/J0304B/J0304B_Report.js")" defer asp-append-version="true"></script>
+    }

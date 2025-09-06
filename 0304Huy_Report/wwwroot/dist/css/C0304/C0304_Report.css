@@ -1,7 +1,7 @@
 ﻿.table-wrapper {
     overflow-y: auto;
     overflow-x: auto;
-    height: 74vh;
+    height: 68vh;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: auto; 
     -ms-overflow-style: auto; 
@@ -29,7 +29,8 @@
 .table-wrapper table {
     border-collapse: separate;
     border-spacing: 0;
-    min-width: 1200px;
+    min-width: 1250px;
+    max-width: 1250px;
     table-layout: fixed;
 }
 
@@ -43,14 +44,14 @@
 .table-wrapper th {
     background-color: #f2f2f2;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 14px;
     position: sticky;
     top: 0;
     z-index: 3;
 }
 
 .table-wrapper td {
-    font-size: 1rem;
+    font-size: 14px;
 }
 
 .table-wrapper tr:hover td {
@@ -70,7 +71,7 @@
 }
 
 label {
-    font-size: 1rem !important;
+    font-size: 14px !important;
     font-weight: 600;
     margin: 5px 0 4px 0;
 }
@@ -80,11 +81,11 @@ label {
     justify-content: space-between;
 }
 
-    .container_BangKeThu.left {
-        display: block;
-        width: 16%;
-        justify-content: space-between;
-    }
+.container_BangKeThu.left {
+    display: block;
+    width: 16%;
+    justify-content: space-between;
+}
 
 .container_BangKeThu.right {
     width: 84%;
@@ -92,7 +93,7 @@ label {
 }
 
 .container_BangKeThu.left .row {
-    font-size: 1rem;
+    font-size: 14px;
 }
 
 .container_BangKeThu.left .row button {
@@ -136,13 +137,13 @@ input {
 }
 
 .input-group .form-control {
-    font-size: 1rem;
+    font-size: 14px;
     padding: 8px 12px;
     height: 42px; 
 }
 
 .input-group-text {
-    font-size: 1rem;
+    font-size: 14px;
     padding: 0 12px;
     display: flex;
     align-items: center; 
@@ -151,7 +152,7 @@ input {
 }
 
 .input-group-text i {
-    font-size: 1rem;
+    font-size: 14px;
 }
 
 #btnFilter {

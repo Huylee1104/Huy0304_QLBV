@@ -5,8 +5,8 @@ namespace M0304C.Models.BaoCaoThuDichVu
 {
     public class M0304CBaoCaoThuDichVu
     {
-        [Key]
-        public long ID { get; set; }
+        //[Key]
+        //public long ID { get; set; }
         public string? NhomDichVu { get; set; }
         public string? DichVu { get; set; }
         public int? SoLuong { get; set; }

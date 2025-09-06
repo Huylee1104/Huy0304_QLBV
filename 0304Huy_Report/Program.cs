@@ -7,6 +7,8 @@ using S0304NhanVien.Services;
 using S0304ThongTinDoanhNghiep.Services;
 using S0304BBCHoaDonDienTuDV.Services;
 using S0304CBaoCaoThuDichVu.Services;
+using S0304DBKBienLaiTamUng.Services;
+using S0304EBKBienLaiHoanUng.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddScoped<I0304HTTTService, S0304HTTTService>();
 builder.Services.AddScoped<I0304BangKeThuService, S0304BangKeThuService>();
 builder.Services.AddScoped<I0304BBCHoaDonDienTuDVService, S0304BBCHoaDonDienTuService>();
 builder.Services.AddScoped<I0304CBaoCaoThuDichVuService, S0304CBaoCaoThuDichVuService>();
+builder.Services.AddScoped<I0304DBKBienLaiTamUngService, S0304EBKBienLaiTamUngService>();
+builder.Services.AddScoped<I0304EBKBienLaiHoanUngService, S0304EBKBienLaiHoanUngService>();
 
 builder.Services.AddDistributedMemoryCache(); // Bộ nhớ tạm cho session
 builder.Services.AddSession(options =>

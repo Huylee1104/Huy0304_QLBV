@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - _0304Huy_Report</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/_0304Huy_Report.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~dist/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap/dist/css/bootstrap.min.css")" /> <!---->
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/toastr/toastr.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" /> <!--Dùng chung file css với C0304-->
 </head>
 <body>
     <header>
@@ -26,20 +29,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="BangKeThu">Bảng Kê Thu</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304BangKeThu" asp-action="Index">Bảng Kê Thu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="BCHoaDonDienTuDV">BCHoaDonDienTuDV</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304BCHoaDonDienTuDV" asp-action="Index">BCHoaDonDienTuDV</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="BaoCaoThuDichVu">BaoCaoThuDichVu</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304CBaoCaoThuDichVu" asp-action="Index">BaoCaoThuDichVu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304DBKBienLaiTamUng" asp-action="Index">BangKeBienLaiTamUng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304EBKBienLaiHoanUng" asp-action="Index">BangKeBienLaiHoanUng</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -50,8 +59,13 @@
             &copy; 2025 - _0304Huy_Report - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/libs/jquery/dist/jquery.min.js" defer></script> <!---->
+    <script src="~/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script> <!---->
+    <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
+    <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
+    <script src="~/dist/libs/toastr/toastr.min.js" defer></script>
+    <script src="@Url.Content("~/dist/js/J0304/BienChung.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
