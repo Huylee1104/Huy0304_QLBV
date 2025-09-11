@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\controllers\\c0304h\\c03004hbctongsosidtheokhoaphongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304h\\c03004hbctongsosidtheokhoaphongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -39,19 +43,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAD8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-11T08:48:04.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "C03004HBCTongSoSIDTheoKhoaPhongController.cs",
               "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
               "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
               "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
               "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwBsAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-11T08:41:43.12Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "P0304HHuy_ReportExcel.cs",
               "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_ReportExcel.cs",
               "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_ReportExcel.cs",
@@ -59,12 +76,11 @@
               "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_ReportExcel.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAMAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T08:36:30.464Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-11T08:36:30.464Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "P0304HHuy_Report.cs",
               "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_Report.cs",
               "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_Report.cs",
@@ -72,12 +88,11 @@
               "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304H\\P0304HHuy_Report.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T08:36:29.728Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-11T08:36:29.728Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "S0304HBCTongSoSIDTheoKhoaPhong.cs",
               "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
               "RelativeDocumentMoniker": "0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
@@ -85,12 +100,11 @@
               "RelativeToolTip": "0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T08:28:41.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-11T08:28:41.041Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "M0304HBCTongSoSIDTheoKhoaPhong.cs",
               "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
               "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
@@ -98,8 +112,7 @@
               "RelativeToolTip": "0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T08:17:44.386Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-11T08:17:44.386Z"
             }
           ]
         }
