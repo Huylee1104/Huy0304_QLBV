@@ -126,12 +126,12 @@ public class P0304DExcelReportTemplate
             foreach (var nv in _danhSachNhanVien)
             {
                 int stt = 1;
-                var dataNV = _data.Where(d => d.IDNhanVien == nv.Id).ToList();
+                var dataNV = _data.Where(d => d.IDNhanVien == nv.ID).ToList();
                 if (!dataNV.Any()) continue;
-                var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.Id);
+                var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.ID);
 
                 ws.Range(currentRow, 2, currentRow, 9).Merge();
-                ws.Cell(currentRow, 2).Value = $"Nhân viên: {nv.Ten}";
+                ws.Cell(currentRow, 2).Value = $"Nhân viên: {nv.TenNhanVien}";
                 ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 ws.Cell(currentRow, 2).Style.Font.Bold = true;
                 ws.Cell(currentRow, 2).Style.Font.FontSize = 10;

@@ -9,7 +9,7 @@ namespace M0304C.Models.BaoCaoThuDichVu
         //public long ID { get; set; }
         public string? NhomDichVu { get; set; }
         public string? DichVu { get; set; }
-        public int? SoLuong { get; set; }
+        public long? SoLuong { get; set; }
         public decimal? TongHoaDon { get; set; }
     }
 

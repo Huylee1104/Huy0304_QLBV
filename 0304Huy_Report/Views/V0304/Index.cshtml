@@ -6,8 +6,8 @@
     var jsonNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSNhanVien);
 }
     <div class="card p-1">
-        <div class="container_BangKeThu">
-            <div class="container_BangKeThu left">
+        <div class="container_Team3">
+            <div class="container_Team3 left">
                 <div class="row" style="padding:0; margin: 5px;">
                     <div style="width: 100%; padding:0;">
                         <label class="form-label">Giai đoạn</label>
@@ -27,7 +27,7 @@
                 <div class="row" style="padding:0; margin: 5px;">
                     <div style="width: 100%;padding:0;">
                         <label class="form-label">Từ ngày</label>
-                        <div class="input-group" id="datepicker">
+                        <div class="input-group" id="ngayTuNgay-datepicker">
                             <input type="text"
                                    class="form-control date-input"
                                    id="ngayTuNgay"
@@ -35,7 +35,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="datepicker-icon">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayTuNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -46,7 +46,7 @@
 
                     <div style="width: 100%; margin: 5px 0px;padding:0;">
                         <label class="form-label">Đến ngày</label>
-                        <div class="input-group" id="datepicker2">
+                        <div class="input-group" id="ngayDenNgay-datepicker">
                             <input type="text"
                                    class="form-control date-input"
                                    id="ngayDenNgay"
@@ -54,7 +54,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="datepicker-icon2">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <div class="container_BangKeThu right">
+            <div class="container_Team3 right">
                 <!-- Thêm spinner -->
                 <div id="loadingSpinner" class="text-center" style="display: none; margin: 20px 0;">
                     <div class="spinner-border text-primary" role="status">
@@ -157,7 +157,8 @@
         if (typeof provincesDataNhanVien === "string") {
             provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
         }
-
+        // console.log(provincesDataHTTT);
+        // console.log(provincesDataNhanVien);
     </script>
     @section Scripts {
     <script src="@Url.Content("~/dist/js/J0304/J0304_Report.js")" defer asp-append-version="true"></script>

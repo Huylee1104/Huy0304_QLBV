@@ -1,31 +1,28 @@
+using C0304.Db.Models;
+using M0304.Models.KhoHang;
 using M0304NhanVien.Models;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace S0304NhanVien.Services
 {
     public class S0304NhanVienService : I0304NhanVienService
     {
-        private readonly string _filePath;
+        private readonly M0304Context _context;
 
-        public S0304NhanVienService(IWebHostEnvironment env)
+        public S0304NhanVienService(M0304Context context)
         {
-            _filePath = Path.Combine(env.WebRootPath, "dist", "data", "json", "Dm_NhanVien.json");
-        }
-
-        public string GetFilePath()
-        {
-            return _filePath;
+            _context = context;
         }
 
         public async Task<List<M0304NhanVienModel>> GetAllNhanVien()
         {
-            if (!File.Exists(_filePath))
-                return new List<M0304NhanVienModel>();
+            var khoHangs = await _context.M0304NhanViens
+                .AsNoTracking()
+                .OrderBy(x => x.TenNhanVien)
+                .ToListAsync();
 
-            var json = File.ReadAllText(_filePath);
-            var htttList = JsonConvert.DeserializeObject<List<M0304NhanVienModel>>(json);
-
-            return htttList.OrderBy(httt => httt.Ten).ToList();
+            return khoHangs;
         }
     }
 }

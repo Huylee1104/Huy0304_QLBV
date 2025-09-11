@@ -148,12 +148,12 @@ namespace S0304BangKeThu.Services
 
             if (idNhanVien != 0)
             {
-                tenNhanVien = allNhanVien.FirstOrDefault(nv => nv.Id == idNhanVien)?.Ten ?? "Không rõ";
+                tenNhanVien = allNhanVien.FirstOrDefault(nv => nv.ID == idNhanVien)?.TenNhanVien ?? "Không rõ";
             }
             else
             {
                 var ids = data.Select(d => d.IDNhanVien).Distinct().ToList();
-                danhSachNhanVien = allNhanVien.Where(nv => ids.Contains(nv.Id)).ToList();
+                danhSachNhanVien = allNhanVien.Where(nv => ids.Contains(nv.ID)).ToList();
             }
 
             var tongChung = new M0304TongHopBangKeThu

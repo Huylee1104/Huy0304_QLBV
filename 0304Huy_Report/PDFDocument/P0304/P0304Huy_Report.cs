@@ -146,11 +146,11 @@ namespace P0304.PDFDocument
                         {
                             foreach (var nv in _danhSachNhanVien)
                             {
-                                var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.Id);
-                                var dataNV = _data.Where(d => d.IDNhanVien == nv.Id).ToList();
+                                var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.ID);
+                                var dataNV = _data.Where(d => d.IDNhanVien == nv.ID).ToList();
                                 if (tongNV.TongSoTien > 0)
                                 {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.Ten}").Bold();
+                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");
                                     table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongSoTien.ToString("N0") ?? "0");
@@ -173,7 +173,7 @@ namespace P0304.PDFDocument
                                 }
                                 if (tongNV.TongHuy > 0)
                                 {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.Ten}").Bold();
+                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
                                     table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongHuy.ToString("N0") ?? "0");
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");
@@ -196,7 +196,7 @@ namespace P0304.PDFDocument
                                 }
                                 if (tongNV.TongHoan > 0)
                                 {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.Ten}").Bold();
+                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");
                                     table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongHoan.ToString("N0") ?? "0");
                                     table.Cell().Element(CellStyle).AlignRight().Text("0");

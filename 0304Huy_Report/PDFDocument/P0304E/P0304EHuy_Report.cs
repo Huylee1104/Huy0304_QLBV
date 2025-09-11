@@ -137,14 +137,14 @@ namespace P0304E.PDFDocument
                         foreach (var nv in nhanVienTruCuoi)
                         {
                             int stt = 1;
-                            var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.Id);
-                            var dataNV = _data.Where(d => d.IDNhanVien == nv.Id).ToList();
+                            var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.ID);
+                            var dataNV = _data.Where(d => d.IDNhanVien == nv.ID).ToList();
 
                             table.Cell().ColumnSpan(12).Border(1).Padding(3).Element(container =>
                             {
                                 container.Row(row =>
                                 {
-                                    row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nv.Ten}").FontSize(7).Bold();
+                                    row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nv.TenNhanVien}").FontSize(7).Bold();
                                     row.RelativeItem(2).Text("");
                                     row.RelativeItem(1).Text("");
                                     row.RelativeItem(1).Text("");
@@ -173,15 +173,15 @@ namespace P0304E.PDFDocument
 
                         var nvCuoi = _danhSachNhanVien.Last();
                         int sttCuoi = 1;
-                        var tongNVCuoi = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nvCuoi.Id);
-                        var dataNVCuoi = _data.Where(d => d.IDNhanVien == nvCuoi.Id).ToList();
+                        var tongNVCuoi = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nvCuoi.ID);
+                        var dataNVCuoi = _data.Where(d => d.IDNhanVien == nvCuoi.ID).ToList();
 
 
                         table.Cell().ColumnSpan(12).Border(1).Padding(3).Element(container =>
                         {
                             container.Row(row =>
                             {
-                                row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nvCuoi.Ten}").FontSize(7).Bold();
+                                row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nvCuoi.TenNhanVien}").FontSize(7).Bold();
                                 row.RelativeItem(2).Text("");
                                 row.RelativeItem(1).Text("");
                                 row.RelativeItem(1).Text("");

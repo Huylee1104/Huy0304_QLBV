@@ -76,38 +76,38 @@ label {
     margin: 5px 0 4px 0;
 }
 
-.container_BangKeThu {
+.container_Team3 {
     display: flex;
     justify-content: space-between;
 }
 
-.container_BangKeThu.left {
+.container_Team3.left {
     display: block;
     width: 16%;
     justify-content: space-between;
 }
 
-.container_BangKeThu.right {
+.container_Team3.right {
     width: 84%;
     display: block;
 }
 
-.container_BangKeThu.left .row {
+.container_Team3.left .row {
     font-size: 14px;
 }
 
-.container_BangKeThu.left .row button {
+.container_Team3.left .row button {
     width: 100%;
     font-size: 0.8rem;
 }
 
-.container_BangKeThu.left .row.export-buttons {
+.container_Team3.left .row.export-buttons {
     display: flex;
     font-size: 0.8rem;
     gap: 8px; 
 }
 
-.container_BangKeThu.left .row.export-buttons button {
+.container_Team3.left .row.export-buttons button {
     flex: 1;
     padding: 8px;
     font-size: 0.8rem;
@@ -283,7 +283,7 @@ input {
     }
 
 
-.container_BangKeThu.left .row .select-row {
+.container_Team3.left .row .select-row {
     width: 100%;
 }
 

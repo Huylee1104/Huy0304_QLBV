@@ -141,7 +141,7 @@ namespace S0304EBKBienLaiHoanUng.Services
             var allNhanVien = await _nhanVienService.GetAllNhanVien();
 
             var ids = data.Select(d => d.IDNhanVien).Distinct().ToList();
-            danhSachNhanVien = allNhanVien.Where(nv => ids.Contains(nv.Id)).ToList();
+            danhSachNhanVien = allNhanVien.Where(nv => ids.Contains(nv.ID)).ToList();
 
             // 2. Tính tổng theo nhân viên
             tongTheoNhanVien = data

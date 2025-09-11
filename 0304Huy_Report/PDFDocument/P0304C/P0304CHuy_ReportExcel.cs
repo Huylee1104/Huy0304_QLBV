@@ -95,7 +95,7 @@ public class P0304CExcelReportTemplate
                 ws.Cell(currentRow, i + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             }
 
-            int stt = 1;
+            long stt = 1;
 
             currentRow++;
 
@@ -185,7 +185,7 @@ public class P0304CExcelReportTemplate
                 cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center; 
             }
 
-            void SetCenterCellNumber(IXLCell cell, int? value)
+            void SetCenterCellNumber(IXLCell cell, long? value)
             {
                 cell.Value = value ?? 0;
                 cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;

@@ -9,6 +9,9 @@ using S0304BBCHoaDonDienTuDV.Services;
 using S0304CBaoCaoThuDichVu.Services;
 using S0304DBKBienLaiTamUng.Services;
 using S0304EBKBienLaiHoanUng.Services;
+using S0304KhoHang.Services;
+using S0304GPhieuLinhVatTuYTe.Services;
+using S0304FBKTinhHinhTraDuocNCC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +22,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddScoped<I0304ThongTinDoanhNghiep, S0304ThongTinDoanhNghiepService>();
 builder.Services.AddScoped<I0304NhanVienService, S0304NhanVienService>();
 builder.Services.AddScoped<I0304HTTTService, S0304HTTTService>();
+builder.Services.AddScoped<I0304KhoHangService, S0304KhohangService>();
 builder.Services.AddScoped<I0304BangKeThuService, S0304BangKeThuService>();
 builder.Services.AddScoped<I0304BBCHoaDonDienTuDVService, S0304BBCHoaDonDienTuService>();
 builder.Services.AddScoped<I0304CBaoCaoThuDichVuService, S0304CBaoCaoThuDichVuService>();
 builder.Services.AddScoped<I0304DBKBienLaiTamUngService, S0304EBKBienLaiTamUngService>();
 builder.Services.AddScoped<I0304EBKBienLaiHoanUngService, S0304EBKBienLaiHoanUngService>();
+builder.Services.AddScoped<I0304GPhieuLinhVatTuYTeService, S0304GPhieuLinhVatTuYTeService>();
+builder.Services.AddScoped<I0304FBKTinhHinhTraDuocNCCService, S0304FBKTinhHinhTraDuocNCCService>();
 
 builder.Services.AddDistributedMemoryCache(); // Bộ nhớ tạm cho session
 builder.Services.AddSession(options =>

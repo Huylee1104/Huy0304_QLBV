@@ -1,121 +1,4 @@
-﻿// ==================== ĐỊNH DẠNG NGÀY NHẬP ====================
-function initDateInputFormatting() {
-    const dateInputIds = ["ngayTuNgay", "ngayDenNgay"];
-
-    dateInputIds.forEach(function (id) {
-        const input = document.getElementById(id);
-        if (!input) return;
-
-        input.addEventListener("input", function () {
-            let value = input.value.replace(/\D/g, "");
-            let formatted = "";
-            let selectionStart = input.selectionStart;
-
-            if (value.length > 0) formatted += value.substring(0, 2);
-            if (value.length >= 3) formatted += "-" + value.substring(2, 4);
-            if (value.length >= 5) formatted += "-" + value.substring(4, 8);
-
-            if (formatted !== input.value) {
-                const prevLength = input.value.length;
-                input.value = formatted;
-                const newLength = formatted.length;
-                const diff = newLength - prevLength;
-                input.setSelectionRange(selectionStart + diff, selectionStart + diff);
-            }
-        });
-
-        input.addEventListener("click", function () {
-            const pos = input.selectionStart;
-            if (pos <= 2) input.setSelectionRange(0, 2);
-            else if (pos <= 5) input.setSelectionRange(3, 5);
-            else input.setSelectionRange(6, 10);
-        });
-
-        input.addEventListener("keydown", function (e) {
-            const pos = input.selectionStart;
-            let val = input.value;
-
-            if (e.key === "Backspace" && (pos === 3 || pos === 6)) {
-                e.preventDefault();
-                input.value = val.slice(0, pos - 1) + val.slice(pos);
-                input.setSelectionRange(pos - 1, pos - 1);
-            }
-            if (e.key === "Delete" && (pos === 2 || pos === 5)) {
-                e.preventDefault();
-                input.value = val.slice(0, pos) + val.slice(pos + 1);
-                input.setSelectionRange(pos, pos);
-            }
-        });
-        $('#datepicker-icon').on('click', function () {
-            $("#ngayTuNgay").datepicker('show');
-        });
-        $('#datepicker-icon2').on('click', function () {
-            $("#ngayDenNgay").datepicker('show');
-        });
-    });
-}
-
-// ==================== DATEPICKER ====================
-function initDatePicker() {
-    $('[id="ngayTuNgay"], [id="ngayDenNgay"]').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        language: 'vi',
-        todayHighlight: true,
-        orientation: 'bottom auto',
-        weekStart: 1
-    });
-}
-
-// ==================== COMBOBOX ====================
-// Common helper functions
-function removeAccents(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
-function highlightMatch(text, keyword) {
-    if (!keyword) return text;
-
-    const normalizedText = removeAccents(text).toLowerCase();
-    const normalizedKeyword = removeAccents(keyword).toLowerCase();
-
-    const startIndexNormalized = normalizedText.indexOf(normalizedKeyword);
-    if (startIndexNormalized === -1) return text;
-
-    let startIndexOriginal = 0;
-    let count = 0;
-    for (let i = 0; i < text.length; i++) {
-        if (removeAccents(text[i]).toLowerCase() !== '') {
-            if (count === startIndexNormalized) {
-                startIndexOriginal = i;
-                break;
-            }
-            count++;
-        }
-    }
-
-    let endIndexOriginal = startIndexOriginal;
-    let count2 = 0;
-    for (let i = startIndexOriginal; i < text.length; i++) {
-        if (removeAccents(text[i]).toLowerCase() !== '') {
-            count2++;
-        }
-        if (count2 === normalizedKeyword.length) {
-            endIndexOriginal = i + 1;
-            break;
-        }
-    }
-
-    return (
-        text.substring(0, startIndexOriginal) +
-        '<span class="highlight-text">' +
-        text.substring(startIndexOriginal, endIndexOriginal) +
-        '</span>' +
-        text.substring(endIndexOriginal)
-    );
-}
-
-// Factory function to initialize autocomplete
+﻿// COMBOBOX
 function initAutocomplete(config) {
     const {
         inputId,
@@ -661,7 +544,7 @@ function formatCurrency(value) {
 
 // ==================== CẬP NHẬT BẢNG ====================
 function updateTable(response) {
-    const tbody = $('.container_BangKeThu.right tbody');
+    const tbody = $('.container_Team3.right tbody');
     tbody.empty();
 
     if (response.totalRecords !== undefined) {
@@ -705,74 +588,41 @@ function updateTable(response) {
     }
 }
 
-// ==================== RÀNG BUỘC ĐIỀU KIỆN CHỌN NGÀY ====================
-$(document).ready(function () {
-    $('#datepicker').on('changeDate', function (e) {
-        let startDate = $('#ngayTuNgay').datepicker('getDate');
-        let endDate = $('#ngayDenNgay').datepicker('getDate');
-
-        if (endDate && startDate > endDate) {
-            $('#ngayDenNgay').datepicker('setDate', startDate);
-        }
-    });
-
-    $('#datepicker2').on('changeDate', function (e) {
-        let startDate = $('#ngayTuNgay').datepicker('getDate');
-        let endDate = $('#ngayDenNgay').datepicker('getDate');
-
-        if (startDate && endDate < startDate) {
-            $('#ngayTuNgay').datepicker('setDate', endDate);
-        }
-    });
-});
-
 // ==================== KHI TẢI TRANG ====================
 $(document).ready(function () {
-    initDateInputFormatting();
-    initDatePicker();
+    const config = {
+        tuNgay: 'ngayTuNgay', // id ô input
+        denNgay: 'ngayDenNgay',
+        tuNgayIcon: 'ngayTuNgay-icon', // id icon
+        denNgayIcon: 'ngayDenNgay-icon',
+        tuNgayDatepicker: 'ngayTuNgay-datepicker', // id cả cụm datepicker
+        denNgayDatepicker: 'ngayDenNgay-datepicker'
+    };
+
+    initDateInputFormatting(config);
+    initDatePicker(config);
+    initDateRangeConstraint(config);
 });
 
 // ==================== LOAD COMBOBOX ====================
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize second combobox
+    const dataNhanVien = convertData(
+        provincesDataNhanVien,
+        item => item.TenNhanVien || '',
+        item => item.ID
+    );
+
     initAutocomplete({
         inputId: 'comboBox2',
         dropdownId: 'dropdownList2',
         hiddenIdId: 'IDNhanVien',
-        data: provincesDataNhanVien,
-        getName: item => item.Ten || '',
-        getId: item => item.Id,
-        getAbbr: item => item.Viettat || '',
+        data: dataNhanVien,
+        getName: item => item.ten || '',
+        getId: item => item.id,
+        getAbbr: item => item.viettat || '',
         filterPredicate: (item, normalizedFilter) =>
-            removeAccents((item.Ten || '').toLowerCase()).includes(normalizedFilter) ||
-            removeAccents((item.Viettat || "").toLowerCase()).startsWith(normalizedFilter)
+            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
+            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
     });
-});
-
-// ==================== THÔNG BÁO ====================
-$(document).ready(function () {
-    // Chỉ hiển thị toastr nếu có tham số cụ thể trong URL
-    if (window.location.search.includes('showToast=true')) {
-        var successMessage = '@Html.Raw(TempData["SuccessMessage"] as string)';
-        if (successMessage) {
-            toastr.success(decodeHTMLEntities(successMessage));
-        }
-
-        var errorMessage = '@Html.Raw(TempData["ErrorMessage"] as string)';
-        if (errorMessage) {
-            toastr.error(decodeHTMLEntities(errorMessage));
-        }
-
-        var warningMessage = '@Html.Raw(TempData["WarningMessage"] as string)';
-        if (warningMessage) {
-            toastr.warning(decodeHTMLEntities(warningMessage));
-        }
-    }
-
-    function decodeHTMLEntities(text) {
-        var textArea = document.createElement('textarea');
-        textArea.innerHTML = text;
-        return textArea.value;
-    }
 });
 

@@ -5,8 +5,8 @@ namespace M0304D.Models.BKBienLaiTamUng
 {
     public class M0304DBKBienLaiTamUng
     {
-        [Key]
-        public long ID { get; set; }
+        //[Key]
+        //public long ID { get; set; }
         public DateTime? NgayThu { get; set; }
         public string? MaYTe { get; set; }
         public string? SoBA { get; set; }
@@ -18,7 +18,6 @@ namespace M0304D.Models.BKBienLaiTamUng
         public decimal? Huy { get; set; }
         public decimal? HoanTra { get; set; }
         public string? HTTT { get; set; }
-        public long? IDCN { get; set; }
         public long? IDNhanVien { get; set; }
     }
 

@@ -130,13 +130,13 @@ public class P0304ExcelReportTemplate
             {
                 foreach (var nv in _danhSachNhanVien)
                 {
-                    var dataNV = _data.Where(d => d.IDNhanVien == nv.Id).ToList();
+                    var dataNV = _data.Where(d => d.IDNhanVien == nv.ID).ToList();
                     if (!dataNV.Any()) continue;
-                    var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.Id);
+                    var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.ID);
                     if (tongNV.TongSoTien > 0)
                     {
                         ws.Range(currentRow, 2, currentRow, 8).Merge();
-                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.Ten}";
+                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.TenNhanVien}";
                         ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
                         ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
@@ -180,7 +180,7 @@ public class P0304ExcelReportTemplate
                     if (tongNV.TongHuy > 0)
                     {
                         ws.Range(currentRow, 2, currentRow, 8).Merge();
-                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.Ten}";
+                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.TenNhanVien}";
                         ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
                         ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
@@ -224,7 +224,7 @@ public class P0304ExcelReportTemplate
                     if (tongNV.TongHoan > 0)
                     {
                         ws.Range(currentRow, 2, currentRow, 8).Merge();
-                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.Ten}";
+                        ws.Cell(currentRow, 2).Value = $"Tên nhân viên: {nv.TenNhanVien}";
                         ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
                         ws.Cell(currentRow, 2).Style.Font.FontSize = 10;

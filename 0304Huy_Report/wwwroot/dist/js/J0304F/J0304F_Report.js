@@ -1,72 +1,153 @@
-﻿// ==================== ĐỊNH DẠNG NGÀY NHẬP ====================
-function initDateInputFormatting() {
-    const dateInputIds = ["ngayTuNgay", "ngayDenNgay"];
+﻿// ==================== COMBOBOX ====================
+function initAutocomplete(config) {
+    const {
+        inputId,
+        dropdownId,
+        hiddenIdId,
+        data,
+        getName,
+        getId,
+        getAbbr = () => "", // Optional abbreviation getter
+        filterPredicate
+    } = config;
 
-    dateInputIds.forEach(function (id) {
-        const input = document.getElementById(id);
-        if (!input) return;
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    const hiddenId = document.getElementById(hiddenIdId);
+    let isMouseDownOnDropdown = false;
+    let highlightedIndex = -1;
+    let currentOptions = [];
 
-        input.addEventListener("input", function () {
-            let value = input.value.replace(/\D/g, "");
-            let formatted = "";
-            let selectionStart = input.selectionStart;
+    hiddenId.value = 0;
 
-            if (value.length > 0) formatted += value.substring(0, 2);
-            if (value.length >= 3) formatted += "-" + value.substring(2, 4);
-            if (value.length >= 5) formatted += "-" + value.substring(4, 8);
+    function renderOptions(filter = "") {
+        dropdown.innerHTML = "";
+        highlightedIndex = 0;
+        const normalizedFilter = removeAccents(filter.toLowerCase());
 
-            if (formatted !== input.value) {
-                const prevLength = input.value.length;
-                input.value = formatted;
-                const newLength = formatted.length;
-                const diff = newLength - prevLength;
-                input.setSelectionRange(selectionStart + diff, selectionStart + diff);
+        currentOptions = data.filter(item => filterPredicate(item, normalizedFilter));
+
+        currentOptions.forEach((item, index) => {
+            const option = document.createElement('div');
+            option.classList.add('option-item');
+
+            const nameSpan = document.createElement('span');
+            nameSpan.innerHTML = highlightMatch(getName(item), filter);
+            nameSpan.style.flex = "1";
+            option.appendChild(nameSpan);
+
+            const abbr = getAbbr(item);
+            if (abbr) {
+                const abbrSpan = document.createElement('span');
+                abbrSpan.innerHTML = highlightMatch(abbr, filter);
+                abbrSpan.style.marginLeft = "10px";
+                abbrSpan.style.color = "#888";
+                abbrSpan.style.fontSize = "12px";
+                option.appendChild(abbrSpan);
             }
-        });
 
-        input.addEventListener("click", function () {
-            const pos = input.selectionStart;
-            if (pos <= 2) input.setSelectionRange(0, 2);
-            else if (pos <= 5) input.setSelectionRange(3, 5);
-            else input.setSelectionRange(6, 10);
-        });
+            if (index === highlightedIndex) option.classList.add('highlight');
 
-        input.addEventListener("keydown", function (e) {
-            const pos = input.selectionStart;
-            let val = input.value;
-
-            if (e.key === "Backspace" && (pos === 3 || pos === 6)) {
+            option.addEventListener('mousedown', (e) => {
                 e.preventDefault();
-                input.value = val.slice(0, pos - 1) + val.slice(pos);
-                input.setSelectionRange(pos - 1, pos - 1);
+                selectOption(index);
+            });
+
+            dropdown.appendChild(option);
+        });
+
+        dropdown.style.display = currentOptions.length ? "block" : "none";
+    }
+
+    function updateHighlight() {
+        const options = dropdown.querySelectorAll('.option-item');
+        options.forEach((opt, idx) => {
+            opt.classList.toggle('highlight', idx === highlightedIndex);
+        });
+    }
+
+    function selectOption(index) {
+        if (index >= 0 && index < currentOptions.length) {
+            input.value = getName(currentOptions[index]);
+            hiddenId.value = getId(currentOptions[index]);
+            dropdown.style.display = "none";
+        }
+    }
+
+    input.addEventListener('input', () => {
+        if (input.value.trim() === "") {
+            hiddenId.value = 0;
+            dropdown.style.display = "none";
+        } else {
+            hiddenId.value = "";
+            renderOptions(input.value);
+        }
+    });
+
+    dropdown.addEventListener('mousedown', () => {
+        isMouseDownOnDropdown = true;
+    });
+
+    input.addEventListener('blur', () => {
+        setTimeout(() => {
+            if(!isMouseDownOnDropdown) {
+                if (hiddenId.value === "" && input.value.trim() !== "") {
+                    input.value = "";
+                    hiddenId.value = 0;
+                    toastr.error("Vui lòng chọn kho trả hợp lệ");
+                }
+                if (hiddenId.value === "0") {
+                    toastr.error("Vui lòng chọn kho trả");
+                }
             }
-            if (e.key === "Delete" && (pos === 2 || pos === 5)) {
+            isMouseDownOnDropdown = false;
+            dropdown.style.display = "none";
+        }, 100);
+    });
+
+    input.addEventListener('focus', () => renderOptions());
+
+    input.addEventListener('input', () => {
+        renderOptions(input.value);
+    });
+
+    window.addEventListener('load', () => {
+        if (hiddenId.value && !input.value) {
+            const selected = data.find(x => getId(x) == hiddenId.value);
+            if (selected) {
+                input.value = getName(selected);
+            }
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (dropdown.style.display === "block") {
+            if (e.key === "ArrowDown") {
                 e.preventDefault();
-                input.value = val.slice(0, pos) + val.slice(pos + 1);
-                input.setSelectionRange(pos, pos);
+                highlightedIndex = (highlightedIndex + 1) % currentOptions.length;
+                updateHighlight();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                highlightedIndex = (highlightedIndex - 1 + currentOptions.length) % currentOptions.length;
+                updateHighlight();
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                selectOption(highlightedIndex);
             }
-        });
-        $('#datepicker-icon').on('click', function () {
-            $("#ngayTuNgay").datepicker('show');
-        });
-        $('#datepicker-icon2').on('click', function () {
-            $("#ngayDenNgay").datepicker('show');
-        });
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        const isClickInsideCombo = e.target.closest(`#${inputId}`) || e.target.closest(`#${dropdownId}`);
+        if (!isClickInsideCombo) {
+            if (hiddenId.value === "" && input.value.trim() !== "") {
+                input.value = "";
+                hiddenId.value = 0;
+            }
+            dropdown.style.display = "none";
+        }
     });
 }
-
-// ==================== DATEPICKER ====================
-function initDatePicker() {
-    $('[id="ngayTuNgay"], [id="ngayDenNgay"]').datepicker({
-        format: 'dd-mm-yyyy',
-        autoclose: true,
-        language: 'vi',
-        todayHighlight: true,
-        orientation: 'bottom auto',
-        weekStart: 1
-    });
-}
-
 // ==================== BIẾN GLOBAL PHÂN TRANG ====================
 let currentPage = 1;
 let pageSize = 20;
@@ -142,6 +223,7 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
+    let idKhoHang = $('#IDKhoHang').val();
     if (!isPagination) {
         firstLoad = true;
     }
@@ -167,11 +249,12 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
+        idKhoHang: idKhoHang,
         page: currentPage,
         pageSize: pageSize
     }
     $.ajax({
-        url: '/bao_cao_thu_dich_vu/filter',
+        url: '/bang_ke_tinh_hinh_tra_duoc_NCC/filter',
         type: 'POST',
         data: payload,
         success: function (response) {
@@ -204,7 +287,7 @@ function filterData(isPagination = false) {
 function ajaxFilterRequest(payload) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '/bao_cao_thu_dich_vu/filter',
+            url: '/bang_ke_tinh_hinh_tra_duoc_NCC/filter',
             type: 'POST',
             data: payload,
             success: function (resp) { resolve(resp); },
@@ -213,12 +296,13 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay) {
+function fetchAllFilteredData(tuNgay, denNgay, idKhoHang) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
+            idKhoHang: idKhoHang || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -242,6 +326,7 @@ function fetchAllFilteredData(tuNgay, denNgay) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
+                    idKhoHang: idKhoHang,
                     page: p,
                     pageSize: pageSize
                 };
@@ -265,8 +350,9 @@ function fetchAllFilteredData(tuNgay, denNgay) {
 function validateExportDatesAndData() {
     const tuNgay = $('#ngayTuNgay').val();
     const denNgay = $('#ngayDenNgay').val();
+    const idKhoHang = $('#IDKhoHang').val();
 
-    if (!tuNgay && !denNgay) {
+    if (!tuNgay && !denNgay ) {
         if (!window.filteredData || window.filteredData.length === 0) {
             toastr.error("Không có dữ liệu để xuất");
             return false;
@@ -275,6 +361,10 @@ function validateExportDatesAndData() {
     }
     if ((tuNgay && !denNgay) || (!tuNgay && denNgay)) {
         toastr.error("Vui lòng chọn cả từ ngày và đến ngày");
+        return false;
+    }
+    if (idKhoHang === "0" || idKhoHang === "" || idKhoHang == null) {
+        toastr.error("Vui lòng chọn kho trả");
         return false;
     }
 
@@ -299,11 +389,12 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idKhoHang: $('#IDKhoHang').val(),
         doanhNghiep: window.doanhNghiep || null
     };
 
     $.ajax({
-        url: '/bao_cao_thu_dich_vu/export/excel',
+        url: '/bang_ke_tinh_hinh_tra_duoc_NCC/export/excel',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(requestData),
@@ -317,7 +408,7 @@ function doExportExcel(finalData, btn, originalHtml) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `BaoCaoThuDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
+            a.download = `BangKeTinhHinhTraDuocNCC_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -346,9 +437,10 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idKhoHang = $('#IDKhoHang').val();
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den)
+        fetchAllFilteredData(tu, den, idKhoHang)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -368,10 +460,11 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idKhoHang: $('#IDKhoHang').val(),
         doanhNghiep: window.doanhNghiep || null
     };
 
-    fetch("/bao_cao_thu_dich_vu/export/pdf", {
+    fetch("/bang_ke_tinh_hinh_tra_duoc_NCC/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
@@ -384,7 +477,7 @@ function doExportPdf(finalData, btnElem) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `BaoCaoThuDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
+            a.download = `BangKeTinhHinhTraDuocNCC_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
             a.click();
             window.URL.revokeObjectURL(url);
             toastr.success("Xuất PDF thành công");
@@ -409,9 +502,10 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idKhoHang = $('#IDKhoHang').val();
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den)
+        fetchAllFilteredData(tu, den, idKhoHang)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -447,7 +541,7 @@ function formatCurrency(value) {
 
 // ==================== CẬP NHẬT BẢNG ====================
 function updateTable(response) {
-    const tbody = $('.container_BangKeThu.right tbody');
+    const tbody = $('.container_Team3.right tbody');
     tbody.empty();
 
     if (response.totalRecords !== undefined) {
@@ -465,77 +559,70 @@ function updateTable(response) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
 
-    if (data.length > 0) {
+    if (data.length > 0) { // Cần chỉnh lại chỗ này
         data.forEach((item, index) => {
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
-                    <td class = "text-center text-nowrap">${stt}</td>
-                    <td class = "text-start" style = "min-width: 250px; max-width: 400px;" >${item.nhomDichVu || item.NhomDichVu || ''}</td>
-                    <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
-                    <td class = "text-center text-nowrap">${item.soLuong || item.SoLuong}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
-                    
+                    <td class="text-nowrap text-center">${stt}</td>
+                    <td class="text-nowrap text-center">${formatDate(item.ngayHoaDon || item.NgayHoaDon) || ''}</td>
+                    <td class="text-nowrap text-start">${item.soHoaDon || item.SoHoaDon || ''}</td>
+                    <td class="text-nowrap text-center">${formatDate(item.ngayTra || item.NgayTra)}</td>
+                    <td class="text-nowrap text-start">${item.phieuTra || item.PhieuTra || 'Không rõ'}</td>
+                    <td class="text-nowrap text-start">${item.congTy || item.CongTy || 'Không rõ'}</td>
+                    <td class="text-nowrap text-center">${item.maID || item.MaID || 'Không rõ'}</td>
+                    <td class="text-start" style = "min-width: 450px; max-width: 500px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
+                    <td class="text-nowrap text-start">${item.quyCach || item.QuyCach || 'Không rõ'}</td>
+                    <td class="text-nowrap text-center">${item.soLo || item.SoLo || 'Không rõ'}</td>
+                    <td class="text-nowrap text-end">${item.slDongGoi || item.SLDongGoi}</td>
+                    <td class="text-nowrap text-end">${item.slLe || item.SLLe}</td>
+                    <td class="text-nowrap text-end">${formatCurrency(item.donGiaDongGoi || item.DonGiaDongGoi) || 0}</td>
+                    <td class="text-nowrap text-end">${formatCurrency(item.donGiaLe || item.DonGiaLe) || 0}</td>
+                    <td class="text-nowrap text-end">${formatCurrency(item.thanhTien || item.ThanhTien) || 0}</td>
                 </tr>
             `;
             tbody.append(row);
         });
     } else {
-        tbody.append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 
-// ==================== RÀNG BUỘC ĐIỀU KIỆN CHỌN NGÀY ====================
-$(document).ready(function () {
-    $('#datepicker').on('changeDate', function (e) {
-        let startDate = $('#ngayTuNgay').datepicker('getDate');
-        let endDate = $('#ngayDenNgay').datepicker('getDate');
-
-        if (endDate && startDate > endDate) {
-            $('#ngayDenNgay').datepicker('setDate', startDate);
-        }
-    });
-
-    $('#datepicker2').on('changeDate', function (e) {
-        let startDate = $('#ngayTuNgay').datepicker('getDate');
-        let endDate = $('#ngayDenNgay').datepicker('getDate');
-
-        if (startDate && endDate < startDate) {
-            $('#ngayTuNgay').datepicker('setDate', endDate);
-        }
-    });
-});
-
 // ==================== KHI TẢI TRANG ====================
 $(document).ready(function () {
-    initDateInputFormatting();
-    initDatePicker();
+    const config = {
+        tuNgay: 'ngayTuNgay', // id ô input
+        denNgay: 'ngayDenNgay',
+        tuNgayIcon: 'ngayTuNgay-icon', // id icon
+        denNgayIcon: 'ngayDenNgay-icon',
+        tuNgayDatepicker: 'ngayTuNgay-datepicker', // id cả cụm datepicker
+        denNgayDatepicker: 'ngayDenNgay-datepicker'
+    };
+
+    initDateInputFormatting(config);
+    initDatePicker(config);
+    initDateRangeConstraint(config);
 });
 
-// ==================== THÔNG BÁO ====================
-$(document).ready(function () {
-    // Chỉ hiển thị toastr nếu có tham số cụ thể trong URL
-    if (window.location.search.includes('showToast=true')) {
-        var successMessage = '@Html.Raw(TempData["SuccessMessage"] as string)';
-        if (successMessage) {
-            toastr.success(decodeHTMLEntities(successMessage));
-        }
+// ==================== LOAD COMBOBOX ====================
+document.addEventListener("DOMContentLoaded", () => {
+    const dataKhoHang = convertData(
+        provincesDataKhoHang,
+        item => item.TenKhoHang || '',
+        item => item.ID
+    );
 
-        var errorMessage = '@Html.Raw(TempData["ErrorMessage"] as string)';
-        if (errorMessage) {
-            toastr.error(decodeHTMLEntities(errorMessage));
-        }
-
-        var warningMessage = '@Html.Raw(TempData["WarningMessage"] as string)';
-        if (warningMessage) {
-            toastr.warning(decodeHTMLEntities(warningMessage));
-        }
-    }
-
-    function decodeHTMLEntities(text) {
-        var textArea = document.createElement('textarea');
-        textArea.innerHTML = text;
-        return textArea.value;
-    }
+    initAutocomplete({
+        inputId: 'comboBox',
+        dropdownId: 'dropdownList',
+        hiddenIdId: 'IDKhoHang',
+        data: dataKhoHang,
+        getName: item => item.ten || '',
+        getId: item => item.id,
+        getAbbr: item => item.viettat || '',
+        filterPredicate: (item, normalizedFilter) =>
+            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
+            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
+    });
 });
 

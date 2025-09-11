@@ -1,4 +1,117 @@
-﻿// goiKham.js - Xử lý ngày tháng, phân trang, xuất báo cáo cho module Gói Khám
+﻿// ==================== DATE INPUT FORMATTING ====================
+function initDateInputFormatting(config) {
+    const dateInputIds = [config.tuNgay, config.denNgay];
+
+    dateInputIds.forEach(function (id) {
+        const input = document.getElementById(id);
+        if (!input) return;
+
+        // Format khi nhập
+        input.addEventListener("input", function () {
+            let value = input.value.replace(/\D/g, "");
+            let formatted = "";
+            let selectionStart = input.selectionStart;
+
+            if (value.length > 0) formatted += value.substring(0, 2);
+            if (value.length >= 3) formatted += "-" + value.substring(2, 4);
+            if (value.length >= 5) formatted += "-" + value.substring(4, 8);
+
+            if (formatted !== input.value) {
+                const prevLength = input.value.length;
+                input.value = formatted;
+                const newLength = formatted.length;
+                const diff = newLength - prevLength;
+                input.setSelectionRange(selectionStart + diff, selectionStart + diff);
+            }
+        });
+
+        // Chọn theo block ngày / tháng / năm
+        input.addEventListener("click", function () {
+            const pos = input.selectionStart;
+            if (pos <= 2) input.setSelectionRange(0, 2);
+            else if (pos <= 5) input.setSelectionRange(3, 5);
+            else input.setSelectionRange(6, 10);
+        });
+
+        // Xử lý backspace / delete ở vị trí có dấu "-"
+        input.addEventListener("keydown", function (e) {
+            const pos = input.selectionStart;
+            let val = input.value;
+
+            if (e.key === "Backspace" && (pos === 3 || pos === 6)) {
+                e.preventDefault();
+                input.value = val.slice(0, pos - 1) + val.slice(pos);
+                input.setSelectionRange(pos - 1, pos - 1);
+            }
+            if (e.key === "Delete" && (pos === 2 || pos === 5)) {
+                e.preventDefault();
+                input.value = val.slice(0, pos) + val.slice(pos + 1);
+                input.setSelectionRange(pos, pos);
+            }
+        });
+    });
+
+    // Gắn icon mở datepicker
+    if (config.tuNgayIcon && config.tuNgay) {
+        $(`#${config.tuNgayIcon}`).on('click', function () {
+            $(`#${config.tuNgay}`).datepicker('show');
+        });
+    }
+    if (config.denNgayIcon && config.denNgay) {
+        $(`#${config.denNgayIcon}`).on('click', function () {
+            $(`#${config.denNgay}`).datepicker('show');
+        });
+    }
+}
+
+// ==================== DATEPICKER ====================
+function initDatePicker(config) {
+    const tuNgaySelector = `#${config.tuNgay}`;
+    const denNgaySelector = `#${config.denNgay}`;
+
+    $(`${tuNgaySelector}, ${denNgaySelector}`).datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        language: 'vi',
+        todayHighlight: true,
+        orientation: 'bottom auto',
+        weekStart: 1
+    });
+}
+
+// ==================== RÀNG BUỘC ĐIỀU KIỆN CHỌN NGÀY ====================
+function initDateRangeConstraint(config) {
+    const tuNgayInput = `#${config.tuNgay}`;
+    const denNgayInput = `#${config.denNgay}`;
+    const tuNgayWrapper = `#${config.tuNgayDatepicker}`;
+    const denNgayWrapper = `#${config.denNgayDatepicker}`;
+
+    // Khi thay đổi ngày bắt đầu
+    $(tuNgayWrapper).on('changeDate', function () {
+        let startDate = $(tuNgayInput).datepicker('getDate');
+        let endDate = $(denNgayInput).datepicker('getDate');
+
+        if (endDate && startDate > endDate) {
+            $(denNgayInput).datepicker('setDate', startDate);
+        }
+    });
+
+    // Khi thay đổi ngày kết thúc
+    $(denNgayWrapper).on('changeDate', function () {
+        let startDate = $(tuNgayInput).datepicker('getDate');
+        let endDate = $(denNgayInput).datepicker('getDate');
+
+        if (startDate && endDate < startDate) {
+            $(tuNgayInput).datepicker('setDate', endDate);
+        }
+    });
+
+    let startDate = $(tuNgayInput).datepicker('getDate');
+    let endDate = $(denNgayInput).datepicker('getDate');
+    if (startDate && endDate && startDate > endDate) {
+        $(denNgayInput).datepicker('setDate', startDate);
+    }
+}
 
 // ==================== ĐỊNH DẠNG NGÀY NHẬP ====================
 
@@ -322,4 +435,95 @@ $('#selectGiaiDoan').change(function () {
     updateDates();
 });
 
+// ==================== CHUẨN HÓA VĂN BẢN ====================
+function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
+function highlightMatch(text, keyword) {
+    if (!keyword) return text;
+
+    const normalizedText = removeAccents(text).toLowerCase();
+    const normalizedKeyword = removeAccents(keyword).toLowerCase();
+
+    const startIndexNormalized = normalizedText.indexOf(normalizedKeyword);
+    if (startIndexNormalized === -1) return text;
+
+    let startIndexOriginal = 0;
+    let count = 0;
+    for (let i = 0; i < text.length; i++) {
+        if (removeAccents(text[i]).toLowerCase() !== '') {
+            if (count === startIndexNormalized) {
+                startIndexOriginal = i;
+                break;
+            }
+            count++;
+        }
+    }
+
+    let endIndexOriginal = startIndexOriginal;
+    let count2 = 0;
+    for (let i = startIndexOriginal; i < text.length; i++) {
+        if (removeAccents(text[i]).toLowerCase() !== '') {
+            count2++;
+        }
+        if (count2 === normalizedKeyword.length) {
+            endIndexOriginal = i + 1;
+            break;
+        }
+    }
+
+    return (
+        text.substring(0, startIndexOriginal) +
+        '<span class="highlight-text">' +
+        text.substring(startIndexOriginal, endIndexOriginal) +
+        '</span>' +
+        text.substring(endIndexOriginal)
+    );
+}
+
+// ==================== HÀM CHUẨN HÓA DỮ LIỆU ====================
+function convertData(dataArray, getName, getId, getAbbr) {
+    return (dataArray || []).map(item => {
+        const id = getId(item);
+        const name = getName(item) || "";
+
+        const rawAbbr = getAbbr ? (getAbbr(item) || "") : "";
+        const vietTat = rawAbbr.trim() !== ""
+            ? rawAbbr
+            : name.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("");
+
+        return {
+            id,
+            ten: name,
+            viettat: vietTat
+        };
+    });
+}
+
+// ==================== THÔNG BÁO ====================
+$(document).ready(function () {
+    // Chỉ hiển thị toastr nếu có tham số cụ thể trong URL
+    if (window.location.search.includes('showToast=true')) {
+        var successMessage = '@Html.Raw(TempData["SuccessMessage"] as string)';
+        if (successMessage) {
+            toastr.success(decodeHTMLEntities(successMessage));
+        }
+
+        var errorMessage = '@Html.Raw(TempData["ErrorMessage"] as string)';
+        if (errorMessage) {
+            toastr.error(decodeHTMLEntities(errorMessage));
+        }
+
+        var warningMessage = '@Html.Raw(TempData["WarningMessage"] as string)';
+        if (warningMessage) {
+            toastr.warning(decodeHTMLEntities(warningMessage));
+        }
+    }
+
+    function decodeHTMLEntities(text) {
+        var textArea = document.createElement('textarea');
+        textArea.innerHTML = text;
+        return textArea.value;
+    }
+});
