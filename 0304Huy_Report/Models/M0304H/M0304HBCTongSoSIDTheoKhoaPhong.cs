@@ -9,11 +9,11 @@ namespace M0304H.Models.BCTongSoSIDTheoKhoaPhong
         //public long ID { get; set; }
         public string? TenKhoaPhong { get; set; }
         public int? VienPhi { get; set; }
-        public int? QL1 { get; set; }
-        public int? QL2 { get; set; }
-        public int? QL3 { get; set; }
-        public int? QL4 { get; set; }
-        public int? QL5 { get; set; }
+        public int? QL01 { get; set; }
+        public int? QL02 { get; set; }
+        public int? QL03 { get; set; }
+        public int? QL04 { get; set; }
+        public int? QL05 { get; set; }
         public int? DichVu { get; set; }
         public int? KhamChuyenGia { get; set; }
         public int? Tong { get; set; }

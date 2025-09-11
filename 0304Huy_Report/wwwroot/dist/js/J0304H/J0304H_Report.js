@@ -248,7 +248,7 @@ function doExportExcel(finalData, btn, originalHtml) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `BaoCaoThuDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
+            a.download = `BaoCaoTongSoSIDTheoKhoaPhong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -315,7 +315,7 @@ function doExportPdf(finalData, btnElem) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `BaoCaoThuDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
+            a.download = `BaoCaoTongSoSIDTheoKhoaPhong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
             a.click();
             window.URL.revokeObjectURL(url);
             toastr.success("Xuất PDF thành công");
@@ -406,10 +406,16 @@ function updateTable(response) {
             const row = `
                 <tr>
                     <td class = "text-center text-nowrap">${stt}</td>
-                    <td class = "text-start" style = "min-width: 250px; max-width: 400px;" >${item.nhomDichVu || item.NhomDichVu || ''}</td>
-                    <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
-                    <td class = "text-center text-nowrap">${item.soLuong || item.SoLuong}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
+                    <td class = "text-start text-nowrap">${item.tenKhoaPhong || item.TenKhoaPhong || ''}</td>
+                    <td class = "text-end text-nowrap">${item.vienPhi || item.VienPhi || ''}</td>
+                    <td class = "text-end text-nowrap">${item.ql01 || item.QL01 || ''}</td>
+                    <td class = "text-end text-nowrap">${item.ql02 || item.QL02 || ''}</td>
+                    <td class = "text-end text-nowrap">${item.ql03 || item.QL03 || ''}</td>
+                    <td class = "text-end text-nowrap">${item.ql04 || item.QL04 || ''}</td>
+                    <td class = "text-end text-nowrap">${item.ql05 || item.QL05 || ''}</td>
+                    <td class = "text-end text-nowrap">${item.dichVu || item.DichVu || ''}</td>
+                    <td class = "text-end text-nowrap">${item.khamChuyenGia || item.KhamChuyenGia || ''}</td>
+                    <td class = "text-end text-nowrap">${item.tong || item.Tong || ''}</td>
                     
                 </tr>
             `;
@@ -425,7 +431,7 @@ function updateTable(response) {
             `;
         tbody.append(totalRow);
     } else {
-        tbody.append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="11" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 

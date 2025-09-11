@@ -1,5 +1,5 @@
 ﻿using C0304BCHoaDonDienTuDV.Controllers;
-using M0304C.Models.BaoCaoThuDichVu;
+using M0304H.Models.BCTongSoSIDTheoKhoaPhong;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C0304HBCTongSoSIDTheoKhoaPhong.Controllers
@@ -10,10 +10,10 @@ namespace C0304HBCTongSoSIDTheoKhoaPhong.Controllers
         //private string _maChucNang = "/bao_cao_tong_so_SID_theo_khoa_phong";
         //private IMemoryCachingServices _memoryCache;
 
-        private readonly I0304CBaoCaoThuDichVuService _service;
+        private readonly I0304HBCTongSoSIDTheoKhoaPhongService _service;
         private readonly ILogger<C0304HBCTongSoSIDTheoKhoaPhongController> _logger;
 
-        public C0304HBCTongSoSIDTheoKhoaPhongController(ILogger<C0304HBCTongSoSIDTheoKhoaPhongController> logger, I0304CBaoCaoThuDichVuService service /*, IMemoryCachingServices memoryCache*/)
+        public C0304HBCTongSoSIDTheoKhoaPhongController(ILogger<C0304HBCTongSoSIDTheoKhoaPhongController> logger, I0304HBCTongSoSIDTheoKhoaPhongService service /*, IMemoryCachingServices memoryCache*/)
         {
             _logger = logger;
             _service = service;
@@ -46,22 +46,22 @@ namespace C0304HBCTongSoSIDTheoKhoaPhong.Controllers
         {
             try
             {
-                var result = await _service.GetBCThuDichVu(tuNgay, denNgay, IdChiNhanh, page, pageSize);
+                var result = await _service.GetBCTongSoSIDTheoKhoaPhong(tuNgay, denNgay, IdChiNhanh, page, pageSize);
 
-                if (!result.BaoCaoThuDichVu.Success)
+                if (!result.BCTongSoSIDTheoKhoaPhong.Success)
                 {
-                    _logger.LogWarning("Service trả về lỗi: {Message}", result.BaoCaoThuDichVu.Message);
-                    return Json(new { success = false, message = result.BaoCaoThuDichVu.Message });
+                    _logger.LogWarning("Service trả về lỗi: {Message}", result.BCTongSoSIDTheoKhoaPhong.Message);
+                    return Json(new { success = false, message = result.BCTongSoSIDTheoKhoaPhong.Message });
                 }
 
                 return Json(new
                 {
                     success = true,
-                    message = result.BaoCaoThuDichVu.Message,
-                    data = result.BaoCaoThuDichVu.Data,
-                    totalRecords = result.BaoCaoThuDichVu.TotalRecords,
-                    totalPages = result.BaoCaoThuDichVu.TotalPages,
-                    currentPage = result.BaoCaoThuDichVu.CurrentPage,
+                    message = result.BCTongSoSIDTheoKhoaPhong.Message,
+                    data = result.BCTongSoSIDTheoKhoaPhong.Data,
+                    totalRecords = result.BCTongSoSIDTheoKhoaPhong.TotalRecords,
+                    totalPages = result.BCTongSoSIDTheoKhoaPhong.TotalPages,
+                    currentPage = result.BCTongSoSIDTheoKhoaPhong.CurrentPage,
                     doanhNghiep = result.DoanhNghiep
                 });
             }
@@ -76,18 +76,18 @@ namespace C0304HBCTongSoSIDTheoKhoaPhong.Controllers
         [HttpPost("export/pdf")]
         public async Task<IActionResult> ExportToPDF([FromBody] ExportRequest request)
         {
-            var pdfBytes = await _service.ExportBaoCaoThuDichVuPdfAsync(request, HttpContext.Session);
+            var pdfBytes = await _service.ExportBCTongSoSIDTheoKhoaPhongPdfAsync(request, HttpContext.Session);
 
-            string fileName = $"BaoCaoThuDichVu_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
+            string fileName = $"BaoCaoTongSoSIDTheoKhoaPhong_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }
 
         [HttpPost("export/excel")]
         public async Task<IActionResult> ExportToExcel([FromBody] ExportRequest request)
         {
-            var excelBytes = await _service.ExportBaoCaoThuDichVuExcelAsync(request, HttpContext.Session);
+            var excelBytes = await _service.ExportBCTongSoSIDTheoKhoaPhongExcelAsync(request, HttpContext.Session);
 
-            string fileName = $"BaoCaoThuDichVu_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
+            string fileName = $"BaoCaoTongSoSIDTheoKhoaPhong_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }

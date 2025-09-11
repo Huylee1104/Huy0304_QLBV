@@ -86,48 +86,48 @@ namespace P0304H.PDFDocument
                     });
                 });
 
-                page.Content().PaddingVertical(6).Column(col =>
-                {
-                    col.Item().Table(table =>
-                    {
-                        table.ColumnsDefinition(columns =>
-                        {
-                            columns.ConstantColumn(30);
-                            columns.ConstantColumn(150);
-                            columns.RelativeColumn();
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(80);
-                        });
+                //page.Content().PaddingVertical(6).Column(col =>
+                //{
+                //    col.Item().Table(table =>
+                //    {
+                //        table.ColumnsDefinition(columns =>
+                //        {
+                //            columns.ConstantColumn(30);
+                //            columns.ConstantColumn(150);
+                //            columns.RelativeColumn();
+                //            columns.ConstantColumn(60);
+                //            columns.ConstantColumn(80);
+                //        });
 
-                        table.Header(header =>
-                        {
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("STT");
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Nhóm dịch vụ");
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Dịch vụ");
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số lượng");
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Tổng hóa đơn");
-                        });
+                //        table.Header(header =>
+                //        {
+                //            header.Cell().Element(CellStyleHeader).AlignCenter().Text("STT");
+                //            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Nhóm dịch vụ");
+                //            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Dịch vụ");
+                //            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số lượng");
+                //            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Tổng hóa đơn");
+                //        });
 
-                        int stt = 1;
-                        foreach (var item in _data)
-                        {
-                            table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString()); 
-                            table.Cell().Element(CellStyle).AlignLeft().Text(item.NhomDichVu ?? string.Empty);
-                            table.Cell().Element(CellStyle).AlignLeft().Text(item.DichVu ?? string.Empty);
-                            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuong?.ToString("N0") ?? "0");
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.TongHoaDon?.ToString("N0") ?? "0");  
-                            stt++;
-                        }
+                //        int stt = 1;
+                //        foreach (var item in _data)
+                //        {
+                //            table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString()); 
+                //            table.Cell().Element(CellStyle).AlignLeft().Text(item.NhomDichVu ?? string.Empty);
+                //            table.Cell().Element(CellStyle).AlignLeft().Text(item.DichVu ?? string.Empty);
+                //            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuong?.ToString("N0") ?? "0");
+                //            table.Cell().Element(CellStyle).AlignRight().Text(item.TongHoaDon?.ToString("N0") ?? "0");  
+                //            stt++;
+                //        }
 
-                        var tongHoaDon = _data.Sum(x => x.TongHoaDon ?? 0);
+                //        var tongHoaDon = _data.Sum(x => x.TongHoaDon ?? 0);
 
-                        table.Cell().ColumnSpan(3).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
+                //        table.Cell().ColumnSpan(3).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
 
-                        table.Cell().Border(1).Element(CellTong).Text("");
+                //        table.Cell().Border(1).Element(CellTong).Text("");
 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{tongHoaDon:N0}").Bold(); 
-                    });
-                });
+                //        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{tongHoaDon:N0}").Bold(); 
+                //    });
+                //});
 
                 page.Footer()
                     .AlignRight()

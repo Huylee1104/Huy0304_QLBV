@@ -99,63 +99,63 @@ public class P0304HExcelReportTemplate
 
             currentRow++;
 
-            foreach (var item in _data)
-            {
-                int col = 2;
+            //foreach (var item in _data)
+            //{
+            //    int col = 2;
 
-                SetCenterCellNumber(ws.Cell(currentRow, col++), stt++);
-                SetMiddle(ws.Cell(currentRow, col++), item.NhomDichVu ?? "");
+            //    SetCenterCellNumber(ws.Cell(currentRow, col++), stt++);
+            //    SetMiddle(ws.Cell(currentRow, col++), item.NhomDichVu ?? "");
 
-                var dichVu = item.DichVu ?? "";
-                int maxLength = 60;
-                var sb = new StringBuilder();
-                int lastBreak = 0;
+            //    var dichVu = item.DichVu ?? "";
+            //    int maxLength = 60;
+            //    var sb = new StringBuilder();
+            //    int lastBreak = 0;
 
-                while (lastBreak < dichVu.Length)
-                {
-                    if (lastBreak + maxLength >= dichVu.Length)
-                    {
-                        sb.Append(dichVu.Substring(lastBreak));
-                        break;
-                    }
+            //    while (lastBreak < dichVu.Length)
+            //    {
+            //        if (lastBreak + maxLength >= dichVu.Length)
+            //        {
+            //            sb.Append(dichVu.Substring(lastBreak));
+            //            break;
+            //        }
 
-                    int breakIndex = dichVu.LastIndexOf(' ', lastBreak + maxLength, maxLength);
-                    if (breakIndex <= lastBreak)
-                        breakIndex = lastBreak + maxLength;
+            //        int breakIndex = dichVu.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+            //        if (breakIndex <= lastBreak)
+            //            breakIndex = lastBreak + maxLength;
 
-                    sb.Append(dichVu.Substring(lastBreak, breakIndex - lastBreak));
-                    sb.Append("\n");
-                    lastBreak = breakIndex + 1;
-                }
+            //        sb.Append(dichVu.Substring(lastBreak, breakIndex - lastBreak));
+            //        sb.Append("\n");
+            //        lastBreak = breakIndex + 1;
+            //    }
 
-                var cell = ws.Cell(currentRow, col++);
-                cell.Value = sb.ToString();
-                cell.Style.Alignment.WrapText = true;
-                cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            //    var cell = ws.Cell(currentRow, col++);
+            //    cell.Value = sb.ToString();
+            //    cell.Style.Alignment.WrapText = true;
+            //    cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-                SetCenterCellNumber(ws.Cell(currentRow, col++), item.SoLuong);
-                SetNumberCell(ws.Cell(currentRow, col++), item.TongHoaDon);
-                currentRow++;
-            }
+            //    SetCenterCellNumber(ws.Cell(currentRow, col++), item.SoLuong);
+            //    SetNumberCell(ws.Cell(currentRow, col++), item.TongHoaDon);
+            //    currentRow++;
+            //}
 
-            currentRow++;
-            var tongTatCaHoaDon = _data.Sum(x => x.TongHoaDon);
+            //currentRow++;
+            //var tongTatCaHoaDon = _data.Sum(x => x.TongHoaDon);
 
-            int colFirst = 2;
-            int colLast = 6; 
+            //int colFirst = 2;
+            //int colLast = 6; 
 
-            ws.Range(currentRow, colFirst, currentRow, colFirst + 3).Merge();
+            //ws.Range(currentRow, colFirst, currentRow, colFirst + 3).Merge();
 
-            var cellLabel = ws.Cell(currentRow, colFirst);
-            cellLabel.Value = "Tổng Cộng";
-            cellLabel.Style.Font.Bold = true;
-            cellLabel.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            cellLabel.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            //var cellLabel = ws.Cell(currentRow, colFirst);
+            //cellLabel.Value = "Tổng Cộng";
+            //cellLabel.Style.Font.Bold = true;
+            //cellLabel.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            //cellLabel.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-            // Cột 7: tổng giá trị
-            var setCellTong = ws.Cell(currentRow, colLast);
-            SetNumberCell(setCellTong, tongTatCaHoaDon);
-            setCellTong.Style.Font.Bold = true;
+            //// Cột 7: tổng giá trị
+            //var setCellTong = ws.Cell(currentRow, colLast);
+            //SetNumberCell(setCellTong, tongTatCaHoaDon);
+            //setCellTong.Style.Font.Bold = true;
 
             ws.Range(8, 2, currentRow, 6).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
             ws.Range(8, 2, currentRow, 6).Style.Border.InsideBorder = XLBorderStyleValues.Thin;

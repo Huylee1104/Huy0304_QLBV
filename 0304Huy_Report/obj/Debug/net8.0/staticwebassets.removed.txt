@@ -1,1 +1,2 @@
-D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304\BienChung.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304C\J0304H_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304H\J0304C_Report.js
