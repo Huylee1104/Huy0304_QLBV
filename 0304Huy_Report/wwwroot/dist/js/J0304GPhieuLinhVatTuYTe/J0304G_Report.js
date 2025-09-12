@@ -560,7 +560,9 @@ function updateTable(response) {
     }
 
     if (data.length > 0) { // Cần chỉnh lại chỗ này
+        let tongSoLuong = 0;
         data.forEach((item, index) => {
+            tongSoLuong += Number(item.soLuong || item.SoLuong || 0);
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
@@ -573,6 +575,13 @@ function updateTable(response) {
             `;
             tbody.append(row);
         });
+        const totalRow = `
+                <tr class="fw-bold">
+                    <td colspan="4" class="text-center text-nowrap">Tổng cộng</td>
+                    <td class="text-center text-nowrap">${tongSoLuong}</td>
+                </tr>
+            `;
+        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
     }

@@ -560,7 +560,17 @@ function updateTable(response) {
     }
 
     if (data.length > 0) { // Cần chỉnh lại chỗ này
+        let tongDongGoi = 0;
+        let tongLe = 0;
+        let tongDonGiaDongGoi = 0;
+        let tongDonGiaLe = 0;
+        let tognThanhTien = 0;
         data.forEach((item, index) => {
+            tongDongGoi += Number(item.slDongGoi || item.SLDongGoi || 0);
+            tongLe += Number(item.slLe || item.SLLe || 0);
+            tongDonGiaDongGoi += Number(item.donGiaDongGoi || item.DonGiaDongGoi || 0);
+            tongDonGiaLe += Number(item.donGiaLe || item.DonGiaLe || 0);
+            tognThanhTien += Number(item.thanhTien || item.ThanhTien || 0);
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
@@ -583,6 +593,17 @@ function updateTable(response) {
             `;
             tbody.append(row);
         });
+        const totalRow = `
+                <tr class="fw-bold">
+                    <td colspan="10" class="text-center text-nowrap">Tổng cộng</td>
+                    <td class="text-center text-nowrap">${tongDongGoi}</td>
+                    <td class="text-center text-nowrap">${tongLe}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tognThanhTien)}</td>
+                </tr>
+            `;
+        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
     }

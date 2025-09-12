@@ -561,7 +561,13 @@ function updateTable(response) {
     }
 
     if (data.length > 0) { // Cần chỉnh lại chỗ này
+        let tongHuy = 0;
+        let tongHoan = 0;
+        let tongSoTien = 0;
         data.forEach((item, index) => {
+            tongHuy += Number(item.huy || item.Huy || 0);
+            tongHoan += Number(item.hoan || item.Hoan || 0);
+            tongSoTien += Number(item.soTien || item.SoTien || 0);
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
@@ -579,6 +585,15 @@ function updateTable(response) {
             `;
             tbody.append(row);
         });
+        const totalRow = `
+                <tr class="fw-bold">
+                    <td colspan="7" class="text-center text-nowrap">Tổng cộng</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongHuy) }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongHoan)}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongSoTien)}</td>
+                </tr>
+            `;
+        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }

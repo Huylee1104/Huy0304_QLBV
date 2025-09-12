@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\controllers\\c0304f\\c0304fbktinhhinhtraduocncccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304f\\c0304fbktinhhinhtraduocncccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\wwwroot\\dist\\js\\j0304ebkbienlaihoanung\\j0304e_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304ebkbienlaihoanung\\j0304e_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "C0304FBKTinhHinhTraDuocNCCController.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
-              "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T07:08:37.607Z",
+              "Title": "J0304E_Report.js",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
+              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
+              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
+              "ViewState": "AgIAADQCAAAAAAAAAAAAAD0CAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-12T13:16:13.2Z",
               "EditorCaption": ""
             }
           ]

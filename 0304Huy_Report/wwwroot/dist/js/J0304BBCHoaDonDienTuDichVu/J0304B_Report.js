@@ -397,7 +397,11 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
+        let tongGiaTri = 0;
+        let tongGiaTriHDDT = 0;
         data.forEach((item, index) => {
+            tongGiaTri += Number(item.giaTri || item.GiaTri || 0);
+            tongGiaTriHDDT += Number(item.giaTriHDDT || item.GiaTriHDDT || 0);c
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
@@ -417,6 +421,21 @@ function updateTable(response) {
             `;
             tbody.append(row);
         });
+        const totalRow = `
+                <tr class="fw-bold">
+                    <td colspan="3" class="text-center text-nowrap">Tổng cộng</td>
+                    <td class="text-center text-nowrap">${formatCurrency(tongGiaTri)}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongGiaTriHDDT)}</td>
+                    <td class="text-center text-nowrap">${''}</td>
+                </tr>
+            `;
+        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="12" class="text-center">Không có dữ liệu</td></tr>');
     }

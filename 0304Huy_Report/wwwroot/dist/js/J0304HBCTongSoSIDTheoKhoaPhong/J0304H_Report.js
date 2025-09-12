@@ -397,12 +397,26 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
-        let tongSoLuong = 0;
-        let tongHoaDon = 0;
+        let tongVienPhi = 0;
+        let tongQL1 = 0;
+        let tongQL2 = 0;
+        let tongQL3 = 0;
+        let tongQL4 = 0;
+        let tongQL5 = 0;
+        let tongDichVu = 0;
+        let tongKhamChuyenGia = 0;
+        let tongToanBo = 0;
         data.forEach((item, index) => {
             const stt = (currentPage - 1) * pageSize + index + 1;
-            tongSoLuong += Number(item.soLuong || item.SoLuong || 0);
-            tongHoaDon += Number(item.tongHoaDon || item.TongHoaDon || 0);
+            tongVienPhi += Number(item.vienPhi || item.VienPhi || 0);
+            tongQL1 += Number(item.ql01 || item.QL01 || 0);
+            tongQL2 += Number(item.ql02 || item.QL02 || 0);
+            tongQL3 += Number(item.ql03 || item.QL03 || 0);
+            tongQL4 += Number(item.ql04 || item.QL04 || 0);
+            tongQL5 += Number(item.ql05 || item.QL05 || 0);
+            tongDichVu += Number(item.dichVu || item.DichVu || 0);
+            tongKhamChuyenGia += Number(item.khamChuyenGia || item.KhamChuyenGia || 0);
+            tongToanBo += Number(item.tong || item.Tong || 0);
             const row = `
                 <tr>
                     <td class = "text-center text-nowrap">${stt}</td>
@@ -424,9 +438,16 @@ function updateTable(response) {
 
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="3" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-center text-nowrap">${tongSoLuong}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHoaDon)}</td>
+                    <td colspan="2" class="text-center text-nowrap">Tổng cộng</td>
+                    <td class="text-center text-nowrap">${tongVienPhi}</td>
+                    <td class="text-center text-nowrap">${tongQL1}</td>
+                    <td class="text-center text-nowrap">${tongQL2}</td>
+                    <td class="text-center text-nowrap">${tongQL3}</td>
+                    <td class="text-center text-nowrap">${tongQL4}</td>
+                    <td class="text-center text-nowrap">${tongQL5}</td>
+                    <td class="text-center text-nowrap">${tongDichVu}</td>
+                    <td class="text-center text-nowrap">${tongKhamChuyenGia}</td>
+                    <td class="text-center text-nowrap">${tongToanBo}</td>
                 </tr>
             `;
         tbody.append(totalRow);
