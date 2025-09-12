@@ -73,7 +73,7 @@ namespace P0304F.PDFDocument
                         });
                     });
 
-                    col.Item().AlignCenter().Column(center =>
+                    col.Item().AlignCenter().PaddingVertical(10).Column(center =>
                     {
                         center.Item()
                             .AlignCenter()
@@ -144,13 +144,13 @@ namespace P0304F.PDFDocument
                         }
                     });
 
-                    col.Item().Row(row =>
+                    col.Item().PaddingTop(10).Row(row =>
                     {
                         row.RelativeItem().AlignLeft().Text($"Cộng khoản: {_data.Count} khoản").Bold();
                         row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                     });
 
-                    col.Item().PaddingTop(20).Table(table =>
+                    col.Item().PaddingTop(10).Table(table =>
                     {
                         table.ColumnsDefinition(columns =>
                         {

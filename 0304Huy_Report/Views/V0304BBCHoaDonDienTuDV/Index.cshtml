@@ -1,9 +1,6 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
-@{
-    var jsonkhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSKhoHang);
-}
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -19,7 +16,7 @@
                     </div>
                 </div>
 
-                <div class ="select-row" id="selectContainer"
+                <div class="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -53,7 +50,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon2">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -61,22 +58,7 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-
-                    @* <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
-                        <label for="NguonDuoc" class="form-label">Nguồn dược</label>
-                        <input type="text" class="form-control" id="comboBox" name="tenNguonDuoc" data-value="@ViewBag.khoHang">
-                        <input type="hidden" id="IDNguonDuoc" name="NguonDuoc" data-value="@ViewBag.IDKhoHang" />
-                        <div class="dropdownList" id="dropdownList"></div>
-                    </div> *@
-
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
-                        <label for="KhoTra" class="form-label">Kho trả</label>
-                    <input type="text" class="form-control" id="comboBox" name="tenKhoTra" data-value="@ViewBag.khoHang">
-                    <input type="hidden" id="IDKhoHang" name="IDKhoHang" data-value="@ViewBag.IDKhoHang" />
-                        <div class="dropdownList" id="dropdownList"></div>
-                    </div>
-
-                    <label style="padding:0; margin:0px;">
+                    <label style="padding:0; margin: 5px 0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
                         </button>
@@ -108,20 +90,17 @@
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
-                                <th class="text-center text-nowrap">Ngày hóa đơn</th>
-                                <th class="text-center text-nowrap">Số hóa đơn</th>
-                                <th class="text-center text-nowrap">Ngày trả</th>
-                                <th class="text-center text-nowrap">Phiếu trả</th>
-                                <th class="text-center text-nowrap">Công ty</th>
-                                <th class="text-center text-nowrap">Mã ID</th>
-                                <th class="text-center text-nowrap">Tên thuốc, hàm lượng</th>
-                                <th class="text-center text-nowrap">Quy cách</th>
-                                <th class="text-center text-nowrap">Số lô</th>
-                                <th class="text-center text-nowrap">SL đóng gói</th>
-                                <th class="text-center text-nowrap">SL lẻ</th>
-                                <th class="text-center text-nowrap">Đơn giá đóng gói</th>
-                                <th class="text-center text-nowrap">Đơn giá lẻ</th>
-                                <th class="text-center text-nowrap">Thành tiền</th>
+                                <th class="text-center text-nowrap">Số chứng từ</th>
+                                <th class="text-center text-nowrap">Ngày thu</th>
+                                <th class="text-center text-nowrap">Giá trị</th>
+                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
+                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
+                                <th class="text-center text-nowrap">Năm sinh</th>
+                                <th class="text-center text-nowrap">Địa chỉ</th>
+                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
+                                <th class="text-center text-nowrap">E_Invoice No</th>
+                                <th class="text-center text-nowrap">Giá trị HDDT</th>
+                                <th class="text-center text-nowrap">Mã tra cứu</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,15 +129,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-    let provincesDataKhoHang = @Html.Raw(ViewBag.DSKhoHang ?? "[]");
-
-        if (typeof provincesDataKhoHang === "string") {
-            provincesDataKhoHang = JSON.parse(provincesDataKhoHang);
-        }
-        console.log(provincesDataKhoHang);
-    </script>
+    </div>   
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304F/J0304F_Report.js")" defer asp-append-version="true"></script>
+        <script src="@Url.Content("~/dist/js/J0304BBCHoaDonDienTuDV/J0304B_Report.js")" defer asp-append-version="true"></script>
     }

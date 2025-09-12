@@ -38,7 +38,7 @@ namespace C0304CBaoCaoThuDichVu.Controllers
                 CaNhan = true,
                 Xem = true,
             };
-            return View("~/Views/V0304C/Index.cshtml");
+            return View("~/Views/V0304CBaoCaoThuDichVu/Index.cshtml");
         }
 
         [HttpPost("filter")]

@@ -57,7 +57,7 @@ namespace C0304BangKeThu.Controllers
             ViewBag.DSNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien);
 
 
-            return View("~/Views/V0304/Index.cshtml");
+            return View("~/Views/V0304BangKeThu/Index.cshtml");
         }
 
         [HttpPost("filter")]

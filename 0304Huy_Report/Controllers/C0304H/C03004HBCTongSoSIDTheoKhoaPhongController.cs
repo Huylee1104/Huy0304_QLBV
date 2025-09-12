@@ -38,7 +38,7 @@ namespace C0304HBCTongSoSIDTheoKhoaPhong.Controllers
                 CaNhan = true,
                 Xem = true,
             };
-            return View("~/Views/V0304H/Index.cshtml");
+            return View("~/Views/V0304HBCTongSoSIDTheoKhoaPhong/Index.cshtml");
         }
 
         [HttpPost("filter")]

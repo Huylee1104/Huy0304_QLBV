@@ -50,7 +50,7 @@ namespace C0304DBKBienLaiTamUng.Controllers
             ViewBag.DSNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien);
 
 
-            return View("~/Views/V0304D/Index.cshtml");
+            return View("~/Views/V0304DBKBienLaiTamUng/Index.cshtml");
         }
 
         [HttpPost("filter")]

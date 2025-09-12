@@ -12,7 +12,7 @@ namespace M0304G.Models.PhieuLinhVatTuYTe
         public string? MaVatTu { get; set; }
         public string? TenVatTu { get; set; }
         public string? DonViTinh { get; set; }
-        public int? SoLuong { get; set; }
+        public double? SoLuong { get; set; }
         //public long? IDKhoTra { get; set; }
     }
 

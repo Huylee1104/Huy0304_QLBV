@@ -51,7 +51,7 @@ namespace C0304FBKTinhHinhTraDuocNCC.Controllers
             ViewBag.DSKhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(dsKhoHang);
 
 
-            return View("~/Views/V0304F/Index.cshtml");
+            return View("~/Views/V0304FBKTinhHinhTraDuocNCC/Index.cshtml");
         }
 
         [HttpPost("filter")]

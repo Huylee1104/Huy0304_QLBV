@@ -38,7 +38,7 @@ namespace C0304BCHoaDonDienTuDV.Controllers
                 CaNhan = true,
                 Xem = true,
             };
-            return View("~/Views/V0304B/Index.cshtml");
+            return View("~/Views/V0304BBCHoaDonDienTuDV/Index.cshtml");
         }
 
         [HttpPost("filter")]

@@ -51,7 +51,7 @@ namespace C0304GPhieuLinhVatTuYTe.Controllers
             ViewBag.DSKhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(dsKhoHang);
 
 
-            return View("~/Views/V0304G/Index.cshtml");
+            return View("~/Views/V0304GPhieuLinhVatTuYTe/Index.cshtml");
         }
 
         [HttpPost("filter")]

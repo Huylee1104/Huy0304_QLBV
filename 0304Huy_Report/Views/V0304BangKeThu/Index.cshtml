@@ -1,6 +1,10 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
+@{
+    var jsonHTTT = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSHTTT);
+    var jsonNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSNhanVien);
+}
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -16,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="select-row" id="selectContainer"
+                <div class ="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -50,7 +54,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon2">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -58,7 +62,22 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-                    <label style="padding:0; margin: 5px 0px;">
+
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                        <label for="NhanVien" class="form-label">Nhân viên</label>
+                        <input type="text" class="form-control" id="comboBox2" name="tenNhanVien" data-value="@ViewBag.tenNhanVien">
+                        <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
+                        <div class="dropdownList" id="dropdownList2"></div>
+                    </div>
+
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
+                        <label for="HTTT" class="form-label">Hình thức thanh toán</label>
+                        <input type="text" class="form-control" id="comboBox" name="tenHTTT" data-value="@ViewBag.tenHTTT">
+                        <input type="hidden" id="IDHTTT" name="IDHTTT" data-value="@ViewBag.IDHTTT" />
+                        <div class="dropdownList" id="dropdownList"></div>
+                    </div>
+
+                    <label style="padding:0; margin:0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
                         </button>
@@ -90,17 +109,15 @@
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
-                                <th class="text-center text-nowrap">Số chứng từ</th>
+                                <th class="text-center text-nowrap">Mã y tế</th>
+                                <th class="text-center text-nowrap">Họ và tên</th>
+                                <th class="text-center text-nowrap">Quyển sổ</th>
+                                <th class="text-center text-nowrap">Số biên lai</th>
+                                <th class="text-center text-nowrap">Loại</th>
                                 <th class="text-center text-nowrap">Ngày thu</th>
-                                <th class="text-center text-nowrap">Giá trị</th>
-                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
-                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
-                                <th class="text-center text-nowrap">Năm sinh</th>
-                                <th class="text-center text-nowrap">Địa chỉ</th>
-                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
-                                <th class="text-center text-nowrap">E_Invoice No</th>
-                                <th class="text-center text-nowrap">Giá trị HDDT</th>
-                                <th class="text-center text-nowrap">Mã tra cứu</th>
+                                <th class="text-center text-nowrap">Hủy</th>
+                                <th class="text-center text-nowrap">Hoàn</th>
+                                <th class="text-center text-nowrap">Số tiền</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,7 +146,20 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
+    <script>
+        let provincesDataHTTT = @Html.Raw(ViewBag.DSHTTT ?? "[]");
+        let provincesDataNhanVien = @Html.Raw(ViewBag.DSNhanVien ?? "[]");
+
+        if (typeof provincesDataHTTT === "string") {
+            provincesDataHTTT = JSON.parse(provincesDataHTTT);
+        }
+        if (typeof provincesDataNhanVien === "string") {
+            provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
+        }
+        // console.log(provincesDataHTTT);
+        // console.log(provincesDataNhanVien);
+    </script>
     @section Scripts {
-        <script src="@Url.Content("~/dist/js/J0304B/J0304B_Report.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304BangKeThu/J0304_Report.js")" defer asp-append-version="true"></script>
     }

@@ -68,6 +68,7 @@
                         <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
                         <div class="dropdownList" id="dropdownList2"></div>
                     </div>
+
                     <label style="padding:0; margin:0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
@@ -98,20 +99,20 @@
                 <div class="table-wrapper">
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
-                            <tr>
-                                <th class="text-center text-nowrap">STT</th>
-                                <th class="text-center text-nowrap">Ngày thu</th>
-                                <th class="text-center text-nowrap">Mã y tế</th>
-                                <th class="text-center text-nowrap">Số BA</th>
-                                <th class="text-center text-nowrap">Mã đợt</th>
-                                <th class="text-center text-nowrap">Họ tên bệnh nhân</th>
-                                <th class="text-center text-nowrap">Số biên lai</th>
-                                <th class="text-center text-nowrap">Số quyển</th>
-                                <th class="text-center text-nowrap">Thu phí</th>
-                                <th class="text-center text-nowrap">Hủy</th>
-                                <th class="text-center text-nowrap">Hoàn trả</th>
-                                <th class="text-center text-nowrap">HTTT</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center text-nowrap">STT</th>
+                            <th class="text-center text-nowrap">Ngày thu</th>
+                            <th class="text-center text-nowrap">Mã y tế</th>
+                            <th class="text-center text-nowrap">Số BA</th>
+                            <th class="text-center text-nowrap">Mã đợt</th>
+                            <th class="text-center text-nowrap">Họ tên bệnh nhân</th>
+                            <th class="text-center text-nowrap">Số BL hoàn ứng</th>
+                            <th class="text-center text-nowrap">Số BL tạm ứng</th>
+                            <th class="text-center text-nowrap">Giá trị hoàn ứng</th>
+                            <th class="text-center text-nowrap">Hủy</th>
+                            <th class="text-center text-nowrap">Hoàn trả</th>
+                            <th class="text-center text-nowrap">HTTT</th>
+                        </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -146,8 +147,8 @@
         if (typeof provincesDataNhanVien === "string") {
             provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
         }
-	console.log(provincesDataNhanVien);
+
     </script>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304D/J0304D_Report.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304EBKBienLaiHoanUng/J0304E_Report.js")" defer asp-append-version="true"></script>
     }

@@ -407,15 +407,15 @@ function updateTable(response) {
                 <tr>
                     <td class = "text-center text-nowrap">${stt}</td>
                     <td class = "text-start text-nowrap">${item.tenKhoaPhong || item.TenKhoaPhong || ''}</td>
-                    <td class = "text-end text-nowrap">${item.vienPhi || item.VienPhi || ''}</td>
-                    <td class = "text-end text-nowrap">${item.ql01 || item.QL01 || ''}</td>
-                    <td class = "text-end text-nowrap">${item.ql02 || item.QL02 || ''}</td>
-                    <td class = "text-end text-nowrap">${item.ql03 || item.QL03 || ''}</td>
-                    <td class = "text-end text-nowrap">${item.ql04 || item.QL04 || ''}</td>
-                    <td class = "text-end text-nowrap">${item.ql05 || item.QL05 || ''}</td>
-                    <td class = "text-end text-nowrap">${item.dichVu || item.DichVu || ''}</td>
-                    <td class = "text-end text-nowrap">${item.khamChuyenGia || item.KhamChuyenGia || ''}</td>
-                    <td class = "text-end text-nowrap">${item.tong || item.Tong || ''}</td>
+                    <td class = "text-end text-nowrap">${item.vienPhi || item.VienPhi || 0}</td>
+                    <td class = "text-end text-nowrap">${item.ql01 || item.QL01 || 0}</td>
+                    <td class = "text-end text-nowrap">${item.ql02 || item.QL02 || 0}</td>
+                    <td class = "text-end text-nowrap">${item.ql03 || item.QL03 || 0}</td>
+                    <td class = "text-end text-nowrap">${item.ql04 || item.QL04 || 0}</td>
+                    <td class = "text-end text-nowrap">${item.ql05 || item.QL05 || 0}</td>
+                    <td class = "text-end text-nowrap">${item.dichVu || item.DichVu || 0}</td>
+                    <td class = "text-end text-nowrap">${item.khamChuyenGia || item.KhamChuyenGia || 0}</td>
+                    <td class = "text-end text-nowrap">${item.tong || item.Tong || 0}</td>
                     
                 </tr>
             `;

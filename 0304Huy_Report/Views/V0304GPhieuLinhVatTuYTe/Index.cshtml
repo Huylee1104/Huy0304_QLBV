@@ -2,7 +2,7 @@
     ViewData["NonSixOs"] = true;
 }
 @{
-    var jsonNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSNhanVien);
+    var jsonkhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSKhoHang);
 }
     <div class="card p-1">
         <div class="container_Team3">
@@ -62,11 +62,18 @@
                         <span class="text-danger"></span>
                     </div>
 
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
-                        <label for="NhanVien" class="form-label">Nhân viên</label>
-                        <input type="text" class="form-control" id="comboBox2" name="tenNhanVien" data-value="@ViewBag.tenNhanVien">
-                        <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
-                        <div class="dropdownList" id="dropdownList2"></div>
+                    @* <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                        <label for="NguonDuoc" class="form-label">Nguồn dược</label>
+                        <input type="text" class="form-control" id="comboBox" name="tenNguonDuoc" data-value="@ViewBag.khoHang">
+                        <input type="hidden" id="IDNguonDuoc" name="NguonDuoc" data-value="@ViewBag.IDKhoHang" />
+                        <div class="dropdownList" id="dropdownList"></div>
+                    </div> *@
+
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
+                        <label for="KhoTra" class="form-label">Kho trả</label>
+                    <input type="text" class="form-control" id="comboBox" name="tenKhoTra" data-value="@ViewBag.khoHang">
+                    <input type="hidden" id="IDKhoHang" name="IDKhoHang" data-value="@ViewBag.IDKhoHang" />
+                        <div class="dropdownList" id="dropdownList"></div>
                     </div>
 
                     <label style="padding:0; margin:0px;">
@@ -99,20 +106,13 @@
                 <div class="table-wrapper">
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
-                        <tr>
-                            <th class="text-center text-nowrap">STT</th>
-                            <th class="text-center text-nowrap">Ngày thu</th>
-                            <th class="text-center text-nowrap">Mã y tế</th>
-                            <th class="text-center text-nowrap">Số BA</th>
-                            <th class="text-center text-nowrap">Mã đợt</th>
-                            <th class="text-center text-nowrap">Họ tên bệnh nhân</th>
-                            <th class="text-center text-nowrap">Số BL hoàn ứng</th>
-                            <th class="text-center text-nowrap">Số BL tạm ứng</th>
-                            <th class="text-center text-nowrap">Giá trị hoàn ứng</th>
-                            <th class="text-center text-nowrap">Hủy</th>
-                            <th class="text-center text-nowrap">Hoàn trả</th>
-                            <th class="text-center text-nowrap">HTTT</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap">Mã vật tư</th>
+                                <th class="text-center text-nowrap">Tên vật tư</th>
+                                <th class="text-center text-nowrap">Đơn vị tính</th>
+                                <th class="text-center text-nowrap">Yêu cầu</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -142,13 +142,13 @@
         </div>
     </div>
     <script>
-        let provincesDataNhanVien = @Html.Raw(ViewBag.DSNhanVien ?? "[]");
+    let provincesDataKhoHang = @Html.Raw(ViewBag.DSKhoHang ?? "[]");
 
-        if (typeof provincesDataNhanVien === "string") {
-            provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
+        if (typeof provincesDataKhoHang === "string") {
+            provincesDataKhoHang = JSON.parse(provincesDataKhoHang);
         }
-
+        console.log(provincesDataKhoHang);
     </script>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304E/J0304E_Report.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304GPhieuLinhVatTuYTe/J0304G_Report.js")" defer asp-append-version="true"></script>
     }

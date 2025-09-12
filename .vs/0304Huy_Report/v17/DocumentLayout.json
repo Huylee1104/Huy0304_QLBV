@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\service\\s0304h\\s0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\service\\s0304h\\s0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\models\\m0304h\\m0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\models\\m0304h\\m0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\wwwroot\\dist\\js\\j0304h\\j0304h_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304h\\j0304h_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\controllers\\c0304h\\c03004hbctongsosidtheokhoaphongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304h\\c03004hbctongsosidtheokhoaphongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\service\\s0304h\\si0304h\\si0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\service\\s0304h\\si0304h\\si0304hbctongsosidtheokhoaphong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\controllers\\c0304f\\c0304fbktinhhinhtraduocncccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304f\\c0304fbktinhhinhtraduocncccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SI0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304H\\SI0304H\\SI0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Service\\S0304H\\SI0304H\\SI0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304H\\SI0304H\\SI0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeToolTip": "0304Huy_Report\\Service\\S0304H\\SI0304H\\SI0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T09:34:20.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304H\\C03004HBCTongSoSIDTheoKhoaPhongController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAYwDkAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T09:32:09.58Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "J0304H_Report.js",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304H\\J0304H_Report.js",
-              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304H\\J0304H_Report.js",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304H\\J0304H_Report.js",
-              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304H\\J0304H_Report.js",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAwwGoAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-11T09:30:06.563Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "M0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeToolTip": "0304Huy_Report\\Models\\M0304H\\M0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAkwA4AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T09:25:58.1Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "S0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "RelativeToolTip": "0304Huy_Report\\Service\\S0304H\\S0304HBCTongSoSIDTheoKhoaPhong.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAYwB8AAABdAAAAAAAAAA==",
+              "Title": "C0304FBKTinhHinhTraDuocNCCController.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
+              "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304F\\C0304FBKTinhHinhTraDuocNCCController.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T09:23:21.086Z",
+              "WhenOpened": "2025-09-12T07:08:37.607Z",
               "EditorCaption": ""
             }
           ]

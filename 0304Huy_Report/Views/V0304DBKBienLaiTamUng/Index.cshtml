@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
-    <div class="card p-1 w-full ">
+@{
+    var jsonNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSNhanVien);
+}
+    <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
                 <div class="row" style="padding:0; margin: 5px;">
@@ -16,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="select-row" id="selectContainer"
+                <div class ="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -58,7 +61,14 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-                    <label style="padding:0; margin: 5px 0px;">
+
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                        <label for="NhanVien" class="form-label">Nhân viên</label>
+                        <input type="text" class="form-control" id="comboBox2" name="tenNhanVien" data-value="@ViewBag.tenNhanVien">
+                        <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
+                        <div class="dropdownList" id="dropdownList2"></div>
+                    </div>
+                    <label style="padding:0; margin:0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
                         </button>
@@ -90,18 +100,22 @@
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
-                                <th class="text-center text-nowrap">Nhóm dịch vụ</th>
-                                <th class="text-center text-nowrap">Dịch vụ</th>
-                                <th class="text-center text-nowrap">Số lượng</th>
-                                <th class="text-center text-nowrap">Tổng hóa đơn</th>
+                                <th class="text-center text-nowrap">Ngày thu</th>
+                                <th class="text-center text-nowrap">Mã y tế</th>
+                                <th class="text-center text-nowrap">Số BA</th>
+                                <th class="text-center text-nowrap">Mã đợt</th>
+                                <th class="text-center text-nowrap">Họ tên bệnh nhân</th>
+                                <th class="text-center text-nowrap">Số biên lai</th>
+                                <th class="text-center text-nowrap">Số quyển</th>
+                                <th class="text-center text-nowrap">Thu phí</th>
+                                <th class="text-center text-nowrap">Hủy</th>
+                                <th class="text-center text-nowrap">Hoàn trả</th>
+                                <th class="text-center text-nowrap">HTTT</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
-                </div>
-                <div class="m-2" style="float: right; display: flex; justify-content: end;">
-                <p>Tổng tồn bộ ở chỗ này</p>
                 </div>
                 <div class="phan_trang">
                     <div class="d-flex">
@@ -125,7 +139,15 @@
                 </div>
             </div>
         </div>
-    </div>    
-@section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304C/J0304C_Report.js")" defer></script>
-}
+    </div>
+    <script>
+        let provincesDataNhanVien = @Html.Raw(ViewBag.DSNhanVien ?? "[]");
+
+        if (typeof provincesDataNhanVien === "string") {
+            provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
+        }
+	console.log(provincesDataNhanVien);
+    </script>
+    @section Scripts {
+    <script src="@Url.Content("~/dist/js/J0304DBKBienLaiTamUng/J0304D_Report.js")" defer asp-append-version="true"></script>
+    }

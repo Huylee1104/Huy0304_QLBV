@@ -1,2 +1,8 @@
-D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304C\J0304H_Report.js
-D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304H\J0304C_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304E\J0304E_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304\J0304_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304H\J0304H_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304F\J0304F_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304G\J0304G_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304D\J0304D_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304B\J0304B_Report.js
+D:\Code\0304Huy_Report\0304Huy_Report\wwwroot\dist\js\J0304C\J0304C_Report.js
