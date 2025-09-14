@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\wwwroot\\dist\\js\\j0304ebkbienlaihoanung\\j0304e_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304ebkbienlaihoanung\\j0304e_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\models\\m0304d\\m0304dbkbienlaitamung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\models\\m0304d\\m0304dbkbienlaitamung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\wwwroot\\dist\\js\\j0304dbkbienlaitamung\\j0304d_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304dbkbienlaitamung\\j0304d_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +27,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "J0304E_Report.js",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
-              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
-              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304EBKBienLaiHoanUng\\J0304E_Report.js",
-              "ViewState": "AgIAADQCAAAAAAAAAAAAAD0CAAAZAAAAAAAAAA==",
+              "Title": "M0304DBKBienLaiTamUng.cs",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304D\\M0304DBKBienLaiTamUng.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304D\\M0304DBKBienLaiTamUng.cs",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304D\\M0304DBKBienLaiTamUng.cs",
+              "RelativeToolTip": "0304Huy_Report\\Models\\M0304D\\M0304DBKBienLaiTamUng.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwAsAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-13T10:27:50.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "J0304D_Report.js",
+              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304DBKBienLaiTamUng\\J0304D_Report.js",
+              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304DBKBienLaiTamUng\\J0304D_Report.js",
+              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304DBKBienLaiTamUng\\J0304D_Report.js",
+              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304DBKBienLaiTamUng\\J0304D_Report.js",
+              "ViewState": "AgIAAD8CAAAAAAAAAAAqwFsCAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-12T13:16:13.2Z",
+              "WhenOpened": "2025-09-13T10:16:22.685Z",
               "EditorCaption": ""
             }
           ]

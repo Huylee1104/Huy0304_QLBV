@@ -559,20 +559,42 @@ function updateTable(response) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
 
-    if (data.length > 0) { // Cần chỉnh lại chỗ này
-        let tongDongGoi = 0;
-        let tongLe = 0;
-        let tongDonGiaDongGoi = 0;
-        let tongDonGiaLe = 0;
-        let tognThanhTien = 0;
-        data.forEach((item, index) => {
-            tongDongGoi += Number(item.slDongGoi || item.SLDongGoi || 0);
-            tongLe += Number(item.slLe || item.SLLe || 0);
-            tongDonGiaDongGoi += Number(item.donGiaDongGoi || item.DonGiaDongGoi || 0);
-            tongDonGiaLe += Number(item.donGiaLe || item.DonGiaLe || 0);
-            tognThanhTien += Number(item.thanhTien || item.ThanhTien || 0);
-            const stt = (currentPage - 1) * pageSize + index + 1;
-            const row = `
+    if (data.length > 0) {
+        // Gom nhóm theo công ty
+        const groupedData = {};
+        data.forEach(item => {
+            const congTy = item.congTy || item.CongTy || "Không rõ";
+            if (!groupedData[congTy]) {
+                groupedData[congTy] = [];
+            }
+            groupedData[congTy].push(item);
+        });
+
+        Object.keys(groupedData).forEach(congTy => {
+            // Header công ty
+            const companyRow = `
+            <tr class="fw-bold">
+                <td colspan="15" class="text-start">${congTy}</td>
+            </tr>
+        `;
+            tbody.append(companyRow);
+
+            // Reset tổng cho công ty này
+            let tongDongGoi = 0;
+            let tongLe = 0;
+            let tongDonGiaDongGoi = 0;
+            let tongDonGiaLe = 0;
+            let tongThanhTien = 0;
+
+            groupedData[congTy].forEach((item, index) => {
+                tongDongGoi += Number(item.slDongGoi || item.SLDongGoi || 0);
+                tongLe += Number(item.slLe || item.SLLe || 0);
+                tongDonGiaDongGoi += Number(item.donGiaDongGoi || item.DonGiaDongGoi || 0);
+                tongDonGiaLe += Number(item.donGiaLe || item.DonGiaLe || 0);
+                tongThanhTien += Number(item.thanhTien || item.ThanhTien || 0);
+                const stt = (currentPage - 1) * pageSize + index + 1;
+
+                const row = `
                 <tr>
                     <td class="text-nowrap text-center">${stt}</td>
                     <td class="text-nowrap text-center">${formatDate(item.ngayHoaDon || item.NgayHoaDon) || ''}</td>
@@ -581,7 +603,7 @@ function updateTable(response) {
                     <td class="text-nowrap text-start">${item.phieuTra || item.PhieuTra || 'Không rõ'}</td>
                     <td class="text-nowrap text-start">${item.congTy || item.CongTy || 'Không rõ'}</td>
                     <td class="text-nowrap text-center">${item.maID || item.MaID || 'Không rõ'}</td>
-                    <td class="text-start" style = "min-width: 450px; max-width: 500px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
+                    <td class="text-start" style="min-width: 450px; max-width: 500px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
                     <td class="text-nowrap text-start">${item.quyCach || item.QuyCach || 'Không rõ'}</td>
                     <td class="text-nowrap text-center">${item.soLo || item.SoLo || 'Không rõ'}</td>
                     <td class="text-nowrap text-end">${item.slDongGoi || item.SLDongGoi}</td>
@@ -591,19 +613,22 @@ function updateTable(response) {
                     <td class="text-nowrap text-end">${formatCurrency(item.thanhTien || item.ThanhTien) || 0}</td>
                 </tr>
             `;
-            tbody.append(row);
+                tbody.append(row);
+            });
+
+            // Tổng riêng cho công ty
+            const totalRow = `
+            <tr class="fw-bold table-secondary">
+                <td colspan="10" class="text-center text-nowrap">Tổng cộng</td>
+                <td class="text-center text-nowrap">${tongDongGoi}</td>
+                <td class="text-center text-nowrap">${tongLe}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongThanhTien)}</td>
+            </tr>
+        `;
+            tbody.append(totalRow);
         });
-        const totalRow = `
-                <tr class="fw-bold">
-                    <td colspan="10" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-center text-nowrap">${tongDongGoi}</td>
-                    <td class="text-center text-nowrap">${tongLe}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tognThanhTien)}</td>
-                </tr>
-            `;
-        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
     }

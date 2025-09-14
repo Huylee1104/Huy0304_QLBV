@@ -19,6 +19,7 @@ namespace M0304D.Models.BKBienLaiTamUng
         public decimal? HoanTra { get; set; }
         public string? HTTT { get; set; }
         public long? IDNhanVien { get; set; }
+        public string? TenNhanVien { get; set; }
     }
 
     public class M0304DPagedResult<T>
