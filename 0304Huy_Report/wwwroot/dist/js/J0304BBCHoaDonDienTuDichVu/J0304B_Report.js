@@ -423,14 +423,9 @@ function updateTable(response) {
         });
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="3" class="text-center text-nowrap">Tổng cộng</td>
+                    <td colspan="2" class="text-end text-nowrap">Tổng cộng</td>
                     <td class="text-center text-nowrap">${formatCurrency(tongGiaTri)}</td>
-                    <td class="text-center text-nowrap">${''}</td>
-                    <td class="text-center text-nowrap">${''}</td>
-                    <td class="text-center text-nowrap">${''}</td>
-                    <td class="text-center text-nowrap">${''}</td>
-                    <td class="text-center text-nowrap">${''}</td>
-                    <td class="text-center text-nowrap">${''}</td>
+                    <td colspan = "6" class="text-center text-nowrap khongapdung"></td>
                     <td class="text-end text-nowrap">${formatCurrency(tongGiaTriHDDT)}</td>
                     <td class="text-center text-nowrap">${''}</td>
                 </tr>

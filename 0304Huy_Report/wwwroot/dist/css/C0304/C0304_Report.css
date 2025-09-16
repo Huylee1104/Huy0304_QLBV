@@ -1,69 +1,107 @@
-﻿.table-wrapper {
-    overflow-y: auto;
-    overflow-x: auto;
-    height: 68vh;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: auto; 
-    -ms-overflow-style: auto; 
+﻿/* ---------- scrollbar custom ---------- */
+/*.table-wrapper-scroll::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
 }
 
-.table-wrapper::-webkit-scrollbar {
-    width: 8px; 
-    height: 8px;
-}
-
-.table-wrapper::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.5); 
+.table-wrapper-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
     border-radius: 6px;
 }
 
-.table-wrapper::-webkit-scrollbar-track {
-    background-color: rgba(0,0,0,0.1); 
+.table-wrapper-scroll::-webkit-scrollbar-track {
+    background: transparent;
 }
-
 
 .column-toggle-dropdown:hover .dropdown-menu {
     display: block;
-}
+}*/
 
-.table-wrapper table {
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 1250px;
-    max-width: 1250px;
-    table-layout: fixed;
-}
+/* ---------- container ---------- */
+/*.table-wrapper-scroll {
+    overflow: auto;*/ /* scroll cả ngang và dọc */
+    /*height: 68vh;*/ /* chiều cao khung */
+    /*scrollbar-width: thin;*/ /* Firefox */
+    /*-ms-overflow-style: scrollbar;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}*/
 
-.table-wrapper th,
-.table-wrapper td {
-    border: 1px solid #ccc;
-    padding: 3px;
-    text-align: center;
-}
+    /* ---------- table ---------- */
+    /*.table-wrapper-scroll table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: auto;
+        min-width: 1250px;*/ /* giữ scroll ngang nếu bảng nhiều cột */
+        /*table-layout: auto;*/ /* cột dãn theo nội dung */
+    /*}*/
 
-.table-wrapper th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    font-size: 14px;
-    position: sticky;
-    top: 0;
-    z-index: 3;
-}
+    /* ---------- cell (td/th) ---------- */
+    /*.table-wrapper-scroll th,
+    .table-wrapper-scroll td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: center;
+        font-size: 13px;*/
+        /* ✨ quan trọng: giữ text 1 dòng, không xuống hàng */
+        /*white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;*/ /* hiện "..." khi nội dung quá dài */
+    /*}*/
 
-.table-wrapper td {
-    font-size: 14px;
-}
+    /* ---------- header sticky ---------- */
+    /*.table-wrapper-scroll th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 21;
+    }*/
 
-.table-wrapper tr:hover td {
-    background-color: #e6f7ff; 
-}
+    /* ---------- hover row ---------- */
+    /*.table-wrapper-scroll tr:hover td {
+        background-color: #bae7ff;*/ /* màu đậm hơn để phân biệt */
+    /*}*/
+    /* Khi click chọn */
+    /*.table-wrapper-scroll tr.selected td {
+        background-color: #bae7ff;*/ /* màu đậm hơn để phân biệt */
+    /*}*/
+    /* ---------- fix border 2 cạnh ---------- */
+    /*.table-wrapper-scroll th:first-child,
+    .table-wrapper-scroll td:first-child {
+        border-left: 1px solid #ccc !important;
+    }
 
-.table-wrapper th:first-child {
-    border-left: 1px solid #ccc !important;
-}
+    .table-wrapper-scroll th:last-child,
+    .table-wrapper-scroll td:last-child {
+        border-right: 1px solid #ccc !important;
+    }
 
-.table-wrapper th:last-child {
-    border-right: 1px solid #ccc !important;
+    .table-wrapper-scroll tfoot td:nth-child(-n+4) {
+        background-color: #f2f2f2 !important;
+    }*/
+
+    /* Đảm bảo các cột tổng cộng có màu nền đúng */
+    /*.table-wrapper-scroll tfoot td {
+        background-color: #f2f2f2 !important;
+    }
+
+    .table-wrapper-scroll tfoot td {
+        position: static !important;
+        background-color: #f2f2f2 !important;
+    }
+
+    .table-wrapper-scroll thead tr:nth-child(1) th {
+        top: 0;
+    }
+
+    .table-wrapper-scroll thead tr:nth-child(2) th {
+        top: 30px;*/ /* đúng bằng chiều cao dòng 1 */
+        /*background-color: white !important;
+    }*/
+
+.column-toggle-dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 .form-label {

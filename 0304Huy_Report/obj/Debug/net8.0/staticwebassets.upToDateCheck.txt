@@ -7,6 +7,7 @@ wwwroot\dist\js\BienChung.js
 wwwroot\dist\js\J0304BangKeThu\J0304_Report.js
 wwwroot\dist\js\J0304BBCHoaDonDienTuDichVu\J0304B_Report.js
 wwwroot\dist\js\J0304CBaoCaoThuDichVu\J0304C_Report.js
+wwwroot\dist\js\J0304DBKBienLaiTamUng\J0304D_Report.js
 wwwroot\dist\js\J0304EBKBienLaiHoanUng\J0304E_Report.js
 wwwroot\dist\js\J0304FBKTinhHinhTraDuocNCC\J0304F_Report.js
 wwwroot\dist\js\J0304GPhieuLinhVatTuYTe\J0304G_Report.js
@@ -4473,4 +4474,3 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
-wwwroot\dist\js\J0304DBKBienLaiTamUng\J0304D_Report.js

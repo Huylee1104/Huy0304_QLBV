@@ -377,6 +377,7 @@ function formatCurrency(value) {
 
 
 // ==================== CẬP NHẬT BẢNG ====================
+
 function updateTable(response) {
     const tbody = $('.container_Team3.right tbody');
     tbody.empty();
@@ -405,10 +406,10 @@ function updateTable(response) {
             tongHoaDon += Number(item.tongHoaDon || item.TongHoaDon || 0);
             const row = `
                 <tr>
-                    <td class = "text-center text-nowrap">${stt}</td>
-                    <td class = "text-start" style = "min-width: 250px; max-width: 400px;" >${item.nhomDichVu || item.NhomDichVu || ''}</td>
+                    <td class = "text-center text-nowrap" >${stt}</td>
+                    <td class = "text-start">${item.nhomDichVu || item.NhomDichVu || ''}</td>
                     <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
-                    <td class = "text-center text-nowrap">${item.soLuong || item.SoLuong}</td>
+                    <td class = "text-end text-nowrap">${item.soLuong || item.SoLuong}</td>
                     <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
                     
                 </tr>
@@ -418,8 +419,9 @@ function updateTable(response) {
 
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="3" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-center text-nowrap">${tongSoLuong}</td>
+                    <td colspan = "2" class="text-end text-nowrap">Tổng cộng</td>
+                    <td class="text-start text-nowrap khongapdung"></td>
+                    <td class="text-end text-nowrap">${tongSoLuong}</td>
                     <td class="text-end text-nowrap">${formatCurrency(tongHoaDon)}</td>
                 </tr>
             `;

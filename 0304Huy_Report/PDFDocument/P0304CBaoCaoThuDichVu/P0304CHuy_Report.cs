@@ -124,7 +124,7 @@ namespace P0304.PDFDocument
                         table.Cell().ColumnSpan(3).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
 
                         table.Cell().Border(1).Element(CellTong).Text("");
-
+                         
                         table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{tongHoaDon:N0}").Bold(); 
                     });
                 });

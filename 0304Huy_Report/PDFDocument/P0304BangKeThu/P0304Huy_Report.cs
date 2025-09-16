@@ -298,40 +298,52 @@ namespace P0304.PDFDocument
                             }
                         }
 
-                        table.Cell().ColumnSpan(7)
-                        .Element(CellStyle)
-                        .AlignCenter()
-                        .Text("Tổng cộng").Bold();
-
-                        table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHuy.ToString("N0"));
-                        table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHoan.ToString("N0"));
-                        table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongSoTien.ToString("N0"));
-
-                        col.Item().Height(10);
-
                         col.Item().EnsureSpace()
-                            .Column(cuoi =>
-                            {
-                                cuoi.Spacing(5);
+                        .Column(cuoi =>
+                        {
+                            cuoi.Spacing(5);
 
-                                cuoi.Item().Text($"Số tiền phải nộp: {_tongChung.TongChenhLech:N0}")
+                            // Phần tổng cộng trong bảng
+                            cuoi.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.RelativeColumn(7);
+                                    columns.RelativeColumn();
+                                    columns.RelativeColumn();
+                                    columns.RelativeColumn();
+                                });
+
+                                table.Cell().ColumnSpan(7)
+                                    .Element(CellStyle)
+                                    .AlignCenter()
+                                    .Text("Tổng cộng")
                                     .Bold();
 
-                                cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(_tongChung.TongChenhLech)}")
-                                    .Italic();
+                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHuy.ToString("N0"));
+                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHoan.ToString("N0"));
+                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongSoTien.ToString("N0"));
+                            });
 
-                                cuoi.Item().Row(row =>
+                            cuoi.Item().Height(10);
+
+                            // Phần ghi chú, chữ ký
+                            cuoi.Item().Text($"Số tiền phải nộp: {_tongChung.TongChenhLech:N0}").Bold();
+
+                            cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(_tongChung.TongChenhLech)}").Italic();
+
+                            cuoi.Item().Row(row =>
+                            {
+                                row.RelativeItem().Text("");
+                                row.ConstantItem(200).Column(right =>
                                 {
-                                    row.RelativeItem().Text("");
-                                    row.ConstantItem(200).Column(right =>
-                                    {
-                                        right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
-                                        right.Item().AlignCenter().Text("Người lập bảng").Bold();
-                                        right.Item().Height(40);
-                                        right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
-                                    });
+                                    right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                    right.Item().AlignCenter().Text("Người lập bảng").Bold();
+                                    right.Item().Height(40);
+                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
                                 });
                             });
+                        });
 
                     });
                 });

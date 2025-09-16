@@ -570,22 +570,27 @@ function updateTable(response) {
 
         Object.keys(groupedData).forEach(nhanVien => {
             // Header nhân viên
-            const nvRow = `
-            <tr class="fw-bold">
-                <td colspan="12" class="text-start">Nhân viên: ${nhanVien}</td>
-            </tr>
-        `;
-            tbody.append(nvRow);
-
-            // Reset tổng cho từng nhân viên
             let tongThuPhi = 0;
             let tongHuy = 0;
             let tongHoanTra = 0;
 
-            groupedData[nhanVien].forEach((item, index) => {
+            groupedData[nhanVien].forEach(item => {
                 tongThuPhi += Number(item.thuPhi || item.ThuPhi || 0);
                 tongHuy += Number(item.huy || item.Huy || 0);
                 tongHoanTra += Number(item.hoanTra || item.HoanTra || 0);
+            });
+            const nvRow = `
+            <tr class="fw-bold">
+                <td colspan="2" class = "text-start">Nhân viên: ${nhanVien}</td>
+                <td colspan = "6" class="text-end text-nowrap khongapdung"></td>
+                <td class="text-end text-nowrap">${formatCurrency(tongThuPhi)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHuy)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHoanTra)}</td>
+                <td></td>
+            </tr>`;
+            tbody.append(nvRow);
+
+            groupedData[nhanVien].forEach((item, index) => {
                 const stt = (currentPage - 1) * pageSize + index + 1;
 
                 const row = `
@@ -602,21 +607,20 @@ function updateTable(response) {
                     <td class="text-nowrap text-end">${formatCurrency(item.huy || item.Huy || 0)}</td>
                     <td class="text-nowrap text-end">${formatCurrency(item.hoanTra || item.HoanTra || 0)}</td>
                     <td class="text-nowrap text-center">${item.httt || item.HTTT || 'Không rõ'}</td>
-                </tr>
-            `;
+                </tr>`;
                 tbody.append(row);
             });
 
             // Tổng riêng cho nhân viên
             const totalRow = `
             <tr class="fw-bold table-secondary">
-                <td colspan="8" class="text-center text-nowrap">Tổng cộng</td>
+                <td colspan = "2" class="text-end text-nowrap">Tổng cộng:</td>
+                <td colspan = "6" class="text-end text-nowrap khongapdung"></td>
                 <td class="text-end text-nowrap">${formatCurrency(tongThuPhi)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongHuy)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongHoanTra)}</td>
                 <td></td>
-            </tr>
-        `;
+            </tr>`;
             tbody.append(totalRow);
         });
     } else {

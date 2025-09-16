@@ -574,9 +574,8 @@ function updateTable(response) {
             // Header công ty
             const companyRow = `
             <tr class="fw-bold">
-                <td colspan="15" class="text-start">${congTy}</td>
-            </tr>
-        `;
+                <td colspan="15" class="text-center tong-col">${congTy}</td>
+            </tr>`;
             tbody.append(companyRow);
 
             // Reset tổng cho công ty này
@@ -611,22 +610,21 @@ function updateTable(response) {
                     <td class="text-nowrap text-end">${formatCurrency(item.donGiaDongGoi || item.DonGiaDongGoi) || 0}</td>
                     <td class="text-nowrap text-end">${formatCurrency(item.donGiaLe || item.DonGiaLe) || 0}</td>
                     <td class="text-nowrap text-end">${formatCurrency(item.thanhTien || item.ThanhTien) || 0}</td>
-                </tr>
-            `;
+                </tr>`;
                 tbody.append(row);
             });
 
             // Tổng riêng cho công ty
             const totalRow = `
             <tr class="fw-bold table-secondary">
-                <td colspan="10" class="text-center text-nowrap">Tổng cộng</td>
-                <td class="text-center text-nowrap">${tongDongGoi}</td>
-                <td class="text-center text-nowrap">${tongLe}</td>
+                <td colspan="3" class="text-end text-nowrap">Tổng cộng: </td>
+                <td colspan="7" class="text-end text-nowrap khongapdung"></td>
+                <td class="text-end text-nowrap khongapdung">${tongDongGoi}</td>
+                <td class="text-end text-nowrap">${tongLe}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongThanhTien)}</td>
-            </tr>
-        `;
+            </tr>`;
             tbody.append(totalRow);
         });
     } else {

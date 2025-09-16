@@ -226,7 +226,7 @@ namespace P0304D.PDFDocument
                             }
                         }
 
-                        col.Item().EnsureSpace(81).Column(group =>
+                        col.Item().EnsureSpace(86).Column(group =>
                         {
                             group.Item().Table(lastRowTable =>
                             {
@@ -288,6 +288,8 @@ namespace P0304D.PDFDocument
 
                             group.Item().Column(cuoi =>
                             {
+                                cuoi.Item().Height(5);
+
                                 cuoi.Spacing(5);
                                 cuoi.Item().Text($"Số tiền phải nộp: {tongChenhLech:N0}").Bold();
                                 cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(tongChenhLech)}").Italic();

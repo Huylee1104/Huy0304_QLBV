@@ -430,7 +430,6 @@ function updateTable(response) {
                     <td class = "text-end text-nowrap">${item.dichVu || item.DichVu || 0}</td>
                     <td class = "text-end text-nowrap">${item.khamChuyenGia || item.KhamChuyenGia || 0}</td>
                     <td class = "text-end text-nowrap">${item.tong || item.Tong || 0}</td>
-                    
                 </tr>
             `;
             tbody.append(row);
@@ -438,21 +437,21 @@ function updateTable(response) {
 
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="2" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-center text-nowrap">${tongVienPhi}</td>
-                    <td class="text-center text-nowrap">${tongQL1}</td>
-                    <td class="text-center text-nowrap">${tongQL2}</td>
-                    <td class="text-center text-nowrap">${tongQL3}</td>
-                    <td class="text-center text-nowrap">${tongQL4}</td>
-                    <td class="text-center text-nowrap">${tongQL5}</td>
-                    <td class="text-center text-nowrap">${tongDichVu}</td>
-                    <td class="text-center text-nowrap">${tongKhamChuyenGia}</td>
-                    <td class="text-center text-nowrap">${tongToanBo}</td>
+                    <td colspan = "2" class="text-end text-nowrap">Tổng cộng: </td>
+                    <td class="text-end text-nowrap khongapdung">${tongVienPhi}</td>
+                    <td class="text-end text-nowrap">${tongQL1}</td>
+                    <td class="text-end text-nowrap">${tongQL2}</td>o
+                    <td class="text-end text-nowrap">${tongQL3}</td>
+                    <td class="text-end text-nowrap">${tongQL4}</td>
+                    <td class="text-end text-nowrap">${tongQL5}</td>
+                    <td class="text-end text-nowrap">${tongDichVu}</td>
+                    <td class="text-end text-nowrap">${tongKhamChuyenGia}</td>
+                    <td class="text-end text-nowrap">${tongToanBo}</td>
                 </tr>
             `;
         tbody.append(totalRow);
     } else {
-        tbody.append('<tr><td colspan="11" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 

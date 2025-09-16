@@ -568,7 +568,7 @@ function updateTable(response) {
                 <tr>
                     <td class = "text-center text-nowrap">${stt}</td>
                     <td class = "text-center text-nowrap">${item.maVatTu || item.MaVatTu || ''}</td>
-                    <td class = "text-start" style = "min-width: 600px; max-width: 650px;">${item.tenVatTu || item.TenVatTu || ''}</td>
+                    <td class = "text-start" style ="min-width: 500px; max-width: 550px;">${item.tenVatTu || item.TenVatTu || ''}</td>
                     <td class = "text-center text-nowrap">${item.donViTinh || item.DonViTinh}</td>
                     <td class = "text-center text-nowrap">${item.soLuong || item.SoLuong || ''}</td>
                 </tr>
@@ -577,7 +577,8 @@ function updateTable(response) {
         });
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="4" class="text-center text-nowrap">Tổng cộng</td>
+                    <td colspan = "2" class="text-end text-nowrap">Tổng cộng: </td>
+                    <td colspan = "2" class="text-end text-nowrap khongapdung"> </td>
                     <td class="text-center text-nowrap">${tongSoLuong}</td>
                 </tr>
             `;

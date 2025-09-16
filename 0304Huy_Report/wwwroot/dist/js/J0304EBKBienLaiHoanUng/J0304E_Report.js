@@ -562,16 +562,43 @@ function updateTable(response) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
 
-    if (data.length > 0) { // Cần chỉnh lại chỗ này
-        let tonggiaTriHoanUng = 0;
-        let tongHuy = 0;
-        let tongHoanTra = 0;
-        data.forEach((item, index) => {
-            tonggiaTriHoanUng += Number(item.giaTriHoanUng || item.GiaTriHoanUng || 0);
-            tongHuy += Number(item.huy || item.Huy || 0);
-            tongHoanTra += Number(item.hoanTra || item.HoanTra || 0);
-            const stt = (currentPage - 1) * pageSize + index + 1;
-            const row = `
+    if (data.length > 0) {
+        // Gom nhóm theo nhân viên
+        const groupedData = {};
+        data.forEach(item => {
+            const nhanVien = item.tenNhanVien || item.TenNhanVien || "Không rõ";
+            if (!groupedData[nhanVien]) {
+                groupedData[nhanVien] = [];
+            }
+            groupedData[nhanVien].push(item);
+        });
+
+        Object.keys(groupedData).forEach(nhanVien => {
+            // Header nhân viên
+            let tonggiaTriHoanUng = 0;
+            let tongHuy = 0;
+            let tongHoanTra = 0;
+
+            groupedData[nhanVien].forEach(item => {
+                tongThuPhi += Number(item.giaTriHoanUng || item.GiaTriHoanUng || 0);
+                tongHuy += Number(item.huy || item.Huy || 0);
+                tongHoanTra += Number(item.hoanTra || item.HoanTra || 0);
+            });
+            const nvRow = `
+            <tr class="fw-bold">
+                <td colspan="2" class = "text-start">Nhân viên: ${nhanVien}</td>
+                <td colspan = "6" class="text-end text-nowrap khongapdung"></td>
+                <td class="text-end text-nowrap">${formatCurrency(tonggiaTriHoanUng)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHuy)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHoanTra)}</td>
+                <td></td>
+            </tr>`;
+            tbody.append(nvRow);
+
+            groupedData[nhanVien].forEach((item, index) => {
+                const stt = (currentPage - 1) * pageSize + index + 1;
+
+                const row = `
                 <tr>
                     <td class="text-nowrap text-center">${stt}</td>
                     <td class="text-nowrap text-center">${formatDate(item.ngayThu || item.NgayThu)}</td>
@@ -585,19 +612,22 @@ function updateTable(response) {
                     <td class="text-nowrap text-end">${formatCurrency(item.huy || item.Huy || 0)}</td>
                     <td class="text-nowrap text-end">${formatCurrency(item.hoanTra || item.HoanTra || 0)}</td>
                     <td class="text-nowrap text-center">${item.httt || item.HTTT || 'Không rõ'}</td>
-                </tr>
-            `;
-            tbody.append(row);
+                </tr>`;
+                tbody.append(row);
+            });
+
+            // Tổng riêng cho nhân viên
+            const totalRow = `
+            <tr class="fw-bold table-secondary">
+                <td colspan = "2" class="text-end text-nowrap">Tổng cộng:</td>
+                <td colspan = "6" class="text-end text-nowrap khongapdung"></td>
+                <td class="text-end text-nowrap">${formatCurrency(tonggiaTriHoanUng)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHuy)}</td>
+                <td class="text-end text-nowrap">${formatCurrency(tongHoanTra)}</td>
+                <td></td>
+            </tr>`;
+            tbody.append(totalRow);
         });
-        const totalRow = `
-                <tr class="fw-bold">
-                    <td colspan="8" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tonggiaTriHoanUng)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHuy)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHoanTra)}</td>
-                </tr>
-            `;
-        tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="12" class="text-center">Không có dữ liệu</td></tr>');
     }

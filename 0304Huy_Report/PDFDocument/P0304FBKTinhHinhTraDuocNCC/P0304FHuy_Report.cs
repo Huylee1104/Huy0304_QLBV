@@ -199,42 +199,42 @@ namespace P0304F.PDFDocument
                         var vat = 0;
                         var tongTien = tongCong + vat;
 
-                        table.Cell().ColumnSpan(10);
-                        table.Cell().ColumnSpan(5).Element(c =>
+                        col.Item().EnsureSpace()
+                        .Column(cuoi =>
                         {
-                            c.Column(col =>
+                            cuoi.Item().Height(5);
+
+                            cuoi.Item().Row(row =>
                             {
-                                col.Item().Row(row =>
+                                row.RelativeItem(10);
+                                row.RelativeItem(5).Column(col =>
                                 {
-                                    row.RelativeItem().AlignLeft().Text("Tổng cộng:").Bold();
-                                    row.RelativeItem().AlignRight().Text($"{tongCong:N0}").Bold();
-                                });
+                                    col.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().AlignLeft().Text("Tổng cộng:").Bold();
+                                        r.RelativeItem().AlignRight().Text($"{tongCong:N0}").Bold();
+                                    });
 
-                                col.Item().Row(row =>
-                                {
-                                    row.RelativeItem().AlignLeft().Text("Tiền VAT:").Bold();
-                                    row.RelativeItem().AlignRight().Text($"{vat:N0}").Bold();
-                                });
+                                    col.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().AlignLeft().Text("Tiền VAT:").Bold();
+                                        r.RelativeItem().AlignRight().Text($"{vat:N0}").Bold();
+                                    });
 
-                                col.Item().Row(row =>
-                                {
-                                    row.RelativeItem().AlignLeft().Text("Tổng tiền:").Bold();
-                                    row.RelativeItem().AlignRight().Text($"{tongTien:N0}").Bold();
+                                    col.Item().Row(r =>
+                                    {
+                                        r.RelativeItem().AlignLeft().Text("Tổng tiền:").Bold();
+                                        r.RelativeItem().AlignRight().Text($"{tongTien:N0}").Bold();
+                                    });
                                 });
                             });
-                        });
 
-                        table.Cell().ColumnSpan(15).PaddingTop(7).Element(container =>
-                        {
-                            container.Row(row =>
+                            cuoi.Item().PaddingTop(7).Row(row =>
                             {
                                 row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                             });
-                        });
 
-                        table.Cell().ColumnSpan(15).PaddingTop(20).Element(container =>
-                        {
-                            container.Row(row =>
+                            cuoi.Item().PaddingTop(20).Row(row =>
                             {
                                 row.RelativeItem().AlignCenter().Text("Thủ kho").Bold();
                                 row.RelativeItem().AlignCenter().Text("Kế toán").Bold();

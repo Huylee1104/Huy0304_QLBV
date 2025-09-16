@@ -144,34 +144,38 @@ namespace P0304F.PDFDocument
                         }
                     });
 
-                    col.Item().PaddingTop(10).Row(row =>
+                    col.Item().EnsureSpace()
+                    .Column(cuoi =>
                     {
-                        row.RelativeItem().AlignLeft().Text($"Cộng khoản: {_data.Count} khoản").Bold();
-                        row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
-                    });
-
-                    col.Item().PaddingTop(10).Table(table =>
-                    {
-                        table.ColumnsDefinition(columns =>
+                        cuoi.Item().PaddingTop(10).Row(row =>
                         {
-                            columns.RelativeColumn();
-                            columns.RelativeColumn(); 
-                            columns.RelativeColumn(); 
-                            columns.RelativeColumn(); 
-                            columns.RelativeColumn();
+                            row.RelativeItem().AlignLeft().Text($"Cộng khoản: {_data.Count} khoản").Bold();
+                            row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                         });
 
-                        table.Cell().AlignCenter().Text("Người lập bảng").Bold();
-                        table.Cell().AlignCenter().Text("Trưởng khoa Dược/VTYT\nngười được uỷ quyền").Bold();
-                        table.Cell().AlignCenter().Text("Trưởng khoa/phòng").Bold();
-                        table.Cell().AlignCenter().Text("Người giao").Bold();
-                        table.Cell().AlignCenter().Text("Người nhận").Bold();
+                        cuoi.Item().PaddingTop(10).Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
+                            });
 
-                        table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
-                        table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
-                        table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
-                        table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
-                        table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                            table.Cell().AlignCenter().Text("Người lập bảng").Bold();
+                            table.Cell().AlignCenter().Text("Trưởng khoa Dược/VTYT\nngười được uỷ quyền").Bold();
+                            table.Cell().AlignCenter().Text("Trưởng khoa/phòng").Bold();
+                            table.Cell().AlignCenter().Text("Người giao").Bold();
+                            table.Cell().AlignCenter().Text("Người nhận").Bold();
+
+                            table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                            table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                            table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                            table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                            table.Cell().AlignCenter().Text("(Ký, ghi rõ họ tên)").Italic();
+                        });
                     });
                 });
 

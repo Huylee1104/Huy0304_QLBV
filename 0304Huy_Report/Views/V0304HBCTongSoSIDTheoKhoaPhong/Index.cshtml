@@ -1,6 +1,73 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
+
+<style>
+    table {
+        border-right: 1px solid #ccc !important;
+        border-left: 1px solid #ccc !important;
+    }
+    .table-wrapper-scroll th,
+    .table-wrapper-scroll td {
+        white-space: nowrap; /* giữ nội dung không xuống dòng */
+    }
+
+    /* Header - Cố định 2 cột */
+    .table-wrapper-scroll thead th:nth-child(1) {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 22;
+        background-color: #f2f2f2;
+        border-right: 1px solid #ccc !important;
+        min-width: 65px;
+        width: 65px;
+    }
+
+    .table-wrapper-scroll thead th:nth-child(2) {
+        position: sticky;
+        top: 0;
+        left: 65px; /* bằng đúng width cột 1 */
+        z-index: 22;
+        background-color: #f2f2f2;
+        border-right: 1px solid #ccc !important;
+    }
+
+    /* Body - Cố định 2 cột (trừ dòng tổng) */
+    .table-wrapper-scroll tbody tr td:nth-child(1) {
+        position: sticky;
+        left: 0;
+        z-index: 20;
+        background-color: white;
+        border-right: 1px solid #ccc !important;
+        min-width: 65px;
+        width: 65px;
+    }
+
+    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
+        position: sticky;
+        left: 65px; /* bằng đúng width cột 1 */
+        z-index: 20;
+        background-color: white;
+        border-right: 1px solid #ccc !important;
+    }
+
+    /* Hover cho dữ liệu thường */
+    .table-wrapper-scroll tbody tr:hover td {
+        background-color: #bae7ff !important;
+    }
+
+    /* Định dạng dòng tổng */
+    .table-wrapper-scroll tbody tr.total-row td {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .table-wrapper-scroll tr.selected td {
+        background-color: #bae7ff !important;
+    }
+</style>
+
     <div class="card p-1 w-full ">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -85,14 +152,14 @@
                     <p>Đang tải dữ liệu...</p>
                 </div>
 
-                <div class="table-wrapper">
+                <div class="table-wrapper-scroll">
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
                                 <th class="text-center text-nowrap">Tên khoa phòng</th>
                                 <th class="text-center text-nowrap">Viện phí</th>
-                            <th class="text-center text-nowrap">Bảo hiểm 100% (QL01)</th>
+                                <th class="text-center text-nowrap">Bảo hiểm 100% (QL01)</th>
                                 <th class="text-center text-nowrap">Bảo hiểm 100% (QL02)</th>
                                 <th class="text-center text-nowrap">Bảo hiểm 95% (QL03)</th>
                                 <th class="text-center text-nowrap">Bảo hiểm 80% (QL04)</th>
@@ -105,9 +172,6 @@
                         <tbody>
                         </tbody>
                     </table>
-                </div>
-                <div class="m-2" style="float: right; display: flex; justify-content: end;">
-                <p>Tổng tồn bộ ở chỗ này</p>
                 </div>
                 <div class="phan_trang">
                     <div class="d-flex">

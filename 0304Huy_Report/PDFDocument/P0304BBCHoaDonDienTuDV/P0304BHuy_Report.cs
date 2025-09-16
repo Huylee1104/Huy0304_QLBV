@@ -157,41 +157,61 @@ namespace P0304.PDFDocument
                         var tongGiaTri = _data.Sum(x => x.GiaTri ?? 0);
                         var tongGiaTriHDDT = _data.Sum(x => x.GiaTriHDDT ?? 0);
 
-                        table.Cell().ColumnSpan(12).Border(1).Element(cell =>
-                        {
-                            cell.Row(row =>
-                            {
-                                CellTong(row.ConstantItem(30)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(55)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
-                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
-                                CellTong(row.RelativeItem(1)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(30)).AlignCenter().Text("");
-                                CellTong(row.RelativeItem(2)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
-                                CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
-                                CellTong(row.ConstantItem(45)).AlignCenter().Text("");
-                            });
-                        });
-
-                        col.Item().Height(10);
                         col.Item().EnsureSpace()
-                            .Column(cuoi =>
+                        .Column(cuoi =>
+                        {
+                            cuoi.Item().Table(table =>
                             {
-                                cuoi.Item().Row(row =>
+                                table.ColumnsDefinition(columns =>
                                 {
-                                    row.RelativeItem().Text("");
-                                    row.ConstantItem(200).Column(right =>
+                                    columns.ConstantColumn(30);
+                                    columns.ConstantColumn(55);
+                                    columns.ConstantColumn(60);
+                                    columns.ConstantColumn(65);
+                                    columns.ConstantColumn(45);
+                                    columns.RelativeColumn(1);
+                                    columns.ConstantColumn(30);
+                                    columns.RelativeColumn(2);
+                                    columns.ConstantColumn(60);
+                                    columns.ConstantColumn(45);
+                                    columns.ConstantColumn(65);
+                                    columns.ConstantColumn(45);
+                                });
+
+                                table.Cell().ColumnSpan(12).Border(1).Element(cell =>
+                                {
+                                    cell.Row(row =>
                                     {
-                                        right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
-                                        right.Item().AlignCenter().Text("Người lập bảng").Bold();
-                                        right.Item().Height(40);
-                                        right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
+                                        CellTong(row.ConstantItem(30)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
+                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                        CellTong(row.RelativeItem(1)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(30)).AlignCenter().Text("");
+                                        CellTong(row.RelativeItem(2)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
+                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                                     });
                                 });
                             });
+
+                            cuoi.Item().Height(10);
+
+                            cuoi.Item().Row(row =>
+                            {
+                                row.RelativeItem().Text("");
+                                row.ConstantItem(200).Column(right =>
+                                {
+                                    right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                    right.Item().AlignCenter().Text("Người lập bảng").Bold();
+                                    right.Item().Height(40);
+                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
+                                });
+                            });
+                        });
                     });
                 });
 
