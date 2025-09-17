@@ -1,6 +1,7 @@
 ﻿using M0304.Models.BangKeThu;
 using M0304.Models.KhoHang;
 using M0304.Models.ThongTinDoanhNghiep;
+using M0304BenhNhan.Models;
 using M0304B.Models.BCHoaDonDienTuDV;
 using M0304C.Models.BaoCaoThuDichVu;
 using M0304D.Models.BKBienLaiTamUng;
@@ -9,6 +10,7 @@ using M0304F.Models.BKTinhHinhTraDuocNCC;
 using M0304G.Models.PhieuLinhVatTuYTe;
 using M0304H.Models.BCTongSoSIDTheoKhoaPhong;
 using M0304NhanVien.Models;
+using M0304I.Models.PhieuTheoDoiChucNangSong;
 using Microsoft.EntityFrameworkCore;
 
 namespace C0304.Db.Models
@@ -24,6 +26,7 @@ namespace C0304.Db.Models
         public DbSet<M0304BBCHoaDonDienTuDV> M0304BBCHoaDonDienTuDVs { get; set; }
         public DbSet<M0304ThongTinDoanhNghiep> M0304ThongTinDoanhNghieps { get; set; }
         public DbSet<M0304KhoHang> M0304KhoHangs { get; set; }
+        public DbSet<M0304BenhNhanModel> M0304BenhNhans { get; set; }
         public DbSet<M0304NhanVienModel> M0304NhanViens { get; set; }
         public DbSet<M0304CBaoCaoThuDichVu> M0304CBaoCaoThuDichVus { get; set; }
         public DbSet<M0304DBKBienLaiTamUng> M0304DBKBienLaiTamUngs { get; set; }
@@ -31,6 +34,8 @@ namespace C0304.Db.Models
         public DbSet<M0304FBKTinhHinhTraDuocNCC> M0304FBKTinhHinhTraDuocNCCs { get; set; }
         public DbSet<M0304GPhieuLinhVatTuYTe> M0304GPhieuLinhVatTuYTes { get; set; }
         public DbSet<M0304HBCTongSoSIDTheoKhoaPhong> M0304HBCTongSoSIDTheoKhoaPhongs { get; set; }
+        public DbSet<BenhNhanThongTinModel> BenhNhanThongTins { get; set; }
+        public DbSet<SinhHieuModel> SinhHieus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,10 +47,13 @@ namespace C0304.Db.Models
             modelBuilder.Entity<M0304ThongTinDoanhNghiep>().ToTable("ThongTinDoanhNghiep");
             modelBuilder.Entity<M0304CBaoCaoThuDichVu>().HasNoKey();
             modelBuilder.Entity<M0304KhoHang>().ToTable("HH_DM_KhoHang");
+            modelBuilder.Entity<M0304BenhNhanModel>().ToTable("DM_BenhNhan");
             modelBuilder.Entity<M0304NhanVienModel>().ToTable("DM_NhanVien");
             modelBuilder.Entity<M0304FBKTinhHinhTraDuocNCC>().HasNoKey();
             modelBuilder.Entity<M0304GPhieuLinhVatTuYTe>().HasNoKey();
             modelBuilder.Entity<M0304HBCTongSoSIDTheoKhoaPhong>().HasNoKey();
+            modelBuilder.Entity<BenhNhanThongTinModel>().HasNoKey();
+            modelBuilder.Entity<SinhHieuModel>().HasNoKey();
         }
     }
 }
