@@ -129,7 +129,7 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
 
-            var data = request.Data ?? new List<HoSoBenhAnModel>();
+            var data = request.Data ?? new HoSoBenhAnModel();
             var document = new P0304IReportTemplatePDF(data, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();

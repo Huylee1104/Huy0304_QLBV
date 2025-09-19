@@ -49,7 +49,7 @@ namespace M0304I.Models.PhieuTheoDoiChucNangSong
 
     public class ExportRequest
     {
-        public List<HoSoBenhAnModel> Data { get; set; }
+        public HoSoBenhAnModel Data { get; set; }
         public long? IdBenhNhan { get; set; }
         public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
     }

@@ -235,7 +235,6 @@ function filterData(isPagination = false) {
         page: currentPage,
         pageSize: pageSize
     }
-    console.log(payload);
     $.ajax({
         url: '/phieu_theo_doi_chuc_nang_song/filter',
         type: 'POST',
@@ -344,33 +343,34 @@ function doExportPdf(finalData, btnElem) {
         idBenhNhan: $('#IDBenhNhan').val(),
         doanhNghiep: window.doanhNghiep || null
     };
-
+    console.log(requestData, );
+    console.log("data json: ", JSON.stringify(requestData));
     fetch("/phieu_theo_doi_chuc_nang_song/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
     })
-        .then(res => {
-            if (!res.ok) throw new Error('Network response was not ok');
-            return res.blob();
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `BangKeTinhHinhTraDuocNCC_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
-        })
-        .catch(error => {
-            console.error('Error exporting PDF:', error);
-            toastr.error("Xuất PDF thất bại");
-        })
-        .finally(() => {
-            btnElem.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Xuất PDF';
-            btnElem.disabled = false;
-        });
+    .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `BangKeTinhHinhTraDuocNCC_.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        toastr.success("Xuất PDF thành công");
+    })
+    .catch(error => {
+        console.error('Error exporting PDF:', error);
+        toastr.error("Xuất PDF thất bại");
+    })
+    .finally(() => {
+        btnElem.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Xuất PDF';
+        btnElem.disabled = false;
+    });
 }
 
 $('#btnExportPDF').off('click').on('click', function (e) {
@@ -382,10 +382,10 @@ $('#btnExportPDF').off('click').on('click', function (e) {
     btn.disabled = true;
 
     const idBenhNhan = $('#IDBenhNhan').val();
-
-    if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(idBenhNhan)
-            .then(allData => {
+    
+    if (!window.filteredData) {
+        (idBenhNhan)
+            fetchAllFilteredData.then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
             })
@@ -394,7 +394,8 @@ $('#btnExportPDF').off('click').on('click', function (e) {
                 btn.disabled = false;
             });
     } else {
-        doExportPdf(window.filteredData, btn);
+        console.log(window.filteredData[0]);
+        doExportPdf(window.filteredData[0], btn);
     }
 });
 
@@ -426,10 +427,6 @@ function formatCurrency(value) {
 function updateTable(response) {
     const tbody = $('.container_Team3.right tbody');
     tbody.empty();
-    console.log(response);
-    console.log(response.data.thongTinBenhNhan);
-    console.log(response.data.sinhHieus);
-    // Render thông tin bệnh nhân trước
     if (response.data.thongTinBenhNhan) {
         const info = response.data.thongTinBenhNhan;
         const rowInfo = `

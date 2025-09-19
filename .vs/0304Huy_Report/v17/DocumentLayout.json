@@ -1,26 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Code\\0304Huy_Report\\",
+  "WorkspaceRootPath": "D:\\Code\\Huy0304_QLBV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\wwwroot\\dist\\js\\j0304iphieutheodoichucnangsong\\j0304i_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304iphieutheodoichucnangsong\\j0304i_report.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\views\\v0304iphieutheodoichucnangsong\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\views\\v0304iphieutheodoichucnangsong\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\service\\s0304i\\s0304iphieutheodoichucnangsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\service\\s0304i\\s0304iphieutheodoichucnangsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\models\\m0304i\\m0304iphieutheodoichucnangsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\models\\m0304i\\m0304iphieutheodoichucnangsong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\0304huy_report\\0304huy_report\\controllers\\c0304i\\c0304fbiphieutheodoichucnangsongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304i\\c0304fbiphieutheodoichucnangsongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\wwwroot\\dist\\js\\j0304util\\j0302dateformatutil.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304util\\j0302dateformatutil.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,75 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "M0304IPhieuTheoDoiChucNangSong.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304I\\M0304IPhieuTheoDoiChucNangSong.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Models\\M0304I\\M0304IPhieuTheoDoiChucNangSong.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Models\\M0304I\\M0304IPhieuTheoDoiChucNangSong.cs",
-              "RelativeToolTip": "0304Huy_Report\\Models\\M0304I\\M0304IPhieuTheoDoiChucNangSong.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwCoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "P0304GHuy_Report.cs",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAYwGMAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T13:22:53.88Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "C0304FBIPhieuTheoDoiChucNangSongController.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304I\\C0304FBIPhieuTheoDoiChucNangSongController.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304I\\C0304FBIPhieuTheoDoiChucNangSongController.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Controllers\\C0304I\\C0304FBIPhieuTheoDoiChucNangSongController.cs",
-              "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304I\\C0304FBIPhieuTheoDoiChucNangSongController.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAAwFQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T13:17:05.487Z",
+              "WhenOpened": "2025-09-19T01:51:21.482Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "S0304IPhieuTheoDoiChucNangSong.cs",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304I\\S0304IPhieuTheoDoiChucNangSong.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Service\\S0304I\\S0304IPhieuTheoDoiChucNangSong.cs",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Service\\S0304I\\S0304IPhieuTheoDoiChucNangSong.cs",
-              "RelativeToolTip": "0304Huy_Report\\Service\\S0304I\\S0304IPhieuTheoDoiChucNangSong.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAAwFEAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T13:16:57.982Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Views\\V0304IPhieuTheoDoiChucNangSong\\Index.cshtml",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Views\\V0304IPhieuTheoDoiChucNangSong\\Index.cshtml",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\Views\\V0304IPhieuTheoDoiChucNangSong\\Index.cshtml",
-              "RelativeToolTip": "0304Huy_Report\\Views\\V0304IPhieuTheoDoiChucNangSong\\Index.cshtml",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAvwIMAAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-17T13:12:06.343Z",
+              "Title": "J0302DateFormatUtil.js",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
+              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
+              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
+              "ViewState": "AgIAAN8BAAAAAAAAAAAQwOUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-09-19T01:22:45.881Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "J0304I_Report.js",
-              "DocumentMoniker": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304IPhieuTheoDoiChucNangSong\\J0304I_Report.js",
-              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304IPhieuTheoDoiChucNangSong\\J0304I_Report.js",
-              "ToolTip": "D:\\Code\\0304Huy_Report\\0304Huy_Report\\wwwroot\\dist\\js\\J0304IPhieuTheoDoiChucNangSong\\J0304I_Report.js",
-              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304IPhieuTheoDoiChucNangSong\\J0304I_Report.js",
-              "ViewState": "AgIAAKABAAAAAAAAAAA3wKsBAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-17T09:56:38.739Z",
+              "Title": "P0304IHuy_Report.cs",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAIwEEAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-18T10:52:55.505Z",
               "EditorCaption": ""
             }
           ]
