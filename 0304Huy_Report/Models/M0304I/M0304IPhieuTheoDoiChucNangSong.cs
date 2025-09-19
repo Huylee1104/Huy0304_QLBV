@@ -9,7 +9,12 @@ namespace M0304I.Models.PhieuTheoDoiChucNangSong
     {
         public string? MaVaoVien { get; set; }
         public string? TenBenhNhan { get; set; }
-        public int? Tuoi { get; set; } 
+        public string? MaBenhNhan { get; set; }
+        public string? TenKhoa { get; set; }
+        public string? TenPhong { get; set; }
+        public string? TenGiuong { get; set; }
+        public DateTime? NgaySinh { get; set; }
+        public string? DiaChi { get; set; }
         public string? GioiTinh { get; set; }
         public string? ChanDoan { get; set; } 
     }

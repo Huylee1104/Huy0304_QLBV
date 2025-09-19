@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using P0304I.PDFDocument;
 using QuestPDF.Fluent;
 using System.Data;
+using System.Data.Common;
 
 namespace S0304CPhieuTheoDoiChucNangSong.Services
 {
@@ -166,11 +167,16 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
                         {
                             result.ThongTinBenhNhan = new BenhNhanThongTinModel
                             {
-                                MaVaoVien = reader.GetString(reader.GetOrdinal("MaVaoVien")),
-                                TenBenhNhan = reader.GetString(reader.GetOrdinal("TenBenhNhan")),
-                                Tuoi = reader.GetInt32(reader.GetOrdinal("Tuoi")),
-                                GioiTinh = reader.GetString(reader.GetOrdinal("GioiTinh")),
-                                ChanDoan = reader.GetString(reader.GetOrdinal("ChanDoan"))
+                                MaVaoVien = GetSafeString(reader, "MaVaoVien"),
+                                TenBenhNhan = GetSafeString(reader, "TenBenhNhan"),
+                                MaBenhNhan = GetSafeString(reader, "MaBenhNhan"),
+                                TenKhoa = GetSafeString(reader, "TenKhoa"),
+                                TenPhong = GetSafeString(reader, "TenPhong"),
+                                TenGiuong = GetSafeString(reader, "TenGiuong"),
+                                NgaySinh = GetSafeDateTime(reader, "NgaySinh"),
+                                DiaChi = GetSafeString(reader, "DiaChi"),
+                                GioiTinh = GetSafeString(reader, "GioiTinh"),
+                                ChanDoan = GetSafeString(reader, "ChanDoan")
                             };
                         }
 
@@ -196,6 +202,17 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
             }
 
             return result;
+        }
+        private static string GetSafeString(DbDataReader reader, string columnName)
+        {
+            int ordinal = reader.GetOrdinal(columnName);
+            return reader.IsDBNull(ordinal) ? null : reader.GetString(ordinal);
+        }
+
+        private static DateTime? GetSafeDateTime(DbDataReader reader, string columnName)
+        {
+            int ordinal = reader.GetOrdinal(columnName);
+            return reader.IsDBNull(ordinal) ? (DateTime?)null : reader.GetDateTime(ordinal);
         }
     }
 }

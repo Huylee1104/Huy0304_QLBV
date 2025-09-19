@@ -433,7 +433,12 @@ function updateTable(response) {
         <tr class="table-info">
             <td colspan="7" class="text-start">
                 <strong>Họ tên:</strong> ${info.tenBenhNhan || info.TenBenhNhan || ''} <br>
-                <strong>Tuổi:</strong> ${info.tuoi || info.Tuoi || ''} <br>
+                <strong>Mã bệnh nhân:</strong> ${info.maBenhNhan || info.MaBenhNhan || ''} <br>
+                <strong>Khoa:</strong> ${info.tenKhoa || info.TenKhoa || ''} <br>
+                <strong>Tên phòng:</strong> ${info.tenPhong || info.TenPhong || ''} <br>
+                <strong>Tên buồng:</strong> ${info.tenGiuong || info.TenGiuong || ''} <br>
+                <strong>Tuổi:</strong> ${info.ngaySinh || info.NgaySinh || ''} <br>
+                <strong>Địa chỉ:</strong> ${info.diaChi || info.DiaChi || ''} <br>
                 <strong>Giới tính:</strong> ${info.gioiTinh || info.GioiTinh || ''} <br>
                 <strong>Chẩn đoán:</strong> ${info.chanDoan || info.ChanDoan || ''} <br>
                 <strong>Mã vào viện:</strong> ${info.maVaoVien || info.MaVaovien || ''}

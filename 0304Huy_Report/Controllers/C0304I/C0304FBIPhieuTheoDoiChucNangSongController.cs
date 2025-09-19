@@ -89,6 +89,8 @@ namespace C0304IPhieuTheoDoiChucNangSong.Controllers
         {
             var pdfBytes = await _service.ExportGetPhieuTheoDoiChucNangSongPdfAsync(request, HttpContext.Session);
 
+            _logger.LogWarning("pdfBytes: " + pdfBytes);
+
             string fileName = $"BangKeTinhHinhTraDuocNCC.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }

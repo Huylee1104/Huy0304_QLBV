@@ -5,14 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\wwwroot\\dist\\js\\j0304util\\j0302dateformatutil.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304util\\j0302dateformatutil.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,34 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "P0304GHuy_Report.cs",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAYwGMAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-19T01:51:21.482Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "J0302DateFormatUtil.js",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
-              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
-              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304Util\\J0302DateFormatUtil.js",
-              "ViewState": "AgIAAN8BAAAAAAAAAAAQwOUBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-19T01:22:45.881Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -58,7 +24,7 @@
               "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
               "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
               "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAIwDsAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAD4vz0AAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-18T10:52:55.505Z",
               "EditorCaption": ""
