@@ -62,10 +62,10 @@ namespace P0304.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(9);
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -143,7 +143,6 @@ namespace P0304.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
                 .Padding(4)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(10));

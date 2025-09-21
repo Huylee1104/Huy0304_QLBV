@@ -49,7 +49,7 @@ namespace P0304F.PDFDocument
             {
                 page.Size(PageSizes.A4.Landscape());
                 page.Margin(15);
-                page.DefaultTextStyle(x => x.FontSize(8));
+                page.DefaultTextStyle(x => x.FontSize(8).FontFamily("Times New Roman", "Arial"));
 
                 page.Header().ShowOnce().Column(col =>
                 {
@@ -68,10 +68,10 @@ namespace P0304F.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8);
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8);
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8);
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8);
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -229,12 +229,13 @@ namespace P0304F.PDFDocument
                                 });
                             });
 
-                            cuoi.Item().PaddingTop(7).Row(row =>
+                            cuoi.Item().PaddingTop(10).Row(row =>
                             {
-                                row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                row.RelativeItem().AlignRight().
+                                Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}").Bold().Italic();
                             });
 
-                            cuoi.Item().PaddingTop(20).Row(row =>
+                            cuoi.Item().PaddingTop(10).Row(row =>
                             {
                                 row.RelativeItem().AlignCenter().Text("Thủ kho").Bold();
                                 row.RelativeItem().AlignCenter().Text("Kế toán").Bold();
@@ -247,12 +248,26 @@ namespace P0304F.PDFDocument
                 });
 
                 page.Footer()
-                    .AlignRight()
-                    .Text(txt =>
+                    .Row(row =>
                     {
-                        txt.CurrentPageNumber();
-                        txt.Span(" / ");
-                        txt.TotalPages();
+                        row.RelativeItem()
+                            .AlignLeft()
+                            .Text(txt =>
+                            {
+                                txt.Span("(In ngày: ").Italic();
+                                txt.Span(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss")).Italic();
+                                txt.Span(")").Italic();
+                            });
+
+                        row.RelativeItem()
+                            .AlignLeft()
+                            .Text(txt =>
+                            {
+                                txt.Span("Trang ");
+                                txt.CurrentPageNumber();
+                                txt.Span(" / ");
+                                txt.TotalPages();
+                            });
                     });
             });
         }
@@ -260,7 +275,6 @@ namespace P0304F.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
                 .Padding(3)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(8));

@@ -69,10 +69,10 @@ namespace P0304E.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(9);
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(9).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(9).Bold();
+                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(9).Bold();
+                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(9).Bold();
                             });
                         });
                     });
@@ -88,7 +88,7 @@ namespace P0304E.PDFDocument
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(8);
+                            .FontSize(8).Bold().Italic();
                     });
                 });
 
@@ -144,7 +144,11 @@ namespace P0304E.PDFDocument
                             {
                                 container.Row(row =>
                                 {
-                                    row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nv.TenNhanVien}").FontSize(7).Bold();
+                                    row.ConstantItem(25 + 45 + 45 + 50 + 45).ExtendHorizontal().AlignLeft().Text(text =>
+                                    {
+                                        text.Span("Nhân viên: ").FontSize(7);
+                                        text.Span($"{nv.TenNhanVien}").FontSize(7).Bold();
+                                    });
                                     row.RelativeItem(2).Text("");
                                     row.RelativeItem(1).Text("");
                                     row.RelativeItem(1).Text("");
@@ -275,7 +279,11 @@ namespace P0304E.PDFDocument
                             {
                                 cuoi.Spacing(5);
                                 cuoi.Item().Text($"Số tiền phải nộp: {tongChenhLech:N0}").Bold();
-                                cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(tongChenhLech)}").Italic();
+                                cuoi.Item().Text(text =>
+                                {
+                                    text.Span("Bằng chữ: ");
+                                    text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(tongChenhLech)}").Italic().Bold();
+                                });
 
                                 cuoi.Item().Row(row =>
                                 {
@@ -294,12 +302,24 @@ namespace P0304E.PDFDocument
                 });
 
                 page.Footer()
-                    .AlignRight()
-                    .Text(txt =>
+                    .Row(row =>
                     {
-                        txt.CurrentPageNumber();
-                        txt.Span(" / ");
-                        txt.TotalPages();
+                        row.RelativeItem()
+                            .AlignLeft()
+                            .Text(txt =>
+                            {
+                                txt.Span(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+                            });
+
+                        row.RelativeItem()
+                            .AlignRight()
+                            .Text(txt =>
+                            {
+                                txt.Span("Trang ");
+                                txt.CurrentPageNumber();
+                                txt.Span(" / ");
+                                txt.TotalPages();
+                            });
                     });
             });
         }
@@ -307,7 +327,6 @@ namespace P0304E.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
                 .Padding(3)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(8));

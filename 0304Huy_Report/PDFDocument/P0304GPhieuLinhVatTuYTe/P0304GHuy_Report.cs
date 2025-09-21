@@ -65,8 +65,8 @@ namespace P0304F.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8);
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8);
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8);
                                 info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8);
                                 info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8);
                             });
@@ -85,7 +85,8 @@ namespace P0304F.PDFDocument
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(8);
+                            .FontSize(8)
+                            .Italic();
                     });
                     col.Item().AlignLeft().Column(left =>
                     {
@@ -110,13 +111,13 @@ namespace P0304F.PDFDocument
                     {
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.ConstantColumn(25);   // STT
-                            columns.ConstantColumn(70);   // Mã
-                            columns.RelativeColumn(4);    // Tên thuốc / VT
-                            columns.ConstantColumn(45);   // Đơn vị tính
-                            columns.ConstantColumn(60);   // Số lượng - Yêu cầu
-                            columns.ConstantColumn(60);   // Số lượng - Phát
-                            columns.RelativeColumn(2);    // Ghi chú
+                            columns.ConstantColumn(25);
+                            columns.ConstantColumn(70);
+                            columns.RelativeColumn(4); 
+                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(60);
+                            columns.RelativeColumn(2); 
                         });
 
                         table.Cell().RowSpan(2).Element(CellStyleHeader).AlignCenter().Text("STT").Bold();
@@ -150,7 +151,7 @@ namespace P0304F.PDFDocument
                         cuoi.Item().PaddingTop(10).Row(row =>
                         {
                             row.RelativeItem().AlignLeft().Text($"Cộng khoản: {_data.Count} khoản").Bold();
-                            row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                            row.RelativeItem().AlignRight().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}").Italic();
                         });
 
                         cuoi.Item().PaddingTop(10).Table(table =>

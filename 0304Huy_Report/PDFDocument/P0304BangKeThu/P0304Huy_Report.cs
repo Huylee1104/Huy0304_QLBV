@@ -78,10 +78,10 @@ namespace P0304.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(9);
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(9);
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });

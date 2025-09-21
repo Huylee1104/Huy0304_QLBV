@@ -69,10 +69,10 @@ namespace P0304D.PDFDocument
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8);
-                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8);
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8);
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8);
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -89,7 +89,7 @@ namespace P0304D.PDFDocument
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(8);
+                            .FontSize(8).Bold().Italic();
                     });
                 });
 
@@ -160,7 +160,11 @@ namespace P0304D.PDFDocument
                             {
                                 container.Row(row =>
                                 {
-                                    row.ConstantItem(25 + 50 + 45 + 50 + 50).ExtendHorizontal().AlignLeft().Text($"Nhân viên: {nv.TenNhanVien}").FontSize(7).Bold();
+                                    row.ConstantItem(25 + 50 + 45 + 50 + 50).ExtendHorizontal().AlignLeft().Text(text =>
+                                    {
+                                        text.Span("Nhân viên: ").FontSize(7);
+                                        text.Span($"{nv.TenNhanVien}").FontSize(7).Bold();
+                                    });
                                     row.RelativeItem(2).Text("");
                                     row.RelativeItem(1).Text("");
                                     row.RelativeItem(1).Text("");
@@ -279,7 +283,7 @@ namespace P0304D.PDFDocument
                                     columns.ConstantColumn(35);
                                 });
 
-                                footerTable.Cell().Row(1).Column(1).ColumnSpan(8).Element(CellStyle).AlignCenter().Text("Tổng cộng").Bold();
+                                footerTable.Cell().Row(1).Column(1).ColumnSpan(8).Element(CellStyle).AlignRight().Text("Tổng cộng").Bold();
                                 footerTable.Cell().Row(1).Column(9).Element(CellStyle).AlignRight().Text(tongThuPhi.ToString("N0")).Bold();
                                 footerTable.Cell().Row(1).Column(10).Element(CellStyle).AlignRight().Text(tongHuy.ToString("N0")).Bold();
                                 footerTable.Cell().Row(1).Column(11).Element(CellStyle).AlignRight().Text(tongHoanTra.ToString("N0")).Bold();
@@ -291,8 +295,12 @@ namespace P0304D.PDFDocument
                                 cuoi.Item().Height(5);
 
                                 cuoi.Spacing(5);
-                                cuoi.Item().Text($"Số tiền phải nộp: {tongChenhLech:N0}").Bold();
-                                cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(tongChenhLech)}").Italic();
+                                cuoi.Item().Text($"Số tiền phải nộp: {tongChenhLech:N0} đồng").Bold();
+                                cuoi.Item().Text(text =>
+                                {
+                                    text.Span("Bằng chữ: ");
+                                    text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(tongChenhLech)}").Italic().Bold();
+                                });
 
                                 cuoi.Item().Row(row =>
                                 {
@@ -300,7 +308,7 @@ namespace P0304D.PDFDocument
                                     row.ConstantItem(200).Column(right =>
                                     {
                                         right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
-                                        right.Item().AlignCenter().Text("Người lập bảng");
+                                        right.Item().AlignCenter().Text("Người lập").Bold();
                                         right.Item().Height(40);
                                         right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
                                     });
@@ -314,6 +322,7 @@ namespace P0304D.PDFDocument
                     .AlignRight()
                     .Text(txt =>
                     {
+                        txt.Span("Trang ");
                         txt.CurrentPageNumber();
                         txt.Span(" / ");
                         txt.TotalPages();
@@ -324,7 +333,6 @@ namespace P0304D.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
                 .Padding(3)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(8));

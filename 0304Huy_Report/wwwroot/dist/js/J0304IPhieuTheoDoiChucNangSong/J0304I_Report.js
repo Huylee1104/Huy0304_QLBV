@@ -358,7 +358,7 @@ function doExportPdf(finalData, btnElem) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `BangKeTinhHinhTraDuocNCC_.pdf`;
+        a.download = `PhieuTheoDoiChucNangSong.pdf`;
         a.click();
         window.URL.revokeObjectURL(url);
         toastr.success("Xuất PDF thành công");

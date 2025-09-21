@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Code\\Huy0304_QLBV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304iphieutheochucnangsong\\p0304ihuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304fbktinhhinhtraduocncc\\p0304fhuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304fbktinhhinhtraduocncc\\p0304fhuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "P0304IHuy_Report.cs",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
-              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304IPhieuTheoChucNangSong\\P0304IHuy_Report.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAApwEoAAABSAAAAAAAAAA==",
+              "Title": "P0304FHuy_Report.cs",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304FBKTinhHinhTraDuocNCC\\P0304FHuy_Report.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304FBKTinhHinhTraDuocNCC\\P0304FHuy_Report.cs",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304FBKTinhHinhTraDuocNCC\\P0304FHuy_Report.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304FBKTinhHinhTraDuocNCC\\P0304FHuy_Report.cs",
+              "ViewState": "AgIAAP8AAAAAAAAAAAAqwAwBAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-18T10:52:55.505Z",
+              "WhenOpened": "2025-09-21T03:14:04.242Z",
               "EditorCaption": ""
             }
           ]

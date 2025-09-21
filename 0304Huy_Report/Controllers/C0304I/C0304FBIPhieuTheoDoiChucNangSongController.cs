@@ -91,7 +91,7 @@ namespace C0304IPhieuTheoDoiChucNangSong.Controllers
 
             _logger.LogWarning("pdfBytes: " + pdfBytes);
 
-            string fileName = $"BangKeTinhHinhTraDuocNCC.pdf";
+            string fileName = $"PhieuTheoDoiChucNangSong.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }
     }
