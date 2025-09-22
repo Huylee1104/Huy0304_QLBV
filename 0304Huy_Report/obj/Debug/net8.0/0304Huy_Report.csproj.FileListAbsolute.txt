@@ -435,3 +435,8 @@ D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\any\native\LatoFon
 D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\any\native\LatoFont\Lato-Thin.ttf
 D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\any\native\LatoFont\Lato-ThinItalic.ttf
 D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\any\native\LatoFont\OFL.txt
+D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\SkiaSharp.dll
+D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\osx\native\libSkiaSharp.dylib
+D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\win-arm64\native\libSkiaSharp.dll
+D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\win-x64\native\libSkiaSharp.dll
+D:\Code\Huy0304_QLBV\0304Huy_Report\bin\Debug\net8.0\runtimes\win-x86\native\libSkiaSharp.dll

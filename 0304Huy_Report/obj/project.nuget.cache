@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6pgLnS+E/Is=",
+  "dgSpecHash": "qzosZYn87+4=",
   "success": true,
   "projectFilePath": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\0304Huy_Report.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,9 @@
     "C:\\Users\\DELL\\.nuget\\packages\\questpdf\\2024.3.0\\questpdf.2024.3.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\rbush.signed\\4.0.0\\rbush.signed.4.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\sixlabors.fonts\\1.0.0\\sixlabors.fonts.1.0.0.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\skiasharp\\3.119.0\\skiasharp.3.119.0.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\skiasharp.nativeassets.macos\\3.119.0\\skiasharp.nativeassets.macos.3.119.0.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\skiasharp.nativeassets.win32\\3.119.0\\skiasharp.nativeassets.win32.3.119.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",

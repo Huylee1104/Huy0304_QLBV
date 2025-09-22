@@ -6,6 +6,8 @@ using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using SixLabors.Fonts;
+using SkiaSharp;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -35,7 +37,7 @@ namespace P0304I.PDFDocument
         public void Compose(IDocumentContainer container)
         {
             var sinhHoa = (_data.SinhHieus ?? Enumerable.Empty<SinhHieuModel>())
-                .OrderBy(x => x.NgayKhaoSat ?? DateTime.MinValue) 
+                .OrderBy(x => x.NgayKhaoSat ?? DateTime.MinValue)
                 .ToList();
 
             container.Page(page =>
@@ -188,8 +190,105 @@ namespace P0304I.PDFDocument
 
                         for (int page = 0; page < totalPages; page++)
                         {
-                            int startIndex = page*maxColumnsPerPage;
+                            int startIndex = page * maxColumnsPerPage;
                             int endIndex = Math.Min(startIndex + maxColumnsPerPage, totalColumns);
+                            column.Item().Element(x =>
+                            {
+                                x.Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(26);
+                                        columns.ConstantColumn(28);
+                                        for (int i = startIndex; i < endIndex; i++)
+                                        {
+                                            columns.RelativeColumn();
+                                        }
+                                    });
+
+                                    table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text("Ngày tháng");
+                                    int j = startIndex;
+                                    while (j < endIndex && j < listNgay.Count)
+                                    {
+                                        var currentNgay = listNgay[j];
+                                        if (j + 1 < endIndex && j + 1 < listNgay.Count && listNgay[j + 1] == currentNgay)
+                                        {
+                                            table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text($"{currentNgay}");
+                                            j += 2;
+                                        }
+                                        else
+                                        {
+                                            table.Cell().Element(CellStyle).AlignCenter().Text($"{currentNgay}");
+                                            j++;
+                                        }
+                                    }
+
+                                    table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text("Giờ");
+                                    foreach (var gio in listGio.Skip(startIndex).Take(endIndex - startIndex))
+                                    {
+                                        table.Cell().Element(CellStyle).AlignCenter().Text($"{gio}");
+                                    }
+                                });
+                            });
+
+                            column.Item().Element(x =>
+                            {
+                                x.Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(26);
+                                        columns.ConstantColumn(28);
+                                        columns.RelativeColumn();
+                                    });
+
+                                    var leftMachLabels = new[] { "160", "140", "120", "100", "80", "60", "40"};
+                                    var leftNhietLabels = new[] { "41", "40", "39", "38", "37", "36", "35"};
+                                    int rowsCount = leftMachLabels.Length;
+                                    float rowHeightPt = 30f;
+
+                                    table.Cell().Element(CellStyleTop).Element(c =>
+                                    {
+                                        c.Column(col =>
+                                        {
+                                            for (int r = 0; r < rowsCount; r++)
+                                                col.Item().Height(rowHeightPt).AlignCenter().Text(leftMachLabels[r]);
+                                        });
+                                    });
+
+                                    table.Cell().Element(CellStyleTop).Element(c =>
+                                    {
+                                        c.Column(col =>
+                                        {
+                                            for (int r = 0; r < rowsCount; r++)
+                                                col.Item().Height(rowHeightPt).AlignCenter().Text(leftNhietLabels[r]);
+                                        });
+                                    });
+
+                                    int columnsCount = endIndex - startIndex;
+                                    byte[] pngBytes = MatrixRenderer.RenderMatrixPng(
+                                        columns: columnsCount,
+                                        rows: rowsCount,
+                                        rowHeightPt: rowHeightPt,
+                                        listMach: listMach ?? new List<string>(),
+                                        listNhiet: listNhietDo ?? new List<string>(),
+                                        startIndex: startIndex,
+                                        endIndex: endIndex,
+                                        dpi: 150
+                                    );
+
+                                    table.Cell().Element(c =>
+                                    {
+                                        using var msImg = new MemoryStream(pngBytes);
+                                        c.Background("#FFFFFF")
+                                         .Border(1)
+                                         .BorderColor("#000000")
+                                         .Image(msImg)
+                                         .FitWidth();
+                                    });
+                                });
+                            });
+
                             column.Item().Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>
@@ -201,260 +300,6 @@ namespace P0304I.PDFDocument
                                         columns.RelativeColumn();
                                     }
                                 });
-
-                                table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text("Ngày tháng");
-                                int j = startIndex;
-                                while (j < endIndex && j < listNgay.Count)
-                                {
-                                    var currentNgay = listNgay[j];
-
-                                    if (j + 1 < endIndex && j + 1 < listNgay.Count && listNgay[j + 1] == currentNgay)
-                                    {
-                                        table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text($"{currentNgay}");
-                                        j += 2;
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyle).AlignCenter().Text($"{currentNgay}");
-                                        j++;
-                                    }
-                                }
-
-                                table.Cell().ColumnSpan(2).Element(CellStyle).AlignCenter().Text("Giờ");
-                                foreach (var gio in listGio.Skip(startIndex).Take(endIndex - startIndex))
-                                {
-                                    table.Cell().Element(CellStyle).AlignCenter().Text($"{gio}");
-                                }
-                                table.Cell().Element(CellStyle).AlignCenter().Element(e =>
-                                {
-                                    e.Column(column =>
-                                    {
-                                        column.Item().Text("Mạch");
-                                        column.Item().Text("(L/ph)");
-                                    });
-                                });
-                                table.Cell().Element(CellStyle).AlignCenter().Text("Nhiệt độ (C)");
-                                for (int i = startIndex; i < endIndex; i++)
-                                {
-                                    table.Cell().Element(CellStyle).AlignCenter().Text("");
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("160");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("41");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 140 && mach <= 160) || (nhietDo > 40 && nhietDo <= 41))
-                                    {
-                                        if ((mach > 140 && mach <= 160) && !(nhietDo > 40 && nhietDo <= 41))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 140 && mach <= 160) && (nhietDo > 40 && nhietDo <= 41))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 140 && mach <= 160) && (nhietDo > 40 && nhietDo <= 41))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("140");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("40");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 120 && mach <= 140) || (nhietDo > 39 && nhietDo <= 40))
-                                    {
-                                        if ((mach > 120 && mach <= 140) && !(nhietDo > 39 && nhietDo <= 40))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 120 && mach <= 140) && (nhietDo > 39 && nhietDo <= 40))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 120 && mach <= 140) && (nhietDo > 39 && nhietDo <= 40))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("120");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("39");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 100 && mach <= 120) || (nhietDo > 38 && nhietDo <= 39))
-                                    {
-                                        if ((mach > 100 && mach <= 120) && !(nhietDo > 38 && nhietDo <= 39))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 100 && mach <= 120) && (nhietDo > 38 && nhietDo <= 39))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 100 && mach <= 120) && (nhietDo > 38 && nhietDo <= 39))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("100");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("38");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 80 && mach <= 100) || (nhietDo > 37 && nhietDo <= 38))
-                                    {
-                                        if ((mach > 80 && mach <= 100) && !(nhietDo > 37 && nhietDo <= 38))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 80 && mach <= 100) && (nhietDo > 37 && nhietDo <= 38))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 80 && mach <= 100) && (nhietDo > 37 && nhietDo <= 38))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("80");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("37");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 60 && mach <= 80) || (nhietDo > 36 && nhietDo <= 37))
-                                    {
-                                        if ((mach > 60 && mach <= 80) && !(nhietDo > 36 && nhietDo <= 37))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 60 && mach <= 80) && (nhietDo > 36 && nhietDo <= 37))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 60 && mach <= 80) && (nhietDo > 36 && nhietDo <= 37))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("60");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("36");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 40 && mach <= 60) || (nhietDo > 35 && nhietDo <= 36))
-                                    {
-                                        if ((mach > 40 && mach <= 60) && !(nhietDo > 35 && nhietDo <= 36))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 40 && mach <= 60) && (nhietDo > 35 && nhietDo <= 36))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 40 && mach <= 60) && (nhietDo > 35 && nhietDo <= 36))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
-
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("40");
-                                table.Cell().Element(CellStyleTop).Height(23).AlignCenter().Text("35");
-                                for (int i = startIndex; i < endIndex; i++) // tác hàm ra
-                                {
-                                    double mach = double.TryParse(listMach[i], out var mVal) ? mVal : 0;
-                                    double nhietDo = double.TryParse(listNhietDo[i], out var nVal) ? nVal : 0;
-
-                                    var (ptMach, pbMach) = TinhPadding010_Auto(mach, step: 20);
-                                    var (ptNhiet, pbNhiet) = TinhPadding010_Auto(nhietDo, step: 1);
-
-                                    if ((mach > 20 && mach <= 40) || (nhietDo > 34 && nhietDo <= 35))
-                                    {
-                                        if ((mach > 20 && mach <= 40) && !(nhietDo > 34 && nhietDo <= 35))
-                                        {
-                                            RenderMachCell(table, mach, ptMach, pbMach);
-                                        }
-                                        else if (!(mach > 20 && mach <= 40) && (nhietDo > 34 && nhietDo <= 35))
-                                        {
-                                            RenderNhietDoCell(table, nhietDo, ptNhiet, pbNhiet);
-                                        }
-                                        else if ((mach > 20 && mach <= 40) && (nhietDo > 34 && nhietDo <= 35))
-                                        {
-                                            RenderMachNhietDoCell(table, mach, nhietDo, ptMach, pbMach, ptNhiet, pbNhiet);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        table.Cell().Element(CellStyleBigSize).AlignCenter().Text("");
-                                    }
-                                }
 
                                 table.Cell().ColumnSpan(2).Element(CellStyle).AlignLeft().Element(e =>
                                 {
@@ -473,7 +318,7 @@ namespace P0304I.PDFDocument
                                 {
                                     e.Column(column =>
                                     {
-                                        column.Item().Text("Cân nặng");
+                                        column.Item().Text("2. Cân nặng");
                                         column.Item().Text("(Kg)");
                                     });
                                 });
@@ -486,7 +331,7 @@ namespace P0304I.PDFDocument
                                 {
                                     e.Column(column =>
                                     {
-                                        column.Item().Text("Nhịp thở");
+                                        column.Item().Text("3. Nhịp thở");
                                         column.Item().Text("(Lần/ph)");
                                     });
                                 });
@@ -528,151 +373,184 @@ namespace P0304I.PDFDocument
                             });
                             if (page < totalPages - 1)
                             {
-                                column.Item().PageBreak(); // ✅ CHÍNH XÁC Ở ĐÂY
+                                column.Item().PageBreak();
                             }
-                        }
-                    }); 
-                });
-            });
-
-            static IContainer CellStyle(IContainer container) =>
-            container
-            .Border(1)
-            .Padding(3)
-            .AlignMiddle()
-            .DefaultTextStyle(x => x.FontSize(8));
-
-            static IContainer CellStyleTop(IContainer container) =>
-            container
-            .Border(1)
-            .PaddingLeft(5)
-            .PaddingRight(5)
-            .PaddingBottom(10)
-            .AlignTop()
-            .DefaultTextStyle(x => x.FontSize(8));
-
-            static IContainer CellStyleBigSize(IContainer container) =>
-            container
-            .Border(1)
-            .Padding(5)
-            .AlignMiddle()
-            .DefaultTextStyle(x => x.FontSize(8));
-
-            static void RenderMachCell(TableDescriptor table, double mach, int ptMach, int pbMach)
-            {
-                table.Cell().Border(1)
-                .Row(row => {
-                    row.RelativeItem(1)
-                       .AlignCenter()
-                       .PaddingRight(4)
-                       .Element(c => c.CellStyleCham(paddingTop: ptMach, paddingBottom: pbMach))
-                       .Column(col =>
-                       {
-                           col.Spacing(0);
-                           col.Item().Unconstrained().Text($"{mach}")
-                               .FontColor("#FF0000")
-                               .FontSize(6)
-                               .LineHeight(0.3f);
-                           col.Item().Unconstrained().Text("●")
-                               .FontColor("#FF0000")
-                               .FontSize(11)
-                               .LineHeight(0.9f);
-                       });
-                });
-            }
-
-            static void RenderNhietDoCell(TableDescriptor table, double nhietDo, int ptNhiet, int pbNhiet)
-            {
-                table.Cell().Border(1)
-                .Row(row => {
-                    row.RelativeItem(1)
-                       .AlignCenter()
-                       .PaddingRight(4)
-                       .Element(c => c.CellStyleCham(paddingTop: ptNhiet, paddingBottom: pbNhiet))
-                       .Column(col =>
-                       {
-                           col.Spacing(0);
-                           col.Item().Unconstrained().Text($"{nhietDo}")
-                               .FontColor("#0000FF")
-                               .FontSize(6)
-                               .LineHeight(2.4f);
-                           col.Item().Unconstrained().Text("●")
-                               .FontColor("#0000FF")
-                               .FontSize(11)
-                               .LineHeight(0.8f);
-                       });
-                });
-            }
-
-            static void RenderMachNhietDoCell(TableDescriptor table, double mach, double nhietDo, int ptMach, int pbMach, int ptNhiet, int pbNhiet)
-            {
-                table.Cell().Border(1)
-                .Row(row =>
-                {
-                    row.RelativeItem(1).Element(c =>
-                    {
-                        c.AlignCenter().Row(inner =>
-                        {
-                            inner.AutoItem().Layers(layers =>
-                            {
-                                layers.PrimaryLayer()
-                                    .TranslateX(-12)
-                                    .Unconstrained()
-                                    .Element(x => x.CellStyleCham(paddingTop: ptMach, paddingBottom: pbMach))
-                                    .Text(text =>
-                                    {
-                                        text.Span($"{mach}").FontColor("#FF0000").FontSize(6).LineHeight(0.5f);
-                                        text.Span("●").FontColor("#FF0000").FontSize(11).LineHeight(1f);
-                                    });
-
-                                layers.Layer()
-                                    .TranslateX(-4)
-                                    .Unconstrained()
-                                    .Element(x => x.CellStyleCham(paddingTop: ptNhiet, paddingBottom: pbNhiet))
-                                    .Text(text =>
-                                    {
-                                        text.Span("●").FontColor("#0000FF").FontSize(11).LineHeight(0.8f);
-                                        text.Span($"{nhietDo}").FontColor("#0000FF").FontSize(6).LineHeight(0.5f);
-                                    });
-                            });
-                        });
+                        };
                     });
                 });
-            }
+
+                static IContainer CellStyle(IContainer container) =>
+                container
+                .Border(1)
+                .Padding(3)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(8));
+
+                static IContainer CellStyleTop(IContainer container) =>
+                container
+                .Border(1)
+                .PaddingLeft(5)
+                .PaddingRight(5)
+                .PaddingBottom(10)
+                .AlignTop()
+                .DefaultTextStyle(x => x.FontSize(8));
+
+                static IContainer CellStyleBigSize(IContainer container) =>
+                container
+                .Border(1)
+                .Padding(5)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(8));
+            });
         }
-    }
-
-    public static class PdfExtensions
-    {
-        public static IContainer CellStyleCham(
-            this IContainer container,
-            int paddingTop,
-            int paddingBottom)
+        public static class MatrixRenderer
         {
-            float translateY;
+            public static byte[] RenderMatrixPng(
+                int columns,
+                int rows,
+                float rowHeightPt,
+                List<string> listMach,
+                List<string> listNhiet,
+                int startIndex,
+                int endIndex,
+                int dpi = 150)
+            {
+                if (columns <= 0 || rows <= 0) return Array.Empty<byte>();
 
-            if (5 - paddingBottom < 0)
-            {
-                translateY = 5 - paddingBottom;
-            }
-            else if (5 - paddingBottom == 0)
-            {
-                translateY = paddingTop + paddingBottom;
-            }
-            else
-            {
-                translateY = paddingTop + paddingBottom + 5;
-            }
+                float totalHeightPt = rows * rowHeightPt;
+                float pxPerPt = dpi / 72f;
+                int heightPx = (int)Math.Ceiling(totalHeightPt * pxPerPt/2f);
 
-                return container
-                    .TranslateY(translateY)
-                    .PaddingTop(paddingTop)
-                    .PaddingBottom(paddingBottom)
-                    .PaddingLeft(0)
-                    .PaddingRight(0)
-                    .DefaultTextStyle(x => x.FontSize(13));
+                int basePxPerColumn = (int)Math.Ceiling(12f * pxPerPt);
+                int widthPx = Math.Max((int)(columns * basePxPerColumn), 300);
+
+                using var surface = SKSurface.Create(new SKImageInfo(widthPx, heightPx, SKColorType.Rgba8888, SKAlphaType.Premul));
+                var canvas = surface.Canvas;
+                canvas.Clear(SKColors.Transparent);
+
+                var thin = Math.Max(1f, pxPerPt * 0.25f);
+                var gridPaint = new SKPaint { Color = new SKColor(0xE0, 0xE0, 0xE0), StrokeWidth = thin, IsAntialias = false, Style = SKPaintStyle.Stroke };
+                var axisPaint = new SKPaint { Color = new SKColor(0xB0, 0xB0, 0xB0), StrokeWidth = Math.Max(1f, pxPerPt * 0.6f), IsAntialias = false, Style = SKPaintStyle.Stroke };
+                var redLine = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), StrokeWidth = Math.Max(1.6f, pxPerPt * 0.9f), IsAntialias = true, Style = SKPaintStyle.Stroke };
+                var blueLine = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), StrokeWidth = Math.Max(1.6f, pxPerPt * 0.9f), IsAntialias = true, Style = SKPaintStyle.Stroke };
+                var redDot = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), IsAntialias = true, Style = SKPaintStyle.Fill };
+                var blueDot = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), IsAntialias = true, Style = SKPaintStyle.Fill };
+                var textRed = new SKPaint { Color = SKColors.Red, TextSize = 5 * pxPerPt, IsAntialias = true };
+                var textBlue = new SKPaint { Color = SKColors.Blue, TextSize = 5 * pxPerPt, IsAntialias = true };
+
+                for (int c = 0; c <= columns; c++)
+                {
+                    float x = c * (widthPx / (float)columns);
+                    canvas.DrawLine(x, 0, x, heightPx, gridPaint);
+                }
+
+                for (int r = 0; r <= rows; r++)
+                {
+                    float y = r * (heightPx / (float)rows);
+                    canvas.DrawLine(0, y, widthPx, y, gridPaint);
+                }
+
+                float machMin = 40f, machMax = 160f;
+                float nhietMin = 35f, nhietMax = 41f;
+
+                float cellHpx = heightPx / (float)rows;
+
+                float MapY(float v, float vMin, float vMax)
+                {
+                    float stepValue = (vMax - vMin) / Math.Max(1f, (rows - 1));
+                    if (stepValue <= 0f) stepValue = 1f;
+
+                    float rowIndex = (vMax - v) / stepValue;
+                    rowIndex = Math.Clamp(rowIndex, 0f, rows - 1f);
+
+                    float y = (rowIndex + 0.0f) * cellHpx;
+
+                    return Math.Clamp(y, 0f, heightPx - 1f);
+                }
+
+                float ColumnCenterX(int colIndex)
+                {
+                    return (colIndex + 0.5f) * (widthPx / (float)columns);
+                }
+
+                var machPts = new List<(int col, float value)>();
+                var nhietPts = new List<(int col, float value)>();
+
+                for (int i = startIndex; i < endIndex && i < listMach.Count && i < listNhiet.Count; i++)
+                {
+                    int colIdx = i - startIndex;
+                    if (double.TryParse(listMach[i], NumberStyles.Any, CultureInfo.InvariantCulture, out var mVal))
+                    {
+                        if (!double.IsNaN(mVal) && mVal > 0) machPts.Add((colIdx, (float)mVal));
+                    }
+                    if (double.TryParse(listNhiet[i], NumberStyles.Any, CultureInfo.InvariantCulture, out var nVal))
+                    {
+                        if (!double.IsNaN(nVal) && nVal > 0) nhietPts.Add((colIdx, (float)nVal));
+                    }
+                }
+
+                void DrawSeries(
+                    List<(int col, float value)> pts,
+                    SKPaint paintLine,
+                    SKPaint paintDot,
+                    float vMin,
+                    float vMax,
+                    SKPaint paintText,
+                    bool textAbove
+                )
+                {
+                    if (pts.Count == 0) return;
+                    var sorted = pts.OrderBy(p => p.col).ToList();
+
+                    paintText.IsAntialias = true;
+                    paintText.SubpixelText = true;
+                    paintText.LcdRenderText = true;
+                    paintText.HintingLevel = SKPaintHinting.Full;
+                    paintText.IsStroke = false;
+                    paintText.FilterQuality = SKFilterQuality.High;
+
+                    for (int i = 0; i < sorted.Count - 1; i++)
+                    {
+                        var a = sorted[i];
+                        var b = sorted[i + 1];
+                        var ax = ColumnCenterX(a.col);
+                        var ay = MapY(a.value, vMin, vMax);
+                        var bx = ColumnCenterX(b.col);
+                        var by = MapY(b.value, vMin, vMax);
+                        canvas.DrawLine(ax, ay, bx, by, paintLine);
+                    }
+
+                    float dotR = Math.Max(1.6f, pxPerPt * 0.8f);
+                    foreach (var p in sorted)
+                    {
+                        var x = ColumnCenterX(p.col);
+                        var y = MapY(p.value, vMin, vMax);
+
+                        canvas.DrawCircle(x, y, dotR, paintDot);
+
+                        var text = p.value.ToString("0.#", CultureInfo.InvariantCulture);
+                        float textW = paintText.MeasureText(text);
+                        float textX = x - textW / 2f;
+
+                        float textBaselineY;
+                        if (textAbove)
+                            textBaselineY = y - dotR - (paintText.TextSize * 0.4f) - 2f;
+                        else
+                            textBaselineY = y + dotR + (paintText.TextSize) + 2f;
+
+                        canvas.DrawText(text, textX, textBaselineY, paintText);
+                    }
+                }
+
+                DrawSeries(machPts, redLine, redDot, machMin, machMax, textRed, true);
+                DrawSeries(nhietPts, blueLine, blueDot, nhietMin, nhietMax, textBlue, false);
+
+                using var img = surface.Snapshot();
+                using var data = img.Encode(SKEncodedImageFormat.Png, 100);
+                File.WriteAllBytes("test.png", data.ToArray());
+                return data.ToArray();
+            }
         }
     }
 }
-
 

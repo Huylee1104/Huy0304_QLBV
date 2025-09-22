@@ -1,37 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Code\\Huy0304_QLBV\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304gphieulinhvattuyte\\p0304ghuy_report.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "P0304GHuy_Report.cs",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304GPhieuLinhVatTuYTe\\P0304GHuy_Report.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAAEEAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T03:07:41.052Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
