@@ -420,14 +420,14 @@ namespace P0304I.PDFDocument
             {
                 if (columns <= 0 || rows <= 0) return Array.Empty<byte>();
 
-                float pxPerPt = dpi / 72f;             // pixel trên 1 pt
-                float totalHeightPt = 220f;            // tổng chiều cao cố định
-                float totalWidthPt = 501f;             // tổng chiều rộng cố định
+                float pxPerPt = dpi / 72f;
+                float totalHeightPt = 220f;
+                float totalWidthPt = 501f;
 
                 int heightPx = (int)Math.Ceiling(totalHeightPt * pxPerPt);
                 int widthPx = (int)Math.Ceiling(totalWidthPt * pxPerPt);
 
-                float cellWpx = widthPx / (float)columns; // chiều rộng mỗi ô (co giãn theo số cột)
+                float cellWpx = widthPx / (float)columns;
                 float cellHpx = heightPx / (float)rows;
 
                 using var surface = SKSurface.Create(new SKImageInfo(widthPx, heightPx, SKColorType.Rgba8888, SKAlphaType.Premul));
