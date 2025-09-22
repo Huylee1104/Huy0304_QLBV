@@ -160,25 +160,6 @@ namespace P0304I.PDFDocument
                 var listCanNang = _data.SinhHieus?.Select(sh => sh.CanNang).ToList();
                 var listNhipTho = _data.SinhHieus?.Select(sh => sh.NhipTho).ToList();
 
-                (int paddingTop, int paddingBottom) TinhPadding010_Auto(double value, double step, bool roundToInt = true)
-                {
-                    double cellValueTop = Math.Ceiling(value / step) * step;
-
-                    double offsetRatio = (cellValueTop - value) / step;
-                    offsetRatio = Math.Clamp(offsetRatio, 0, 1);
-
-                    double pTop = offsetRatio * 9.0;
-                    double pBot = 9.0 - pTop;
-
-                    if (roundToInt)
-                    {
-                        pTop = Math.Round(pTop);
-                        pBot = 9 - pTop;
-                    }
-
-                    return ((int)pTop, (int)pBot);
-                }
-
                 page.Content().PaddingVertical(6).Element(e =>
                 {
                     e.Column(column =>

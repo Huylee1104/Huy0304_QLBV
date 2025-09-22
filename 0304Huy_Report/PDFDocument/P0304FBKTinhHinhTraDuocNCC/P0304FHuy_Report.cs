@@ -174,25 +174,73 @@ namespace P0304F.PDFDocument
                         {
                             int stt = 1;
                             var data = _data.Where(d => d.IDCongTy == cty.ID).ToList();
-                            table.Cell().ColumnSpan(15).Border(1).BorderColor(Colors.Black).MinHeight(13).AlignCenter().AlignMiddle().Text(cty.Ten).SemiBold();
-                            foreach (var item in data)
+                            if (!data.Any()) continue;
+
+                            // Tạo 1 cụm tên công ty + dòng dữ liệu đầu tiên
+                            table.Cell().ColumnSpan(15).Element(container =>
                             {
-                                table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayHoaDon?.ToString("dd-MM-yyyy") ?? "");
-                                table.Cell().Element(CellStyle).AlignLeft().Text(item.SoHoaDon ?? "");
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayTra?.ToString("dd-MM-yyyy") ?? "");
-                                table.Cell().Element(CellStyle).AlignLeft().Text(item.PhieuTra ?? "");
-                                table.Cell().Element(CellStyle).AlignLeft().Text(item.CongTy ?? "");
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.MaID ?? "");
-                                table.Cell().Element(CellStyle).AlignLeft().Text(item.TenThuoc ?? "");
-                                table.Cell().Element(CellStyle).AlignLeft().Text(item.QuyCach ?? "");
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLo ?? "");
-                                table.Cell().Element(CellStyle).AlignRight().Text(item.SLDongGoi?.ToString("N0") ?? "");
-                                table.Cell().Element(CellStyle).AlignRight().Text(item.SLLe?.ToString("N0") ?? "");
-                                table.Cell().Element(CellStyle).AlignRight().Text(item.DonGiaDongGoi?.ToString("N0") ?? "");
-                                table.Cell().Element(CellStyle).AlignRight().Text(item.DonGiaLe?.ToString("N0") ?? "");
-                                table.Cell().Element(CellStyle).AlignRight().Text(item.ThanhTien?.ToString("N0") ?? "");
-                            }
+                                container.Column(col =>
+                                {
+                                    col.Spacing(0);
+
+                                    var first = data.First();
+                                    col.Item().EnsureSpace().Element(cell =>
+                                    {
+
+                                        cell.Column(colInner =>
+                                        {
+                                            colInner.Spacing(0);
+
+                                            colInner.Item().Border(1).BorderColor(Colors.Black)
+                                                .MinHeight(13)
+                                                .AlignCenter().AlignMiddle()
+                                                .Text(cty.Ten).SemiBold();
+
+                                            colInner.Item().Row(row =>
+                                            {
+                                                row.ConstantItem(25).Element(CellStyle).AlignCenter().Text(stt++.ToString());
+                                                row.ConstantItem(50).Element(CellStyle).AlignCenter().Text(first.NgayHoaDon?.ToString("dd-MM-yyyy") ?? "");
+                                                row.ConstantItem(45).Element(CellStyle).AlignLeft().Text(first.SoHoaDon ?? "");
+                                                row.ConstantItem(50).Element(CellStyle).AlignCenter().Text(first.NgayTra?.ToString("dd-MM-yyyy") ?? "");
+                                                row.ConstantItem(45).Element(CellStyle).AlignLeft().Text(first.PhieuTra ?? "");
+                                                row.RelativeItem(1).Element(CellStyle).AlignLeft().Text(first.CongTy ?? "");
+                                                row.ConstantItem(45).Element(CellStyle).AlignCenter().Text(first.MaID ?? "");
+                                                row.RelativeItem(1).Element(CellStyle).AlignLeft().Text(first.TenThuoc ?? "");
+                                                row.ConstantItem(30).Element(CellStyle).AlignLeft().Text(first.QuyCach ?? "");
+                                                row.ConstantItem(40).Element(CellStyle).AlignCenter().Text(first.SoLo ?? "");
+                                                row.ConstantItem(40).Element(CellStyle).AlignRight().Text(first.SLDongGoi?.ToString("N0") ?? "");
+                                                row.ConstantItem(40).Element(CellStyle).AlignRight().Text(first.SLLe?.ToString("N0") ?? "");
+                                                row.ConstantItem(40).Element(CellStyle).AlignRight().Text(first.DonGiaDongGoi?.ToString("N0") ?? "");
+                                                row.ConstantItem(40).Element(CellStyle).AlignRight().Text(first.DonGiaLe?.ToString("N0") ?? "");
+                                                row.ConstantItem(50).Element(CellStyle).AlignRight().Text(first.ThanhTien?.ToString("N0") ?? "");
+                                            });
+                                        });
+                                    });
+
+                                    foreach (var item in data.Skip(1))
+                                    {
+                                        col.Item().Row(row =>
+                                        {
+                                            row.ConstantItem(25).Element(CellStyle).AlignCenter().Text(stt++.ToString());
+                                            row.ConstantItem(50).Element(CellStyle).AlignCenter().Text(item.NgayHoaDon?.ToString("dd-MM-yyyy") ?? "");
+                                            row.ConstantItem(45).Element(CellStyle).AlignLeft().Text(item.SoHoaDon ?? "");
+                                            row.ConstantItem(50).Element(CellStyle).AlignCenter().Text(item.NgayTra?.ToString("dd-MM-yyyy") ?? "");
+                                            row.ConstantItem(45).Element(CellStyle).AlignLeft().Text(item.PhieuTra ?? "");
+                                            row.RelativeItem(1).Element(CellStyle).AlignLeft().Text(item.CongTy ?? "");
+                                            row.ConstantItem(45).Element(CellStyle).AlignCenter().Text(item.MaID ?? "");
+                                            row.RelativeItem(1).Element(CellStyle).AlignLeft().Text(item.TenThuoc ?? "");
+                                            row.ConstantItem(30).Element(CellStyle).AlignLeft().Text(item.QuyCach ?? "");
+                                            row.ConstantItem(40).Element(CellStyle).AlignCenter().Text(item.SoLo ?? "");
+                                            row.ConstantItem(40).Element(CellStyle).AlignRight().Text(item.SLDongGoi?.ToString("N0") ?? "");
+                                            row.ConstantItem(40).Element(CellStyle).AlignRight().Text(item.SLLe?.ToString("N0") ?? "");
+                                            row.ConstantItem(40).Element(CellStyle).AlignRight().Text(item.DonGiaDongGoi?.ToString("N0") ?? "");
+                                            row.ConstantItem(40).Element(CellStyle).AlignRight().Text(item.DonGiaLe?.ToString("N0") ?? "");
+                                            row.ConstantItem(50).Element(CellStyle).AlignRight().Text(item.ThanhTien?.ToString("N0") ?? "");
+
+                                        });
+                                    }
+                                });
+                            });
                         }
 
                         var tongCong = _data.Sum(x => x.ThanhTien ?? 0);
