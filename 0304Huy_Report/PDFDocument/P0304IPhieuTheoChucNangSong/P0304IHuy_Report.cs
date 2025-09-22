@@ -431,12 +431,12 @@ namespace P0304I.PDFDocument
                 var thin = Math.Max(1f, pxPerPt * 0.25f);
                 var gridPaint = new SKPaint { Color = new SKColor(0xE0, 0xE0, 0xE0), StrokeWidth = thin, IsAntialias = false, Style = SKPaintStyle.Stroke };
                 var axisPaint = new SKPaint { Color = new SKColor(0xB0, 0xB0, 0xB0), StrokeWidth = Math.Max(1f, pxPerPt * 0.6f), IsAntialias = false, Style = SKPaintStyle.Stroke };
-                var redLine = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), StrokeWidth = Math.Max(1.6f, pxPerPt * 0.9f), IsAntialias = true, Style = SKPaintStyle.Stroke };
-                var blueLine = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), StrokeWidth = Math.Max(1.6f, pxPerPt * 0.9f), IsAntialias = true, Style = SKPaintStyle.Stroke };
+                var redLine = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), StrokeWidth = Math.Max(1f, pxPerPt * 0.5f), IsAntialias = true, Style = SKPaintStyle.Stroke };
+                var blueLine = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), StrokeWidth = Math.Max(1f, pxPerPt * 0.5f), IsAntialias = true, Style = SKPaintStyle.Stroke };
                 var redDot = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), IsAntialias = true, Style = SKPaintStyle.Fill };
                 var blueDot = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), IsAntialias = true, Style = SKPaintStyle.Fill };
-                var textRed = new SKPaint { Color = SKColors.Red, TextSize = 5 * pxPerPt, IsAntialias = true };
-                var textBlue = new SKPaint { Color = SKColors.Blue, TextSize = 5 * pxPerPt, IsAntialias = true };
+                var textRed = new SKPaint { Color = SKColors.Red, TextSize = 5 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
+                var textBlue = new SKPaint { Color = SKColors.Blue, TextSize = 5 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
 
                 for (int c = 0; c <= columns; c++)
                 {
