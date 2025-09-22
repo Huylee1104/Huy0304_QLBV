@@ -209,6 +209,28 @@ namespace P0304I.PDFDocument
                                     {
                                         table.Cell().Element(CellStyle).AlignCenter().Text($"{gio}");
                                     }
+
+                                    table.Cell().Element(CellStyle).AlignCenter().Element(e =>
+                                    {
+                                        e.Column(column =>
+                                        {
+                                            column.Item().Text("Mạch");
+                                            column.Item().Text("(L/ph)");
+                                        });
+                                    });
+
+                                    table.Cell().Element(CellStyle).AlignCenter().Element(e =>
+                                    {
+                                        e.Column(column =>
+                                        {
+                                            column.Item().Text("Nhiệt");
+                                            column.Item().Text("độ (C)");
+                                        });
+                                    });
+                                    for (int i = startIndex; i < endIndex; i++)
+                                    {
+                                        table.Cell().Element(CellStyle).AlignCenter().Text("");
+                                    }
                                 });
                             });
 
@@ -398,60 +420,57 @@ namespace P0304I.PDFDocument
             {
                 if (columns <= 0 || rows <= 0) return Array.Empty<byte>();
 
-                float totalHeightPt = rows * rowHeightPt;
-                float pxPerPt = dpi / 72f;
-                int heightPx = (int)Math.Ceiling(totalHeightPt * pxPerPt/2f);
+                float pxPerPt = dpi / 72f;             // pixel trên 1 pt
+                float totalHeightPt = 220f;            // tổng chiều cao cố định
+                float totalWidthPt = 501f;             // tổng chiều rộng cố định
 
-                int basePxPerColumn = (int)Math.Ceiling(12f * pxPerPt);
-                int widthPx = Math.Max((int)(columns * basePxPerColumn), 300);
+                int heightPx = (int)Math.Ceiling(totalHeightPt * pxPerPt);
+                int widthPx = (int)Math.Ceiling(totalWidthPt * pxPerPt);
+
+                float cellWpx = widthPx / (float)columns; // chiều rộng mỗi ô (co giãn theo số cột)
+                float cellHpx = heightPx / (float)rows;
 
                 using var surface = SKSurface.Create(new SKImageInfo(widthPx, heightPx, SKColorType.Rgba8888, SKAlphaType.Premul));
                 var canvas = surface.Canvas;
                 canvas.Clear(SKColors.Transparent);
 
-                var thin = Math.Max(1f, pxPerPt * 0.25f);
+                var thin = Math.Max(1f, pxPerPt * 0.5f);
                 var gridPaint = new SKPaint { Color = new SKColor(0xE0, 0xE0, 0xE0), StrokeWidth = thin, IsAntialias = false, Style = SKPaintStyle.Stroke };
                 var axisPaint = new SKPaint { Color = new SKColor(0xB0, 0xB0, 0xB0), StrokeWidth = Math.Max(1f, pxPerPt * 0.6f), IsAntialias = false, Style = SKPaintStyle.Stroke };
                 var redLine = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), StrokeWidth = Math.Max(1f, pxPerPt * 0.5f), IsAntialias = true, Style = SKPaintStyle.Stroke };
                 var blueLine = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), StrokeWidth = Math.Max(1f, pxPerPt * 0.5f), IsAntialias = true, Style = SKPaintStyle.Stroke };
                 var redDot = new SKPaint { Color = new SKColor(0xFF, 0x00, 0x00), IsAntialias = true, Style = SKPaintStyle.Fill };
                 var blueDot = new SKPaint { Color = new SKColor(0x00, 0x00, 0xFF), IsAntialias = true, Style = SKPaintStyle.Fill };
-                var textRed = new SKPaint { Color = SKColors.Red, TextSize = 5 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
-                var textBlue = new SKPaint { Color = SKColors.Blue, TextSize = 5 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
+                var textRed = new SKPaint { Color = SKColors.Red, TextSize = 8 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
+                var textBlue = new SKPaint { Color = SKColors.Blue, TextSize = 8 * pxPerPt, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold) };
 
                 for (int c = 0; c <= columns; c++)
                 {
-                    float x = c * (widthPx / (float)columns);
+                    float x = c * cellWpx;
                     canvas.DrawLine(x, 0, x, heightPx, gridPaint);
                 }
 
                 for (int r = 0; r <= rows; r++)
                 {
-                    float y = r * (heightPx / (float)rows);
+                    float y = r * cellHpx;
                     canvas.DrawLine(0, y, widthPx, y, gridPaint);
                 }
 
                 float machMin = 40f, machMax = 160f;
                 float nhietMin = 35f, nhietMax = 41f;
 
-                float cellHpx = heightPx / (float)rows;
-
                 float MapY(float v, float vMin, float vMax)
                 {
                     float stepValue = (vMax - vMin) / Math.Max(1f, (rows - 1));
-                    if (stepValue <= 0f) stepValue = 1f;
-
                     float rowIndex = (vMax - v) / stepValue;
                     rowIndex = Math.Clamp(rowIndex, 0f, rows - 1f);
-
-                    float y = (rowIndex + 0.0f) * cellHpx;
-
+                    float y = rowIndex * cellHpx;
                     return Math.Clamp(y, 0f, heightPx - 1f);
                 }
 
                 float ColumnCenterX(int colIndex)
                 {
-                    return (colIndex + 0.5f) * (widthPx / (float)columns);
+                    return (colIndex + 0.5f) * cellWpx;
                 }
 
                 var machPts = new List<(int col, float value)>();
