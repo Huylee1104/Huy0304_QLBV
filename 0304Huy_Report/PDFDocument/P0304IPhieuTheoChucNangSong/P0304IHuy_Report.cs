@@ -274,7 +274,7 @@ namespace P0304I.PDFDocument
                                         listNhiet: listNhietDo ?? new List<string>(),
                                         startIndex: startIndex,
                                         endIndex: endIndex,
-                                        dpi: 150
+                                        dpi: 450
                                     );
 
                                     table.Cell().Element(c =>
@@ -413,7 +413,7 @@ namespace P0304I.PDFDocument
                 List<string> listNhiet,
                 int startIndex,
                 int endIndex,
-                int dpi = 150)
+                int dpi = 450)
             {
                 if (columns <= 0 || rows <= 0) return Array.Empty<byte>();
 
@@ -547,7 +547,7 @@ namespace P0304I.PDFDocument
 
                 using var img = surface.Snapshot();
                 using var data = img.Encode(SKEncodedImageFormat.Png, 100);
-                File.WriteAllBytes("test.png", data.ToArray());
+
                 return data.ToArray();
             }
         }
