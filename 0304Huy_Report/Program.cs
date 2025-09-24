@@ -15,6 +15,7 @@ using S0304GPhieuLinhVatTuYTe.Services;
 using S0304FBKTinhHinhTraDuocNCC.Services;
 using S0304HBCTongSoSIDTheoKhoaPhong.Services;
 using S0304CPhieuTheoDoiChucNangSong.Services;
+using S0304LPhieuTheoDoiTruyenDich.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ builder.Services.AddScoped<I0304GPhieuLinhVatTuYTeService, S0304GPhieuLinhVatTuY
 builder.Services.AddScoped<I0304FBKTinhHinhTraDuocNCCService, S0304FBKTinhHinhTraDuocNCCService>();
 builder.Services.AddScoped<I0304HBCTongSoSIDTheoKhoaPhongService, S0304HBCTongSoSIDTheoKhoaPhongService>();
 builder.Services.AddScoped<I0304CPhieuTheoDoiChucNangSongService, S0304ITheoDoiChucNangSongService>();
+builder.Services.AddScoped<I0304LPhieuTheoDoiTruyenDichService, S0304LPhieuTheoDoiTruyenDichService>();
 
 builder.Services.AddDistributedMemoryCache(); // Bộ nhớ tạm cho session
 builder.Services.AddSession(options =>

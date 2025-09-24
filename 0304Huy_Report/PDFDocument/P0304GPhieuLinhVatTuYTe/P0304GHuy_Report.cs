@@ -194,7 +194,6 @@ namespace P0304F.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
                 .Padding(3)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(8));

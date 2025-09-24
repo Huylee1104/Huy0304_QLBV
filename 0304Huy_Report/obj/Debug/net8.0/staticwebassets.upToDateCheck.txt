@@ -4475,3 +4475,4 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
+wwwroot\dist\js\J0304LPhieuTheoDoiTruyenDich\J0304L_Report.js

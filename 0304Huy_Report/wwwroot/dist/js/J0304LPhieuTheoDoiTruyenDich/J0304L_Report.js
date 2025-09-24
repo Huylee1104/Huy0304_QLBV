@@ -236,11 +236,12 @@ function filterData(isPagination = false) {
         pageSize: pageSize
     }
     $.ajax({
-        url: '/phieu_theo_doi_chuc_nang_song/filter',
+        url: '/phieu_theo_doi_truyen_dich/filter',
         type: 'POST',
         data: payload,
         success: function (response) {
             if (response.success) {
+                console.log(response)
                 updateTable(response);
                 window.filteredData = Array.isArray(response.data) ? response.data : (response.data ? [response.data] : []);
                 totalRecords = response.totalRecords || totalRecords;
@@ -267,7 +268,7 @@ function filterData(isPagination = false) {
 function ajaxFilterRequest(payload) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '/phieu_theo_doi_chuc_nang_song/filter',
+            url: '/phieu_theo_doi_truyen_dich/filter',
             type: 'POST',
             data: payload,
             success: function (resp) { resolve(resp); },
@@ -324,15 +325,15 @@ function fetchAllFilteredData(idBenhNhan) {
 
 // ==================== KIỂM TRA DỮ LIỆU XUẤT ====================
 function validateExportDatesAndData() {
-    const idBenhNhan = $('#IDBenhNhan').val();
-    if (idBenhNhan === "0" || idBenhNhan === "" || idBenhNhan == null) {
-        toastr.error("Vui lòng chọn bệnh nhân");
-        return false;
-    }
-    if (!window.filteredData || window.filteredData.length === 0) {
-        toastr.error("Không có dữ liệu để xuất");
-        return false;
-    }
+    //const idBenhNhan = $('#IDBenhNhan').val();
+    //if (idBenhNhan === "0" || idBenhNhan === "" || idBenhNhan == null) {
+    //    toastr.error("Vui lòng chọn bệnh nhân");
+    //    return false;
+    //}
+    //if (!window.filteredData || window.filteredData.length === 0) {
+    //    toastr.error("Không có dữ liệu để xuất");
+    //    return false;
+    //}
     return true;
 }
 
@@ -345,7 +346,7 @@ function doExportPdf(finalData, btnElem) {
     };
     console.log(requestData, );
     console.log("data json: ", JSON.stringify(requestData));
-    fetch("/phieu_theo_doi_chuc_nang_song/export/pdf", {
+    fetch("/phieu_theo_doi_truyen_dich/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
@@ -358,7 +359,7 @@ function doExportPdf(finalData, btnElem) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `PhieuTheoDoiChucNangSong.pdf`;
+        a.download = `PhieuTheoDoiTruyenDich.pdf`;
         a.click();
         window.URL.revokeObjectURL(url);
         toastr.success("Xuất PDF thành công");
@@ -427,21 +428,19 @@ function formatCurrency(value) {
 function updateTable(response) {
     const tbody = $('.container_Team3.right tbody');
     tbody.empty();
-    if (response.data.thongTinBenhNhan) {
-        const info = response.data.thongTinBenhNhan;
+    if (response.data.thongTinBN) {
+        const info = response.data.thongTinBN;
         const rowInfo = `
         <tr class="table-info">
-            <td colspan="7" class="text-start">
-                <strong>Họ tên:</strong> ${info.tenBenhNhan || info.TenBenhNhan || ''} <br>
-                <strong>Mã bệnh nhân:</strong> ${info.maBenhNhan || info.MaBenhNhan || ''} <br>
+            <td colspan="10" class="text-start">
                 <strong>Khoa:</strong> ${info.tenKhoa || info.TenKhoa || ''} <br>
-                <strong>Tên phòng:</strong> ${info.tenPhong || info.TenPhong || ''} <br>
-                <strong>Tên buồng:</strong> ${info.tenGiuong || info.TenGiuong || ''} <br>
-                <strong>Tuổi:</strong> ${info.ngaySinh || info.NgaySinh || ''} <br>
-                <strong>Địa chỉ:</strong> ${info.diaChi || info.DiaChi || ''} <br>
+                <strong>Mã vào viện:</strong> ${info.maVaoVien || info.MaVaovien || ''}<br>
+                <strong>Họ tên:</strong> ${info.tenBenhNhan || info.TenBenhNhan || ''} <br>
                 <strong>Giới tính:</strong> ${info.gioiTinh || info.GioiTinh || ''} <br>
+                <strong>Tuổi:</strong> ${info.ngaySinh || info.NgaySinh || ''} <br>
+                <strong>Tên buồng:</strong> ${info.tenGiuong || info.TenGiuong || ''} <br>
+                <strong>Tên phòng:</strong> ${info.tenPhong || info.TenPhong || ''} <br>
                 <strong>Chẩn đoán:</strong> ${info.chanDoan || info.ChanDoan || ''} <br>
-                <strong>Mã vào viện:</strong> ${info.maVaoVien || info.MaVaovien || ''}
             </td>
         </tr>
     `;
@@ -449,23 +448,26 @@ function updateTable(response) {
     }
 
     // Render danh sách sinh hiệu
-    if (response.data.sinhHieus && response.data.sinhHieus.length > 0) {
-        response.data.sinhHieus.forEach((item, index) => {
+    if (response.data.truyenDich && response.data.truyenDich.length > 0) {
+        response.data.truyenDich.forEach((item, index) => {
             const row = `
                 <tr>
-                    <td class="text-center">${index + 1}</td>
-                    <td class="text-center">${formatDate(item.ngayKhaoSat || item.NgayKhaoSat)}</td>
-                    <td class="text-center">${item.mach || item.Mach ||''}</td>
-                    <td class="text-center">${item.nhietDo || item.NhietDo || ''}</td>
-                    <td class="text-center">${item.huyetAp || item.HuyetAp || ''}</td>
-                    <td class="text-center">${item.canNang || item.CanNang || ''}</td>
-                    <td class="text-center">${item.nhipTho || item.NhipTho || ''}</td>
+                    <td class="text-center text-nowrap">${index + 1}</td>
+                    <td class="text-center text-nowrap">${formatDate(item.ngayThang || item.NgayThang)}</td>
+                    <td class="text-start text-nowrap">${item.tenDichTruyen || item.TenDichTruyen ||''}</td>
+                    <td class="text-end text-nowrap">${item.soLuong || item.SoLuong || ''}</td>
+                    <td class="text-center text-nowrap">${item.soLo || item.SoLO || ''}</td>
+                    <td class="text-center text-nowrap">${item.tocDo || item.TocDo || ''}</td>
+                    <td class="text-center text-nowrap">${formatDate(item.batDau || item.BatDau || '') }</td>
+                    <td class="text-center text-nowrap">${formatDate(item.ketThuc || item.Ketthuc || '') }</td>
+                    <td class="text-start text-nowrap">${item.bsChiDinh || item.BSChiDich || ''}</td>
+                    <td class="text-start text-nowrap">${item.nguoiThucHien || item.NguoiThucHien || ''}</td>
                 </tr>
             `;
             tbody.append(row);
         });
     } else {
-        tbody.append('<tr><td colspan="7" class="text-center">Không có dữ liệu sinh hiệu</td></tr>');
+        tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 
