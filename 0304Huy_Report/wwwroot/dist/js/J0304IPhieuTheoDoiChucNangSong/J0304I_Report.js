@@ -231,7 +231,7 @@ function filterData(isPagination = false) {
 
     let payload = {
         IdChiNhanh: _idcn,
-        idBenhNhan: 9,
+        idVaoVien: 9,
         page: currentPage,
         pageSize: pageSize
     }
@@ -324,15 +324,15 @@ function fetchAllFilteredData(idBenhNhan) {
 
 // ==================== KIỂM TRA DỮ LIỆU XUẤT ====================
 function validateExportDatesAndData() {
-    const idBenhNhan = $('#IDBenhNhan').val();
-    if (idBenhNhan === "0" || idBenhNhan === "" || idBenhNhan == null) {
-        toastr.error("Vui lòng chọn bệnh nhân");
-        return false;
-    }
-    if (!window.filteredData || window.filteredData.length === 0) {
-        toastr.error("Không có dữ liệu để xuất");
-        return false;
-    }
+    //const idBenhNhan = $('#IDBenhNhan').val();
+    //if (idBenhNhan === "0" || idBenhNhan === "" || idBenhNhan == null) {
+    //    toastr.error("Vui lòng chọn bệnh nhân");
+    //    return false;
+    //}
+    //if (!window.filteredData || window.filteredData.length === 0) {
+    //    toastr.error("Không có dữ liệu để xuất");
+    //    return false;
+    //}
     return true;
 }
 

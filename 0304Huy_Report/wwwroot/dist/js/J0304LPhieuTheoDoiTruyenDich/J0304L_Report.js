@@ -231,7 +231,7 @@ function filterData(isPagination = false) {
 
     let payload = {
         IdChiNhanh: _idcn,
-        idBenhNhan: 9,
+        idVaoVien: 9,
         page: currentPage,
         pageSize: pageSize
     }

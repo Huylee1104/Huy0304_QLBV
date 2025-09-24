@@ -54,11 +54,11 @@ namespace C0304LPhieuTheoDoiTruyenDich.Controllers
         }
 
         [HttpPost("filter")]
-        public async Task<IActionResult> Filter(long IdChiNhanh, long? idBenhNhan = null, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> Filter(long IdChiNhanh, long? idVaoVien = null, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await _service.GetPhieuTheoDoiTruyenDich(IdChiNhanh, idBenhNhan, page, pageSize);
+                var result = await _service.GetPhieuTheoDoiTruyenDich(IdChiNhanh, idVaoVien, page, pageSize);
 
                 if (!result.PhieuTheoDoiTruyenDich.Success)
                 {

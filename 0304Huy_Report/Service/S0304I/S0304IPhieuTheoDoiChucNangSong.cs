@@ -29,7 +29,7 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
             _env = env;
         }
 
-        public async Task<M0304IPhieuTheoDoiChucNangSongResponse> GetPhieuTheoDoiChucNangSong(long idCN, long? idBenhNhan, int page = 1, int pageSize = 20)
+        public async Task<M0304IPhieuTheoDoiChucNangSongResponse> GetPhieuTheoDoiChucNangSong(long idCN, long? idVaoVien, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
 
@@ -59,7 +59,7 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
             }
 
             // Gọi service bạn đã viết
-            var hoSo = await GetHoSoBenhAnAsync(idBenhNhan ?? 0, idCN);
+            var hoSo = await GetHoSoBenhAnAsync(idVaoVien ?? 0, idCN);
 
             // Phân trang chỉ áp dụng cho SinhHieus
             var totalRecords = hoSo.SinhHieus?.Count ?? 0;
@@ -137,7 +137,7 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
             return pdfBytes;
         }
 
-        private async Task<HoSoBenhAnModel> GetHoSoBenhAnAsync(long idBenhNhan, long idCN)
+        private async Task<HoSoBenhAnModel> GetHoSoBenhAnAsync(long idVaoVien, long idCN)
         {
             var result = new HoSoBenhAnModel();
 
@@ -152,7 +152,7 @@ namespace S0304CPhieuTheoDoiChucNangSong.Services
 
                     var p1 = cmd.CreateParameter();
                     p1.ParameterName = "@IdVaoVien";
-                    p1.Value = idBenhNhan;
+                    p1.Value = idVaoVien;
                     cmd.Parameters.Add(p1);
 
                     var p2 = cmd.CreateParameter();
