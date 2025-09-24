@@ -108,25 +108,17 @@ namespace P0304L.PDFDocument
                     col.Item().Padding(5).Row(row =>
                     {
                         row.RelativeItem().AlignLeft()
-                            .Text(text =>
-                            {
-                                text.Span("*     Họ tên người bệnh: ").FontSize(10);
-                                text.Span($"{_data?.ThongTinBN?.TenBenhNhan ?? ""}").FontSize(10);
-                            });
+                        .Text(text =>
+                        {
+                            text.Span("*     Họ tên người bệnh: ").FontSize(10);
+                            text.Span($"{_data?.ThongTinBN?.TenBenhNhan ?? ""}").FontSize(10);
 
-                        row.RelativeItem().AlignLeft()
-                            .Text(text =>
-                            {
-                                text.Span("Ngày sinh: ").FontSize(10);
-                                text.Span(ngaySinhFull).FontSize(10);
-                            });
+                            text.Span("        Ngày sinh: ").FontSize(10);
+                            text.Span(ngaySinhFull).FontSize(10);
 
-                        row.RelativeItem().AlignLeft()
-                            .Text(text =>
-                            {
-                                text.Span("Giới tính: ").FontSize(10);
-                                text.Span($"{_data?.ThongTinBN?.GioiTinh ?? ""}").FontSize(10);
-                            });
+                            text.Span("       Giới tính: ").FontSize(10);
+                            text.Span($"{_data?.ThongTinBN?.GioiTinh ?? ""}").FontSize(10);
+                        });
                     });
 
                     col.Item().PaddingLeft(5).Row(row =>
