@@ -6,8 +6,6 @@ namespace M0304.Models.BangKeThu
 {
     public class M0304BangKeThu
     {
-        [Key]
-        public int Id { get; set; }
         public string? MaYTe { get; set; }
         public string? HoVaTen { get; set; }
         public string? QuyenSo { get; set; }
@@ -17,9 +15,9 @@ namespace M0304.Models.BangKeThu
         public decimal? Huy { get; set; }
         public decimal? Hoan { get; set; }
         public decimal? SoTien { get; set; }
-        public long? IDCN { get; set; }
-        public long? IDHTTT { get; set; }
         public long? IDNhanVien { get; set; }
+        public string? MaNhanVien { get; set; }
+        public string? TenNhanVien { get; set; }
     }
 
     public class M0304PagedResult<T>
@@ -59,6 +57,15 @@ namespace M0304.Models.BangKeThu
     public class ReportSummary
     {
         public M0304TongHopBangKeThu TongChung { get; set; }
-        public List<M0304TongTheoNhanVien> TongTheoNhanVien { get; set; }
+        public List<M0304TongTheoQuyenSo> TongTheoQuyenSo { get; set; }
+    }
+
+    public class M0304TongTheoQuyenSo
+    {
+        public string QuyenSo { get; set; }
+        public decimal TongHuy { get; set; }
+        public decimal TongHoan { get; set; }
+        public decimal TongSoTien { get; set; }
+        public decimal TongChenhLech { get; set; }
     }
 }

@@ -560,40 +560,100 @@ function updateTable(response) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
 
-    if (data.length > 0) { // Cần chỉnh lại chỗ này
-        let tongHuy = 0;
-        let tongHoan = 0;
-        let tongSoTien = 0;
-        data.forEach((item, index) => {
-            tongHuy += Number(item.huy || item.Huy || 0);
-            tongHoan += Number(item.hoan || item.Hoan || 0);
-            tongSoTien += Number(item.soTien || item.SoTien || 0);
-            const stt = (currentPage - 1) * pageSize + index + 1;
-            const row = `
-                <tr>
-                    <td class="text-nowrap text-center">${stt}</td>
-                    <td class="text-nowrap text-center">${item.maYTe || item.MaYTe || ''}</td>
-                    <td class="text-nowrap text-start">${item.HoVaTen || item.hoVaTen || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${item.quyenSo || item.QuyenSo || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${item.soBienLai || item.SoBienLai || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${item.loai || item.Loai || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${formatDate(item.ngayThu || item.NgayThu)}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.huy || item.Huy)}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.hoan || item.Hoan)}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.soTien || item.SoTien)}</td>
-                </tr>
-            `;
-            tbody.append(row);
+    if (data.length > 0) {
+        const groupedData = {};
+        data.forEach(item => {
+            const nhanVien = item.tenNhanVien || item.TenNhanVien || "Không rõ";
+            if (!groupedData[nhanVien]) {
+                groupedData[nhanVien] = [];
+            }
+            groupedData[nhanVien].push(item);
         });
-        const totalRow = `
-                <tr class="fw-bold">
-                    <td colspan="7" class="text-center text-nowrap">Tổng cộng</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHuy) }</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHoan)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongSoTien)}</td>
-                </tr>
-            `;
-        tbody.append(totalRow);
+
+        const sortedNhanVienList = Object.keys(groupedData).sort((a, b) =>
+            a.localeCompare(b, 'vi', { sensitivity: 'base' })
+        );
+
+        sortedNhanVienList.forEach(nhanVien => {
+            let tongTienNV = 0;
+            let tongHuyNV = 0;
+            let tongHoanTraNV = 0;
+            const itemsForNhanVien = groupedData[nhanVien] || [];
+
+            const groupedByQuyenSo = {};
+            itemsForNhanVien
+                .sort((a, b) => {
+                    const qsA = (a.quyenSo || a.QuyenSo || "").toString();
+                    const qsB = (b.quyenSo || b.QuyenSo || "").toString();
+                    return qsA.localeCompare(qsB, 'vi', { sensitivity: 'base' });
+                })
+                .forEach(item => {
+                    const quyenSo = item.quyenSo || item.QuyenSo || "Không rõ";
+                    if (!groupedByQuyenSo[quyenSo]) groupedByQuyenSo[quyenSo] = [];
+                    groupedByQuyenSo[quyenSo].push(item);
+                });
+            const nvRow = `
+            <tr class="fw-bold">
+                <td colspan="10" class = "text-start">Nhân viên: ${nhanVien}</td>
+            </tr>`;
+            tbody.append(nvRow);
+
+            Object.keys(groupedByQuyenSo).forEach(quyenSo => {
+                let tongThuPhiQS = 0;
+                let tongHuyQS = 0;
+                let tongHoanTraQS = 0;
+
+                const quyenSoList = groupedByQuyenSo[quyenSo];
+
+                // Tính tổng trước
+                quyenSoList.forEach(item => {
+                    tongThuPhiQS += Number(item.soTien || item.SoTien || 0);
+                    tongHuyQS += Number(item.huy || item.Huy || 0);
+                    tongHoanTraQS += Number(item.hoan || item.Hoan || 0);
+                });
+
+                // Header quyển sổ (có tổng nằm ở đây)
+                const maNV = quyenSoList[0].maNhanVien || quyenSoList[0].MaNhanVien || "";
+                const qsHeaderRow = `
+                <tr class="fw-bold table-light">
+                    <td colspan="7" class="text-start" style = "padding-left:40px;">${maNV} - ${quyenSo}</td>
+                    <td class="text-end">${formatCurrency(tongHuyQS)}</td>
+                    <td class="text-end">${formatCurrency(tongHoanTraQS)}</td>
+                    <td class="text-end">${formatCurrency(tongThuPhiQS)}</td>
+                </tr>`;
+                tbody.append(qsHeaderRow);
+
+                quyenSoList.forEach((item, index) => {
+                    const stt = (currentPage - 1) * pageSize + index + 1;
+                    const row = `
+                        <tr>
+                            <td class="text-nowrap text-center">${stt}</td>
+                            <td class="text-nowrap text-center">${item.maYTe || item.MaYTe || ''}</td>
+                            <td class="text-nowrap text-start">${item.HoVaTen || item.hoVaTen || 'Không rõ'}</td>
+                            <td class="text-nowrap text-center">${item.quyenSo || item.QuyenSo || 'Không rõ'}</td>
+                            <td class="text-nowrap text-center">${item.soBienLai || item.SoBienLai || 'Không rõ'}</td>
+                            <td class="text-nowrap text-center">${item.loai || item.Loai || 'Không rõ'}</td>
+                            <td class="text-nowrap text-center">${formatDate(item.ngayThu || item.NgayThu)}</td>
+                            <td class="text-nowrap text-end">${formatCurrency(item.huy || item.Huy)}</td>
+                            <td class="text-nowrap text-end">${formatCurrency(item.hoan || item.Hoan)}</td>
+                            <td class="text-nowrap text-end">${formatCurrency(item.soTien || item.SoTien)}</td>
+                        </tr>
+                    `;
+                    tbody.append(row);
+                    tongTienNV += tongThuPhiQS;
+                    tongHuyNV += tongHuyQS;
+                    tongHoanTraNV += tongHoanTraQS;
+                });
+            });
+            const totalRowNV = `
+            <tr class="fw-bold table-secondary">
+                <td colspan="7" class="text-end">Tổng trang:</td>
+                <td class="text-end">${formatCurrency(tongHuyNV)}</td>
+                <td class="text-end">${formatCurrency(tongHoanTraNV)}</td>
+                <td class="text-end">${formatCurrency(tongTienNV)}</td>
+            </tr>`;
+            tbody.append(totalRowNV);
+        });
     } else {
         tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }

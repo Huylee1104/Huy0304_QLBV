@@ -44,7 +44,7 @@ namespace C0304.Db.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<M0304BBCHoaDonDienTuDV>().ToTable("T0304_BCHoaDonDienTuDV");
-            modelBuilder.Entity<M0304BangKeThu>().ToTable("T0304_BangKeThuNgoaiTru");
+            modelBuilder.Entity<M0304BangKeThu>().HasNoKey();
             modelBuilder.Entity<M0304DBKBienLaiTamUng>().HasNoKey();
             modelBuilder.Entity<M0304EBKBienLaiHoanUng>().ToTable("T0304_BKBienLaiHoanUng");
             modelBuilder.Entity<M0304ThongTinDoanhNghiep>().ToTable("ThongTinDoanhNghiep");

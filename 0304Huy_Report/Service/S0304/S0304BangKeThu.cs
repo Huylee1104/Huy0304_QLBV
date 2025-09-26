@@ -63,7 +63,7 @@ namespace S0304BangKeThu.Services
                 };
             }
             var allData = await _context.M0304BangKeThus
-                .FromSqlRaw("EXEC dbo.S0304_BangKeThuTienNgaoiTru @TuNgay, @DenNgay, @IDCN, @IDHTTT, @IDNhanVien",
+                .FromSqlRaw("EXEC dbo.[S0304_BangKeThuNgoaiTru] @TuNgay, @DenNgay, @IDCN, @IDHTTT, @IDNhanVien",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
@@ -135,15 +135,16 @@ namespace S0304BangKeThu.Services
             };
         }
 
-        private async Task<(string tenHTTT, string tenNhanVien, List<M0304NhanVienModel> danhSachNhanVien, M0304TongHopBangKeThu tongChung, List<M0304TongTheoNhanVien> tongTheoNhanVien)>
-            Get_HTTT_NV(long idHTTT, long idNhanVien, List<M0304BangKeThu> data)
+        private async Task<(string tenHTTT, string tenNhanVien, List<M0304NhanVienModel> danhSachNhanVien, List<M0304TongTheoQuyenSo> tongTheoQuyenSo)>
+    Get_HTTT_NV(long idHTTT, long idNhanVien, List<M0304BangKeThu> data)
         {
             var allHTTT = await _htttService.GetAllHTTT();
             var tenHTTT = allHTTT.FirstOrDefault(ht => ht.id == idHTTT)?.ten ?? "Tất cả";
 
             List<M0304NhanVienModel> danhSachNhanVien = null;
-            List<M0304TongTheoNhanVien> tongTheoNhanVien = null;
+            List<M0304TongTheoQuyenSo> tongTheoQuyenSo = null;
             string tenNhanVien = "Tất cả nhân viên";
+
             var allNhanVien = await _nhanVienService.GetAllNhanVien();
 
             if (idNhanVien != 0)
@@ -156,32 +157,21 @@ namespace S0304BangKeThu.Services
                 danhSachNhanVien = allNhanVien.Where(nv => ids.Contains(nv.ID)).ToList();
             }
 
-            var tongChung = new M0304TongHopBangKeThu
-            {
-                TongHuy = data.Sum(r => r.Huy ?? 0m),
-                TongHoan = data.Sum(r => r.Hoan ?? 0m),
-                TongSoTien = data.Sum(r => r.SoTien ?? 0m),
-                TongChenhLech = data.Sum(r => (r.SoTien ?? 0m) - ((r.Huy ?? 0m) + (r.Hoan ?? 0m)))
-            };
-
-            // 2. Tính tổng theo nhân viên
-            if (idNhanVien == 0)
-            {
-                tongTheoNhanVien = data
-                .GroupBy(r => r.IDNhanVien)
-                .Select(g => new M0304TongTheoNhanVien
+            tongTheoQuyenSo = data
+                .GroupBy(r => r.QuyenSo) // gom nhóm theo QuyenSo
+                .Select(g => new M0304TongTheoQuyenSo
                 {
-                    IDNhanVien = g.Key ?? 0,
+                    QuyenSo = g.Key, // g.Key chính là QuyenSo
                     TongHuy = g.Sum(x => x.Huy ?? 0m),
                     TongHoan = g.Sum(x => x.Hoan ?? 0m),
                     TongSoTien = g.Sum(x => x.SoTien ?? 0m),
                     TongChenhLech = g.Sum(x => (x.SoTien ?? 0m) - ((x.Huy ?? 0m) + (x.Hoan ?? 0m)))
                 })
                 .ToList();
-            }
 
-            return (tenHTTT, tenNhanVien, danhSachNhanVien, tongChung, tongTheoNhanVien);
+            return (tenHTTT, tenNhanVien, danhSachNhanVien, tongTheoQuyenSo);
         }
+
         public async Task<byte[]> ExportBaoCaoGoiKhamPdfAsync(ExportRequest request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
@@ -190,7 +180,7 @@ namespace S0304BangKeThu.Services
 
             var data = request.Data ?? new List<M0304BangKeThu>();
             var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate,
-                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongChung, HTTT_NV.tongTheoNhanVien, doanhNghiepObj, logoPath);
+                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -203,7 +193,7 @@ namespace S0304BangKeThu.Services
 
             var data = request.Data ?? new List<M0304BangKeThu>();
             var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate,
-                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongChung, HTTT_NV.tongTheoNhanVien, doanhNghiepObj, logoPath);
+                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;

@@ -21,8 +21,7 @@ namespace P0304.PDFDocument
         private string _tenHTTT;
         private readonly string _logoPath;
 
-        private M0304TongHopBangKeThu _tongChung;
-        private List<M0304TongTheoNhanVien> _tongTheoNhanVien;
+        private List<M0304TongTheoQuyenSo> _tongTheoQuyenSo;
         private List<M0304NhanVienModel> _danhSachNhanVien;
 
         public P0304ReportTemplatePDF(
@@ -32,8 +31,7 @@ namespace P0304.PDFDocument
             string tenHTTT,
             string tenNhanVien,
             List<M0304NhanVienModel> danhSachNhanVien,
-            M0304TongHopBangKeThu tongChung,
-            List<M0304TongTheoNhanVien> tongTheoNhanVien,
+            List<M0304TongTheoQuyenSo> tongTheoQuyenSo,
             M0304ThongTinDoanhNghiep dataDN,
             string logoPath = null
         )
@@ -45,8 +43,7 @@ namespace P0304.PDFDocument
             _tenHTTT = tenHTTT;
             _tenNhanVien = tenNhanVien;
             _danhSachNhanVien = danhSachNhanVien ?? new List<M0304NhanVienModel>();
-            _tongChung = tongChung ?? new M0304TongHopBangKeThu();
-            _tongTheoNhanVien = tongTheoNhanVien ?? new List<M0304TongTheoNhanVien>();
+            _tongTheoQuyenSo = tongTheoQuyenSo ?? new List<M0304TongTheoQuyenSo>();
             _logoPath = logoPath;
         }
 
@@ -59,7 +56,7 @@ namespace P0304.PDFDocument
             {
                 page.Size(PageSizes.A4);
                 page.Margin(15);
-                page.DefaultTextStyle(x => x.FontSize(10));
+                page.DefaultTextStyle(x => x.FontSize(9));
 
                 page.Header().ShowOnce().Column(col =>
                 {
@@ -80,8 +77,6 @@ namespace P0304.PDFDocument
                             {
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
                                 info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -97,7 +92,7 @@ namespace P0304.PDFDocument
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(9);
+                            .FontSize(9).Italic();
 
                         center.Item()
                             .Width(250)
@@ -115,14 +110,14 @@ namespace P0304.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
+                            columns.ConstantColumn(50);
+                            columns.RelativeColumn();
                             columns.ConstantColumn(70);
-                            columns.RelativeColumn(2);
+                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(45);
                             columns.ConstantColumn(60);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(40);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(40);
-                            columns.ConstantColumn(40);
+                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(50);
                             columns.ConstantColumn(50);
                         });
 
@@ -146,157 +141,120 @@ namespace P0304.PDFDocument
                         {
                             foreach (var nv in _danhSachNhanVien)
                             {
-                                var tongNV = _tongTheoNhanVien.FirstOrDefault(t => t.IDNhanVien == nv.ID);
-                                var dataNV = _data.Where(d => d.IDNhanVien == nv.ID).ToList();
-                                if (tongNV.TongSoTien > 0)
+                                table.Cell().ColumnSpan(10)
+                                    .Element(CellStyle)
+                                    .AlignLeft()
+                                    .Text(nv.TenNhanVien?.ToUpper() ?? "")
+                                    .FontSize(8)
+                                    .Bold();
+
+                                var quyenSoList = _tongTheoQuyenSo
+                                    .Where(q => _data.Any(d => d.IDNhanVien == nv.ID && d.QuyenSo == q.QuyenSo))
+                                    .ToList();
+
+                                foreach (var qs in quyenSoList)
                                 {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongSoTien.ToString("N0") ?? "0");
-                                }
-                                foreach (var item in dataNV)
-                                {
-                                    if (item.SoTien > 0)
+                                    DateTime? ngayThu = _data
+                                        .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+                                        .Max(d => d.NgayThu);
+
+                                    table.Cell().ColumnSpan(6)
+                                        .Element(CellStyleLeft)
+                                        .AlignLeft()
+                                        .Text($"      {nv.MaNhanVien} - {qs.QuyenSo}")
+                                        .FontSize(9)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Element(CellStyleNoBorder)
+                                        .AlignCenter()
+                                        .Text(ngayThu.HasValue ? ngayThu.Value.ToString("dd-MM-yyyy") : "")
+                                        .FontSize(8)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Element(CellStyleNoBorder)
+                                        .AlignRight()
+                                        .Text(qs.TongHuy.ToString("N0"))
+                                        .FontSize(8)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Element(CellStyleNoBorder)
+                                        .AlignRight()
+                                        .Text(qs.TongHoan.ToString("N0"))
+                                        .FontSize(8)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Element(CellStyleRight)
+                                        .AlignRight()
+                                        .Text(qs.TongSoTien.ToString("N0"))
+                                        .FontSize(8)
+                                        .Bold();
+
+                                    var chiTiet = _data
+                                        .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+                                        .ToList();
+
+                                    foreach (var item in chiTiet)
                                     {
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                        table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
-                                    }
-                                }
-                                if (tongNV.TongHuy > 0)
-                                {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
-                                    table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongHuy.ToString("N0") ?? "0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                }
-                                foreach (var item in dataNV)
-                                {
-                                    if (item.Huy > 0)
-                                    {
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                        table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
-                                    }
-                                }
-                                if (tongNV.TongHoan > 0)
-                                {
-                                    table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {nv.TenNhanVien}").Bold();
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(tongNV?.TongHoan.ToString("N0") ?? "0");
-                                    table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                }
-                                foreach (var item in dataNV)
-                                {
-                                    if (item.Hoan > 0)
-                                    {
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                        table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                        table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                        table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text((stt++).ToString());
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text(item.MaYTe ?? "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .Text(item.HoVaTen ?? "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text(item.QuyenSo ?? "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text(item.SoBienLai ?? "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text(item.Loai ?? "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignCenter()
+                                            .Text(item.NgayThu.HasValue ? item.NgayThu.Value.ToString("dd-MM-yyyy") : "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignRight()
+                                            .Text(item.Huy.HasValue ? item.Huy.Value.ToString("N0") : "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignRight()
+                                            .Text(item.Hoan.HasValue ? item.Hoan.Value.ToString("N0") : "");
+
+                                        table.Cell()
+                                            .Element(CellStyle)
+                                            .AlignRight()
+                                            .Text(item.SoTien.HasValue ? item.SoTien.Value.ToString("N0") : "");
                                     }
                                 }
                             }
                         }
-                        else
-                        {
-                            if (_tongChung.TongSoTien > 0)
-                            {
-                                table.Cell().ColumnSpan(7).Element(CellStyle).AlignLeft().Text($"Tên nhân viên: {_tenNhanVien}").Bold();
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongSoTien.ToString("N0"));
-                            }
-                            foreach (var item in _data)
-                            {
-                                if (item.SoTien > 0)
-                                {
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                    table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
-                                }
-                            }
-                            if (_tongChung.TongHuy > 0)
-                            {
-                                table.Cell().ColumnSpan(7)
-                                    .Element(CellStyle)
-                                    .AlignLeft()
-                                    .Text($"Tên nhân viên: {_tenNhanVien}").Bold();
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHuy.ToString("N0"));
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                            }
-                            foreach (var item in _data)
-                            {
-                                if (item.Huy > 0)
-                                {
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                    table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
-                                }
-                            }
-                            if (_tongChung.TongHoan > 0)
-                            {
-                                table.Cell().ColumnSpan(7)
-                                    .Element(CellStyle)
-                                    .AlignLeft()
-                                    .Text($"Tên nhân viên: {_tenNhanVien}").Bold();
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHoan.ToString("N0"));
-                                table.Cell().Element(CellStyle).AlignRight().Text("0");
-                            }
-                            foreach (var item in _data)
-                            {
-                                if (item.Hoan > 0)
-                                {
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.MaYTe ?? "");
-                                    table.Cell().Element(CellStyle).AlignLeft().Text(item.HoVaTen ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.QuyenSo ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.SoBienLai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.Loai ?? "");
-                                    table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayThu?.ToString("dd-MM-yyyy") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Huy?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.Hoan?.ToString("N0") ?? "");
-                                    table.Cell().Element(CellStyle).AlignRight().Text(item.SoTien?.ToString("N0") ?? "");
-                                }
-                            }
-                        }
+
+                        var tongHuyAll = _data.Sum(x => x.Huy ?? 0m);
+                        var tongHoanAll = _data.Sum(x => x.Hoan ?? 0m);
+                        var tongSoTienAll = _data.Sum(x => x.SoTien ?? 0m);
 
                         col.Item().EnsureSpace()
                         .Column(cuoi =>
@@ -308,10 +266,16 @@ namespace P0304.PDFDocument
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
-                                    columns.RelativeColumn(7);
+                                    columns.ConstantColumn(30);
+                                    columns.ConstantColumn(50);
                                     columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                    columns.RelativeColumn();
+                                    columns.ConstantColumn(70);
+                                    columns.ConstantColumn(50);
+                                    columns.ConstantColumn(45);
+                                    columns.ConstantColumn(60);
+                                    columns.ConstantColumn(50);
+                                    columns.ConstantColumn(50);
+                                    columns.ConstantColumn(50);
                                 });
 
                                 table.Cell().ColumnSpan(7)
@@ -320,17 +284,24 @@ namespace P0304.PDFDocument
                                     .Text("Tổng cộng")
                                     .Bold();
 
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHuy.ToString("N0"));
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongHoan.ToString("N0"));
-                                table.Cell().Element(CellStyle).AlignRight().Text(_tongChung.TongSoTien.ToString("N0"));
+                                table.Cell().Element(CellStyle).AlignRight().Text(tongHuyAll.ToString("N0")).Bold();
+                                table.Cell().Element(CellStyle).AlignRight().Text(tongHoanAll.ToString("N0")).Bold();
+                                table.Cell().Element(CellStyle).AlignRight().Text(tongSoTienAll.ToString("N0")).Bold();
                             });
 
-                            cuoi.Item().Height(10);
+                            cuoi.Item().Height(1);
 
-                            // Phần ghi chú, chữ ký
-                            cuoi.Item().Text($"Số tiền phải nộp: {_tongChung.TongChenhLech:N0}").Bold();
+                            cuoi.Item().Text(text =>
+                            {
+                                text.Span("Số tiền phải nộp: ").NormalWeight();
+                                text.Span($"{tongSoTienAll:N0}").Bold();
+                            });
 
-                            cuoi.Item().Text($"Bằng chữ: {H0304NumberToTextHelper.ConvertSoThanhChu(_tongChung.TongChenhLech)}").Italic();
+                            cuoi.Item().Text(text =>
+                            {
+                                text.Span("Bằng chữ: ").NormalWeight();
+                                text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(tongSoTienAll)}").Bold().Italic();
+                            });
 
                             cuoi.Item().Row(row =>
                             {
@@ -340,7 +311,7 @@ namespace P0304.PDFDocument
                                     right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                                     right.Item().AlignCenter().Text("Người lập bảng").Bold();
                                     right.Item().Height(40);
-                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
+                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu").Bold();
                                 });
                             });
                         });
@@ -362,16 +333,32 @@ namespace P0304.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Background(Colors.Grey.Lighten3)
-                .Padding(4)
+                .Padding(3)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(10));
 
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
-                .Padding(4)
+                .Padding(3)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(9));
+                .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleNoBorder(IContainer container) =>
+            container
+                .Padding(3)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleLeft(IContainer container) =>
+        container
+        .BorderLeft(1)
+        .Padding(3)
+        .AlignMiddle()
+        .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleRight(IContainer container) =>
+        container
+        .BorderRight(1)
+        .Padding(3)
+        .AlignMiddle()
+        .DefaultTextStyle(x => x.FontSize(8));
     }
 }
