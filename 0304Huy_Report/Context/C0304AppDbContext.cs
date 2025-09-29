@@ -12,6 +12,7 @@ using M0304H.Models.BCTongSoSIDTheoKhoaPhong;
 using M0304NhanVien.Models;
 using M0304I.Models.PhieuTheoDoiChucNangSong;
 using M0304L.Models.PhieuTheoDoiTruyenDich;
+using M0304M.Models.BaoCaoHangHoa;
 using Microsoft.EntityFrameworkCore;
 
 namespace C0304.Db.Models
@@ -39,6 +40,9 @@ namespace C0304.Db.Models
         public DbSet<SinhHieuModel> SinhHieus { get; set; }
         public DbSet<ThongTinBNModel> ThongTinBNs { get; set; }
         public DbSet<TruyenDich> TruyenDichs { get; set; }
+        public DbSet<M0304MHangNhap> HangNhapReports { get; set; }
+        public DbSet<M0304MHangXuat> HangXuatReports { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +63,9 @@ namespace C0304.Db.Models
             modelBuilder.Entity<SinhHieuModel>().HasNoKey();
             modelBuilder.Entity<ThongTinBNModel>().HasNoKey();
             modelBuilder.Entity<TruyenDich>().HasNoKey();
+            modelBuilder.Entity<M0304MHangNhap>().HasNoKey();
+            modelBuilder.Entity<M0304MHangXuat>().HasNoKey();
+
         }
     }
 }

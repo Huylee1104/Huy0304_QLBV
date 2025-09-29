@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["NonSixOs"] = true;
 }
+@{
+    var jsonkhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSKhoHang);
+}
 
 <style>
     table {
@@ -20,28 +23,18 @@
         z-index: 22;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 62px;
+        width: 147px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(3) {
+    .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
-        left: 62px; /* bằng đúng width cột 1 */
+        left: 147px; /* bằng đúng width cột 1 */
         z-index: 22;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 160px;
-    }
-
-    .table-wrapper-scroll thead th:nth-child(6) {
-        position: sticky;
-        top: 0;
-        left: 222px; /* bằng đúng width cột 1 */
-        z-index: 22;
-        background-color: #f2f2f2;
-        border-right: 1px solid #ccc !important;
-        min-width: 160px;
-        max-width: 200px;
+        min-width: 100px;
+		max-width: 150px;
     }
 
     /* Body - Cố định 2 cột (trừ dòng tổng) */
@@ -51,26 +44,17 @@
         z-index: 20;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 62px;
+        width: 147px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
+    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung){
         position: sticky;
-        left: 62px; /* bằng đúng width cột 1 */
+        left: 147px; /* bằng đúng width cột 1 */
         z-index: 20;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 160px;
-    }
-
-    .table-wrapper-scroll tbody tr td:nth-child(6):not(.khongapdung) {
-        position: sticky;
-        left: 222px; /* bằng đúng width cột 1 */
-        z-index: 20;
-        background-color: white;
-        border-right: 1px solid #ccc !important;
-        min-width: 160px;
-        max-width: 200px;
+        min-width: 100px;
+        max-width: 150px;
     }
 
     /* Hover cho dữ liệu thường */
@@ -104,7 +88,7 @@
                     </div>
                 </div>
 
-                <div class="select-row" id="selectContainer"
+                <div class ="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -138,7 +122,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon2">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -146,9 +130,36 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-                    <label style="padding:0; margin: 5px 0px;">
-                        <button id="btnFilter" class="btn btn-outline-primary mb-3">
-                            <i class="bi bi-funnel"></i> Lọc danh sách
+                    <!--Kho Hàng-->
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
+                        <label for="KhoTra" class="form-label">Kho trả</label>
+                    <input type="text" class="form-control" id="comboBox" name="tenKhoTra" data-value="@ViewBag.khoHang">
+                    <input type="hidden" id="IDKhoHang" name="IDKhoHang" data-value="@ViewBag.IDKhoHang" />
+                        <div class="dropdownList" id="dropdownList"></div>
+                    </div>
+                    <!--Nhóm hàng-->
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                        <label for="NhomHang" class="form-label">Nhóm hàng hóa</label>
+                        <input type="text" class="form-control" id="comboBox2" name="tenNhomHang" data-value="@ViewBag.nhomHang">
+                        <input type="hidden" id="IDNhomHang" name="NhomHang" data-value="@ViewBag.IDNhomHang" />
+                        <div class="dropdownList2" id="dropdownList2"></div>
+                    </div>
+                    <!--Hàng hóa-->
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                        <label for="HangHoa" class="form-label">Hàng hóa</label>
+                        <input type="text" class="form-control" id="comboBox3" name="tenHangHoa" data-value="@ViewBag.hangHoa">
+                        <input type="hidden" id="IDHangHoa" name="HangHoa" data-value="@ViewBag.IDHangHoa" />
+                        <div class="dropdownList3" id="dropdownList3"></div>
+                    </div>
+
+                    <label style="padding:0; margin:0px;">
+                        <button id="btnFilterNhap" class="btn btn-outline-primary mb-3">
+                            <i class="bi bi-funnel"></i> Danh sách nhập
+                        </button>
+                    </label>
+                    <label style="padding:0; margin:0px;">
+                        <button id="btnFilterXuat" class="btn btn-outline-primary mb-3">
+                            <i class="bi bi-funnel"></i> Danh sách xất
                         </button>
                     </label>
 
@@ -177,18 +188,11 @@
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
-                                <th class="text-center text-nowrap">STT</th>
-                                <th class="text-center text-nowrap">Số chứng từ</th>
-                                <th class="text-center text-nowrap">Ngày thu</th>
-                                <th class="text-center text-nowrap">Giá trị</th>
-                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
-                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
-                                <th class="text-center text-nowrap">Năm sinh</th>
-                                <th class="text-center text-nowrap">Địa chỉ</th>
-                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
-                                <th class="text-center text-nowrap">E_Invoice No</th>
-                                <th class="text-center text-nowrap">Giá trị HDDT</th>
-                                <th class="text-center text-nowrap">Mã tra cứu</th>
+                                <th class="text-center text-nowrap first-col">STT</th>
+                                <th class="text-center text-nowrap second-col">Mã vật tư</th>
+                                <th class="text-center text-nowrap">Tên vật tư</th>
+                                <th class="text-center text-nowrap">Đơn vị tính</th>
+                                <th class="text-center text-nowrap">Yêu cầu</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -217,7 +221,14 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
+    <script>
+    let provincesDataKhoHang = @Html.Raw(ViewBag.DSKhoHang ?? "[]");
+
+        if (typeof provincesDataKhoHang === "string") {
+            provincesDataKhoHang = JSON.parse(provincesDataKhoHang);
+        }
+    </script>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304BBCHoaDonDienTuDichVu/J0304B_Report.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304GPhieuLinhVatTuYTe/J0304G_Report.js")" defer asp-append-version="true"></script>
     }

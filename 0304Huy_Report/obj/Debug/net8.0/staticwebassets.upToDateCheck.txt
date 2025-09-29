@@ -1,8 +1,10 @@
+wwwroot\dist\css\C0304\C0304_Report.css
 wwwroot\dist\css\site.css
 wwwroot\dist\data\json\DM_HTTT.json
 wwwroot\dist\data\json\Dm_NhanVien.json
 wwwroot\dist\img\logo.png
 wwwroot\dist\js\BienChung.js
+wwwroot\dist\js\J0304BangKeThu\J0304_Report.js
 wwwroot\dist\js\J0304BBCHoaDonDienTuDichVu\J0304B_Report.js
 wwwroot\dist\js\J0304CBaoCaoThuDichVu\J0304C_Report.js
 wwwroot\dist\js\J0304DBKBienLaiTamUng\J0304D_Report.js
@@ -4474,5 +4476,3 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
-wwwroot\dist\css\C0304\C0304_Report.css
-wwwroot\dist\js\J0304BangKeThu\J0304_Report.js
