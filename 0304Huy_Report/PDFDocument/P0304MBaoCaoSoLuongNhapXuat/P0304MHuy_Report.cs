@@ -1,0 +1,327 @@
+﻿using H0304.NumberToText.Helpers;
+using M0304M.Models.BaoCaoHangHoa;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using M0304.Models.ThongTinDoanhNghiep;
+
+namespace P0304M.PDFDocument
+{
+    public class P0304MReportNhapTemplatePDF : IDocument
+    {
+        private readonly List<M0304MHangNhap> _data;
+        private readonly M0304ThongTinDoanhNghiep _dataDN;
+        private string _ngayBatDau;
+        private string _ngayKetThuc;
+
+        public P0304MReportNhapTemplatePDF(
+            List<M0304MHangNhap> data,
+            string ngayBatDau,
+            string ngayKetThuc,
+            M0304ThongTinDoanhNghiep dataDN
+        )
+        {
+            _data = data ?? new List<M0304MHangNhap>();
+            _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
+            _ngayBatDau = ngayBatDau;
+            _ngayKetThuc = ngayKetThuc;
+        }
+
+        public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+        public DocumentSettings GetSettings() => DocumentSettings.Default;
+
+        public void Compose(IDocumentContainer container)
+        {
+            container.Page(page =>
+            {
+                page.Size(PageSizes.A4);
+                page.Margin(15);
+                page.DefaultTextStyle(x => x.FontSize(9));
+
+                page.Header().ShowOnce().Column(col =>
+                {
+                    col.Item().Row(row =>
+                    {
+                        row.RelativeItem(3).Row(left =>
+                        {
+                            left.RelativeItem().Column(info =>
+                            {
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                            });
+                        });
+                    });
+
+                    col.Item().AlignCenter().Column(center =>
+                    {
+                        center.Item()
+                            .Text("BẢNG KÊ THU TIỀN NGOẠI TRÚ THEO BL/HĐ")
+                            .Bold()
+                            .FontSize(12);
+
+                        center.Item()
+                            .Width(250)
+                            .AlignCenter()
+                            .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
+                            .FontSize(9).Italic();
+                    });
+                });
+
+                page.Content().PaddingVertical(6).Column(col =>
+                {
+                    col.Item().Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.ConstantColumn(30);
+                            columns.ConstantColumn(50);
+                            columns.RelativeColumn();
+                            columns.ConstantColumn(70);
+                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(50);
+                            columns.ConstantColumn(50);
+                        });
+
+                        table.Header(header =>
+                        {
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("STT");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Mã y tế");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Họ và tên");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Quyển sổ");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số biên lai");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Loại");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Ngày thu");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Hủy");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Hoàn");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số tiền");
+                        });
+
+                        int stt = 1;
+
+                        //if (_danhSachNhanVien != null && _danhSachNhanVien.Any())
+                        //{
+                        //    foreach (var nv in _danhSachNhanVien)
+                        //    {
+                        //        table.Cell().ColumnSpan(10)
+                        //            .Element(CellStyle)
+                        //            .AlignLeft()
+                        //            .Text(nv.TenNhanVien?.ToUpper() ?? "")
+                        //            .FontSize(8)
+                        //            .Bold();
+
+                        //        var quyenSoList = _tongTheoQuyenSo
+                        //            .Where(q => _data.Any(d => d.IDNhanVien == nv.ID && d.QuyenSo == q.QuyenSo))
+                        //            .ToList();
+
+                        //        foreach (var qs in quyenSoList)
+                        //        {
+                        //            DateTime? ngayThu = _data
+                        //                .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+                        //                .Max(d => d.NgayThu);
+
+                        //            table.Cell().ColumnSpan(6)
+                        //                .Element(CellStyleLeft)
+                        //                .AlignLeft()
+                        //                .Text($"      {nv.MaNhanVien} - {qs.QuyenSo}")
+                        //                .FontSize(9)
+                        //                .Bold();
+
+                        //            table.Cell()
+                        //                .Element(CellStyleNoBorder)
+                        //                .AlignCenter()
+                        //                .Text(ngayThu.HasValue ? ngayThu.Value.ToString("dd-MM-yyyy") : "")
+                        //                .FontSize(8)
+                        //                .Bold();
+
+                        //            table.Cell()
+                        //                .Element(CellStyleNoBorder)
+                        //                .AlignRight()
+                        //                .Text(qs.TongHuy.ToString("N0"))
+                        //                .FontSize(8)
+                        //                .Bold();
+
+                        //            table.Cell()
+                        //                .Element(CellStyleNoBorder)
+                        //                .AlignRight()
+                        //                .Text(qs.TongHoan.ToString("N0"))
+                        //                .FontSize(8)
+                        //                .Bold();
+
+                        //            table.Cell()
+                        //                .Element(CellStyleRight)
+                        //                .AlignRight()
+                        //                .Text(qs.TongSoTien.ToString("N0"))
+                        //                .FontSize(8)
+                        //                .Bold();
+
+                        //            var chiTiet = _data
+                        //                .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+                        //                .ToList();
+
+                        //            foreach (var item in chiTiet)
+                        //            {
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text((stt++).ToString());
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text(item.MaYTe ?? "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .Text(item.HoVaTen ?? "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text(item.QuyenSo ?? "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text(item.SoBienLai ?? "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text(item.Loai ?? "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignCenter()
+                        //                    .Text(item.NgayThu.HasValue ? item.NgayThu.Value.ToString("dd-MM-yyyy") : "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignRight()
+                        //                    .Text(item.Huy.HasValue ? item.Huy.Value.ToString("N0") : "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignRight()
+                        //                    .Text(item.Hoan.HasValue ? item.Hoan.Value.ToString("N0") : "");
+
+                        //                table.Cell()
+                        //                    .Element(CellStyle)
+                        //                    .AlignRight()
+                        //                    .Text(item.SoTien.HasValue ? item.SoTien.Value.ToString("N0") : "");
+                        //            }
+                        //        }
+                        //    }
+                        //}
+
+                        //col.Item().EnsureSpace()
+                        //.Column(cuoi =>
+                        //{
+                        //    cuoi.Spacing(5);
+
+                        //    // Phần tổng cộng trong bảng
+                        //    cuoi.Item().Table(table =>
+                        //    {
+                        //        table.ColumnsDefinition(columns =>
+                        //        {
+                        //            columns.ConstantColumn(30);
+                        //            columns.ConstantColumn(50);
+                        //            columns.RelativeColumn();
+                        //            columns.ConstantColumn(70);
+                        //            columns.ConstantColumn(50);
+                        //            columns.ConstantColumn(45);
+                        //            columns.ConstantColumn(60);
+                        //            columns.ConstantColumn(50);
+                        //            columns.ConstantColumn(50);
+                        //            columns.ConstantColumn(50);
+                        //        });
+
+                        //        table.Cell().ColumnSpan(7)
+                        //            .Element(CellStyle)
+                        //            .AlignCenter()
+                        //            .Text("Tổng cộng")
+                        //            .Bold();
+
+                        //        table.Cell().Element(CellStyle).AlignRight().Text(tongHuyAll.ToString("N0")).Bold();
+                        //        table.Cell().Element(CellStyle).AlignRight().Text(tongHoanAll.ToString("N0")).Bold();
+                        //        table.Cell().Element(CellStyle).AlignRight().Text(tongSoTienAll.ToString("N0")).Bold();
+                        //    });
+
+                        //    cuoi.Item().Height(1);
+
+                        //    cuoi.Item().Text(text =>
+                        //    {
+                        //        text.Span("Số tiền phải nộp: ").NormalWeight();
+                        //        text.Span($"{tongSoTienAll:N0}").Bold();
+                        //    });
+
+                        //    cuoi.Item().Text(text =>
+                        //    {
+                        //        text.Span("Bằng chữ: ").NormalWeight();
+                        //        text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(tongSoTienAll)}").Bold().Italic();
+                        //    });
+
+                        //    cuoi.Item().Row(row =>
+                        //    {
+                        //        row.RelativeItem().Text("");
+                        //        row.ConstantItem(200).Column(right =>
+                        //        {
+                        //            right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                        //            right.Item().AlignCenter().Text("Người lập bảng").Bold();
+                        //            right.Item().Height(40);
+                        //            right.Item().AlignCenter().Text("Trần Thị Hồng Châu").Bold();
+                        //        });
+                        //    });
+                        //});
+
+                    });
+                });
+
+                page.Footer()
+                    .AlignRight()
+                    .Text(txt =>
+                    {
+                        txt.CurrentPageNumber();
+                        txt.Span(" / ");
+                        txt.TotalPages();
+                    });
+            });
+        }
+
+        static IContainer CellStyleHeader(IContainer container) =>
+            container
+                .Border(1)
+                .Padding(3)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.SemiBold().FontSize(10));
+
+        static IContainer CellStyle(IContainer container) =>
+            container
+                .Border(1)
+                .Padding(3)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleNoBorder(IContainer container) =>
+            container
+                .Padding(3)
+                .AlignMiddle()
+                .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleLeft(IContainer container) =>
+        container
+        .BorderLeft(1)
+        .Padding(3)
+        .AlignMiddle()
+        .DefaultTextStyle(x => x.FontSize(8));
+        static IContainer CellStyleRight(IContainer container) =>
+        container
+        .BorderRight(1)
+        .Padding(3)
+        .AlignMiddle()
+        .DefaultTextStyle(x => x.FontSize(8));
+    }
+}

@@ -65,7 +65,6 @@ namespace C0304.Db.Models
             modelBuilder.Entity<TruyenDich>().HasNoKey();
             modelBuilder.Entity<M0304MHangNhap>().HasNoKey();
             modelBuilder.Entity<M0304MHangXuat>().HasNoKey();
-
         }
     }
 }

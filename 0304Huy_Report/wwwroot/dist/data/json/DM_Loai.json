@@ -1,0 +1,12 @@
+﻿[
+  {
+    "id": 1,
+    "ten": "DV kỹ thuật",
+    "viettat":  "DVKT"
+  },
+  {
+    "id": 2,
+    "ten": "Thuốc",
+    "viettat":  "T"
+  }
+]

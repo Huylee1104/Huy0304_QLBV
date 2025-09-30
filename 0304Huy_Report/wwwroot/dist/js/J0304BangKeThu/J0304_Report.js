@@ -221,6 +221,7 @@ function filterData(isPagination = false) {
     let denNgay = $('#ngayDenNgay').val();
     let idHTTT = $('#IDHTTT').val() || 0;
     let idNhanVien = $('#IDNhanVien').val() || 0;
+    let idLoai = $('#IDLoai').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -248,6 +249,7 @@ function filterData(isPagination = false) {
         IdChiNhanh: _idcn,
         idHTTT: idHTTT,
         idNhanVien: idNhanVien,
+        idLoai: idLoai,
         page: currentPage,
         pageSize: pageSize
     }
@@ -294,14 +296,15 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien) {
+function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien, idLoai) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
             idHTTT: idHTTT || 0,
-            idNhanVien: idNhanVien,
+            idNhanVien: idNhanVien || 0,
+            idLoai: idLoai || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -326,7 +329,8 @@ function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien) {
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
                     idHTTT: idHTTT || 0,
-                    idNhanVien: idNhanVien,
+                    idNhanVien: idNhanVien || 0,
+                    idLoai: idLoai || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -350,8 +354,6 @@ function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien) {
 function validateExportDatesAndData() {
     const tuNgay = $('#ngayTuNgay').val();
     const denNgay = $('#ngayDenNgay').val();
-    const idHTTT = $('#IDHTTT').val() || 0;
-    const idNhanVien = $('#IDNhanVien').val() || 0;
 
     if (!tuNgay && !denNgay ) {
         if (!window.filteredData || window.filteredData.length === 0) {
@@ -388,6 +390,7 @@ function doExportExcel(finalData, btn, originalHtml) {
         toDate: $('#ngayDenNgay').val(),
         idHTTT: $('#IDHTTT').val() || 0,
         idNhanVien: $('#IDNhanVien').val() || 0,
+        idLoai: $('#IDLoai').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -437,9 +440,10 @@ $('#btnExportExcel').off('click').on('click', function (e) {
     const den = $('#ngayDenNgay').val();
     const idHTTT = $('#IDHTTT').val() || 0;
     const idNhanVien = $('#IDNhanVien').val() || 0;
+    const idLoai = $('#IDLoai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idHTTT, idNhanVien)
+        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -461,6 +465,7 @@ function doExportPdf(finalData, btnElem) {
         toDate: $('#ngayDenNgay').val(),
         idHTTT: $('#IDHTTT').val() || 0,
         idNhanVien: $('#IDNhanVien').val() || 0,
+        idLoai: $('#IDLoai').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -504,9 +509,10 @@ $('#btnExportPDF').off('click').on('click', function (e) {
     const den = $('#ngayDenNgay').val();
     const idHTTT = $('#IDHTTT').val() || 0;
     const idNhanVien = $('#IDNhanVien').val() || 0;
+    const idLoai = $('#IDLoai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idHTTT, idNhanVien)
+        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -690,6 +696,15 @@ document.addEventListener("DOMContentLoaded", () => {
         item => item.ID
     );
 
+    const dataLoai = convertData(
+        [
+            { id: 1, ten: "DV kỹ thuật", viettat: "DVKT" },
+            { id: 2, ten: "Thuốc", viettat: "T" }
+        ],
+        item => item.ten || '',
+        item => item.id
+    );
+
     initAutocomplete({
         inputId: 'comboBox',
         dropdownId: 'dropdownList',
@@ -708,6 +723,19 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownId: 'dropdownList2',
         hiddenIdId: 'IDNhanVien',
         data: dataNhanVien,
+        getName: item => item.ten || '',
+        getId: item => item.id,
+        getAbbr: item => item.viettat || '',
+        filterPredicate: (item, normalizedFilter) =>
+            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
+            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
+    });
+
+    initAutocomplete({
+        inputId: 'comboBox3',
+        dropdownId: 'dropdownList3',
+        hiddenIdId: 'IDLoai',
+        data: dataLoai,
         getName: item => item.ten || '',
         getId: item => item.id,
         getAbbr: item => item.viettat || '',

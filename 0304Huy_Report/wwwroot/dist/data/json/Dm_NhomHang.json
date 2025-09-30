@@ -1,0 +1,234 @@
+﻿[
+    {
+        "id": 1,
+        "ma": "NH0001",
+        "ten": "BH - THUỐC BHYT",
+        "vaccine": null,
+        "viettat": "BTB",
+        "active": true
+    },
+    {
+        "id": 25,
+        "ma": "NH0000000043",
+        "ten": "DỊCH TRUYỀN",
+        "vaccine": false,
+        "viettat": "DT",
+        "active": true
+    },
+    {
+        "id": 24,
+        "ma": "NH0000000042",
+        "ten": "DỤNG CỤ",
+        "vaccine": false,
+        "viettat": "DC",
+        "active": true
+    },
+    {
+        "id": 7,
+        "ma": "NH0007",
+        "ten": "DV - BÙ NƯỚC ĐIỆN GIẢI",
+        "vaccine": null,
+        "viettat": "DBNDG",
+        "active": false
+    },
+    {
+        "id": 10,
+        "ma": "NH0010",
+        "ten": "DV - DẠ DÀY - TIÊU HÓA",
+        "vaccine": null,
+        "viettat": "DDDTH",
+        "active": false
+    },
+    {
+        "id": 11,
+        "ma": "NH0011",
+        "ten": "DV - DỊCH TRUYỀN",
+        "vaccine": null,
+        "viettat": "DDT",
+        "active": false
+    },
+    {
+        "id": 12,
+        "ma": "NH0012",
+        "ten": "DV - GIẢM ĐAU KHÁNG VIÊM",
+        "vaccine": null,
+        "viettat": "DGDKV",
+        "active": false
+    },
+    {
+        "id": 13,
+        "ma": "NH0013",
+        "ten": "DV - HẠ SỐT NGƯỜI LỚN",
+        "vaccine": null,
+        "viettat": "DHSNL",
+        "active": false
+    },
+    {
+        "id": 14,
+        "ma": "NH0014",
+        "ten": "DV - HẠ SỐT TRẺ EM",
+        "vaccine": null,
+        "viettat": "DHSTE",
+        "active": false
+    },
+    {
+        "id": 8,
+        "ma": "NH0008",
+        "ten": "DV - KHÁNG SINH NGƯỜI LỚN",
+        "vaccine": null,
+        "viettat": "DKSNL",
+        "active": false
+    },
+    {
+        "id": 9,
+        "ma": "NH0009",
+        "ten": "DV - KHÁNG SINH TRẺ EM",
+        "vaccine": null,
+        "viettat": "DKSTE",
+        "active": false
+    },
+    {
+        "id": 15,
+        "ma": "NH0015",
+        "ten": "DV - KHÁNG VIRUS - KHÁNG NẤM",
+        "vaccine": null,
+        "viettat": "DKVKN",
+        "active": false
+    },
+    {
+        "id": 16,
+        "ma": "NH0016",
+        "ten": "DV - LỢI TIỂU",
+        "vaccine": null,
+        "viettat": "DLT",
+        "active": false
+    },
+    {
+        "id": 17,
+        "ma": "NH0017",
+        "ten": "DV - NHỎ MẮT - MŨI - TAI",
+        "vaccine": null,
+        "viettat": "DNMMT",
+        "active": false
+    },
+    {
+        "id": 2,
+        "ma": "NH0002",
+        "ten": "DV - Nhóm thuốc dịch vụ",
+        "vaccine": null,
+        "viettat": "DNTDV",
+        "active": true
+    },
+    {
+        "id": 18,
+        "ma": "NH0018",
+        "ten": "DV - NỘI TIẾT",
+        "vaccine": null,
+        "viettat": "DNT",
+        "active": false
+    },
+    {
+        "id": 4,
+        "ma": "NH0004",
+        "ten": "DV - TÂN DƯỢC",
+        "vaccine": null,
+        "viettat": "DTD",
+        "active": false
+    },
+    {
+        "id": 10028,
+        "ma": "NH0000000047",
+        "ten": "DV - Thực phẩm chức năng",
+        "vaccine": false,
+        "viettat": "DTPCN",
+        "active": true
+    },
+    {
+        "id": 5,
+        "ma": "NH0005",
+        "ten": "DV - Thuốc chích",
+        "vaccine": null,
+        "viettat": "DTC",
+        "active": false
+    },
+    {
+        "id": 19,
+        "ma": "NH0019",
+        "ten": "DV - THUỐC HO",
+        "vaccine": null,
+        "viettat": "DTH",
+        "active": false
+    },
+    {
+        "id": 20,
+        "ma": "NH0020",
+        "ten": "DV - Thuốc YHCT",
+        "vaccine": null,
+        "viettat": "DTY",
+        "active": null
+    },
+    {
+        "id": 21,
+        "ma": "NH0021",
+        "ten": "DV - TUẦN HOÀN NÃO",
+        "vaccine": null,
+        "viettat": "DTHN",
+        "active": null
+    },
+    {
+        "id": 6,
+        "ma": "NH0006",
+        "ten": "DV - Vật tư",
+        "vaccine": null,
+        "viettat": "DVT",
+        "active": null
+    },
+    {
+        "id": 3,
+        "ma": "NH0003",
+        "ten": "DV - VITAMIN- KHOÁNG CHẤT",
+        "vaccine": null,
+        "viettat": "DVKC",
+        "active": null
+    },
+    {
+        "id": 28,
+        "ma": "NH0000000046",
+        "ten": "HOÁ CHẤT",
+        "vaccine": false,
+        "viettat": "HC",
+        "active": true
+    },
+    {
+        "id": 23,
+        "ma": "NH0000000041",
+        "ten": "Máu",
+        "vaccine": false,
+        "viettat": "M",
+        "active": true
+    },
+    {
+        "id": 27,
+        "ma": "NH0000000045",
+        "ten": "Nhóm hàng hóa tương ứng",
+        "vaccine": true,
+        "viettat": "NHHTU",
+        "active": true
+    },
+    {
+        "id": 26,
+        "ma": "NH0000000044",
+        "ten": "Tạm dừng",
+        "vaccine": false,
+        "viettat": "TD",
+        "active": true
+    },
+    {
+        "id": 22,
+        "ma": "NH0000000040",
+        "ten": "Vaccine",
+        "vaccine": true,
+        "viettat": "V",
+        "active": true
+    }
+]

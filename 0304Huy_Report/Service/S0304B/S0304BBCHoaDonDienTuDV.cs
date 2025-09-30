@@ -57,7 +57,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
                 };
             }
             var allData = await _context.M0304BBCHoaDonDienTuDVs
-                .FromSqlRaw("EXEC dbo.S0304_BCHoaDonDienTuDV @TuNgay, @DenNgay, @IDCN",
+                .FromSqlRaw("EXEC dbo.[S0304_BCHoaDonDienTuDV] @TuNgay, @DenNgay, @IDCN",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN))

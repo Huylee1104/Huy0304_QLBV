@@ -1,0 +1,226 @@
+﻿using ClosedXML.Excel;
+using H0304.NumberToText.Helpers;
+using M0304NhanVien.Models;
+using M0304M.Models.BaoCaoHangHoa;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using M0304.Models.ThongTinDoanhNghiep;
+
+public class P0304ExcelReportNhapTemplate
+{
+    private readonly List<M0304MHangNhap> _data;
+    private readonly M0304ThongTinDoanhNghiep _dataDN;
+    private string _ngayBatDau;
+    private string _ngayKetThuc;
+
+    public P0304ExcelReportNhapTemplate(
+        List<M0304MHangNhap> data,
+        string ngayBatDau,
+        string ngayKetThuc,
+        M0304ThongTinDoanhNghiep dataDN
+    )
+    {
+        _data = data ?? new List<M0304MHangNhap>();
+        _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
+        _ngayBatDau = ngayBatDau;
+        _ngayKetThuc = ngayKetThuc;
+    }
+
+    public byte[] GenerateExcel()
+    {
+        using (var wb = new XLWorkbook())
+        {
+            var ws = wb.Worksheets.Add("Báo cáo");
+
+            int currentRow = 1;
+
+            ws.Range(1, 3, 1, 11).Merge();
+            ws.Cell(1, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
+            ws.Cell(1, 3).Style.Font.FontSize = 9;
+            ws.Cell(1, 3).Style.Font.Bold = true;
+
+            ws.Range(2, 3, 2, 11).Merge();
+            ws.Cell(2, 3).Value = _dataDN.TenCSKCB ?? "";
+            ws.Cell(2, 3).Style.Font.FontSize = 9;
+            ws.Cell(2, 3).Style.Font.Bold = true;
+
+            currentRow += 4;
+
+            ws.Range(currentRow, 2, currentRow, 11).Merge();
+            ws.Cell(currentRow, 2).Value = "BẢNG KÊ THU TIỀN NGOẠI TRÚ THEO BL/HĐ";
+            ws.Cell(currentRow, 2).Style.Font.Bold = true;
+            ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
+            ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            currentRow++;
+
+            ws.Range(currentRow, 2, currentRow, 11).Merge();
+            DateTime dtStart, dtEnd;
+            if (DateTime.TryParse(_ngayBatDau, out dtStart) && DateTime.TryParse(_ngayKetThuc, out dtEnd))
+            {
+                ws.Cell(currentRow, 2).Value = $"Từ ngày {dtStart:dd-MM-yyyy} đến ngày {dtEnd:dd-MM-yyyy}";
+            }
+            else
+            {
+                ws.Cell(currentRow, 2).Value = $"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}";
+            }
+            ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
+            ws.Cell(currentRow, 2).Style.Font.Italic = true;
+            ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            currentRow++;
+
+            ws.Range(currentRow, 2, currentRow, 11).Merge();
+            ws.Cell(currentRow, 2).Style.Font.Bold = true;
+            ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
+            ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            currentRow += 2;
+
+            string[] headers = new string[]
+            {
+            "STT", "Mã y tế", "Họ và tên", "Quyển sổ", "Số biên lai",
+            "Loại", "Ngày thu", "Hủy", "Hoàn", "Số tiền"
+            };
+            for (int i = 0; i < headers.Length; i++)
+            {
+                ws.Cell(currentRow, i + 2).Value = headers[i];
+                ws.Cell(currentRow, i + 2).Style.Font.Bold = true;
+                ws.Cell(currentRow, i + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell(currentRow, i + 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            }
+
+            int stt = 1;
+
+            currentRow++;
+            //if (_danhSachNhanVien != null && _danhSachNhanVien.Any())
+            //{
+            //    foreach (var nv in _danhSachNhanVien)
+            //    {
+            //        ws.Range(currentRow, 2, currentRow, 11).Merge();
+            //        ws.Cell(currentRow, 2).Value = $"{nv.TenNhanVien}".ToUpper();
+            //        ws.Cell(currentRow, 2).Style.Font.Bold = true;
+            //        ws.Cell(currentRow, 2).Style.Font.FontSize = 11;
+            //        ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+            //        ws.Range(currentRow, 2, currentRow, 11).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            //        currentRow++;
+
+            //        var quyenSoList = _tongTheoQuyenSo
+            //            .Where(q => _data.Any(d => d.IDNhanVien == nv.ID && d.QuyenSo == q.QuyenSo))
+            //            .ToList();
+
+            //        foreach (var qs in quyenSoList)
+            //        {
+
+            //            var ngayThu = _data
+            //                .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+            //                .Max(d => d.NgayThu);
+
+            //            ws.Range(currentRow, 2, currentRow, 7).Merge();
+            //            ws.Cell(currentRow, 2).Value =$"      {nv.MaNhanVien} - {qs.QuyenSo}";
+            //            ws.Cell(currentRow, 2).Style.Font.Bold = true;
+            //            ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
+            //            ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+
+            //            ws.Cell(currentRow, 8).Value =$"{ngayThu:dd-MM-yyyy}";
+            //            ws.Cell(currentRow, 8).Style.Font.Bold = true;
+            //            ws.Cell(currentRow, 8).Style.Font.FontSize = 10;
+            //            AlignCellCenter(ws.Cell(currentRow, 8));
+
+            //            ws.Cell(currentRow, 9).Value = qs.TongHuy;
+            //            ws.Cell(currentRow, 9).Style.Font.Bold = true;
+            //            ws.Cell(currentRow, 9).Style.Font.FontSize = 10;
+            //            AlignCellRight(ws.Cell(currentRow, 9));
+
+            //            ws.Cell(currentRow, 10).Value = qs.TongHoan;
+            //            ws.Cell(currentRow, 10).Style.Font.Bold = true;
+            //            ws.Cell(currentRow, 10).Style.Font.FontSize = 10;
+            //            AlignCellRight(ws.Cell(currentRow, 10));
+
+            //            ws.Cell(currentRow, 11).Value = qs.TongSoTien;
+            //            ws.Cell(currentRow, 11).Style.Font.Bold = true;
+            //            ws.Cell(currentRow, 11).Style.Font.FontSize = 10;
+            //            AlignCellRight(ws.Cell(currentRow, 11));
+
+            //            ws.Cell(currentRow, 9).Style.NumberFormat.Format = "#,##0";
+            //            ws.Cell(currentRow, 10).Style.NumberFormat.Format = "#,##0";
+            //            ws.Cell(currentRow, 11).Style.NumberFormat.Format = "#,##0";
+            //            ws.Range(currentRow, 2, currentRow, 11).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            //            currentRow++;
+
+            //            var chiTiet = _data
+            //                .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
+            //                .ToList();
+
+            //            foreach (var item in chiTiet)
+            //            {
+            //                ws.Cell(currentRow, 2).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 2));
+            //                ws.Cell(currentRow, 3).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 3));
+            //                ws.Cell(currentRow, 4).Value = item.HoVaTen ?? "";
+            //                ws.Cell(currentRow, 5).Value = item.QuyenSo ?? ""; AlignCellCenter(ws.Cell(currentRow, 5));
+            //                ws.Cell(currentRow, 6).Value = item.SoBienLai ?? ""; AlignCellCenter(ws.Cell(currentRow, 6));
+            //                ws.Cell(currentRow, 7).Value = item.Loai ?? ""; AlignCellCenter(ws.Cell(currentRow, 7));
+            //                ws.Cell(currentRow, 8).Value = item.NgayThu?.ToString("dd-MM-yyyy") ?? ""; AlignCellCenter(ws.Cell(currentRow, 8));
+            //                ws.Cell(currentRow, 9).Value = item.Huy ?? (decimal?)null;
+            //                ws.Cell(currentRow, 10).Value = item.Hoan ?? (decimal?)null;
+            //                ws.Cell(currentRow, 11).Value = item.SoTien ?? (decimal?)null;
+
+            //                ws.Cell(currentRow, 9).Style.NumberFormat.Format = "#,##0";
+            //                ws.Cell(currentRow, 10).Style.NumberFormat.Format = "#,##0";
+            //                ws.Cell(currentRow, 11).Style.NumberFormat.Format = "#,##0";
+
+            //                for (int col = 2; col <= headers.Length + 1; col++)
+            //                    ws.Cell(currentRow, col).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+            //                currentRow++;
+            //            }
+            //        }
+            //    }
+            //}
+
+            for (int col = 9; col <= 11; col++)
+            {
+                ws.Cell(currentRow, col).Style.Font.Bold = true;
+                ws.Cell(currentRow, col).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            }
+            currentRow += 2;
+
+            ws.Range(currentRow, 8, currentRow + 5, 11).Merge();
+
+            var cell = ws.Cell(currentRow, 8);
+            cell.Value = "";
+
+            var rt = cell.GetRichText();
+
+            rt.AddText($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n");
+            rt.AddText("Người lập bảng\n\n\n").SetBold();
+            rt.AddText("Trần Thanh Thảo").SetBold();
+
+            ws.Cell(currentRow, 8).Style.Alignment.WrapText = true;
+            ws.Cell(currentRow, 8).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(currentRow, 8).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
+            ws.Columns().AdjustToContents();
+            ws.Column(1).Width = 2;
+            ws.Column(2).Width = 12;
+
+
+            using (var ms = new MemoryStream())
+            {
+                wb.SaveAs(ms);
+                return ms.ToArray();
+            }
+
+            void AlignCellCenter(IXLCell cell)
+            {
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            }
+
+            void AlignCellRight(IXLCell cell)
+            {
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            }
+        }
+    }
+}

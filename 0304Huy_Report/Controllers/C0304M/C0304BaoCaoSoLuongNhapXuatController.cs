@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using P0304.PDFDocument;
+using P0304M.PDFDocument;
 using QuestPDF.Fluent;
 using System.Diagnostics;
 
-namespace C0304GHangNhap.Controllers
+namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
 {
     [Route("bao_cao_so_luong_nhap_xuat")]
     public class C0304MBaoCaoSoLuongNhapXuatController : Controller
@@ -52,7 +52,7 @@ namespace C0304GHangNhap.Controllers
                 Xem = true,
             };
 
-            return View("~/Views/V0304GHangNhap/Index.cshtml");
+            return View("~/Views/V0304MBaoCaoSoLuongNhapXuat/Index.cshtml");
         }
 
         [HttpPost("filterNhap")]
@@ -121,23 +121,23 @@ namespace C0304GHangNhap.Controllers
 
         }
 
-        //[HttpPost("exportnhap/pdf")]
-        //public async Task<IActionResult> ExportNhapToPDF([FromBody] ExportRequest<M0304MHangNhap> request)
-        //{
-        //    var pdfBytes = await ExportHangNhapPdfAsync(request, HttpContext.Session);
+        [HttpPost("exportnhap/pdf")]
+        public async Task<IActionResult> ExportNhapToPDF([FromBody] ExportRequest<M0304MHangNhap> request)
+        {
+            var pdfBytes = await ExportHangNhapPdfAsync(request, HttpContext.Session);
 
-        //    string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
-        //    return File(pdfBytes, "application/pdf", fileName);
-        //}
+            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
+            return File(pdfBytes, "application/pdf", fileName);
+        }
 
-        //[HttpPost("exportnhap/excel")]
-        //public async Task<IActionResult> ExportNhapToExcel([FromBody] ExportRequest<M0304MHangNhap> request)
-        //{
-        //    var excelBytes = await ExportHangNhapExcelAsync(request, HttpContext.Session);
+        [HttpPost("exportnhap/excel")]
+        public async Task<IActionResult> ExportNhapToExcel([FromBody] ExportRequest<M0304MHangNhap> request)
+        {
+            var excelBytes = await ExportHangNhapExcelAsync(request, HttpContext.Session);
 
-        //    string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
-        //    return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-        //}
+            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
 
         //[HttpPost("exportxuat/pdf")]
         //public async Task<IActionResult> ExportXuatToPDF([FromBody] ExportRequest<M0304MHangXuat> request)
@@ -158,7 +158,7 @@ namespace C0304GHangNhap.Controllers
         //}
 
         // Các hàm xử lý nhập==================
-        public async Task<M0304MHangNhapResponse> GetHangNhap(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
+        private async Task<M0304MHangNhapResponse> GetHangNhap(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
             long? idNhomHang = null, long? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -185,11 +185,11 @@ namespace C0304GHangNhap.Controllers
                         TotalPages = 0,
                         CurrentPage = page
                     },
-                    DoanhNghiep = null        // không có thông tin doanh nghiệp
+                    DoanhNghiep = null     // không có thông tin doanh nghiệp
                 };
             }
             var allData = await _context.HangNhapReports
-                .FromSqlRaw("EXEC dbo.[S0304_HangNhapNgoaiTru] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDKhoHang, @IDHangHoa",
+                .FromSqlRaw("EXEC dbo.[S0304_BaoCaoSoLuongHangNhap] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDNhomHang, @IDHangHoa",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
@@ -262,33 +262,31 @@ namespace C0304GHangNhap.Controllers
             };
         }
 
-        //public async Task<byte[]> ExportHangNhapPdfAsync(ExportRequest<M0304MHangNhap> request, ISession session)
-        //{
-        //    var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-        //    var logoPath = "null";
+        private async Task<byte[]> ExportHangNhapPdfAsync(ExportRequest<M0304MHangNhap> request, ISession session)
+        {
+            var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
+            var logoPath = "null";
 
-        //    var data = request.Data ?? new List<M0304MHangNhap>();
-        //    var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate,
-        //         doanhNghiepObj, logoPath);
+            var data = request.Data ?? new List<M0304MHangNhap>();
+            var document = new P0304MReportNhapTemplatePDF(data, request.FromDate, request.ToDate, doanhNghiepObj);
 
-        //    var pdfBytes = document.GeneratePdf();
-        //    return pdfBytes;
-        //}
-        //public async Task<byte[]> ExportHangNhapExcelAsync(ExportRequest<M0304MHangNhap> request, ISession session)
-        //{
-        //    var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-        //    var logoPath = "";
+            var pdfBytes = document.GeneratePdf();
+            return pdfBytes;
+        }
+        private async Task<byte[]> ExportHangNhapExcelAsync(ExportRequest<M0304MHangNhap> request, ISession session)
+        {
+            var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
+            var logoPath = "";
 
-        //    var data = request.Data ?? new List<M0304MHangNhap>();
-        //    var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate,
-        //        doanhNghiepObj, logoPath);
+            var data = request.Data ?? new List<M0304MHangNhap>();
+            var document = new P0304ExcelReportNhapTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj);
 
-        //    var excelBytes = document.GenerateExcel();
-        //    return excelBytes;
-        //}
+            var excelBytes = document.GenerateExcel();
+            return excelBytes;
+        }
 
         // Các hàm xử lý xuất ==========
-        public async Task<M0304GHangXuatResponse> GetHangXuat(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
+        private async Task<M0304GHangXuatResponse> GetHangXuat(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
             long? idNhomHang = null, long? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -319,7 +317,7 @@ namespace C0304GHangNhap.Controllers
                 };
             }
             var allData = await _context.HangXuatReports
-                .FromSqlRaw("EXEC dbo.[S0304_HangNhapNgoaiTru] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDKhoHang, @IDHangHoa",
+                .FromSqlRaw("EXEC dbo.[S0304_BaoCaoSoLuongHangXuat] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDNhomHang, @IDHangHoa",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
@@ -360,26 +358,26 @@ namespace C0304GHangNhap.Controllers
             };
         }
 
-        //public async Task<byte[]> ExportHangXuatPdfAsync(ExportRequest<M0304MHangXuat> request, ISession session)
+        //private async Task<byte[]> ExportHangXuatPdfAsync(ExportRequest<M0304MHangXuat> request, ISession session)
         //{
         //    var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
         //    var logoPath = "null";
 
         //    var data = request.Data ?? new List<M0304MHangXuat>();
-        //    //var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate,
-        //    //     doanhNghiepObj, logoPath);
+        //    var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate,
+        //         doanhNghiepObj, logoPath);
 
         //    var pdfBytes = document.GeneratePdf();
         //    return pdfBytes;
         //}
-        //public async Task<byte[]> ExportHangXuatExcelAsync(ExportRequest<M0304MHangXuat> request, ISession session)
+        //private async Task<byte[]> ExportHangXuatExcelAsync(ExportRequest<M0304MHangXuat> request, ISession session)
         //{
         //    var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
         //    var logoPath = "";
 
         //    var data = request.Data ?? new List<M0304MHangXuat>();
-        //    //var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate,
-        //    //    doanhNghiepObj, logoPath);
+        //    var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate,
+        //        doanhNghiepObj, logoPath);
 
         //    var excelBytes = document.GenerateExcel();
         //    return excelBytes;

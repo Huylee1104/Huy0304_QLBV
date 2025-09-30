@@ -5,7 +5,7 @@
     var jsonkhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSKhoHang);
 }
 
-<style>
+@* <style>
     table {
         border-right: 1px solid #ccc !important;
         border-left: 1px solid #ccc !important;
@@ -71,7 +71,7 @@
     .table-wrapper-scroll tr.selected td {
         background-color: #bae7ff !important;
     }
-</style>
+</style> *@
 
     <div class="card p-1">
         <div class="container_Team3">
@@ -133,23 +133,17 @@
                     <!--Kho Hàng-->
                     <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
                         <label for="KhoTra" class="form-label">Kho trả</label>
-                    <input type="text" class="form-control" id="comboBox" name="tenKhoTra" data-value="@ViewBag.khoHang">
-                    <input type="hidden" id="IDKhoHang" name="IDKhoHang" data-value="@ViewBag.IDKhoHang" />
-                        <div class="dropdownList" id="dropdownList"></div>
+                        <input type="text" class="form-control tomselect-khoHang" id="IDKhoHang" name="tenKhoHang" value="14" data-id="14" />
                     </div>
                     <!--Nhóm hàng-->
                     <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
-                        <label for="NhomHang" class="form-label">Nhóm hàng hóa</label>
-                        <input type="text" class="form-control" id="comboBox2" name="tenNhomHang" data-value="@ViewBag.nhomHang">
-                        <input type="hidden" id="IDNhomHang" name="NhomHang" data-value="@ViewBag.IDNhomHang" />
-                        <div class="dropdownList2" id="dropdownList2"></div>
+                        <label for="NhomHang" class="form-label">Nhóm hàng</label>
+                        <select class="tomselect-nhomHang" name="tenNhomHang" value="@ViewBag.nhomHang"></select>
                     </div>
                     <!--Hàng hóa-->
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-3 input-wrapper">
                         <label for="HangHoa" class="form-label">Hàng hóa</label>
-                        <input type="text" class="form-control" id="comboBox3" name="tenHangHoa" data-value="@ViewBag.hangHoa">
-                        <input type="hidden" id="IDHangHoa" name="HangHoa" data-value="@ViewBag.IDHangHoa" />
-                        <div class="dropdownList3" id="dropdownList3"></div>
+                        <select class="tomselect-hangHoa"name="tenHangHoa" value="@ViewBag.hangHoa"></select>
                     </div>
 
                     <label style="padding:0; margin:0px;">
@@ -159,7 +153,7 @@
                     </label>
                     <label style="padding:0; margin:0px;">
                         <button id="btnFilterXuat" class="btn btn-outline-primary mb-3">
-                            <i class="bi bi-funnel"></i> Danh sách xất
+                            <i class="bi bi-funnel"></i> Danh sách xuất
                         </button>
                     </label>
 
@@ -188,11 +182,21 @@
                     <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
-                                <th class="text-center text-nowrap first-col">STT</th>
-                                <th class="text-center text-nowrap second-col">Mã vật tư</th>
-                                <th class="text-center text-nowrap">Tên vật tư</th>
-                                <th class="text-center text-nowrap">Đơn vị tính</th>
-                                <th class="text-center text-nowrap">Yêu cầu</th>
+                                <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap">Tên thuốc</th>
+                                <th class="text-center text-nowrap">Tháng 1</th>
+                                <th class="text-center text-nowrap">Tháng 2</th>
+                                <th class="text-center text-nowrap">Tháng 3</th>
+                                <th class="text-center text-nowrap">Tháng 4</th>
+                                <th class="text-center text-nowrap">Tháng 5</th>
+                                <th class="text-center text-nowrap">Tháng 6</th>
+                                <th class="text-center text-nowrap">Tháng 7</th>
+                                <th class="text-center text-nowrap">Tháng 8</th>
+                                <th class="text-center text-nowrap">Tháng 9</th>
+                                <th class="text-center text-nowrap">Tháng 10</th>
+                                <th class="text-center text-nowrap">Tháng 11</th>
+                                <th class="text-center text-nowrap">Tháng 12</th>
+                                <th class="text-center text-nowrap">Tổng cộng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -230,5 +234,5 @@
         }
     </script>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304GPhieuLinhVatTuYTe/J0304G_Report.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304MBaoCaoSoLuongNhapXuat/J0304M_Report.js")" defer asp-append-version="true"></script>
     }

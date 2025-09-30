@@ -56,17 +56,16 @@ namespace C0304BangKeThu.Controllers
             System.Diagnostics.Debug.WriteLine("DSNhanVien: " + Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien));
             ViewBag.DSNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien);
 
-
             return View("~/Views/V0304BangKeThu/Index.cshtml");
         }
 
         [HttpPost("filter")]
         public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idHTTT = null,
-            long? idNhanVien = null, int page = 1, int pageSize = 20)
+            long? idNhanVien = null, int? idLoai = null, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await _service.GetBangKeThu(tuNgay, denNgay, IdChiNhanh, idHTTT, idNhanVien, page, pageSize);
+                var result = await _service.GetBangKeThu(tuNgay, denNgay, IdChiNhanh, idHTTT, idNhanVien, idLoai, page, pageSize);
 
                 if (!result.BangKeThu.Success)
                 {

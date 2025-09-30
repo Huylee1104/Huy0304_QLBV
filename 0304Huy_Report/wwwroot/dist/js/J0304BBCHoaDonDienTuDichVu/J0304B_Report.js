@@ -401,7 +401,7 @@ function updateTable(response) {
         let tongGiaTriHDDT = 0;
         data.forEach((item, index) => {
             tongGiaTri += Number(item.giaTri || item.GiaTri || 0);
-            tongGiaTriHDDT += Number(item.giaTriHDDT || item.GiaTriHDDT || 0);c
+            tongGiaTriHDDT += Number(item.giaTriHDDT || item.GiaTriHDDT || 0);
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
