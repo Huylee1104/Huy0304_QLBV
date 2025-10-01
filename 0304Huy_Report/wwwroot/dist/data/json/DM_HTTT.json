@@ -1,10 +1,14 @@
 ﻿[
   {
     "id": 1,
-    "ten": "Tiền Mặt"
+    "ten": "Tiền Mặt",
+    "viettat": "TM",
+    "active":  true
   },
   {
     "id": 2,
-    "ten": "Chuyển khoản"
+    "ten": "Chuyển khoản",
+    "viettat": "CK",
+    "active":  true
   }
 ]

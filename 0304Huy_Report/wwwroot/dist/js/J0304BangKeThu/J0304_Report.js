@@ -1,150 +1,4 @@
-﻿// ==================== COMBOBOX ====================
-function initAutocomplete(config) {
-    const {
-        inputId,
-        dropdownId,
-        hiddenIdId,
-        data,
-        getName,
-        getId,
-        getAbbr = () => "", // Optional abbreviation getter
-        filterPredicate
-    } = config;
-
-    const input = document.getElementById(inputId);
-    const dropdown = document.getElementById(dropdownId);
-    const hiddenId = document.getElementById(hiddenIdId);
-    let isMouseDownOnDropdown = false;
-    let highlightedIndex = -1;
-    let currentOptions = [];
-
-    hiddenId.value = 0;
-
-    function renderOptions(filter = "") {
-        dropdown.innerHTML = "";
-        highlightedIndex = 0;
-        const normalizedFilter = removeAccents(filter.toLowerCase());
-
-        currentOptions = data.filter(item => filterPredicate(item, normalizedFilter));
-
-        currentOptions.forEach((item, index) => {
-            const option = document.createElement('div');
-            option.classList.add('option-item');
-
-            const nameSpan = document.createElement('span');
-            nameSpan.innerHTML = highlightMatch(getName(item), filter);
-            nameSpan.style.flex = "1";
-            option.appendChild(nameSpan);
-
-            const abbr = getAbbr(item);
-            if (abbr) {
-                const abbrSpan = document.createElement('span');
-                abbrSpan.innerHTML = highlightMatch(abbr, filter);
-                abbrSpan.style.marginLeft = "10px";
-                abbrSpan.style.color = "#888";
-                abbrSpan.style.fontSize = "12px";
-                option.appendChild(abbrSpan);
-            }
-
-            if (index === highlightedIndex) option.classList.add('highlight');
-
-            option.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                selectOption(index);
-            });
-
-            dropdown.appendChild(option);
-        });
-
-        dropdown.style.display = currentOptions.length ? "block" : "none";
-    }
-
-    function updateHighlight() {
-        const options = dropdown.querySelectorAll('.option-item');
-        options.forEach((opt, idx) => {
-            opt.classList.toggle('highlight', idx === highlightedIndex);
-        });
-    }
-
-    function selectOption(index) {
-        if (index >= 0 && index < currentOptions.length) {
-            input.value = getName(currentOptions[index]);
-            hiddenId.value = getId(currentOptions[index]);
-            dropdown.style.display = "none";
-        }
-    }
-
-    input.addEventListener('input', () => {
-        if (input.value.trim() === "") {
-            hiddenId.value = 0;
-            dropdown.style.display = "none";
-        } else {
-            hiddenId.value = "";
-            renderOptions(input.value);
-        }
-    });
-
-    dropdown.addEventListener('mousedown', () => {
-        isMouseDownOnDropdown = true;
-    });
-
-    input.addEventListener('blur', () => {
-        setTimeout(() => {
-            if (!isMouseDownOnDropdown) {
-                if (hiddenId.value === "" && input.value.trim() !== "") {
-                    input.value = "";
-                    hiddenId.value = 0;
-                }
-            }
-            isMouseDownOnDropdown = false;
-            dropdown.style.display = "none";
-        }, 100);
-    });
-
-    input.addEventListener('focus', () => renderOptions());
-
-    input.addEventListener('input', () => {
-        renderOptions(input.value);
-    });
-
-    window.addEventListener('load', () => {
-        if (hiddenId.value && !input.value) {
-            const selected = data.find(x => getId(x) == hiddenId.value);
-            if (selected) {
-                input.value = getName(selected);
-            }
-        }
-    });
-
-    input.addEventListener('keydown', (e) => {
-        if (dropdown.style.display === "block") {
-            if (e.key === "ArrowDown") {
-                e.preventDefault();
-                highlightedIndex = (highlightedIndex + 1) % currentOptions.length;
-                updateHighlight();
-            } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                highlightedIndex = (highlightedIndex - 1 + currentOptions.length) % currentOptions.length;
-                updateHighlight();
-            } else if (e.key === "Enter") {
-                e.preventDefault();
-                selectOption(highlightedIndex);
-            }
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        const isClickInsideCombo = e.target.closest(`#${inputId}`) || e.target.closest(`#${dropdownId}`);
-        if (!isClickInsideCombo) {
-            if (hiddenId.value === "" && input.value.trim() !== "") {
-                input.value = "";
-                hiddenId.value = 0;
-            }
-            dropdown.style.display = "none";
-        }
-    });
-}
-// ==================== BIẾN GLOBAL PHÂN TRANG ====================
+﻿// ==================== BIẾN GLOBAL PHÂN TRANG ====================
 let currentPage = 1;
 let pageSize = 20;
 let totalRecords = 0;
@@ -219,9 +73,9 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
-    let idHTTT = $('#IDHTTT').val() || 0;
-    let idNhanVien = $('#IDNhanVien').val() || 0;
-    let idLoai = $('#IDLoai').val() || 0;
+    let idHTTT = $('.tomselect_httt').val() || 0;
+    let idNhanVien = $('.tomselect_nhanVien').val() || 0;
+    let idLoai = $('.tomselect_loai').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -388,9 +242,9 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idHTTT: $('#IDHTTT').val() || 0,
-        idNhanVien: $('#IDNhanVien').val() || 0,
-        idLoai: $('#IDLoai').val() || 0,
+        idHTTT: $('.tomselect_httt').val() || 0,
+        idNhanVien: $('.tomselect_nhanVien').val() || 0,
+        idLoai: $('.tomselect_loai').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -438,9 +292,9 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idHTTT = $('#IDHTTT').val() || 0;
-    const idNhanVien = $('#IDNhanVien').val() || 0;
-    const idLoai = $('#IDLoai').val() || 0;
+    const idHTTT = $('.tomselect_httt').val() || 0;
+    const idNhanVien = $('.tomselect_nhanVien').val() || 0;
+    const idLoai = $('.tomselect_loai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
         fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
@@ -463,9 +317,9 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idHTTT: $('#IDHTTT').val() || 0,
-        idNhanVien: $('#IDNhanVien').val() || 0,
-        idLoai: $('#IDLoai').val() || 0,
+        idHTTT: $('.tomselect_httt').val() || 0,
+        idNhanVien: $('.tomselect_nhanVien').val() || 0,
+        idLoai: $('.tomselect_loai').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -507,9 +361,9 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idHTTT = $('#IDHTTT').val() || 0;
-    const idNhanVien = $('#IDNhanVien').val() || 0;
-    const idLoai = $('#IDLoai').val() || 0;
+    const idHTTT = $('.tomselect_httt').val() || 0;
+    const idNhanVien = $('.tomselect_nhanVien').val() || 0;
+    const idLoai = $('.tomselect_loai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
         fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
@@ -682,65 +536,74 @@ $(document).ready(function () {
 });
 
 // ==================== LOAD COMBOBOX ====================
-document.addEventListener("DOMContentLoaded", () => {
 
-    const dataHTTT = convertData(
-        provincesDataHTTT,
-        item => item.ten || '',
-        item => item.id 
-    );
+$.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
+    listNhanVien = dataNhanVien
+        .filter(n =>
+            (n.active === true || n.active === 1)
+        )
+        .map(n => ({
+            ...n,
+            alias: n.viettat?.trim() !== ""
+                ? n.viettat.toUpperCase()
+                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+        }));
+    // config cho TomSelect
+    const configs = [
+        {
+            className: ".tomselect-nhanVien",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
 
-    const dataNhanVien = convertData(
-        provincesDataNhanVien,
-        item => item.TenNhanVien || '', 
-        item => item.ID
-    );
-
-    const dataLoai = convertData(
-        [
-            { id: 1, ten: "DV kỹ thuật", viettat: "DVKT" },
-            { id: 2, ten: "Thuốc", viettat: "T" }
-        ],
-        item => item.ten || '',
-        item => item.id
-    );
-
-    initAutocomplete({
-        inputId: 'comboBox',
-        dropdownId: 'dropdownList',
-        hiddenIdId: 'IDHTTT',
-        data: dataHTTT,
-        getName: item => item.ten || '',
-        getId: item => item.id,
-        getAbbr: item => item.viettat || '',
-        filterPredicate: (item, normalizedFilter) =>
-            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
-            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
-    });
-
-    initAutocomplete({
-        inputId: 'comboBox2',
-        dropdownId: 'dropdownList2',
-        hiddenIdId: 'IDNhanVien',
-        data: dataNhanVien,
-        getName: item => item.ten || '',
-        getId: item => item.id,
-        getAbbr: item => item.viettat || '',
-        filterPredicate: (item, normalizedFilter) =>
-            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
-            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
-    });
-
-    initAutocomplete({
-        inputId: 'comboBox3',
-        dropdownId: 'dropdownList3',
-        hiddenIdId: 'IDLoai',
-        data: dataLoai,
-        getName: item => item.ten || '',
-        getId: item => item.id,
-        getAbbr: item => item.viettat || '',
-        filterPredicate: (item, normalizedFilter) =>
-            removeAccents((item.ten || '').toLowerCase()).includes(normalizedFilter) ||
-            removeAccents((item.viettat || '').toLowerCase()).startsWith(normalizedFilter)
-    });
+    configCb(configs, listNhanVien);
 });
+
+$.getJSON("dist/data/json/DM_HTTT.json", dataHTTT => {
+    listHTTT = dataHTTT
+        .filter(n =>
+            (n.active === true || n.active === 1)
+        )
+        .map(n => ({
+            ...n,
+            alias: n.viettat?.trim() !== ""
+                ? n.viettat.toUpperCase()
+                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+        }));
+    // config cho TomSelect
+    const configs = [
+        {
+            className: ".tomselect-httt",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
+
+    configCb(configs, listHTTT);
+});
+
+(function () {
+    const dataLoai = [
+        { id: 1, ten: "DV kỹ thuật", viettat: "DVKT" },
+        { id: 2, ten: "Thuốc", viettat: "T" }
+    ];
+
+    const listLoai = dataLoai.map(n => ({
+        ...n,
+        alias: n.viettat?.trim() !== ""
+            ? n.viettat.toUpperCase()
+            : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+    }));
+
+    const configs = [
+        {
+            className: ".tomselect-loai",
+            dieuKien: response => response.filter(x => x.id)
+        }
+    ];
+
+    configCb(configs, listLoai);
+})();

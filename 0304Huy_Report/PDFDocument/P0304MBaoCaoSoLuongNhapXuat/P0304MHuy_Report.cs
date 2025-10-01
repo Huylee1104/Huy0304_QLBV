@@ -15,25 +15,21 @@ namespace P0304M.PDFDocument
     {
         private readonly List<M0304MHangNhap> _data;
         private readonly M0304ThongTinDoanhNghiep _dataDN;
-        private string _ngayBatDau;
-        private string _ngayKetThuc;
+        private int _nam;
 
         public P0304MReportNhapTemplatePDF(
             List<M0304MHangNhap> data,
-            string ngayBatDau,
-            string ngayKetThuc,
+            int nam,
             M0304ThongTinDoanhNghiep dataDN
         )
         {
             _data = data ?? new List<M0304MHangNhap>();
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
-            _ngayBatDau = ngayBatDau;
-            _ngayKetThuc = ngayKetThuc;
+            _nam = nam;
         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
         public DocumentSettings GetSettings() => DocumentSettings.Default;
-        public int Nam => DateTime.ParseExact(_ngayKetThuc, "dd-MM-yyyy", null).Year;
 
         public void Compose(IDocumentContainer container)
         {
@@ -60,7 +56,7 @@ namespace P0304M.PDFDocument
                     col.Item().AlignCenter().Column(center =>
                     {
                         center.Item()
-                            .Text($"BÁO CÁO SỐ LƯỢNG HÀNG NHẬP NĂM {Nam}")
+                            .Text($"BÁO CÁO SỐ LƯỢNG HÀNG NHẬP NĂM {_nam}")
                             .Bold()
                             .FontSize(12);
                     });
@@ -191,25 +187,21 @@ namespace P0304M.PDFDocument
     {
         private readonly List<M0304MHangXuat> _data;
         private readonly M0304ThongTinDoanhNghiep _dataDN;
-        private string _ngayBatDau;
-        private string _ngayKetThuc;
+        private int _nam;
 
         public P0304MReportXuatTemplatePDF(
             List<M0304MHangXuat> data,
-            string ngayBatDau,
-            string ngayKetThuc,
+            int nam,
             M0304ThongTinDoanhNghiep dataDN
         )
         {
             _data = data ?? new List<M0304MHangXuat>();
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
-            _ngayBatDau = ngayBatDau;
-            _ngayKetThuc = ngayKetThuc;
+            _nam = nam;
         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
         public DocumentSettings GetSettings() => DocumentSettings.Default;
-        public int Nam => DateTime.ParseExact(_ngayKetThuc, "dd-MM-yyyy", null).Year;
 
         public void Compose(IDocumentContainer container)
         {
@@ -236,7 +228,7 @@ namespace P0304M.PDFDocument
                     col.Item().AlignCenter().Column(center =>
                     {
                         center.Item()
-                            .Text($"BÁO CÁO SỐ LƯỢNG HÀNG XUẤT NĂM {Nam}")
+                            .Text($"BÁO CÁO SỐ LƯỢNG HÀNG XUẤT NĂM {_nam}")
                             .Bold()
                             .FontSize(12);
                     });

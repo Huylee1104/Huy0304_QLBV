@@ -63,25 +63,19 @@
                         <span class="text-danger"></span>
                     </div>
 
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
                         <label for="NhanVien" class="form-label">Nhân viên</label>
-                        <input type="text" class="form-control" id="comboBox2" name="tenNhanVien" data-value="@ViewBag.tenNhanVien">
-                        <input type="hidden" id="IDNhanVien" name="IDNhanVien" data-value="@ViewBag.IDNhanVien" />
-                        <div class="dropdownList" id="dropdownList2"></div>
+                        <select class="form-select tomselect-nhanVien" name="tenNhanVien"></select>
                     </div>
 
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
-                        <label for="HTTT" class="form-label">Hình thức thanh toán</label>
-                        <input type="text" class="form-control" id="comboBox" name="tenHTTT" data-value="@ViewBag.tenHTTT">
-                        <input type="hidden" id="IDHTTT" name="IDHTTT" data-value="@ViewBag.IDHTTT" />
-                        <div class="dropdownList" id="dropdownList"></div>
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
+                        <label for="HTTT" class="form-label">HTTT</label>
+                        <select class="form-select tomselect-httt" name="tenHTTT"></select>
                     </div>
 
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1">
                         <label for="Loai" class="form-label">Loại</label>
-                        <input type="text" class="form-control" id="comboBox3" name="tenLoai">
-                        <input type="hidden" id="IDLoai" name="Loai"/>
-                        <div class="dropdownList" id="dropdownList3"></div>
+                        <select class="form-select tomselect-loai" name="tenLoai"></select>
                     </div>
 
                     <label style="padding:0; margin:0px;">
@@ -154,19 +148,6 @@
             </div>
         </div>
     </div>
-    <script>
-        let provincesDataHTTT = @Html.Raw(ViewBag.DSHTTT ?? "[]");
-        let provincesDataNhanVien = @Html.Raw(ViewBag.DSNhanVien ?? "[]");
-
-        if (typeof provincesDataHTTT === "string") {
-            provincesDataHTTT = JSON.parse(provincesDataHTTT);
-        }
-        if (typeof provincesDataNhanVien === "string") {
-            provincesDataNhanVien = JSON.parse(provincesDataNhanVien);
-        }
-        // console.log(provincesDataHTTT);
-        // console.log(provincesDataNhanVien);
-    </script>
     @section Scripts {
     <script src="@Url.Content("~/dist/js/J0304BangKeThu/J0304_Report.js")" defer asp-append-version="true"></script>
     }

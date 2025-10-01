@@ -56,12 +56,12 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         }
 
         [HttpPost("filterNhap")]
-        public async Task<IActionResult> FilterByDayNhap(string tuNgay, string denNgay, long IdChiNhanh,
+        public async Task<IActionResult> FilterByDayNhap(int nam, long IdChiNhanh,
             long? idKhoHang, long? idNhomHang, long? idHangHoa, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await GetHangNhap(tuNgay, denNgay, IdChiNhanh, idKhoHang, idNhomHang, idHangHoa, page, pageSize);
+                var result = await GetHangNhap(nam, IdChiNhanh, idKhoHang, idNhomHang, idHangHoa, page, pageSize);
 
                 if (!result.HangNhap.Success)
                 {
@@ -89,12 +89,12 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         }
 
         [HttpPost("filterXuat")]
-        public async Task<IActionResult> FilterByDayXuat(string tuNgay, string denNgay, long IdChiNhanh,
+        public async Task<IActionResult> FilterByDayXuat(int nam, long IdChiNhanh,
             long? idKhoHang, long? idNhomHang, long? idHangHoa, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await GetHangXuat(tuNgay, denNgay, IdChiNhanh, idKhoHang, idNhomHang, idHangHoa, page, pageSize);
+                var result = await GetHangXuat(nam, IdChiNhanh, idKhoHang, idNhomHang, idHangHoa, page, pageSize);
 
                 if (!result.HangXuat.Success)
                 {
@@ -126,7 +126,7 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var pdfBytes = await ExportHangNhapPdfAsync(request, HttpContext.Session);
 
-            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
+            string fileName = $"HangNhap_{request.nam}.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }
 
@@ -135,7 +135,7 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var excelBytes = await ExportHangNhapExcelAsync(request, HttpContext.Session);
 
-            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
+            string fileName = $"HangNhap_{request.nam}.xlsx";
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
@@ -144,7 +144,7 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var pdfBytes = await ExportHangXuatPdfAsync(request, HttpContext.Session);
 
-            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.pdf";
+            string fileName = $"HangNhap_{request.nam}.pdf";
             return File(pdfBytes, "application/pdf", fileName);
         }
 
@@ -153,12 +153,12 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var excelBytes = await ExportHangXuatExcelAsync(request, HttpContext.Session);
 
-            string fileName = $"HangNhap_{request.FromDate ?? "all"}_den_{request.ToDate ?? "now"}.xlsx";
+            string fileName = $"HangNhap_{request.nam}.xlsx";
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
         // Các hàm xử lý nhập==================
-        private async Task<M0304MHangNhapResponse> GetHangNhap(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
+        private async Task<M0304MHangNhapResponse> GetHangNhap(int nam, long idCN, long? idKhoHang,
             long? idNhomHang = null, long? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -189,16 +189,13 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
                 };
             }
 
-            var dtStart = DateTime.ParseExact(ngayBatDau, "dd-MM-yyyy", null);
-            var dtEnd = DateTime.ParseExact(ngayKetThuc, "dd-MM-yyyy", null);
-
-            int year = dtEnd.Year;
+            int year = nam;
 
             var normalizedStart = new DateTime(year, 1, 1);
             var normalizedEnd = new DateTime(year, 12, 31);
 
-            ngayBatDau = normalizedStart.ToString("dd-MM-yyyy");
-            ngayKetThuc = normalizedEnd.ToString("dd-MM-yyyy");
+            var ngayBatDau = normalizedStart.ToString("dd-MM-yyyy");
+            var ngayKetThuc = normalizedEnd.ToString("dd-MM-yyyy");
 
             var allData = await _context.HangNhapReports
                 .FromSqlRaw("EXEC dbo.[S0304_BaoCaoSoLuongHangNhap] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDNhomHang, @IDHangHoa",
@@ -277,10 +274,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         private async Task<byte[]> ExportHangNhapPdfAsync(ExportRequest<M0304MHangNhap> request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-            var logoPath = "null";
 
             var data = request.Data ?? new List<M0304MHangNhap>();
-            var document = new P0304MReportNhapTemplatePDF(data, request.FromDate, request.ToDate, doanhNghiepObj);
+            var document = new P0304MReportNhapTemplatePDF(data, request.nam, doanhNghiepObj);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -288,17 +284,16 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         private async Task<byte[]> ExportHangNhapExcelAsync(ExportRequest<M0304MHangNhap> request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-            var logoPath = "";
 
             var data = request.Data ?? new List<M0304MHangNhap>();
-            var document = new P0304ExcelReportNhapTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj);
+            var document = new P0304ExcelReportNhapTemplate(data, request.nam, doanhNghiepObj);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
         }
 
         // Các hàm xử lý xuất ==========
-        private async Task<M0304GHangXuatResponse> GetHangXuat(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
+        private async Task<M0304GHangXuatResponse> GetHangXuat(int nam, long idCN, long? idKhoHang,
             long? idNhomHang = null, long? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -329,16 +324,13 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
                 };
             }
 
-            var dtStart = DateTime.ParseExact(ngayBatDau, "dd-MM-yyyy", null);
-            var dtEnd = DateTime.ParseExact(ngayKetThuc, "dd-MM-yyyy", null);
-
-            int year = dtEnd.Year;
+            int year = nam;
 
             var normalizedStart = new DateTime(year, 1, 1);
             var normalizedEnd = new DateTime(year, 12, 31);
 
-            ngayBatDau = normalizedStart.ToString("dd-MM-yyyy");
-            ngayKetThuc = normalizedEnd.ToString("dd-MM-yyyy");
+            var ngayBatDau = normalizedStart.ToString("dd-MM-yyyy");
+            var ngayKetThuc = normalizedEnd.ToString("dd-MM-yyyy");
 
             var allData = await _context.HangXuatReports
                 .FromSqlRaw("EXEC dbo.[S0304_BaoCaoSoLuongHangXuat] @TuNgay, @DenNgay, @IDCN, @IDKhoHang, @IDNhomHang, @IDHangHoa",
@@ -385,10 +377,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         private async Task<byte[]> ExportHangXuatPdfAsync(ExportRequest<M0304MHangXuat> request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-            var logoPath = "null";
 
             var data = request.Data ?? new List<M0304MHangXuat>();
-            var document = new P0304MReportXuatTemplatePDF(data, request.FromDate, request.ToDate, doanhNghiepObj);
+            var document = new P0304MReportXuatTemplatePDF(data, request.nam, doanhNghiepObj);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -396,10 +387,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         private async Task<byte[]> ExportHangXuatExcelAsync(ExportRequest<M0304MHangXuat> request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-            var logoPath = "";
 
             var data = request.Data ?? new List<M0304MHangXuat>();
-            var document = new P0304ExcelReportXuatTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj);
+            var document = new P0304ExcelReportXuatTemplate(data, request.nam, doanhNghiepObj);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;

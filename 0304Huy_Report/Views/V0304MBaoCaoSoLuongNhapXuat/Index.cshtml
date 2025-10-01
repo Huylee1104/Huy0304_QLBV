@@ -72,99 +72,59 @@
         background-color: #bae7ff !important;
     }
 </style> *@
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304M/C0304M.css")" />
+}
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
-                <div class="row" style="padding:0; margin: 5px;">
-                    <div style="width: 100%; padding:0;">
-                        <label class="form-label">Giai đoạn</label>
-                        <select id="selectGiaiDoan" class="form-select">
-                            <option value="Nam" selected>Năm</option>
-                            <option value="Quy">Quý</option>
-                            <option value="Thang">Tháng</option>
-                            <option value="Ngay">Ngày</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class ="select-row" id="selectContainer"
-                     style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
-                </div>
-
-                <div class="row" style="padding:0; margin: 5px;">
-                    <div style="width: 100%;padding:0;">
-                        <label class="form-label">Từ ngày</label>
-                        <div class="input-group" id="ngayTuNgay-datepicker">
-                            <input type="text"
-                                   class="form-control date-input"
-                                   id="ngayTuNgay"
-                                   name="TuNgay"
-                                   value='@DateTime.Now.ToString("dd-MM-yyyy")'
-                                   placeholder="dd-mm-yyyy"
-                                   autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayTuNgay-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </span>
-                        </div>
-                        <span class="text-danger"></span>
-                    </div>
-
-                    <div style="width: 100%; margin: 5px 0px;padding:0;">
-                        <label class="form-label">Đến ngày</label>
-                        <div class="input-group" id="ngayDenNgay-datepicker">
-                            <input type="text"
-                                   class="form-control date-input"
-                                   id="ngayDenNgay"
-                                   name="DenNgay"
-                                   value='@DateTime.Now.ToString("dd-MM-yyyy")'
-                                   placeholder="dd-mm-yyyy"
-                                   autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </span>
-                        </div>
-                        <span class="text-danger"></span>
-                    </div>
-                    <!--Kho Hàng-->
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1">
-                        <label for="KhoTra" class="form-label">Kho trả</label>
-                        <input type="text" class="form-control tomselect-khoHang" id="IDKhoHang" name="tenKhoHang" value="14" data-id="14" />
+                <div class="row g-3 align-items-end filter-row">
+                    <div class="col-md-2">
+                        <label for="nam" class="form-label">Chọn năm</label>
+                        <select class="form-select tomselect-nam" name="tenNam"></select>
                     </div>
                     <!--Nhóm hàng-->
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
+                    <div class="col-md-2">
                         <label for="NhomHang" class="form-label">Nhóm hàng</label>
-                        <select class="tomselect-nhomHang" name="tenNhomHang" value=""></select>
+                        <select class="form-select tomselect-nhomHang" name="tenNhomHang"></select>
                     </div>
+
                     <!--Hàng hóa-->
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-3">
+                    <div class="col-md-2">
                         <label for="HangHoa" class="form-label">Hàng hóa</label>
-                        <select class="tomselect-hangHoa"name="tenHangHoa" value=""></select>
+                        <select class="form-select tomselect-hangHoa" name="tenHangHoa"></select>
                     </div>
 
-                    <label style="padding:0; margin:0px;">
-                        <button id="btnFilterNhap" class="btn btn-outline-primary mb-3">
-                            <i class="bi bi-funnel"></i> Danh sách nhập
-                        </button>
-                    </label>
-                    <label style="padding:0; margin:0px;">
-                        <button id="btnFilterXuat" class="btn btn-outline-primary mb-3">
-                            <i class="bi bi-funnel"></i> Danh sách xuất
-                        </button>
-                    </label>
+                    <div class="col-md-3 d-flex align-items-center gap-2 justify-content-center">
+                        <!-- Radio nhóm Nhập/Xuất -->
+                        <div class="d-flex gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="filterType" id="filterNhap" value="Nhap" checked>
+                                <label class="form-check-label" for="filterNhap">Nhập</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="filterType" id="filterXuat" value="Xuat">
+                                <label class="form-check-label" for="filterXuat">Xuất</label>
+                            </div>
+                        </div>
 
-                </div>
-                <div style="padding:0; margin: 5px;" class="row export-buttons">
-                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
-                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
-                    </button>
+                        <!-- Nút Load -->
+                        <button id="btnFilter" class="btn btn-outline-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
 
-                    <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
-                        <i class="bi bi-file-earmark-excel"></i> Xuất Excel
-                    </button>
+                    <!--Nút export-->
+                    <div class="col-md-3 d-flex gap-2">
+                        <button id="btnExportPDF" class="btn btn-outline-danger flex-fill"
+                                @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                            <i class="bi bi-file-earmark-pdf"></i> PDF
+                        </button>
+                        <button id="btnExportExcel" class="btn btn-outline-success flex-fill"
+                                @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                            <i class="bi bi-file-earmark-excel"></i> Excel
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -178,7 +138,7 @@
                 </div>
 
                 <div class="table-wrapper-scroll">
-                    <table style="margin: auto; table-layout: fixed;" cellpadding="8">
+                    <table style="margin: auto; width: 100%; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
@@ -202,8 +162,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="phan_trang">
-                    <div class="d-flex">
+                <div class="phan_trang d-flex justify-content-end align-items-center">
+                    <div class="d-flex align-items-center me-3">
                         <label class="form-label" style="font-size:1rem !important;">Số bản ghi mỗi trang:</label>
                         <select id="pageSizeSelect" style="font-size:1rem !important;" class="form-select">
                             <option value="10">10</option>
@@ -225,13 +185,6 @@
             </div>
         </div>
     </div>
-    <script>
-    let provincesDataKhoHang = @Html.Raw(ViewBag.DSKhoHang ?? "[]");
-
-        if (typeof provincesDataKhoHang === "string") {
-            provincesDataKhoHang = JSON.parse(provincesDataKhoHang);
-        }
-    </script>
     @section Scripts {
     <script src="@Url.Content("~/dist/js/J0304MBaoCaoSoLuongNhapXuat/J0304M_Report.js")" defer asp-append-version="true"></script>
     }

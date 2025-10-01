@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="PDFDocument\P0304\" />
-    <Folder Include="wwwroot\dist\css\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

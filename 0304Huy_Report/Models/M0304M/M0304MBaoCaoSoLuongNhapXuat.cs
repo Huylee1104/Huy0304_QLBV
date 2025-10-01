@@ -75,8 +75,7 @@ namespace M0304M.Models.BaoCaoHangHoa
     public class ExportRequest<T>
     {
         public List<T> Data { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public int nam { get; set; }
         public long? IdKhoHang { get; set; }
         public long? IdNhomHang { get; set; }
         public long? IdHangHoa { get; set; }

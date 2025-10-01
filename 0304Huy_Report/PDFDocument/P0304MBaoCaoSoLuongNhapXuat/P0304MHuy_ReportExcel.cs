@@ -12,23 +12,18 @@ public class P0304ExcelReportNhapTemplate
 {
     private readonly List<M0304MHangNhap> _data;
     private readonly M0304ThongTinDoanhNghiep _dataDN;
-    private string _ngayBatDau;
-    private string _ngayKetThuc;
+    private int _nam;
 
     public P0304ExcelReportNhapTemplate(
         List<M0304MHangNhap> data,
-        string ngayBatDau,
-        string ngayKetThuc,
+        int nam,
         M0304ThongTinDoanhNghiep dataDN
     )
     {
         _data = data ?? new List<M0304MHangNhap>();
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
-        _ngayBatDau = ngayBatDau;
-        _ngayKetThuc = ngayKetThuc;
+        _nam = nam;
     }
-
-    public int Nam => DateTime.ParseExact(_ngayKetThuc, "dd-MM-yyyy", null).Year;
 
     public byte[] GenerateExcel()
     {
@@ -51,7 +46,7 @@ public class P0304ExcelReportNhapTemplate
             currentRow += 3;
 
             ws.Range(currentRow, 2, currentRow, 16).Merge();
-            ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG NHẬP {Nam}";
+            ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG NHẬP {_nam}";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -167,23 +162,18 @@ public class P0304ExcelReportXuatTemplate
 {
     private readonly List<M0304MHangXuat> _data;
     private readonly M0304ThongTinDoanhNghiep _dataDN;
-    private string _ngayBatDau;
-    private string _ngayKetThuc;
+    private int _nam;
 
     public P0304ExcelReportXuatTemplate(
         List<M0304MHangXuat> data,
-        string ngayBatDau,
-        string ngayKetThuc,
+        int nam,
         M0304ThongTinDoanhNghiep dataDN
     )
     {
         _data = data ?? new List<M0304MHangXuat>();
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
-        _ngayBatDau = ngayBatDau;
-        _ngayKetThuc = ngayKetThuc;
+        _nam = nam;
     }
-
-    public int Nam => DateTime.ParseExact(_ngayKetThuc, "dd-MM-yyyy", null).Year;
 
     public byte[] GenerateExcel()
     {
@@ -206,7 +196,7 @@ public class P0304ExcelReportXuatTemplate
             currentRow += 3;
 
             ws.Range(currentRow, 2, currentRow, 16).Merge();
-            ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG XUẤT {Nam}";
+            ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG XUẤT {_nam}";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;

@@ -1,0 +1,302 @@
+﻿/* ---------- scrollbar custom ---------- */
+.table-wrapper-scroll::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+}
+
+.table-wrapper-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 6px;
+}
+
+.table-wrapper-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.column-toggle-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* ---------- container ---------- */
+.table-wrapper-scroll {
+    overflow: auto; /* scroll cả ngang và dọc */
+    height: 68vh; /* chiều cao khung */
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: scrollbar;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+    /* ---------- table ---------- */
+    .table-wrapper-scroll table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: auto;
+        min-width: 1250px; /* giữ scroll ngang nếu bảng nhiều cột */
+        table-layout: auto; /* cột dãn theo nội dung */
+    }
+
+    /* ---------- cell (td/th) ---------- */
+    .table-wrapper-scroll th,
+    .table-wrapper-scroll td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: center;
+        font-size: 13px;
+        /* ✨ quan trọng: giữ text 1 dòng, không xuống hàng */
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis; /* hiện "..." khi nội dung quá dài */
+    }
+
+    /* ---------- header sticky ---------- */
+    .table-wrapper-scroll th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 21;
+    }
+
+    /* ---------- hover row ---------- */
+    .table-wrapper-scroll tr:hover td {
+        background-color: #bae7ff; /* màu đậm hơn để phân biệt */
+    }
+    /* Khi click chọn */
+    .table-wrapper-scroll tr.selected td {
+        background-color: #bae7ff; /* màu đậm hơn để phân biệt */
+    }
+    /* ---------- fix border 2 cạnh ---------- */
+    .table-wrapper-scroll th:first-child,
+    .table-wrapper-scroll td:first-child {
+        border-left: 1px solid #ccc !important;
+    }
+
+    .table-wrapper-scroll th:last-child,
+    .table-wrapper-scroll td:last-child {
+        border-right: 1px solid #ccc !important;
+    }
+
+    .table-wrapper-scroll tfoot td:nth-child(-n+4) {
+        background-color: #f2f2f2 !important;
+    }
+
+    /* Đảm bảo các cột tổng cộng có màu nền đúng */
+    .table-wrapper-scroll tfoot td {
+        background-color: #f2f2f2 !important;
+    }
+
+    .table-wrapper-scroll tfoot td {
+        position: static !important;
+        background-color: #f2f2f2 !important;
+    }
+
+    .table-wrapper-scroll thead tr:nth-child(1) th {
+        top: 0;
+    }
+
+    .table-wrapper-scroll thead tr:nth-child(2) th {
+        top: 30px; /* đúng bằng chiều cao dòng 1 */
+        background-color: white !important;
+    }
+
+.column-toggle-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Toàn bộ font 13px */
+body, label, input, select, button, .form-label, .form-control, .input-group-text {
+    font-size: 13px !important;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+/* Đồng bộ input/select/button */
+.form-control, select, button {
+    height: 36px;
+    line-height: 36px;
+}
+
+/* Container layout trên-dưới */
+.container_Team3 {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 100%;
+}
+
+    .container_Team3.left {
+        flex: 0 0 10%; /* chiếm 10% chiều cao */
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .container_Team3.right {
+        flex: 1; /* chiếm phần còn lại (90%) */
+        width: 100%;
+        overflow: auto; /* bảng dài thì scroll */
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+.filter-row {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+}
+
+    .filter-row > * {
+        flex: 1;
+        min-width: 100px;
+    }
+
+#yearDropdown {
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    background-color: #fff;
+    padding: 4px 8px;
+    appearance: none; /* ẩn style mặc định (Chrome, Safari, Edge) */
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none;
+}
+
+    #yearDropdown option {
+        border: 0;
+        outline: 0;
+    }
+
+.pagination {
+    margin: 0;
+}
+
+.page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.page-link {
+    color: #0d6efd;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+}
+
+.page-link:hover {
+    color: #0a58ca;
+}
+
+#pageInfo {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+
+#pageSizeSelect {
+    width: auto;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.phan_trang {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 30px;
+    flex-wrap: nowrap;
+    margin: 20px 0 !important;
+    font-size: 1rem;
+    gap: 10px;
+    min-height: 50px;
+}
+
+    .phan_trang label {
+        margin-bottom: 0;
+    }
+
+.page-link:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#loadingSpinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 100px;
+    height: 100px;
+}
+
+    #loadingSpinner .spinner-border {
+        width: 5rem;
+        height: 5rem;
+        border-width: 0.5em;
+    }
+
+#selectContainer .form-select {
+    width: 100% !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+
+#selectContainer {
+    gap: 10px;
+}
+
+.option-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    .option-item.highlight {
+        background-color: #e9ecef;
+    }
+
+.highlight-text {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.dropdownList {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    z-index: 1055;
+}
+
+    .dropdownList div {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .dropdownList div:hover {
+            background-color: #e9ecef;
+        }
+.container_Team3.left .row .select-row {
+    width: 100%;
+}
+
+.input-wrapper {
+    position: relative !important;
+    width: 100%;
+}
+

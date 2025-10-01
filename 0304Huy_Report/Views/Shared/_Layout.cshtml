@@ -15,7 +15,8 @@
     <link href="/dist/css/Custom.css" rel="stylesheet" />
     <link href="/dist/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="/dist/css/toastr.min.css?1684106062" rel="stylesheet" />
-    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" /> <!--Dùng chung file css với C0304-->
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>

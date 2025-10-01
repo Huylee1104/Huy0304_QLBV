@@ -55,25 +55,21 @@ var currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
 var currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
 var currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
 
+$(document).ready(function () {
+    $('input[name="filterType"]').change(function () {
+        if ($('#filterNhap').is(':checked')) {
+            currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
+            currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
+            currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
+        } else if ($('#filterXuat').is(':checked')) {
+            currentUrl = '/bao_cao_so_luong_nhap_xuat/filterXuat';
+            currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportxuat/pdf';
+            currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportxuat/excel';
+        }
+    });
+});
+
 // ==================== SỰ KIỆN PHÂN TRANG ====================
-$(document).on('click', '#btnFilterXuat', function (e) {
-    e.preventDefault();
-    currentPage = 1;
-    currentUrl = '/bao_cao_so_luong_nhap_xuat/filterXuat';
-    currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportxuat/pdf';
-    currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportxuat/excel';
-    filterData();
-});
-
-$(document).on('click', '#btnFilterNhap', function (e) {
-    e.preventDefault();
-    currentPage = 1;
-    currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
-    currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
-    currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
-    filterData();
-});
-
 $(document).on('click', '.page-link', function (e) {
     e.preventDefault();
     const page = $(this).data('page');
@@ -82,21 +78,22 @@ $(document).on('click', '.page-link', function (e) {
         filterData(true);
     }
 });
+$(document).on('click', '#btnFilter', function (e) {
+    e.preventDefault();
+    currentPage = 1;
+    isInitialLoad = true;
+    filterData();
+});
 
 // ==================== LỌC DỮ LIỆU ====================
 let firstLoad = true;
 function filterData(isPagination = false) {
-    let tuNgay = $('#ngayTuNgay').val();
-    let denNgay = $('#ngayDenNgay').val();
+    let nam = $('.tomselect-nam').val();
     let idKhoHang = 14;
     let idNhomHang = $('.tomselect-nhomHang').val() || 0;
     let idHangHoa = $('.tomselect-hangHoa').val() || 0;
     if (!isPagination) {
         firstLoad = true;
-    }
-    if (!isPagination && (!tuNgay || !denNgay)) {
-        toastr.error("Vui lòng chọn từ ngày và đến ngày");
-        return;
     }
 
     function parseDMY(s) {
@@ -104,17 +101,11 @@ function filterData(isPagination = false) {
         return new Date(p[2], p[1] - 1, p[0]);
     }
 
-    if (!isPagination && parseDMY(tuNgay) > parseDMY(denNgay)) {
-        tuNgay = denNgay;
-        $('#ngayTuNgay').val(tuNgay);
-    }
-
     $('#loadingSpinner').show();
     $('.table-wrapper').css('opacity', '0.5');
 
     let payload = {
-        tuNgay: tuNgay,
-        denNgay: denNgay,
+        nam : nam,
         IdChiNhanh: _idcn,
         idKhoHang: idKhoHang,
         idNhomHang: idNhomHang,
@@ -166,11 +157,10 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhomHang, idHangHoa) {
+function fetchAllFilteredData(nam, idKhoHang, idNhomHang, idHangHoa) {
     return new Promise((resolve, reject) => {
         const basePayload = {
-            tuNgay: tuNgay || '',
-            denNgay: denNgay || '',
+            nam : nam,
             IdChiNhanh: _idcn || 0,
             idKhoHang: idKhoHang,
             idNhomHang: idNhomHang ||0,
@@ -195,8 +185,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhomHang, idHangHoa)
             const promises = [];
             for (let p = 2; p <= tp; p++) {
                 const payload = {
-                    tuNgay: tuNgay || '',
-                    denNgay: denNgay || '',
+                    nam : nam,
                     IdChiNhanh: _idcn,
                     idKhoHang: idKhoHang,
                     idNhomHang: idNhomHang || 0,
@@ -222,33 +211,6 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhomHang, idHangHoa)
 
 // ==================== KIỂM TRA DỮ LIỆU XUẤT ====================
 function validateExportDatesAndData() {
-    const tuNgay = $('#ngayTuNgay').val();
-    const denNgay = $('#ngayDenNgay').val();
-
-    if (!tuNgay && !denNgay ) {
-        if (!window.filteredData || window.filteredData.length === 0) {
-            toastr.error("Không có dữ liệu để xuất");
-            return false;
-        }
-        return true;
-    }
-    if ((tuNgay && !denNgay) || (!tuNgay && denNgay)) {
-        toastr.error("Vui lòng chọn cả từ ngày và đến ngày");
-        return false;
-    }
-
-    function parseDMY(s) {
-        const parts = s.split('-');
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-    }
-    if (parseDMY(tuNgay) > parseDMY(denNgay)) {
-        toastr.error("Từ ngày phải nhỏ hơn hoặc bằng đến ngày");
-        return false;
-    }
-    if (!window.filteredData || window.filteredData.length === 0) {
-        toastr.error("Không có dữ liệu để xuất");
-        return false;
-    }
     return true;
 }
 
@@ -256,13 +218,19 @@ function validateExportDatesAndData() {
 function doExportExcel(finalData, btn, originalHtml) {
     const requestData = {
         data: finalData,
-        fromDate: $('#ngayTuNgay').val(),
-        toDate: $('#ngayDenNgay').val(),
+        nam: $('.tomselect-nam').val(),
         idKhoHang: 14,
         idNhomHang: $('.tomselect-nhomHang').val() || 0,
         idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
+
+    var tenFile = '';
+    if (currentUrlPDF.includes('exportnhap')) {
+        tenFile = 'Nhap';
+    } else if (currentUrlPDF.includes('exportxuat')) {
+        tenFile = 'Xuat';
+    }
 
     $.ajax({
         url: currentUrlExcel,
@@ -279,7 +247,7 @@ function doExportExcel(finalData, btn, originalHtml) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `BangKeThuNgoaiTru_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
+            a.download = `BaoCaoSoLuong${tenFile}_${requestData.nam}.xlsx`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -306,14 +274,13 @@ $('#btnExportExcel').off('click').on('click', function (e) {
     btn.html('<span class="spinner-border spinner-border-sm"></span> Đang tạo');
     btn.prop('disabled', true);
 
-    const tu = $('#ngayTuNgay').val();
-    const den = $('#ngayDenNgay').val();
+    const nam = $('.tomselect-nam').val();
     const idKhoHang = 14;
     const idNhomHang = $('.tomselect-nhomHang').val() || 0;
     const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
+        fetchAllFilteredData(nam, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -331,13 +298,18 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 function doExportPdf(finalData, btnElem) {
     const requestData = {
         data: finalData,
-        fromDate: $('#ngayTuNgay').val(),
-        toDate: $('#ngayDenNgay').val(),
+        nam: $('.tomselect-nam').val(),
         idKhoHang: 14,
         idNhomHang: $('.tomselect-nhomHang').val() || 0,
         idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
+    var tenFile = '';
+    if (currentUrlPDF.includes('exportnhap')) {
+        tenFile = 'Nhap';
+    } else if (currentUrlPDF.includes('exportxuat')) {
+        tenFile = 'Xuat';
+    }
 
     fetch(currentUrlPDF, {
         method: "POST",
@@ -352,7 +324,7 @@ function doExportPdf(finalData, btnElem) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `BaoCaoSoLuong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
+        a.download = `BaoCaoSoLuong${tenFile}_${requestData.nam}.pdf`;
         a.click();
         window.URL.revokeObjectURL(url);
         toastr.success("Xuất PDF thành công");
@@ -375,14 +347,13 @@ $('#btnExportPDF').off('click').on('click', function (e) {
     btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang tạo';
     btn.disabled = true;
 
-    const tu = $('#ngayTuNgay').val();
-    const den = $('#ngayDenNgay').val();
+    const nam = $('.tomselect-nam').val();
     const idKhoHang = 14;
     const idNhomHang = $('.tomselect-nhomHang').val() || 0;
     const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
+        fetchAllFilteredData(nam, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -537,6 +508,23 @@ $(document).ready(function () {
     initDateRangeConstraint(config);
 });
 
+function taoJsonNam(yearsToShow = 20) {
+    const currentYear = new Date().getFullYear();
+    const data = [];
+
+    for (let i = 0; i < yearsToShow; i++) {
+        const y = currentYear - i;
+        data.push({
+            id: y,
+            ten: y.toString(), 
+            viettat: "",
+            active: true
+        });
+    }
+
+    return JSON.stringify(data, null, 2);
+}
+
 // ==================== LOAD COMBOBOX ====================
 $.getJSON("dist/data/json/Dm_NhomHang.json", dataNhomHang => {
     listNhomHang = dataNhomHang
@@ -584,4 +572,31 @@ $.getJSON("dist/data/json/Dm_HangHoa.json", dataHangHoa => {
     ];
 
     configCb(configs, listHangHoa);
+});
+
+$(document).ready(function () {
+    const jsonNam = taoJsonNam(20);
+    const listNam = JSON.parse(jsonNam);
+
+    const listYears = listNam.map(n => ({
+        ...n,
+        alias: ""
+    }));
+
+    const configs = [
+        {
+            className: ".tomselect-nam",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
+
+    configCb(configs, listYears);
+
+    const currentYear = new Date().getFullYear().toString();
+    const $select = $(".tomselect-nam")[0].tomselect;
+    if ($select) {
+        $select.setValue(currentYear); // set giá trị mặc định
+    }
 });
