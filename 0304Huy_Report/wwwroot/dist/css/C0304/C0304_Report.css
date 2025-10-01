@@ -262,11 +262,11 @@ input {
     height: 100px; 
 }
 
-    #loadingSpinner .spinner-border {
-        width: 5rem; 
-        height: 5rem;
-        border-width: 0.5em; 
-    }
+#loadingSpinner .spinner-border {
+    width: 5rem; 
+    height: 5rem;
+    border-width: 0.5em; 
+}
 
 #selectContainer .form-select {
     width: 100% !important;
@@ -288,9 +288,9 @@ input {
     cursor: pointer;
 }
 
-    .option-item.highlight {
-        background-color: #e9ecef;
-    }
+.option-item.highlight {
+    background-color: #e9ecef;
+}
 
 .highlight-text {
     background-color: yellow;
@@ -324,8 +324,8 @@ input {
 .container_Team3.left .row .select-row {
     width: 100%;
 }
-/*
+
 .input-wrapper {
-    position: relative;
+    position: relative !important;
     width: 100%;
-}*/
+}

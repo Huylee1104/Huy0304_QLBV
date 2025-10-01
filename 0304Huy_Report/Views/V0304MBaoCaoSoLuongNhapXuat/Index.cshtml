@@ -72,7 +72,6 @@
         background-color: #bae7ff !important;
     }
 </style> *@
-
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -80,10 +79,10 @@
                     <div style="width: 100%; padding:0;">
                         <label class="form-label">Giai đoạn</label>
                         <select id="selectGiaiDoan" class="form-select">
-                            <option value="Nam">Năm</option>
+                            <option value="Nam" selected>Năm</option>
                             <option value="Quy">Quý</option>
                             <option value="Thang">Tháng</option>
-                            <option value="Ngay" selected>Ngày</option>
+                            <option value="Ngay">Ngày</option>
                         </select>
                     </div>
                 </div>
@@ -131,19 +130,19 @@
                         <span class="text-danger"></span>
                     </div>
                     <!--Kho Hàng-->
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1 input-wrapper">
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1">
                         <label for="KhoTra" class="form-label">Kho trả</label>
                         <input type="text" class="form-control tomselect-khoHang" id="IDKhoHang" name="tenKhoHang" value="14" data-id="14" />
                     </div>
                     <!--Nhóm hàng-->
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1 input-wrapper">
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
                         <label for="NhomHang" class="form-label">Nhóm hàng</label>
-                        <select class="tomselect-nhomHang" name="tenNhomHang" value="@ViewBag.nhomHang"></select>
+                        <select class="tomselect-nhomHang" name="tenNhomHang" value=""></select>
                     </div>
                     <!--Hàng hóa-->
-                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-3 input-wrapper">
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-3">
                         <label for="HangHoa" class="form-label">Hàng hóa</label>
-                        <select class="tomselect-hangHoa"name="tenHangHoa" value="@ViewBag.hangHoa"></select>
+                        <select class="tomselect-hangHoa"name="tenHangHoa" value=""></select>
                     </div>
 
                     <label style="padding:0; margin:0px;">

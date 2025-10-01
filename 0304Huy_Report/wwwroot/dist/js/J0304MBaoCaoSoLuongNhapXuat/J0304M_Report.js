@@ -44,27 +44,34 @@ function renderPagination() {
     `);
 }
 
-let currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
-let currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
-let currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
-
-// ==================== SỰ KIỆN PHÂN TRANG ====================
-$(document).on('click', '#btnFilterNhap', function (e) {
-    e.preventDefault();
+// ==================== SỰ KIỆN THAY ĐỔI SỐ BẢN GHI MỖI TRANG ====================
+$(document).on('change', '#pageSizeSelect', function () {
+    pageSize = parseInt($(this).val());
     currentPage = 1;
-    currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
-    currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
-    currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
-    filterData(currentUrl);
+    filterData();
 });
 
+var currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
+var currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
+var currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
+
+// ==================== SỰ KIỆN PHÂN TRANG ====================
 $(document).on('click', '#btnFilterXuat', function (e) {
     e.preventDefault();
     currentPage = 1;
     currentUrl = '/bao_cao_so_luong_nhap_xuat/filterXuat';
     currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportxuat/pdf';
     currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportxuat/excel';
-    filterData(currentUrl);
+    filterData();
+});
+
+$(document).on('click', '#btnFilterNhap', function (e) {
+    e.preventDefault();
+    currentPage = 1;
+    currentUrl = '/bao_cao_so_luong_nhap_xuat/filterNhap';
+    currentUrlPDF = '/bao_cao_so_luong_nhap_xuat/exportnhap/pdf';
+    currentUrlExcel = '/bao_cao_so_luong_nhap_xuat/exportnhap/excel';
+    filterData();
 });
 
 $(document).on('click', '.page-link', function (e) {
@@ -72,20 +79,13 @@ $(document).on('click', '.page-link', function (e) {
     const page = $(this).data('page');
     if (page >= 1 && page <= totalPages && page !== currentPage) {
         currentPage = page;
-        filterData(currentUrl, true);
+        filterData(true);
     }
-});
-
-// ==================== SỰ KIỆN THAY ĐỔI SỐ BẢN GHI MỖI TRANG ====================
-$(document).on('change', '#pageSizeSelect', function () {
-    pageSize = parseInt($(this).val());
-    currentPage = 1;
-    filterData(currentUrl);
 });
 
 // ==================== LỌC DỮ LIỆU ====================
 let firstLoad = true;
-function filterData(url, isPagination = false) {
+function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
     let idKhoHang = 14;
@@ -123,7 +123,7 @@ function filterData(url, isPagination = false) {
         pageSize: pageSize
     }
     $.ajax({
-        url: url,
+        url: currentUrl,
         type: 'POST',
         data: payload,
         success: function (response) {
@@ -153,10 +153,11 @@ function filterData(url, isPagination = false) {
 }
 
 // ==================== HÀM HỖ TRỢ LẤY TOÀN BỘ DỮ LIỆU ====================
-function ajaxFilterRequest(url, payload) {
+function ajaxFilterRequest(payload) {
+    console.log(currentUrlPDF);
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: url,
+            url: currentUrl,
             type: 'POST',
             data: payload,
             success: function (resp) { resolve(resp); },
@@ -252,7 +253,7 @@ function validateExportDatesAndData() {
 }
 
 // ==================== XUẤT EXCEL ====================
-function doExportExcel(url, finalData, btn, originalHtml) {
+function doExportExcel(finalData, btn, originalHtml) {
     const requestData = {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
@@ -264,7 +265,7 @@ function doExportExcel(url, finalData, btn, originalHtml) {
     };
 
     $.ajax({
-        url: url,
+        url: currentUrlExcel,
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(requestData),
@@ -299,7 +300,7 @@ function doExportExcel(url, finalData, btn, originalHtml) {
 $('#btnExportExcel').off('click').on('click', function (e) {
     e.preventDefault();
     if (!validateExportDatesAndData()) return;
-
+    console.log("trong đầu btn", currentUrlPDF);
     const btn = $(this);
     const originalHtml = btn.html();
     btn.html('<span class="spinner-border spinner-border-sm"></span> Đang tạo');
@@ -315,19 +316,19 @@ $('#btnExportExcel').off('click').on('click', function (e) {
         fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
-                doExportExcel(currentUrlExcel, allData, btn, originalHtml);
+                doExportExcel(allData, btn, originalHtml);
             })
             .catch(err => {
                 btn.html(originalHtml);
                 btn.prop('disabled', false);
             });
     } else {
-        doExportExcel(currentUrlExcel, window.filteredData, btn, originalHtml);
+        doExportExcel(window.filteredData, btn, originalHtml);
     }
 });
 
 // ==================== XUẤT PDF ====================
-function doExportPdf(url, finalData, btnElem) {
+function doExportPdf(finalData, btnElem) {
     const requestData = {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
@@ -338,32 +339,32 @@ function doExportPdf(url, finalData, btnElem) {
         doanhNghiep: window.doanhNghiep || null
     };
 
-    fetch(url, {
+    fetch(currentUrlPDF, {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
     })
-        .then(res => {
-            if (!res.ok) throw new Error('Network response was not ok');
-            return res.blob();
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `BaoCaoSoLuong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
-        })
-        .catch(error => {
-            console.error('Error exporting PDF:', error);
-            toastr.error("Xuất PDF thất bại");
-        })
-        .finally(() => {
-            btnElem.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Xuất PDF';
-            btnElem.disabled = false;
-        });
+    .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `BaoCaoSoLuong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        toastr.success("Xuất PDF thành công");
+    })
+    .catch(error => {
+        console.error('Error exporting PDF:', error);
+        toastr.error("Xuất PDF thất bại");
+    })
+    .finally(() => {
+        btnElem.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Xuất PDF';
+        btnElem.disabled = false;
+    });
 }
 
 $('#btnExportPDF').off('click').on('click', function (e) {
@@ -384,14 +385,15 @@ $('#btnExportPDF').off('click').on('click', function (e) {
         fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
-                doExportPdf(currentUrlPDF, allData, btn);
+                doExportPdf(allData, btn);
             })
             .catch(err => {
                 btn.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Xuất PDF';
                 btn.disabled = false;
             });
     } else {
-        doExportPdf(currentUrlPDF, window.filteredData, btn);
+        doExportPdf(window.filteredData, btn);
+
     }
 });
 
@@ -439,7 +441,7 @@ function updateTable(response) {
         // Gom nhóm theo công ty
         const groupedData = {};
         data.forEach(item => {
-            const tenNhomHang = item.tenNhomHang || item.tenNhomHang || "Không rõ";
+            const tenNhomHang = item.tenNhomHang || item.TenNhomHang || "Không rõ";
             if (!groupedData[tenNhomHang]) {
                 groupedData[tenNhomHang] = [];
             }
@@ -447,61 +449,72 @@ function updateTable(response) {
         });
 
         Object.keys(groupedData).forEach(tenNhomHang => {
-            // Header công ty
-            const companyRow = `
-            <tr class="fw-bold">
-                <td colspan="15" class="text-center tong-col">${tenNhomHang}</td>
-            </tr>`;
-            tbody.append(companyRow);
+            const groupItems = groupedData[tenNhomHang];
 
-            // Reset tổng cho công ty này
-            let tongDongGoi = 0;
-            let tongLe = 0;
-            let tongDonGiaDongGoi = 0;
-            let tongDonGiaLe = 0;
-            let tongThanhTien = 0;
+            // Tính tổng từng cột ngay từ đầu
+            let tongThang = Array(12).fill(0);
+            let tongCong = 0;
 
-            groupedData[tenNhomHang].forEach((item, index) => {
-                //tongDongGoi += Number(item.slDongGoi || item.SLDongGoi || 0);
-                //tongLe += Number(item.slLe || item.SLLe || 0);
-                //tongDonGiaDongGoi += Number(item.donGiaDongGoi || item.DonGiaDongGoi || 0);
-                //tongDonGiaLe += Number(item.donGiaLe || item.DonGiaLe || 0);
-                //tongThanhTien += Number(item.thanhTien || item.ThanhTien || 0);
-                const stt = (currentPage - 1) * pageSize + index + 1;
+            groupItems.forEach(item => {
+                tongThang[0] += Number(item.thang1 || item.Thang1 || 0);
+                tongThang[1] += Number(item.thang2 || item.Thang2 || 0);
+                tongThang[2] += Number(item.thang3 || item.Thang3 || 0);
+                tongThang[3] += Number(item.thang4 || item.Thang4 || 0);
+                tongThang[4] += Number(item.thang5 || item.Thang5 || 0);
+                tongThang[5] += Number(item.thang6 || item.Thang6 || 0);
+                tongThang[6] += Number(item.thang7 || item.Thang7 || 0);
+                tongThang[7] += Number(item.thang8 || item.Thang8 || 0);
+                tongThang[8] += Number(item.thang9 || item.Thang9 || 0);
+                tongThang[9] += Number(item.thang10 || item.Thang10 || 0);
+                tongThang[10] += Number(item.thang11 || item.Thang11 || 0);
+                tongThang[11] += Number(item.thang12 || item.Thang12 || 0);
 
-                const row = `
-                <tr>
-                    <td class="text-nowrap text-center">${stt}</td>
-                    <td class="text-start" style="min-width: 450px; max-width: 500px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
-                    <td class="text-nowrap text-end">${item.thang1 || item.Thang1 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang2 || item.Thang2 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang3 || item.Thang3 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang4 || item.Thang4 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang5 || item.Thang5 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang6 || item.Thang6 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang7 || item.Thang7 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang8 || item.Thang8 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang9 || item.Thang9 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang10 || item.Thang10 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang11 || item.Thang11 || 0}</td>
-                    <td class="text-nowrap text-end">${item.thang12 || item.Thang12 || 0}</td>
-                    <td class="text-nowrap text-end">${item.tongCong || item.tongCong || 0}</td>
-                </tr>`;
-                tbody.append(row);
+                tongCong += Number(item.tongCong || item.TongCong || 0);
             });
 
-            // Tổng riêng cho công ty
-            //const totalRow = `
-            //<tr class="fw-bold table-secondary">
-            //    <td colspan="3" class="text-end text-nowrap">Tổng cộng: </td>
-            //    <td colspan="7" class="text-end text-nowrap khongapdung"></td>
-            //    <td class="text-end text-nowrap khongapdung">${tongDongGoi}</td>
-            //    <td class="text-end text-nowrap">${tongLe}</td>
-            //    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
-            //    <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
-            //    <td class="text-end text-nowrap">${formatCurrency(tongThanhTien)}</td>
-            //</tr>`;
-            //tbody.append(totalRow);
+            // Dòng tổng nhóm ngay sau header
+            const totalRow = `
+        <tr class="fw-bold bg-light">
+            <td colspan="2" class="text-start">${tenNhomHang}</td>
+            <td class="text-end">${tongThang[0].toLocaleString()}</td>
+            <td class="text-end">${tongThang[1].toLocaleString()}</td>
+            <td class="text-end">${tongThang[2].toLocaleString()}</td>
+            <td class="text-end">${tongThang[3].toLocaleString()}</td>
+            <td class="text-end">${tongThang[4].toLocaleString()}</td>
+            <td class="text-end">${tongThang[5].toLocaleString()}</td>
+            <td class="text-end">${tongThang[6].toLocaleString()}</td>
+            <td class="text-end">${tongThang[7].toLocaleString()}</td>
+            <td class="text-end">${tongThang[8].toLocaleString()}</td>
+            <td class="text-end">${tongThang[9].toLocaleString()}</td>
+            <td class="text-end">${tongThang[10].toLocaleString()}</td>
+            <td class="text-end">${tongThang[11].toLocaleString()}</td>
+            <td class="text-end">${tongCong.toLocaleString()}</td>
+        </tr>`;
+            tbody.append(totalRow);
+
+            // Dữ liệu từng thuốc
+            groupItems.forEach((item, index) => {
+                const stt = (currentPage - 1) * pageSize + index + 1;
+                const row = `
+            <tr>
+                <td class="text-nowrap text-center">${stt}</td>
+                <td class="text-start" style="min-width: 300px; max-width: 450px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
+                <td class="text-nowrap text-end">${(item.thang1 || item.Thang1 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang2 || item.Thang2 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang3 || item.Thang3 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang4 || item.Thang4 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang5 || item.Thang5 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang6 || item.Thang6 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang7 || item.Thang7 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang8 || item.Thang8 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang9 || item.Thang9 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang10 || item.Thang10 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang11 || item.Thang11 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.thang12 || item.Thang12 || 0).toLocaleString()}</td>
+                <td class="text-nowrap text-end">${(item.tongCong || item.TongCong || 0).toLocaleString()}</td>
+            </tr>`;
+                tbody.append(row);
+            });
         });
     } else {
         tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>')
