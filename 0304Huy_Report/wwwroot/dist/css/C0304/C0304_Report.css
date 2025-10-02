@@ -19,9 +19,9 @@
 
 /* ---------- container ---------- */
 .table-wrapper-scroll {
-    overflow: auto; /* scroll cả ngang và dọc */
-    height: 68vh; /* chiều cao khung */
-    scrollbar-width: thin; /* Firefox */
+    overflow: auto;
+    height: 68vh;
+    scrollbar-width: thin;
     -ms-overflow-style: scrollbar;
     border: 1px solid #ddd;
     box-sizing: border-box;
@@ -32,8 +32,9 @@
     border-collapse: separate;
     border-spacing: 0;
     width: auto;
-    min-width: 1250px; /* giữ scroll ngang nếu bảng nhiều cột */
-    table-layout: auto; /* cột dãn theo nội dung */
+    min-width: 1250px;
+    width: 100%;
+    table-layout: auto;
 }
 
 /* ---------- cell (td/th) ---------- */
@@ -43,30 +44,29 @@
     padding: 6px 8px;
     text-align: center;
     font-size: 13px;
-    /* ✨ quan trọng: giữ text 1 dòng, không xuống hàng */
     white-space: nowrap !important;
     overflow: hidden;
-    text-overflow: ellipsis; /* hiện "..." khi nội dung quá dài */
+    text-overflow: ellipsis;
 }
 
 /* ---------- header sticky ---------- */
 .table-wrapper-scroll th {
     background-color: #f2f2f2;
     font-weight: 600;
-    position: sticky;
-    top: 0;
+    position: sticky !important;
+    top: 0 !important;
     z-index: 21;
 }
 
-/* ---------- hover row ---------- */
+
 .table-wrapper-scroll tr:hover td {
-    background-color: #bae7ff; /* màu đậm hơn để phân biệt */
+    background-color: #bae7ff;
 }
-/* Khi click chọn */
+
 .table-wrapper-scroll tr.selected td {
-    background-color: #bae7ff; /* màu đậm hơn để phân biệt */
+    background-color: #bae7ff;
 }
-/* ---------- fix border 2 cạnh ---------- */
+
 .table-wrapper-scroll th:first-child,
 .table-wrapper-scroll td:first-child {
     border-left: 1px solid #ccc !important;
@@ -81,7 +81,6 @@
     background-color: #f2f2f2 !important;
 }
 
-/* Đảm bảo các cột tổng cộng có màu nền đúng */
 .table-wrapper-scroll tfoot td {
     background-color: #f2f2f2 !important;
 }
@@ -89,10 +88,6 @@
 .table-wrapper-scroll tfoot td {
     position: static !important;
     background-color: #f2f2f2 !important;
-}
-
-.table-wrapper-scroll thead tr:nth-child(1) th {
-    top: 0;
 }
 
 .table-wrapper-scroll thead tr:nth-child(2) th {

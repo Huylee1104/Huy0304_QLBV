@@ -8,11 +8,86 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="PDFDocument\P0304\" />
+    <Compile Remove="Controllers\C0304B\**" />
+    <Compile Remove="Controllers\C0304C\**" />
+    <Compile Remove="Controllers\C0304D\**" />
+    <Compile Remove="Controllers\C0304E\**" />
+    <Compile Remove="Controllers\C0304F\**" />
+    <Compile Remove="Controllers\C0304G\**" />
+    <Compile Remove="Controllers\C0304H\**" />
+    <Compile Remove="Controllers\C0304I\**" />
+    <Compile Remove="Controllers\C0304L\**" />
+    <Compile Remove="Controllers\C0304M\**" />
+    <Compile Remove="Service\S0304B\**" />
+    <Compile Remove="Service\S0304C\**" />
+    <Compile Remove="Service\S0304D\**" />
+    <Compile Remove="Service\S0304E\**" />
+    <Compile Remove="Service\S0304F\**" />
+    <Compile Remove="Service\S0304G\**" />
+    <Compile Remove="Service\S0304H\**" />
+    <Compile Remove="Service\S0304I\**" />
+    <Compile Remove="Service\S0304L\**" />
+    <Content Remove="Controllers\C0304B\**" />
+    <Content Remove="Controllers\C0304C\**" />
+    <Content Remove="Controllers\C0304D\**" />
+    <Content Remove="Controllers\C0304E\**" />
+    <Content Remove="Controllers\C0304F\**" />
+    <Content Remove="Controllers\C0304G\**" />
+    <Content Remove="Controllers\C0304H\**" />
+    <Content Remove="Controllers\C0304I\**" />
+    <Content Remove="Controllers\C0304L\**" />
+    <Content Remove="Controllers\C0304M\**" />
+    <Content Remove="Service\S0304B\**" />
+    <Content Remove="Service\S0304C\**" />
+    <Content Remove="Service\S0304D\**" />
+    <Content Remove="Service\S0304E\**" />
+    <Content Remove="Service\S0304F\**" />
+    <Content Remove="Service\S0304G\**" />
+    <Content Remove="Service\S0304H\**" />
+    <Content Remove="Service\S0304I\**" />
+    <Content Remove="Service\S0304L\**" />
+    <EmbeddedResource Remove="Controllers\C0304B\**" />
+    <EmbeddedResource Remove="Controllers\C0304C\**" />
+    <EmbeddedResource Remove="Controllers\C0304D\**" />
+    <EmbeddedResource Remove="Controllers\C0304E\**" />
+    <EmbeddedResource Remove="Controllers\C0304F\**" />
+    <EmbeddedResource Remove="Controllers\C0304G\**" />
+    <EmbeddedResource Remove="Controllers\C0304H\**" />
+    <EmbeddedResource Remove="Controllers\C0304I\**" />
+    <EmbeddedResource Remove="Controllers\C0304L\**" />
+    <EmbeddedResource Remove="Controllers\C0304M\**" />
+    <EmbeddedResource Remove="Service\S0304B\**" />
+    <EmbeddedResource Remove="Service\S0304C\**" />
+    <EmbeddedResource Remove="Service\S0304D\**" />
+    <EmbeddedResource Remove="Service\S0304E\**" />
+    <EmbeddedResource Remove="Service\S0304F\**" />
+    <EmbeddedResource Remove="Service\S0304G\**" />
+    <EmbeddedResource Remove="Service\S0304H\**" />
+    <EmbeddedResource Remove="Service\S0304I\**" />
+    <EmbeddedResource Remove="Service\S0304L\**" />
+    <None Remove="Controllers\C0304B\**" />
+    <None Remove="Controllers\C0304C\**" />
+    <None Remove="Controllers\C0304D\**" />
+    <None Remove="Controllers\C0304E\**" />
+    <None Remove="Controllers\C0304F\**" />
+    <None Remove="Controllers\C0304G\**" />
+    <None Remove="Controllers\C0304H\**" />
+    <None Remove="Controllers\C0304I\**" />
+    <None Remove="Controllers\C0304L\**" />
+    <None Remove="Controllers\C0304M\**" />
+    <None Remove="Service\S0304B\**" />
+    <None Remove="Service\S0304C\**" />
+    <None Remove="Service\S0304D\**" />
+    <None Remove="Service\S0304E\**" />
+    <None Remove="Service\S0304F\**" />
+    <None Remove="Service\S0304G\**" />
+    <None Remove="Service\S0304H\**" />
+    <None Remove="Service\S0304I\**" />
+    <None Remove="Service\S0304L\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Models\M0304G\M0304GPhieuLinhVatTuYTe.cs" />
+    <None Include="Models\M0304\M0304GPhieuLinhVatTuYTe.cs" />
   </ItemGroup>
 
   <ItemGroup>

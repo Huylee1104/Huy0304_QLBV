@@ -533,29 +533,41 @@ function configCb(configs, dataSource) {
     configs.forEach(cfg => {
         let result = cfg.dieuKien ? cfg.dieuKien(dataSource) : dataSource;
 
-        new TomSelect(cfg.className, {
-            options: result,
-            valueField: "id",
-            labelField: "ten",
-            searchField: ["ten", "alias"],
-            placeholder: cfg.placeholder,
-            maxItems: 1,
-            render: {
-                option: function (data, escape) {
-                    return `
-                             <div class = "border-0" style="display:flex; justify-content:space-between; width:100%; border: none; !important">
-                                 <span>${escape(data.ten)}</span>
-                                 <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
-                             </div>`;
-                },
-                item: function (data, escape) {
-                    return `
-                             <div class = "border-0" style="display:flex; justify-content:space-between; width:100%; border: none !important;">
-                                 <span>${escape(data.ten)}</span>
-                                 <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
-                             </div>`;
+        // Lấy element
+        let el = document.querySelector(cfg.className);
+        if (!el) return;
+
+        // Nếu đã có TomSelect rồi thì clear + add lại options
+        if (el.tomselect) {
+            el.tomselect.clearOptions();
+            el.tomselect.addOptions(result);
+            el.tomselect.refreshOptions(false);
+        } else {
+            // Nếu chưa có thì init mới
+            new TomSelect(cfg.className, {
+                options: result,
+                valueField: "id",
+                labelField: "ten",
+                searchField: ["ten", "alias"],
+                placeholder: cfg.placeholder,
+                maxItems: 1,
+                render: {
+                    option: function (data, escape) {
+                        return `
+                            <div class="border-0" style="display:flex; justify-content:space-between; width:100%; border: none !important">
+                                <span>${escape(data.ten)}</span>
+                                <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
+                            </div>`;
+                    },
+                    item: function (data, escape) {
+                        return `
+                            <div class="border-0" style="display:flex; justify-content:space-between; width:100%; border: none !important;">
+                                <span>${escape(data.ten)}</span>
+                                <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
+                            </div>`;
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 }

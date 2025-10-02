@@ -1,0 +1,43 @@
+﻿[
+  {
+    "id": -1,
+    "ma": "tatca",
+    "ten": "Tất cả",
+    "viettat": "TA"
+  },
+  {
+    "id": 2,
+    "ma": "KHOBHYT",
+    "ten": "Kho Thuốc BHYT",
+    "viettat": "KTB",
+    "active": true
+  },
+  {
+    "id": 3,
+    "ma": "KHODV",
+    "ten": "Kho Thuốc Dịch Vụ",
+    "viettat": "KTDV",
+    "active": true
+  },
+  {
+    "id": 1,
+    "ma": "KHOTONG",
+    "ten": "Kho Tổng",
+    "viettat": "KT",
+    "active": true
+  },
+  {
+    "id": 5,
+    "ma": "KHOVTTH",
+    "ten": "Kho VTTH",
+    "viettat": "KV",
+    "active": true
+  },
+  {
+    "id": 4,
+    "ma": "KHOVTYT",
+    "ten": "Kho VTYT",
+    "viettat": "KV",
+    "active": true
+  }
+]

@@ -56,7 +56,7 @@ namespace C0304BangKeThu.Controllers
             System.Diagnostics.Debug.WriteLine("DSNhanVien: " + Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien));
             ViewBag.DSNhanVien = Newtonsoft.Json.JsonConvert.SerializeObject(dsNhanVien);
 
-            return View("~/Views/V0304BangKeThu/Index.cshtml");
+            return View("~/Views/V0304/V0304BangKeThu/Index.cshtml");
         }
 
         [HttpPost("filter")]
