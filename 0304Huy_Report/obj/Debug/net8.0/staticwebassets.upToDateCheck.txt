@@ -50,7 +50,6 @@ wwwroot\dist\js\J0304GPhieuLinhVatTuYTe\J0304G_Report.js
 wwwroot\dist\js\J0304HBCTongSoSIDTheoKhoaPhong\J0304H_Report.js
 wwwroot\dist\js\J0304IPhieuTheoDoiChucNangSong\J0304I_Report.js
 wwwroot\dist\js\J0304LPhieuTheoDoiTruyenDich\J0304L_Report.js
-wwwroot\dist\js\J0304MBaoCaoSoLuongNhapXuat\J0304M_Report.js
 wwwroot\dist\js\J0304Util\J0302DateFormatUtil.js
 wwwroot\dist\js\site.js
 wwwroot\dist\libs\apexcharts\dist\apexcharts.amd.js
@@ -4806,3 +4805,4 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
+wwwroot\dist\js\J0304MBaoCaoSoLuongNhapXuat\J0304M_Report.js

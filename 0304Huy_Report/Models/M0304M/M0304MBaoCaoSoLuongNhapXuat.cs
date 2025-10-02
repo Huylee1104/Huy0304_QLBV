@@ -7,6 +7,7 @@ namespace M0304M.Models.BaoCaoHangHoa
     public class M0304MHangNhap
     {
         public string? TenThuoc { get; set; }
+        public string? MaThuoc { get; set; }
         public string? TenNhomHang { get; set; }
         public long? IDNhomHang { get; set; }
 
@@ -36,6 +37,7 @@ namespace M0304M.Models.BaoCaoHangHoa
     public class M0304MHangXuat
     {
         public string? TenThuoc { get; set; }
+        public string? MaThuoc { get; set; }
         public string? TenNhomHang { get; set; }
         public long? IDNhomHang { get; set; }
 

@@ -4,18 +4,17 @@
 @{
     var jsonkhoHang = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.DSKhoHang);
 }
-
-@* <style>
+<style>
     table {
         border-right: 1px solid #ccc !important;
         border-left: 1px solid #ccc !important;
     }
+
     .table-wrapper-scroll th,
     .table-wrapper-scroll td {
-        white-space: nowrap; /* giữ nội dung không xuống dòng */
+        white-space: nowrap;
     }
 
-    /* Header - Cố định 2 cột */
     .table-wrapper-scroll thead th:nth-child(1) {
         position: sticky;
         top: 0;
@@ -23,38 +22,71 @@
         z-index: 22;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 147px;
+        width: 65px;
+    }
+
+    .table-wrapper-scroll thead th:last-child {
+        position: sticky;
+        top: 0;
+        right: 0;
+        z-index: 22;
+        background-color: #f2f2f2;
+        border-right: 1px solid #ccc !important;
+        width: 80px;
     }
 
     .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
-        left: 147px; /* bằng đúng width cột 1 */
+        left: 65px; /* bằng đúng width cột 1 */
         z-index: 22;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        min-width: 100px;
-		max-width: 150px;
+        width: 105px
     }
 
-    /* Body - Cố định 2 cột (trừ dòng tổng) */
+    .table-wrapper-scroll thead th:nth-child(3) {
+        position: sticky;
+        top: 0;
+        left: 170px; /* bằng đúng width cột 1 */
+        z-index: 22;
+        background-color: #f2f2f2;
+        border-right: 1px solid #ccc !important;
+    }
+
     .table-wrapper-scroll tbody tr td:nth-child(1) {
         position: sticky;
         left: 0;
         z-index: 20;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 147px;
+        width: 65px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung){
+    .table-wrapper-scroll tbody tr td:last-child {
         position: sticky;
-        left: 147px; /* bằng đúng width cột 1 */
+        right: 0;
         z-index: 20;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        min-width: 100px;
-        max-width: 150px;
+        width: 80px;
+    }
+
+    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
+        position: sticky;
+        left: 65px; /* bằng đúng width cột 1 */
+        z-index: 20;
+        background-color: white;
+        border-right: 1px solid #ccc !important;
+        width: 105px;
+    }
+
+    .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
+        position: sticky;
+        left: 170px; /* bằng đúng width cột 1 */
+        z-index: 20;
+        background-color: white;
+        border-right: 1px solid #ccc !important;
     }
 
     /* Hover cho dữ liệu thường */
@@ -71,15 +103,82 @@
     .table-wrapper-scroll tr.selected td {
         background-color: #bae7ff !important;
     }
-</style> *@
+
+
+    body, label, input, select, button, .form-label, .form-control, .input-group-text {
+        font-size: 13px !important;
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-control, select, button {
+        height: 36px;
+        line-height: 36px;
+    }
+
+    .container_Team3 {
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+        width: 100%;
+    }
+
+        .container_Team3.top {
+            flex: 0 0 10%;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .container_Team3.content {
+            flex: 1;
+            width: 100%;
+            overflow: auto;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+    .filter-row {
+        display: flex;
+        gap: 4px;
+        width: 100%;
+    }
+
+        .filter-row > * {
+            /* flex: 1; */
+            min-width: 100px;
+        }
+
+    #yearDropdown {
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        background-color: #fff;
+        padding: 4px 8px;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+
+        #yearDropdown option {
+            border: 0;
+            outline: 0;
+        }
+
+    .phan_trang {
+        margin: 20px 0 !important;
+    }
+</style>
 @section Styles {
     <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304M/C0304M.css")" />
 }
     <div class="card p-1">
         <div class="container_Team3">
-            <div class="container_Team3 left">
-                <div class="row g-3 align-items-end filter-row">
-                    <div class="col-md-2">
+            <div class="container_Team3 top">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-1">
                         <label for="nam" class="form-label">Chọn năm</label>
                         <select class="form-select tomselect-nam" name="tenNam"></select>
                     </div>
@@ -90,28 +189,30 @@
                     </div>
 
                     <!--Hàng hóa-->
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label for="HangHoa" class="form-label">Hàng hóa</label>
                         <select class="form-select tomselect-hangHoa" name="tenHangHoa"></select>
                     </div>
 
-                    <div class="col-md-3 d-flex align-items-center gap-2 justify-content-center">
-                        <!-- Radio nhóm Nhập/Xuất -->
-                        <div class="d-flex gap-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="filterType" id="filterNhap" value="Nhap" checked>
-                                <label class="form-check-label" for="filterNhap">Nhập</label>
+                    <div class="col-md-2 d-flex justify-content-center">
+                        <div class="d-flex align-items-end gap-2" style="margin-top:5px;">
+                            <!-- Radio nhóm Nhập/Xuất -->
+                            <div class="d-flex gap-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filterType" id="filterNhap" value="Nhap" checked>
+                                    <label class="form-check-label" for="filterNhap">Nhập</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filterType" id="filterXuat" value="Xuat">
+                                    <label class="form-check-label" for="filterXuat">Xuất</label>
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="filterType" id="filterXuat" value="Xuat">
-                                <label class="form-check-label" for="filterXuat">Xuất</label>
-                            </div>
-                        </div>
 
-                        <!-- Nút Load -->
-                        <button id="btnFilter" class="btn btn-outline-primary">
-                            <i class="bi bi-search"></i>
-                        </button>
+                            <!-- Nút Load -->
+                            <button id="btnFilter" class="btn btn-outline-primary" style="margin-bottom: 0px !important; ">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!--Nút export-->
@@ -128,7 +229,7 @@
                 </div>
             </div>
 
-            <div class="container_Team3 right">
+            <div class="container_Team3 content">
                 <!-- Thêm spinner -->
                 <div id="loadingSpinner" class="text-center" style="display: none; margin: 20px 0;">
                     <div class="spinner-border text-primary" role="status">
@@ -138,10 +239,11 @@
                 </div>
 
                 <div class="table-wrapper-scroll">
-                    <table style="margin: auto; width: 100%; table-layout: fixed;" cellpadding="8">
+                    <table style="margin: auto; width: 100%;" cellpadding="8">
                         <thead>
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap">Mã thuốc</th>
                                 <th class="text-center text-nowrap">Tên thuốc</th>
                                 <th class="text-center text-nowrap">Tháng 1</th>
                                 <th class="text-center text-nowrap">Tháng 2</th>

@@ -390,7 +390,7 @@ function formatCurrency(value) {
 
 // ==================== CẬP NHẬT BẢNG ====================
 function updateTable(response) {
-    const tbody = $('.container_Team3.right tbody');
+    const tbody = $('.container_Team3.content tbody');
     tbody.empty();
 
     if (response.totalRecords !== undefined) {
@@ -446,9 +446,9 @@ function updateTable(response) {
             // Dòng tổng nhóm ngay sau header
             const totalRow = `
         <tr class="fw-bold bg-light">
-            <td colspan="2" class="text-start">${tenNhomHang}</td>
-            <td class="text-end">${tongThang[0].toLocaleString()}</td>
-            <td class="text-end">${tongThang[1].toLocaleString()}</td>
+            <td colspan="3" class="text-start">${tenNhomHang}</td>
+            <td class="text-end khongapdung">${tongThang[0].toLocaleString()}</td>
+            <td class="text-end khongapdung">${tongThang[1].toLocaleString()}</td>
             <td class="text-end">${tongThang[2].toLocaleString()}</td>
             <td class="text-end">${tongThang[3].toLocaleString()}</td>
             <td class="text-end">${tongThang[4].toLocaleString()}</td>
@@ -468,7 +468,8 @@ function updateTable(response) {
                 const stt = (currentPage - 1) * pageSize + index + 1;
                 const row = `
             <tr>
-                <td class="text-nowrap text-center">${stt}</td>
+                <td class="text-nowrap text-center" style ="min-width: 65px;">${stt}</td>
+                <td class="text-nowrap text-start style = "min-width: 105px;">${item.maThuoc || item.MaThuoc || ''}</td>
                 <td class="text-start" style="min-width: 300px; max-width: 450px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
                 <td class="text-nowrap text-end">${(item.thang1 || item.Thang1 || 0).toLocaleString()}</td>
                 <td class="text-nowrap text-end">${(item.thang2 || item.Thang2 || 0).toLocaleString()}</td>

@@ -33,19 +33,19 @@ public class P0304ExcelReportNhapTemplate
 
             int currentRow = 1;
 
-            ws.Range(1, 2, 1, 16).Merge();
+            ws.Range(1, 2, 1, 17).Merge();
             ws.Cell(1, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
             ws.Cell(1, 2).Style.Font.FontSize = 9;
             ws.Cell(1, 2).Style.Font.Bold = true;
 
-            ws.Range(2, 2, 2, 16).Merge();
+            ws.Range(2, 2, 2, 17).Merge();
             ws.Cell(2, 2).Value = _dataDN.TenCSKCB ?? "";
             ws.Cell(2, 2).Style.Font.FontSize = 9;
             ws.Cell(2, 2).Style.Font.Bold = true;
 
             currentRow += 3;
 
-            ws.Range(currentRow, 2, currentRow, 16).Merge();
+            ws.Range(currentRow, 2, currentRow, 17).Merge();
             ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG NHẬP {_nam}";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
@@ -54,7 +54,7 @@ public class P0304ExcelReportNhapTemplate
 
             string[] headers = new string[]
             {
-            "STT", "Tên thuốc", "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+            "STT", "Mã thuốc", "Tên thuốc", "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
             "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Tổng cộng"
             };
             for (int i = 0; i < headers.Length; i++)
@@ -92,55 +92,56 @@ public class P0304ExcelReportNhapTemplate
                 int tongCong = (int)data.Sum(x => x.TongCong ?? 0);
 
                 currentRow++;
-                ws.Range(currentRow, 2, currentRow, 3).Merge().Value = nhomHang.TenNH;
-                ws.Range(currentRow, 2, currentRow, 3).Style
+                ws.Range(currentRow, 2, currentRow, 4).Merge().Value = nhomHang.TenNH;
+                ws.Range(currentRow, 2, currentRow, 4).Style
                     .Font.SetBold()
                     .Alignment.SetVertical(XLAlignmentVerticalValues.Center)
                     .Border.OutsideBorder = XLBorderStyleValues.Thin;
 
-                ws.Cell(currentRow, 4).Value = tongThang1;
-                ws.Cell(currentRow, 5).Value = tongThang2;
-                ws.Cell(currentRow, 6).Value = tongThang3;
-                ws.Cell(currentRow, 7).Value = tongThang4;
-                ws.Cell(currentRow, 8).Value = tongThang5;
-                ws.Cell(currentRow, 9).Value = tongThang6;
-                ws.Cell(currentRow, 10).Value = tongThang7;
-                ws.Cell(currentRow, 11).Value = tongThang8;
-                ws.Cell(currentRow, 12).Value = tongThang9;
-                ws.Cell(currentRow, 13).Value = tongThang10;
-                ws.Cell(currentRow, 14).Value = tongThang11;
-                ws.Cell(currentRow, 15).Value = tongThang12;
-                ws.Cell(currentRow, 16).Value = tongCong;
+                ws.Cell(currentRow, 5).Value = tongThang1;
+                ws.Cell(currentRow, 6).Value = tongThang2;
+                ws.Cell(currentRow, 7).Value = tongThang3;
+                ws.Cell(currentRow, 8).Value = tongThang4;
+                ws.Cell(currentRow, 9).Value = tongThang5;
+                ws.Cell(currentRow, 10).Value = tongThang6;
+                ws.Cell(currentRow, 11).Value = tongThang7;
+                ws.Cell(currentRow, 12).Value = tongThang8;
+                ws.Cell(currentRow, 13).Value = tongThang9;
+                ws.Cell(currentRow, 14).Value = tongThang10;
+                ws.Cell(currentRow, 15).Value = tongThang11;
+                ws.Cell(currentRow, 16).Value = tongThang12;
+                ws.Cell(currentRow, 17).Value = tongCong;
 
-                ws.Range(currentRow, 4, currentRow, 16).Style.NumberFormat.SetFormat("#,##0");
-                ws.Range(currentRow, 4, currentRow, 16).Style.Font.SetBold();
+                ws.Range(currentRow, 5, currentRow, 17).Style.NumberFormat.SetFormat("#,##0");
+                ws.Range(currentRow, 5, currentRow, 17).Style.Font.SetBold();
                 // Thêm viền cho dòng tổng
-                ws.Range(currentRow, 2, currentRow, 16).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                ws.Range(currentRow, 2, currentRow, 16).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Range(currentRow, 2, currentRow, 17).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws.Range(currentRow, 2, currentRow, 17).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 
                 // Dữ liệu từng thuốc
                 foreach (var item in data)
                 {
                     currentRow++;
                     ws.Cell(currentRow, 2).Value = stt++;
-                    ws.Cell(currentRow, 3).Value = item.TenThuoc ?? "";
-                    ws.Cell(currentRow, 4).Value = item.Thang1;
-                    ws.Cell(currentRow, 5).Value = item.Thang2;
-                    ws.Cell(currentRow, 6).Value = item.Thang3;
-                    ws.Cell(currentRow, 7).Value = item.Thang4;
-                    ws.Cell(currentRow, 8).Value = item.Thang5;
-                    ws.Cell(currentRow, 9).Value = item.Thang6;
-                    ws.Cell(currentRow, 10).Value = item.Thang7;
-                    ws.Cell(currentRow, 11).Value = item.Thang8;
-                    ws.Cell(currentRow, 12).Value = item.Thang9;
-                    ws.Cell(currentRow, 13).Value = item.Thang10;
-                    ws.Cell(currentRow, 14).Value = item.Thang11;
-                    ws.Cell(currentRow, 15).Value = item.Thang12;
-                    ws.Cell(currentRow, 16).Value = item.TongCong;
+                    ws.Cell(currentRow, 3).Value = item.MaThuoc ?? "";
+                    ws.Cell(currentRow, 4).Value = item.TenThuoc ?? "";
+                    ws.Cell(currentRow, 5).Value = item.Thang1;
+                    ws.Cell(currentRow, 6).Value = item.Thang2;
+                    ws.Cell(currentRow, 7).Value = item.Thang3;
+                    ws.Cell(currentRow, 8).Value = item.Thang4;
+                    ws.Cell(currentRow, 9).Value = item.Thang5;
+                    ws.Cell(currentRow, 10).Value = item.Thang6;
+                    ws.Cell(currentRow, 11).Value = item.Thang7;
+                    ws.Cell(currentRow, 12).Value = item.Thang8;
+                    ws.Cell(currentRow, 13).Value = item.Thang9;
+                    ws.Cell(currentRow, 14).Value = item.Thang10;
+                    ws.Cell(currentRow, 15).Value = item.Thang11;
+                    ws.Cell(currentRow, 16).Value = item.Thang12;
+                    ws.Cell(currentRow, 17).Value = item.TongCong;
 
-                    ws.Range(currentRow, 4, currentRow, 16).Style.NumberFormat.SetFormat("#,##0");
-                    ws.Range(currentRow, 2, currentRow, 16).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                    ws.Range(currentRow, 2, currentRow, 16).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                    ws.Range(currentRow, 5, currentRow, 17).Style.NumberFormat.SetFormat("#,##0");
+                    ws.Range(currentRow, 2, currentRow, 17).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    ws.Range(currentRow, 2, currentRow, 17).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
                 }
             }
 
@@ -183,19 +184,19 @@ public class P0304ExcelReportXuatTemplate
 
             int currentRow = 1;
 
-            ws.Range(1, 2, 1, 16).Merge();
+            ws.Range(1, 2, 1, 17).Merge();
             ws.Cell(1, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
             ws.Cell(1, 2).Style.Font.FontSize = 9;
             ws.Cell(1, 2).Style.Font.Bold = true;
 
-            ws.Range(2, 2, 2, 16).Merge();
+            ws.Range(2, 2, 2, 17).Merge();
             ws.Cell(2, 2).Value = _dataDN.TenCSKCB ?? "";
             ws.Cell(2, 2).Style.Font.FontSize = 9;
             ws.Cell(2, 2).Style.Font.Bold = true;
 
             currentRow += 3;
 
-            ws.Range(currentRow, 2, currentRow, 16).Merge();
+            ws.Range(currentRow, 2, currentRow, 17).Merge();
             ws.Cell(currentRow, 2).Value = $"BÁO CÁO SỐ LƯỢNG HÀNG XUẤT {_nam}";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
@@ -204,7 +205,7 @@ public class P0304ExcelReportXuatTemplate
 
             string[] headers = new string[]
             {
-            "STT", "Tên thuốc", "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+            "STT","Mã thuốc", "Tên thuốc", "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
             "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Tổng cộng"
             };
             for (int i = 0; i < headers.Length; i++)
@@ -242,55 +243,56 @@ public class P0304ExcelReportXuatTemplate
                 int tongCong = (int)data.Sum(x => x.TongCong ?? 0);
 
                 currentRow++;
-                ws.Range(currentRow, 2, currentRow, 3).Merge().Value = nhomHang.TenNH;
-                ws.Range(currentRow, 2, currentRow, 3).Style
+                ws.Range(currentRow, 2, currentRow, 4).Merge().Value = nhomHang.TenNH;
+                ws.Range(currentRow, 2, currentRow, 4).Style
                     .Font.SetBold()
                     .Alignment.SetVertical(XLAlignmentVerticalValues.Center)
                     .Border.OutsideBorder = XLBorderStyleValues.Thin;
 
-                ws.Cell(currentRow, 4).Value = tongThang1;
-                ws.Cell(currentRow, 5).Value = tongThang2;
-                ws.Cell(currentRow, 6).Value = tongThang3;
-                ws.Cell(currentRow, 7).Value = tongThang4;
-                ws.Cell(currentRow, 8).Value = tongThang5;
-                ws.Cell(currentRow, 9).Value = tongThang6;
-                ws.Cell(currentRow, 10).Value = tongThang7;
-                ws.Cell(currentRow, 11).Value = tongThang8;
-                ws.Cell(currentRow, 12).Value = tongThang9;
-                ws.Cell(currentRow, 13).Value = tongThang10;
-                ws.Cell(currentRow, 14).Value = tongThang11;
-                ws.Cell(currentRow, 15).Value = tongThang12;
-                ws.Cell(currentRow, 16).Value = tongCong;
+                ws.Cell(currentRow, 5).Value = tongThang1;
+                ws.Cell(currentRow, 6).Value = tongThang2;
+                ws.Cell(currentRow, 7).Value = tongThang3;
+                ws.Cell(currentRow, 8).Value = tongThang4;
+                ws.Cell(currentRow, 9).Value = tongThang5;
+                ws.Cell(currentRow, 10).Value = tongThang6;
+                ws.Cell(currentRow, 11).Value = tongThang7;
+                ws.Cell(currentRow, 12).Value = tongThang8;
+                ws.Cell(currentRow, 13).Value = tongThang9;
+                ws.Cell(currentRow, 14).Value = tongThang10;
+                ws.Cell(currentRow, 15).Value = tongThang11;
+                ws.Cell(currentRow, 16).Value = tongThang12;
+                ws.Cell(currentRow, 17).Value = tongCong;
 
-                ws.Range(currentRow, 4, currentRow, 16).Style.NumberFormat.SetFormat("#,##0");
-                ws.Range(currentRow, 4, currentRow, 16).Style.Font.SetBold();
+                ws.Range(currentRow, 5, currentRow, 17).Style.NumberFormat.SetFormat("#,##0");
+                ws.Range(currentRow, 5, currentRow, 17).Style.Font.SetBold();
                 // Thêm viền cho dòng tổng
-                ws.Range(currentRow, 2, currentRow, 16).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                ws.Range(currentRow, 2, currentRow, 16).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                ws.Range(currentRow, 2, currentRow, 17).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws.Range(currentRow, 2, currentRow, 17).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 
                 // Dữ liệu từng thuốc
                 foreach (var item in data)
                 {
                     currentRow++;
                     ws.Cell(currentRow, 2).Value = stt++;
-                    ws.Cell(currentRow, 3).Value = item.TenThuoc ?? "";
-                    ws.Cell(currentRow, 4).Value = item.Thang1;
-                    ws.Cell(currentRow, 5).Value = item.Thang2;
-                    ws.Cell(currentRow, 6).Value = item.Thang3;
-                    ws.Cell(currentRow, 7).Value = item.Thang4;
-                    ws.Cell(currentRow, 8).Value = item.Thang5;
-                    ws.Cell(currentRow, 9).Value = item.Thang6;
-                    ws.Cell(currentRow, 10).Value = item.Thang7;
-                    ws.Cell(currentRow, 11).Value = item.Thang8;
-                    ws.Cell(currentRow, 12).Value = item.Thang9;
-                    ws.Cell(currentRow, 13).Value = item.Thang10;
-                    ws.Cell(currentRow, 14).Value = item.Thang11;
-                    ws.Cell(currentRow, 15).Value = item.Thang12;
-                    ws.Cell(currentRow, 16).Value = item.TongCong;
+                    ws.Cell(currentRow, 3).Value = item.MaThuoc ?? "";
+                    ws.Cell(currentRow, 4).Value = item.TenThuoc ?? "";
+                    ws.Cell(currentRow, 5).Value = item.Thang1;
+                    ws.Cell(currentRow, 6).Value = item.Thang2;
+                    ws.Cell(currentRow, 7).Value = item.Thang3;
+                    ws.Cell(currentRow, 8).Value = item.Thang4;
+                    ws.Cell(currentRow, 9).Value = item.Thang5;
+                    ws.Cell(currentRow, 10).Value = item.Thang6;
+                    ws.Cell(currentRow, 11).Value = item.Thang7;
+                    ws.Cell(currentRow, 12).Value = item.Thang8;
+                    ws.Cell(currentRow, 13).Value = item.Thang9;
+                    ws.Cell(currentRow, 14).Value = item.Thang10;
+                    ws.Cell(currentRow, 15).Value = item.Thang11;
+                    ws.Cell(currentRow, 16).Value = item.Thang12;
+                    ws.Cell(currentRow, 17).Value = item.TongCong;
 
-                    ws.Range(currentRow, 4, currentRow, 16).Style.NumberFormat.SetFormat("#,##0");
-                    ws.Range(currentRow, 2, currentRow, 16).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                    ws.Range(currentRow, 2, currentRow, 16).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                    ws.Range(currentRow, 5, currentRow, 17).Style.NumberFormat.SetFormat("#,##0");
+                    ws.Range(currentRow, 2, currentRow, 17).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    ws.Range(currentRow, 2, currentRow, 17).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
                 }
             }
 

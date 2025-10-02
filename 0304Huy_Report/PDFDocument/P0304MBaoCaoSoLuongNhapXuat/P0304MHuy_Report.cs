@@ -69,6 +69,7 @@ namespace P0304M.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
+                            columns.RelativeColumn(2);
                             columns.RelativeColumn(3);
                             for (int i = 0; i < 13; i++)
                                 columns.RelativeColumn();
@@ -77,6 +78,7 @@ namespace P0304M.PDFDocument
                         table.Header(header =>
                         {
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("STT");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Mã thuốc");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Tên thuốc");
                             for (int i = 1; i <= 12; i++)
                                 header.Cell().Element(CellStyleHeader).AlignCenter().Text($"Tháng {i}");
@@ -112,7 +114,7 @@ namespace P0304M.PDFDocument
                             int tongCong = (int)data.Sum(x => x.TongCong ?? 0);
 
                             // Dòng nhóm: merge 15 cột
-                            table.Cell().ColumnSpan(2).Element(cell =>
+                            table.Cell().ColumnSpan(3).Element(cell =>
                                 CellStyle(cell)
                                     .AlignLeft()
                                     .AlignMiddle()
@@ -138,6 +140,7 @@ namespace P0304M.PDFDocument
                             foreach (var item in data)
                             {
                                 table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
+                                table.Cell().Element(CellStyle).AlignLeft().Text(item.MaThuoc ?? "");
                                 table.Cell().Element(CellStyle).AlignLeft().Text(item.TenThuoc ?? "");
                                 table.Cell().Element(CellStyle).AlignRight().Text(((item.Thang1 ?? 0)).ToString("N0"));
                                 table.Cell().Element(CellStyle).AlignRight().Text(((item.Thang2 ?? 0)).ToString("N0"));
@@ -173,14 +176,14 @@ namespace P0304M.PDFDocument
                 .Border(1)
                 .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.SemiBold().FontSize(9));
+                .DefaultTextStyle(x => x.SemiBold().FontSize(8));
 
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
-                .Padding(3)
+                .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(8));
+                .DefaultTextStyle(x => x.FontSize(7));
     }
 
     public class P0304MReportXuatTemplatePDF : IDocument
@@ -241,6 +244,7 @@ namespace P0304M.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
+                            columns.RelativeColumn(2);
                             columns.RelativeColumn(3);
                             for (int i = 0; i < 13; i++)
                                 columns.RelativeColumn();
@@ -249,6 +253,7 @@ namespace P0304M.PDFDocument
                         table.Header(header =>
                         {
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("STT");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Mã thuốc");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Tên thuốc");
                             for (int i = 1; i <= 12; i++)
                                 header.Cell().Element(CellStyleHeader).AlignCenter().Text($"Tháng {i}");
@@ -284,7 +289,7 @@ namespace P0304M.PDFDocument
                             int tongCong = (int)data.Sum(x => x.TongCong ?? 0);
 
                             // Dòng nhóm: merge 15 cột
-                            table.Cell().ColumnSpan(2).Element(cell =>
+                            table.Cell().ColumnSpan(3).Element(cell =>
                                 CellStyle(cell)
                                     .AlignLeft()
                                     .AlignMiddle()
@@ -310,6 +315,7 @@ namespace P0304M.PDFDocument
                             foreach (var item in data)
                             {
                                 table.Cell().Element(CellStyle).AlignCenter().Text(stt++.ToString());
+                                table.Cell().Element(CellStyle).AlignLeft().Text(item.MaThuoc ?? "");
                                 table.Cell().Element(CellStyle).AlignLeft().Text(item.TenThuoc ?? "");
                                 table.Cell().Element(CellStyle).AlignRight().Text(((item.Thang1 ?? 0)).ToString("N0"));
                                 table.Cell().Element(CellStyle).AlignRight().Text(((item.Thang2 ?? 0)).ToString("N0"));
@@ -345,13 +351,13 @@ namespace P0304M.PDFDocument
                 .Border(1)
                 .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.SemiBold().FontSize(9));
+                .DefaultTextStyle(x => x.SemiBold().FontSize(8));
 
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
-                .Padding(3)
+                .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(8));
+                .DefaultTextStyle(x => x.FontSize(7));
     }
 }
