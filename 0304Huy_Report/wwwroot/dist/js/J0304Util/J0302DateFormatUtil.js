@@ -503,6 +503,12 @@ function convertData(dataArray, getName, getId, getAbbr) {
 
 // ==================== THÔNG BÁO ====================
 $(document).ready(function () {
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "2000"
+    };
     // Chỉ hiển thị toastr nếu có tham số cụ thể trong URL
     if (window.location.search.includes('showToast=true')) {
         var successMessage = '@Html.Raw(TempData["SuccessMessage"] as string)';

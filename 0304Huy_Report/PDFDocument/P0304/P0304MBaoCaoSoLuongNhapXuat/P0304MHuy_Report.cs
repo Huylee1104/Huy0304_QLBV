@@ -16,16 +16,19 @@ namespace P0304M.PDFDocument
         private readonly List<M0304MHangNhap> _data;
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private int _nam;
+        private readonly string _logoPath;
 
         public P0304MReportNhapTemplatePDF(
             List<M0304MHangNhap> data,
             int nam,
-            M0304ThongTinDoanhNghiep dataDN
+            M0304ThongTinDoanhNghiep dataDN,
+            string logoPath
         )
         {
             _data = data ?? new List<M0304MHangNhap>();
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _nam = nam;
+            _logoPath = logoPath;
         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
@@ -45,6 +48,14 @@ namespace P0304M.PDFDocument
                     {
                         row.RelativeItem(3).Row(left =>
                         {
+                            if (!string.IsNullOrEmpty(_logoPath) && File.Exists(_logoPath))
+                            {
+                                left.ConstantItem(40).AlignMiddle().Image(_logoPath);
+                            }
+                            else
+                            {
+                                left.ConstantItem(40).AlignMiddle().Text("No Logo");
+                            }
                             left.RelativeItem().Column(info =>
                             {
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
@@ -191,17 +202,21 @@ namespace P0304M.PDFDocument
         private readonly List<M0304MHangXuat> _data;
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private int _nam;
+        private readonly string _logoPath;
 
         public P0304MReportXuatTemplatePDF(
             List<M0304MHangXuat> data,
             int nam,
-            M0304ThongTinDoanhNghiep dataDN
+            M0304ThongTinDoanhNghiep dataDN,
+            string logoPath
+
         )
         {
             _data = data ?? new List<M0304MHangXuat>();
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _nam = nam;
-        }
+            _logoPath = logoPath;
+         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
         public DocumentSettings GetSettings() => DocumentSettings.Default;
@@ -220,6 +235,14 @@ namespace P0304M.PDFDocument
                     {
                         row.RelativeItem(3).Row(left =>
                         {
+                            if (!string.IsNullOrEmpty(_logoPath) && File.Exists(_logoPath))
+                            {
+                                left.ConstantItem(40).AlignMiddle().Image(_logoPath);
+                            }
+                            else
+                            {
+                                left.ConstantItem(40).AlignMiddle().Text("No Logo");
+                            }
                             left.RelativeItem().Column(info =>
                             {
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();

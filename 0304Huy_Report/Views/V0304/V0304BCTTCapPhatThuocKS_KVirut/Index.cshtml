@@ -19,23 +19,33 @@
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 83px;
+        width: 40px;
     }
 
     .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
-        left: 83px;
+        left: 40px;
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 131px;
+        width: 102px;
     }
 
     .table-wrapper-scroll thead th:nth-child(3) {
         position: sticky;
         top: 0;
-        left: 214px;
+        left: 102px;
+        z-index: 25;
+        background-color: #f2f2f2;
+        border-right: 1px solid #ccc !important;
+        width: 84px;
+    }
+
+    .table-wrapper-scroll thead th:nth-child(4) {
+        position: sticky;
+        top: 0;
+        left: 186px;
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
@@ -47,12 +57,12 @@
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 83px;
+        width: 40px;
     }
 
     .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
         position: sticky;
-        left: 83px;
+        left: 40px;
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
@@ -61,7 +71,16 @@
 
     .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
         position: sticky;
-        left: 214px;
+        left: 102px;
+        z-index: 1;
+        background-color: white;
+        border-right: 1px solid #ccc !important;
+        width: 84px;
+    }
+
+    .table-wrapper-scroll tbody tr td:nth-child(4):not(.khongapdung) {
+        position: sticky;
+        left: 186px;
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
@@ -138,19 +157,15 @@
                         <span class="text-danger"></span>
                     </div>
 
+                    <!--Nhóm hàng-->
                     <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
-                        <label for="NhanVien" class="form-label">Nhân viên</label>
-                        <select class="form-select tomselect-nhanVien" name="tenNhanVien"></select>
+                        <label for="NhomHang" class="form-label">Nhóm hàng</label>
+                        <select class="form-select tomselect-nhomHang" name="tenNhomHang"></select>
                     </div>
 
                     <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
-                        <label for="HTTT" class="form-label">HTTT</label>
-                        <select class="form-select tomselect-httt" name="tenHTTT"></select>
-                    </div>
-
-                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1">
-                        <label for="Loai" class="form-label">Loại</label>
-                        <select class="form-select tomselect-loai" name="tenLoai"></select>
+                        <label for="HangHoa" class="form-label">Hàng hóa</label>
+                        <select class="form-select tomselect-hangHoa" name="tenHangHoa"></select>
                     </div>
 
                     <label style="padding:0; margin:0px;">
@@ -161,9 +176,9 @@
 
                 </div>
                 <div style="padding:0; margin: 5px;" class="row export-buttons">
-                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                    @* <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
                         <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
-                    </button>
+                    </button> *@
 
                     <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
                         <i class="bi bi-file-earmark-excel"></i> Xuất Excel
@@ -186,14 +201,23 @@
                             <tr>
                                 <th class="text-center text-nowrap">STT</th>
                                 <th class="text-center text-nowrap">Mã y tế</th>
-                                <th class="text-center text-nowrap">Họ và tên</th>
-                                <th class="text-center text-nowrap">Quyển sổ</th>
-                                <th class="text-center text-nowrap">Số biên lai</th>
-                                <th class="text-center text-nowrap">Loại</th>
-                                <th class="text-center text-nowrap">Ngày thu</th>
-                                <th class="text-center text-nowrap">Hủy</th>
-                                <th class="text-center text-nowrap">Hoàn</th>
-                                <th class="text-center text-nowrap">Số tiền</th>
+                                <th class="text-center text-nowrap">Số bệnh án</th>
+                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
+                                <th class="text-center text-nowrap">Năm sinh</th>
+                                <th class="text-center text-nowrap">Địa chỉ</th>
+                                <th class="text-center text-nowrap">Khoa điều trị</th>
+                                <th class="text-center text-nowrap">Tên phòng khám</th>
+                                <th class="text-center text-nowrap">Bác sĩ kê đơn</th>
+                                <th class="text-center text-nowrap">Tên thuốc</th>
+                                <th class="text-center text-nowrap">Tên hoạt chất</th>
+                                <th class="text-center text-nowrap">Hàm lượng</th>
+                                <th class="text-center text-nowrap">ĐVT</th>
+                                <th class="text-center text-nowrap">Đường dùng</th>
+                                <th class="text-center text-nowrap">Liều dùng</th>
+                                <th class="text-center text-nowrap">Số ngày</th>
+                                <th class="text-center text-nowrap">Số lượng kê đơn</th>
+                                <th class="text-center text-nowrap">Số lượng phát</th>
+                                <th class="text-center text-nowrap">Chẩn đoán</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -224,5 +248,5 @@
         </div>
     </div>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304/J0304BangKeThu.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304/J0304BCTTCapPhatThuocKS_KVirut.js")" defer asp-append-version="true"></script>
     }

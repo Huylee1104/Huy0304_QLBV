@@ -73,9 +73,8 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
-    let idHTTT = $('.tomselect-httt').val() || 0;
-    let idNhanVien = $('.tomselect-nhanVien').val() || 0;
-    let idLoai = $('.tomselect-loai').val() || 0;
+    let idNhomHang = $('.tomselect-nhomHang').val() || 0;
+    let idHangHoa = $('.tomselect-hangHoa').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -101,14 +100,13 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
-        idHTTT: idHTTT,
-        idNhanVien: idNhanVien,
-        idLoai: idLoai,
+        idNhomHang: idNhomHang,
+        idHangHoa: idHangHoa,
         page: currentPage,
         pageSize: pageSize
     }
     $.ajax({
-        url: '/bang_ke_thu_ngoai_tru/filter',
+        url: '/bao_cao_cong_tac_ke_don/filter',
         type: 'POST',
         data: payload,
         success: function (response) {
@@ -142,7 +140,7 @@ function filterData(isPagination = false) {
 function ajaxFilterRequest(payload) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '/bang_ke_thu_ngoai_tru/filter',
+            url: '/bao_cao_cong_tac_ke_don/filter',
             type: 'POST',
             data: payload,
             success: function (resp) { resolve(resp); },
@@ -151,15 +149,14 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien, idLoai) {
+function fetchAllFilteredData(tuNgay, denNgay, idNhomHang, idHangHoa) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
-            idHTTT: idHTTT || 0,
-            idNhanVien: idNhanVien || 0,
-            idLoai: idLoai || 0,
+            idNhomHang: idNhomHang || 0,
+            idHangHoa: idHangHoa || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -183,9 +180,8 @@ function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien, idLoai) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
-                    idHTTT: idHTTT || 0,
-                    idNhanVien: idNhanVien || 0,
-                    idLoai: idLoai || 0,
+                    idNhomHang: idNhomHang || 0,
+                    idHangHoa: idHangHoa || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -243,14 +239,13 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idHTTT: $('.tomselect-httt').val() || 0,
-        idNhanVien: $('.tomselect-nhanVien').val() || 0,
-        idLoai: $('.tomselect-loai').val() || 0,
+        idNhomHang: $('.tomselect-nhomHang').val() || 0,
+        idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
     $.ajax({
-        url: '/bang_ke_thu_ngoai_tru/export/excel',
+        url: '/bao_cao_cong_tac_ke_don/export/excel',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(requestData),
@@ -264,7 +259,7 @@ function doExportExcel(finalData, btn, originalHtml) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `BangKeThuNgoaiTru_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
+            a.download = `BaoCaoCongTacKeDon_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -293,12 +288,11 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idHTTT = $('.tomselect-httt').val() || 0;
-    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
-    const idLoai = $('.tomselect-loai').val() || 0;
+    const idNhomHang = $('.tomselect-nhomHang').val() || 0;
+    const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
+        fetchAllFilteredData(tu, den, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -318,13 +312,12 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idHTTT: $('.tomselect-httt').val() || 0,
-        idNhanVien: $('.tomselect-nhanVien').val() || 0,
-        idLoai: $('.tomselect-loai').val() || 0,
+        idNHomHang: $('.tomselect-nhomHang').val() || 0,
+        idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
-    fetch("/bang_ke_thu_ngoai_tru/export/pdf", {
+    fetch("/bao_cao_cong_tac_ke_don/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
@@ -337,7 +330,7 @@ function doExportPdf(finalData, btnElem) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = `BangKeThuNgoaiTru_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
+            a.download = `BaoCaoCongTacKeDon_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
             a.click();
             window.URL.revokeObjectURL(url);
             toastr.success("Xuất PDF thành công");
@@ -362,12 +355,11 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idHTTT = $('.tomselect-httt').val() || 0;
-    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
-    const idLoai = $('.tomselect-loai').val() || 0;
+    const idNhomHang = $('.tomselect-nhomHang').val() || 0;
+    const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
+        fetchAllFilteredData(tu, den, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -422,103 +414,38 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
-        const groupedData = {};
-        data.forEach(item => {
-            const nhanVien = item.tenNhanVien || item.TenNhanVien || "Không rõ";
-            if (!groupedData[nhanVien]) {
-                groupedData[nhanVien] = [];
-            }
-            groupedData[nhanVien].push(item);
-        });
-
-        const sortedNhanVienList = Object.keys(groupedData).sort((a, b) =>
-            a.localeCompare(b, 'vi', { sensitivity: 'base' })
-        );
-
-        sortedNhanVienList.forEach(nhanVien => {
-            let tongTienNV = 0;
-            let tongHuyNV = 0;
-            let tongHoanTraNV = 0;
-            const itemsForNhanVien = groupedData[nhanVien] || [];
-
-            const groupedByQuyenSo = {};
-            itemsForNhanVien
-                .sort((a, b) => {
-                    const qsA = (a.quyenSo || a.QuyenSo || "").toString();
-                    const qsB = (b.quyenSo || b.QuyenSo || "").toString();
-                    return qsA.localeCompare(qsB, 'vi', { sensitivity: 'base' });
-                })
-                .forEach(item => {
-                    const quyenSo = item.quyenSo || item.QuyenSo || "Không rõ";
-                    if (!groupedByQuyenSo[quyenSo]) groupedByQuyenSo[quyenSo] = [];
-                    groupedByQuyenSo[quyenSo].push(item);
-                });
-            const nvRow = `
-            <tr class="fw-bold">
-                <td colspan="10" class = "text-start">Nhân viên: ${nhanVien}</td>
-            </tr>`;
-            tbody.append(nvRow);
-
-            Object.keys(groupedByQuyenSo).forEach(quyenSo => {
-                let tongThuPhiQS = 0;
-                let tongHuyQS = 0;
-                let tongHoanTraQS = 0;
-
-                const quyenSoList = groupedByQuyenSo[quyenSo];
-
-                // Tính tổng trước
-                quyenSoList.forEach(item => {
-                    tongThuPhiQS += Number(item.soTien || item.SoTien || 0);
-                    tongHuyQS += Number(item.huy || item.Huy || 0);
-                    tongHoanTraQS += Number(item.hoan || item.Hoan || 0);
-                });
-
-                // Header quyển sổ (có tổng nằm ở đây)
-                const maNV = quyenSoList[0].maNhanVien || quyenSoList[0].MaNhanVien || "";
-                const qsHeaderRow = `
-                <tr class="fw-bold table-light">
-                    <td colspan="3" class="text-start" style = "padding-left:40px; border-right: none;">${maNV} - ${quyenSo}</td>
-                    <td colspan="4" class="text-start khongapdung" style = "border-left: none"></td>
-                    <td class="text-end khongapdung">${formatCurrency(tongHuyQS)}</td>
-                    <td class="text-end">${formatCurrency(tongHoanTraQS)}</td>
-                    <td class="text-end">${formatCurrency(tongThuPhiQS)}</td>
-                </tr>`;
-                tbody.append(qsHeaderRow);
-
-                quyenSoList.forEach((item, index) => {
-                    const stt = (currentPage - 1) * pageSize + index + 1;
-                    const row = `
-                        <tr>
-                            <td class="text-nowrap text-center">${stt}</td>
-                            <td class="text-nowrap text-center">${item.maYTe || item.MaYTe || ''}</td>
-                            <td class="text-nowrap text-start">${item.HoVaTen || item.hoVaTen || 'Không rõ'}</td>
-                            <td class="text-nowrap text-center">${item.quyenSo || item.QuyenSo || 'Không rõ'}</td>
-                            <td class="text-nowrap text-center">${item.soBienLai || item.SoBienLai || 'Không rõ'}</td>
-                            <td class="text-nowrap text-center">${item.loai || item.Loai || 'Không rõ'}</td>
-                            <td class="text-nowrap text-center">${formatDate(item.ngayThu || item.NgayThu)}</td>
-                            <td class="text-nowrap text-end">${formatCurrency(item.huy || item.Huy)}</td>
-                            <td class="text-nowrap text-end">${formatCurrency(item.hoan || item.Hoan)}</td>
-                            <td class="text-nowrap text-end">${formatCurrency(item.soTien || item.SoTien)}</td>
-                        </tr>
-                    `;
-                    tbody.append(row);
-                    tongTienNV += tongThuPhiQS;
-                    tongHuyNV += tongHuyQS;
-                    tongHoanTraNV += tongHoanTraQS;
-                });
-            });
-            const totalRowNV = `
-            <tr class="fw-bold table-secondary">
-                <td colspan="3" class="text-end">Tổng trang:</td>
-                <td colspan="4" class="text-end khongapdung"></td>
-                <td class="text-end khongapdung">${formatCurrency(tongHuyNV)}</td>
-                <td class="text-end">${formatCurrency(tongHoanTraNV)}</td>
-                <td class="text-end">${formatCurrency(tongTienNV)}</td>
-            </tr>`;
-            tbody.append(totalRowNV);
+        let tongSoLuong = 0;
+        let tongHoaDon = 0;
+        data.forEach((item, index) => {
+            const stt = (currentPage - 1) * pageSize + index + 1;
+            const row = `
+                <tr>
+                    <td class = "text-center text-nowrap" >${stt}</td>                    
+                    <td class = "text-center text-nowrap" >${item.maYTe || item.MaYTe || ''}</td>                                      
+                    <td class = "text-start text-nowrap" >${item.tenBenhNhan || item.TenBenhNhan || ''}</td>                                      
+                    <td class = "text-center text-nowrap" >${item.namSinh || item.NamSinh || ''}</td>                                      
+                    <td class = "text-start text-nowrap" >${item.gioiTinh || item.GioiTinh || ''}</td>                                      
+                    <td class = "text-start text-nowrap" >${item.doiTuong || item.DoiTuong || ''}</td>                                      
+                    <td class = "text-center text-nowrap" >${item.soLuuTru || item.SoLuuTru || ''}</td>                                     
+                    <td class = "text-center text-nowrap" >${item.soBenhAn || item.SoBenhAn || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.khoaDieuTri || item.KhoaDieuTri || ''}</td>                                     
+                    <td class = "text-center text-nowrap" >${item.ngayKham || item.NgayKham || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.tenPhongKham || item.TenPhongKham || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.bacSiKeToa || item.BacSiKeToa || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.tenThuoc || item.TenThuoc || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.tenHoatChat || item.TenHoatChat || ''}</td>                                     
+                    <td class = "text-end text-nowrap" >${item.soNgay || item.SoNgay || ''}</td>                                     
+                    <td class = "text-end text-nowrap" >${item.soLuong || item.SoLuong || ''}</td>                                     
+                    <td class = "text-end text-nowrap" >${item.soLuongPhat || item.SoLuongPhat || ''}</td>                                     
+                    <td class = "text-end text-nowrap" >${item.donGia || item.DonGia || ''}</td>                                     
+                    <td class = "text-start text-nowrap" style = "max-width: 200px;" >${item.chanDoan || item.ChanDoan || ''}</td>                                     
+                    <td class = "text-start text-nowrap" >${item.mucDichXuat || item.mucDichXuat || ''}</td>                                     
+                </tr>
+            `;
+            tbody.append(row);
         });
     } else {
-        tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 
@@ -539,9 +466,8 @@ $(document).ready(function () {
 });
 
 // ==================== LOAD COMBOBOX ====================
-
-$.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
-    listNhanVien = dataNhanVien
+$.getJSON("dist/data/json/Dm_NhomHang.json", dataNhomHang => {
+    listNhomHang = dataNhomHang
         .filter(n =>
             (n.active === true || n.active === 1)
         )
@@ -551,62 +477,55 @@ $.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
                 ? n.viettat.toUpperCase()
                 : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
         }));
-    // config cho TomSelect
     const configs = [
         {
-            className: ".tomselect-nhanVien",
+            className: ".tomselect-nhomHang",
             dieuKien: function (response) {
                 return response.filter(x => x.id);
             }
         }
     ];
 
-    configCb(configs, listNhanVien);
+    configCb(configs, listNhomHang);
 });
 
-$.getJSON("dist/data/json/DM_HTTT.json", dataHTTT => {
-    listHTTT = dataHTTT
-        .filter(n =>
-            (n.active === true || n.active === 1)
-        )
-        .map(n => ({
-            ...n,
-            alias: n.viettat?.trim() !== ""
-                ? n.viettat.toUpperCase()
-                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
-        }));
-    // config cho TomSelect
-    const configs = [
-        {
-            className: ".tomselect-httt",
-            dieuKien: function (response) {
-                return response.filter(x => x.id);
+function loadHangHoa() {
+    $.getJSON("dist/data/json/HH_DM_HangHoa.json", dataHangHoa => {
+        const idNhomHang = parseInt($('.tomselect-nhomHang').val() || 0, 10);
+
+        listHangHoa = dataHangHoa
+            .filter(n =>
+                (n.active === true || n.active === 1) &&
+                (idNhomHang === 0 || n.idNhomHang === idNhomHang)
+            )
+            .map(n => ({
+                ...n,
+                alias: n.viettat?.trim() !== ""
+                    ? n.viettat.toUpperCase()
+                    : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+            }));
+        const configs = [
+            {
+                className: ".tomselect-hangHoa",
+                dieuKien: function (response) {
+                    return response.filter(x => x.id);
+                }
             }
-        }
-    ];
+        ];
 
-    configCb(configs, listHTTT);
+        configCb(configs, listHangHoa);
+    });
+}
+
+// gọi lần đầu khi load trang
+loadHangHoa();
+
+// bắt sự kiện thay đổi nhóm hàng
+$(document).on('change', '.tomselect-nhomHang', function () {
+    const ts = document.querySelector('.tomselect-hangHoa')?.tomselect;
+    if (ts) {
+        ts.clear();
+        ts.clearOptions();
+    }
+    loadHangHoa();
 });
-
-(function () {
-    const dataLoai = [
-        { id: 1, ten: "DV kỹ thuật", viettat: "DVKT" },
-        { id: 2, ten: "Thuốc", viettat: "T" }
-    ];
-
-    const listLoai = dataLoai.map(n => ({
-        ...n,
-        alias: n.viettat?.trim() !== ""
-            ? n.viettat.toUpperCase()
-            : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
-    }));
-
-    const configs = [
-        {
-            className: ".tomselect-loai",
-            dieuKien: response => response.filter(x => x.id)
-        }
-    ];
-
-    configCb(configs, listLoai);
-})();

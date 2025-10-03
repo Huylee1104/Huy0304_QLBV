@@ -13,16 +13,18 @@ public class P0304ExcelReportNhapTemplate
     private readonly List<M0304MHangNhap> _data;
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private int _nam;
-
+    private readonly string _logoPath;
     public P0304ExcelReportNhapTemplate(
         List<M0304MHangNhap> data,
         int nam,
-        M0304ThongTinDoanhNghiep dataDN
+        M0304ThongTinDoanhNghiep dataDN,
+        string logoPath
     )
     {
         _data = data ?? new List<M0304MHangNhap>();
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _nam = nam;
+        _logoPath = logoPath;
     }
 
     public byte[] GenerateExcel()
@@ -33,15 +35,24 @@ public class P0304ExcelReportNhapTemplate
 
             int currentRow = 1;
 
-            ws.Range(1, 2, 1, 17).Merge();
-            ws.Cell(1, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
-            ws.Cell(1, 2).Style.Font.FontSize = 9;
-            ws.Cell(1, 2).Style.Font.Bold = true;
+            if (!string.IsNullOrEmpty(_logoPath) && File.Exists(_logoPath))
+            {
+                //ws.Range(1, 1, 2, 2).Merge(); // dòng dầu, cột đầu, dòng cuối, cột cuối
+                var img = ws.AddPicture(_logoPath)
+                    .MoveTo(ws.Cell(1, 2))
+                    .Scale(0.2);
+                ws.Row(1).AdjustToContents();
+            }
 
-            ws.Range(2, 2, 2, 17).Merge();
-            ws.Cell(2, 2).Value = _dataDN.TenCSKCB ?? "";
-            ws.Cell(2, 2).Style.Font.FontSize = 9;
-            ws.Cell(2, 2).Style.Font.Bold = true;
+            ws.Range(1, 3, 1, 17).Merge();
+            ws.Cell(1, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
+            ws.Cell(1, 3).Style.Font.FontSize = 9;
+            ws.Cell(1, 3).Style.Font.Bold = true;
+
+            ws.Range(2, 3, 2, 17).Merge();
+            ws.Cell(2, 3).Value = _dataDN.TenCSKCB ?? "";
+            ws.Cell(2, 3).Style.Font.FontSize = 9;
+            ws.Cell(2, 3).Style.Font.Bold = true;
 
             currentRow += 3;
 
@@ -164,16 +175,19 @@ public class P0304ExcelReportXuatTemplate
     private readonly List<M0304MHangXuat> _data;
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private int _nam;
+    private readonly string _logoPath;
 
     public P0304ExcelReportXuatTemplate(
         List<M0304MHangXuat> data,
         int nam,
-        M0304ThongTinDoanhNghiep dataDN
+        M0304ThongTinDoanhNghiep dataDN,
+        string logoPath
     )
     {
         _data = data ?? new List<M0304MHangXuat>();
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _nam = nam;
+        _logoPath = logoPath;
     }
 
     public byte[] GenerateExcel()
@@ -184,15 +198,23 @@ public class P0304ExcelReportXuatTemplate
 
             int currentRow = 1;
 
-            ws.Range(1, 2, 1, 17).Merge();
-            ws.Cell(1, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
-            ws.Cell(1, 2).Style.Font.FontSize = 9;
-            ws.Cell(1, 2).Style.Font.Bold = true;
+            if (!string.IsNullOrEmpty(_logoPath) && File.Exists(_logoPath))
+            {
+                var img = ws.AddPicture(_logoPath)
+                    .MoveTo(ws.Cell(1, 2))
+                    .Scale(0.2);
+                ws.Row(1).AdjustToContents();
+            }
 
-            ws.Range(2, 2, 2, 17).Merge();
-            ws.Cell(2, 2).Value = _dataDN.TenCSKCB ?? "";
-            ws.Cell(2, 2).Style.Font.FontSize = 9;
-            ws.Cell(2, 2).Style.Font.Bold = true;
+            ws.Range(1, 3, 1, 17).Merge();
+            ws.Cell(1, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
+            ws.Cell(1, 3).Style.Font.FontSize = 9;
+            ws.Cell(1, 3).Style.Font.Bold = true;
+
+            ws.Range(2, 3, 2, 17).Merge();
+            ws.Cell(2, 3).Value = _dataDN.TenCSKCB ?? "";
+            ws.Cell(2, 3).Style.Font.FontSize = 9;
+            ws.Cell(2, 3).Style.Font.Bold = true;
 
             currentRow += 3;
 

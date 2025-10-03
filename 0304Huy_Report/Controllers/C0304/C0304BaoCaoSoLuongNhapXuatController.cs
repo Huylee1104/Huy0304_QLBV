@@ -22,14 +22,17 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         private readonly ILogger<C0304MBaoCaoSoLuongNhapXuatController> _logger;
         private readonly M0304Context _context;
         private readonly I0304ThongTinDoanhNghiep _thongTinDoanhNghiepService;
+        private readonly IWebHostEnvironment _env;
 
         public C0304MBaoCaoSoLuongNhapXuatController(M0304Context context, 
             ILogger<C0304MBaoCaoSoLuongNhapXuatController> logger,
-            I0304ThongTinDoanhNghiep thongTinDoanhNghiepService /*, IMemoryCachingServices memoryCache*/)
+            I0304ThongTinDoanhNghiep thongTinDoanhNghiepService, IWebHostEnvironment env
+            /*, IMemoryCachingServices memoryCache*/)
         {
             _context = context;
             _logger = logger;
             _thongTinDoanhNghiepService = thongTinDoanhNghiepService;
+            _env = env;
             //_memoryCache = memoryCache;
         }
         public async Task<IActionResult> Index()
@@ -275,8 +278,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
 
+            var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
             var data = request.Data ?? new List<M0304MHangNhap>();
-            var document = new P0304MReportNhapTemplatePDF(data, request.nam, doanhNghiepObj);
+            var document = new P0304MReportNhapTemplatePDF(data, request.nam, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -285,8 +289,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
 
+            var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
             var data = request.Data ?? new List<M0304MHangNhap>();
-            var document = new P0304ExcelReportNhapTemplate(data, request.nam, doanhNghiepObj);
+            var document = new P0304ExcelReportNhapTemplate(data, request.nam, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
@@ -378,8 +383,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
 
+            var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
             var data = request.Data ?? new List<M0304MHangXuat>();
-            var document = new P0304MReportXuatTemplatePDF(data, request.nam, doanhNghiepObj);
+            var document = new P0304MReportXuatTemplatePDF(data, request.nam, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -388,8 +394,9 @@ namespace C0304MBaoCaoSoLuongNhapXuat.Controllers
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
 
+            var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
             var data = request.Data ?? new List<M0304MHangXuat>();
-            var document = new P0304ExcelReportXuatTemplate(data, request.nam, doanhNghiepObj);
+            var document = new P0304ExcelReportXuatTemplate(data, request.nam, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
