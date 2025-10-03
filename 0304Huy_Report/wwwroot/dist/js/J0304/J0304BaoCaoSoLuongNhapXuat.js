@@ -615,5 +615,10 @@ loadHangHoa();
 
 // bắt sự kiện thay đổi nhóm hàng
 $(document).on('change', '.tomselect-nhomHang', function () {
+    const ts = document.querySelector('.tomselect-hangHoa')?.tomselect;
+    if (ts) {
+        ts.clear(); 
+        ts.clearOptions();
+    }
     loadHangHoa();
 });

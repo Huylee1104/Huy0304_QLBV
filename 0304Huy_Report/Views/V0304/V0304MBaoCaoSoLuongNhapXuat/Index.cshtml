@@ -42,7 +42,9 @@
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 105px
+        width: 105px !important;
+        min-width: 105px !important;
+        max-width: 105px !important;
     }
 
     .table-wrapper-scroll thead th:nth-child(3) {
@@ -78,7 +80,9 @@
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 105px;
+        width: 105px !important;
+        min-width: 105px !important;
+        max-width: 105px !important;
     }
 
     .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
@@ -194,8 +198,8 @@
                     </div>
 
                     <div class="col-md-2 d-flex justify-content-center">
-                        <div class="d-flex align-items-end gap-2" style="margin-top:5px;">
-                            <div class="d-flex gap-2">
+                        <div class="d-flex align-items-end gap-3" style="margin-top:5px;">
+                            <div class="d-flex gap-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="filterType" id="filterNhap" value="Nhap" checked>
                                     <label class="form-check-label" for="filterNhap">Nhập</label>
