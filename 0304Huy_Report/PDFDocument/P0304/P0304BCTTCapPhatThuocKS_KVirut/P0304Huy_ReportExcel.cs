@@ -137,14 +137,39 @@ public class P0304BCTTCapPhatThuocKS_KVirutExcelReportTemplate
                 ws.Cell(currentRow, col++).Value = item.TenPhongKham ?? "";
                 ws.Cell(currentRow, col++).Value = item.BacSiKeDon ?? "";
                 ws.Cell(currentRow, col++).Value = item.TenThuoc ?? "";
-                ws.Cell(currentRow, col++).Value = item.TenHoatChat ?? "";
+                var hoatChat = item.TenHoatChat ?? "";
+                maxLength = 60;
+                sb = new StringBuilder();
+                lastBreak = 0;
+
+                while (lastBreak < hoatChat.Length)
+                {
+                    if (lastBreak + maxLength >= hoatChat.Length)
+                    {
+                        sb.Append(hoatChat.Substring(lastBreak));
+                        break;
+                    }
+
+                    int breakIndex = hoatChat.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+                    if (breakIndex <= lastBreak)
+                        breakIndex = lastBreak + maxLength;
+
+                    sb.Append(hoatChat.Substring(lastBreak, breakIndex - lastBreak));
+                    sb.Append("\n");
+                    lastBreak = breakIndex + 1;
+                }
+
+                var cell4 = ws.Cell(currentRow, col++);
+                cell4.Value = sb.ToString();
+                cell4.Style.Alignment.WrapText = true;
+                cell4.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 ws.Cell(currentRow, col++).Value = item.HamLuong ?? "";
                 ws.Cell(currentRow, col++).Value = item.DVT ?? "";
                 ws.Cell(currentRow, col++).Value = item.DuongDung ?? "";
                 ws.Cell(currentRow, col++).Value = item.LieuDung ?? "";
                 ws.Cell(currentRow, col++).Value = item.SoNgay ?? 0;
                 ws.Cell(currentRow, col++).Value = item.SoLuongKeDon ?? 0;
-                ws.Cell(currentRow, col++).Value = item.SoLuongPhat ?? 0;
+                ws.Cell(currentRow, col++).Value = item.SoLuongXuat ?? 0;
                 var chanDoan = item.ChanDoan ?? "";
                 maxLength = 60;
                 sb = new StringBuilder();

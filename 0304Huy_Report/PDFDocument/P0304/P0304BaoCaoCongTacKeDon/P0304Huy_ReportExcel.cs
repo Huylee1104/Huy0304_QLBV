@@ -115,16 +115,43 @@ public class P0304BaoCaoCongTacKeDonExcelReportTemplate
                 ws.Cell(currentRow, col++).Value = item.TenPhongKham ?? "";
                 ws.Cell(currentRow, col++).Value = item.BacSiKeToa ?? "";
                 ws.Cell(currentRow, col++).Value = item.TenThuoc ?? "";
-                ws.Cell(currentRow, col++).Value = item.TenHoatChat ?? "";
+
+                var hoatChat = item.TenHoatChat ?? "";
+                int maxLength = 60;
+                var sb = new StringBuilder();
+                int lastBreak = 0;
+
+                while (lastBreak < hoatChat.Length)
+                {
+                    if (lastBreak + maxLength >= hoatChat.Length)
+                    {
+                        sb.Append(hoatChat.Substring(lastBreak));
+                        break;
+                    }
+
+                    int breakIndex = hoatChat.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+                    if (breakIndex <= lastBreak)
+                        breakIndex = lastBreak + maxLength;
+
+                    sb.Append(hoatChat.Substring(lastBreak, breakIndex - lastBreak));
+                    sb.Append("\n");
+                    lastBreak = breakIndex + 1;
+                }
+
+                var cell3 = ws.Cell(currentRow, col++);
+                cell3.Value = sb.ToString();
+                cell3.Style.Alignment.WrapText = true;
+                cell3.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
                 ws.Cell(currentRow, col++).Value = item.SoNgay ?? 0;
                 ws.Cell(currentRow, col++).Value = item.SoLuong ?? 0;
                 ws.Cell(currentRow, col++).Value = item.SoLuongPhat ?? 0;
                 var cell = ws.Cell(currentRow, col++);cell.Value = item.DonGia ?? 0;cell.Style.NumberFormat.Format = "#,##0";
 
                 var chanDoan = item.ChanDoan ?? "";
-                int maxLength = 60;
-                var sb = new StringBuilder();
-                int lastBreak = 0;
+                maxLength = 60;
+                sb = new StringBuilder();
+                lastBreak = 0;
 
                 while (lastBreak < chanDoan.Length)
                 {
@@ -147,6 +174,7 @@ public class P0304BaoCaoCongTacKeDonExcelReportTemplate
                 cell2.Value = sb.ToString();
                 cell2.Style.Alignment.WrapText = true;
                 cell2.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+
                 ws.Cell(currentRow, col++).Value = item.MucDichXuat ?? "";
 
                 var rangeRow = ws.Range(currentRow, 2, currentRow, col - 1);

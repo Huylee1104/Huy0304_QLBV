@@ -21,7 +21,7 @@ namespace M0304.Models.BCTTCapPhatThuocKS_KVirut
         public string? LieuDung { get; set; }
         public int? SoNgay { get; set; }
         public double? SoLuongKeDon { get; set; }
-        public double? SoLuongPhat { get; set; }
+        public double? SoLuongXuat { get; set; }
         public string? ChanDoan { get; set; }
     }
 
