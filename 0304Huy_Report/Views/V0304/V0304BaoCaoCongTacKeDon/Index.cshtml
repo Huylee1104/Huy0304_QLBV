@@ -80,6 +80,9 @@
         background-color: #bae7ff !important;
     }
 </style> 
+@section Styles{
+    <link rel="stylesheet" href="@Url.Content("~/dist/css/C0304/C0304_Report.css")" />
+}
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -136,6 +139,11 @@
                             </span>
                         </div>
                         <span class="text-danger"></span>
+                    </div>
+
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
+                        <label for="KhoHang" class="form-label">Kho hàng</label>
+                        <select class="form-select tomselect-khoHang" name="tenKhoHang"></select>
                     </div>
 
                     <!--Nhóm hàng-->
@@ -230,5 +238,12 @@
         </div>
     </div>
     @section Scripts {
+    <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
+    <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
+    <script src="/dist/libs/tom-select/dist/js/tom-select.base.js" defer asp-append-version="true"></script>
+    <script src="~/dist/libs/toast/toastr.min.js" defer></script>
+    <script src="@Url.Content("~/dist/js/BienChung.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
+    <script src="~/dist/js/site.js" asp-append-version="true"></script>
     <script src="@Url.Content("~/dist/js/J0304/J0304BaoCaoCongTacKeDon.js")" defer asp-append-version="true"></script>
     }

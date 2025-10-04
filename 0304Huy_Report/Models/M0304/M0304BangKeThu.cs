@@ -32,8 +32,12 @@ namespace M0304.Models.BangKeThu
 
     public class M0304BangKeThuResponse
     {
-        public M0304PagedResult<M0304BangKeThu> BangKeThu { get; set; }   // danh sách bảng kê thu phân trang
-        public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }    // thông tin doanh nghiệp
+        public M0304PagedResult<M0304BangKeThu> BangKeThu { get; set; }
+        public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
+
+        public decimal? TongHoan { get; set; }
+        public decimal? TongHuy { get; set; }
+        public decimal? TongSoTien { get; set; }
     }
 
     public class ExportRequest

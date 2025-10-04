@@ -431,11 +431,9 @@ function updateTable(response) {
             groupedData[nhanVien].push(item);
         });
 
-        const sortedNhanVienList = Object.keys(groupedData).sort((a, b) =>
-            a.localeCompare(b, 'vi', { sensitivity: 'base' })
-        );
+        let globalIndex = 0;
 
-        sortedNhanVienList.forEach(nhanVien => {
+        Object.keys(groupedData).forEach(nhanVien => { 
             let tongTienNV = 0;
             let tongHuyNV = 0;
             let tongHoanTraNV = 0;
@@ -453,9 +451,10 @@ function updateTable(response) {
                     if (!groupedByQuyenSo[quyenSo]) groupedByQuyenSo[quyenSo] = [];
                     groupedByQuyenSo[quyenSo].push(item);
                 });
+
             const nvRow = `
             <tr class="fw-bold">
-                <td colspan="10" class = "text-start">Nhân viên: ${nhanVien}</td>
+                <td colspan="10" class="text-start">Nhân viên: ${nhanVien}</td>
             </tr>`;
             tbody.append(nvRow);
 
@@ -466,27 +465,26 @@ function updateTable(response) {
 
                 const quyenSoList = groupedByQuyenSo[quyenSo];
 
-                // Tính tổng trước
                 quyenSoList.forEach(item => {
                     tongThuPhiQS += Number(item.soTien || item.SoTien || 0);
                     tongHuyQS += Number(item.huy || item.Huy || 0);
                     tongHoanTraQS += Number(item.hoan || item.Hoan || 0);
                 });
 
-                // Header quyển sổ (có tổng nằm ở đây)
                 const maNV = quyenSoList[0].maNhanVien || quyenSoList[0].MaNhanVien || "";
                 const qsHeaderRow = `
                 <tr class="fw-bold table-light">
-                    <td colspan="3" class="text-start" style = "padding-left:40px; border-right: none;">${maNV} - ${quyenSo}</td>
-                    <td colspan="4" class="text-start khongapdung" style = "border-left: none"></td>
+                    <td colspan="3" class="text-start" style="padding-left:40px; border-right: none;">${maNV} - ${quyenSo}</td>
+                    <td colspan="4" class="text-start khongapdung" style="border-left: none"></td>
                     <td class="text-end khongapdung">${formatCurrency(tongHuyQS)}</td>
                     <td class="text-end">${formatCurrency(tongHoanTraQS)}</td>
                     <td class="text-end">${formatCurrency(tongThuPhiQS)}</td>
                 </tr>`;
                 tbody.append(qsHeaderRow);
 
-                quyenSoList.forEach((item, index) => {
-                    const stt = (currentPage - 1) * pageSize + index + 1;
+                quyenSoList.forEach(item => {
+                    globalIndex++;
+                    const stt = (currentPage - 1) * pageSize + globalIndex;
                     const row = `
                         <tr>
                             <td class="text-nowrap text-center">${stt}</td>
@@ -502,14 +500,15 @@ function updateTable(response) {
                         </tr>
                     `;
                     tbody.append(row);
-                    tongTienNV += tongThuPhiQS;
-                    tongHuyNV += tongHuyQS;
-                    tongHoanTraNV += tongHoanTraQS;
                 });
+                tongTienNV += tongThuPhiQS;
+                tongHuyNV += tongHuyQS;
+                tongHoanTraNV += tongHoanTraQS;
             });
+
             const totalRowNV = `
             <tr class="fw-bold table-secondary">
-                <td colspan="3" class="text-end">Tổng trang:</td>
+                <td colspan="3" class="text-end">Tổng nhân viên:</td>
                 <td colspan="4" class="text-end khongapdung"></td>
                 <td class="text-end khongapdung">${formatCurrency(tongHuyNV)}</td>
                 <td class="text-end">${formatCurrency(tongHoanTraNV)}</td>
@@ -517,6 +516,17 @@ function updateTable(response) {
             </tr>`;
             tbody.append(totalRowNV);
         });
+
+        const totalRowPage = `
+        <tr class="fw-bold">
+            <td colspan="3" class="text-end">Tổng trang:</td>
+            <td colspan="4" class="text-end khongapdung"></td>
+            <td class="text-end khongapdung">${formatCurrency(response.tongHuy || response.TongHuy)}</td>
+            <td class="text-end">${formatCurrency(response.tongHoan || response.TongHoan)}</td>
+            <td class="text-end">${formatCurrency(response.tongSoTien || response.TongSoTien)}</td>
+        </tr>`;
+        tbody.append(totalRowPage);
+
     } else {
         tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }

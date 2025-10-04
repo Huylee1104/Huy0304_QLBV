@@ -406,12 +406,11 @@ function updateTable(response) {
             tongHoaDon += Number(item.tongHoaDon || item.TongHoaDon || 0);
             const row = `
                 <tr>
-                    <td class = "text-center text-nowrap" >${stt}</td>
-                    <td class = "text-start">${item.nhomDichVu || item.NhomDichVu || ''}</td>
+                    <td class = "text-center text-nowrap" style = "width: 65px;">${stt}</td>
+                    <td class = "text-start text-nowrap">${item.nhomDichVu || item.NhomDichVu || ''}</td>
                     <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
                     <td class = "text-end text-nowrap">${item.soLuong || item.SoLuong}</td>
                     <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
-                    
                 </tr>
             `;
             tbody.append(row);

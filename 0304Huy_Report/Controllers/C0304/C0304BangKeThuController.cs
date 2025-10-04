@@ -81,7 +81,10 @@ namespace C0304BangKeThu.Controllers
                     totalRecords = result.BangKeThu.TotalRecords,
                     totalPages = result.BangKeThu.TotalPages,
                     currentPage = result.BangKeThu.CurrentPage,
-                    doanhNghiep = result.DoanhNghiep
+                    doanhNghiep = result.DoanhNghiep,
+                    tongHuy = result.TongHuy,
+                    tongHoan = result.TongHoan,
+                    tongSoTien = result.TongSoTien
                 });
             }
             catch (Exception ex)

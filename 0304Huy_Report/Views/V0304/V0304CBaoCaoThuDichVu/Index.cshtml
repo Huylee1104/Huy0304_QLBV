@@ -9,10 +9,10 @@
     }
     .table-wrapper-scroll th,
     .table-wrapper-scroll td {
-        white-space: nowrap; /* giữ nội dung không xuống dòng */
+        white-space: nowrap;
     }
 
-    /* Header - Cố định 2 cột */
+    
     .table-wrapper-scroll thead th:nth-child(1) {
         position: sticky;
         top: 0;
@@ -20,46 +20,39 @@
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 132px;
+        width: 65px;
     }
 
     .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
-        left: 132px; /* bằng đúng width cột 1 */
+        left: 65px;
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        min-width: 150px;
-        max-width: 200px;
     }
 
-    /* Body - Cố định 2 cột (trừ dòng tổng) */
     .table-wrapper-scroll tbody tr td:nth-child(1) {
         position: sticky;
         left: 0;
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 132px;
+        width: 65px;
     }
 
     .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
         position: sticky;
-        left: 132px; /* bằng đúng width cột 1 */
+        left: 65px;
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        min-width: 150px;
-        max-width: 200px;
     }
 
-    /* Hover cho dữ liệu thường */
     .table-wrapper-scroll tbody tr:hover td {
         background-color: #bae7ff !important;
     }
 
-    /* Định dạng dòng tổng */
     .table-wrapper-scroll tbody tr.total-row td {
         background-color: #f0f0f0;
         font-weight: bold;
@@ -155,10 +148,10 @@
                 </div>
 
                 <div class="table-wrapper-scroll">
-                    <table style="margin: auto; table-layout: fixed;" cellpadding="8">
+                    <table style="margin: auto;" cellpadding="8">
                         <thead>
                             <tr>
-                                <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap" style="width: 65px;">STT</th>
                                 <th class="text-center text-nowrap">Nhóm dịch vụ</th>
                                 <th class="text-center text-nowrap">Dịch vụ</th>
                                 <th class="text-center text-nowrap">Số lượng</th>

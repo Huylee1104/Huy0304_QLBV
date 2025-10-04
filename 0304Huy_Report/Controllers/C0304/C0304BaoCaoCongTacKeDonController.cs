@@ -54,12 +54,12 @@ namespace C0304BaoCaoCongTacKeDon.Controllers
         }
 
         [HttpPost("filter")]
-        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idNhomHang = null,
-            long? idHangHoa = null, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idKhoHang, long? idNhomHang = null,
+            long ? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await GetBaoCaoCongTacKeDon(tuNgay, denNgay, IdChiNhanh, idNhomHang, idHangHoa, page, pageSize);
+                var result = await GetBaoCaoCongTacKeDon(tuNgay, denNgay, IdChiNhanh, idKhoHang, idNhomHang, idHangHoa, page, pageSize);
 
                 if (!result.BaoCaoCongTacKeDon.Success)
                 {
@@ -96,7 +96,7 @@ namespace C0304BaoCaoCongTacKeDon.Controllers
         }
 
 
-        private async Task<M0304BaoCaoCongTacKeDonResponse> GetBaoCaoCongTacKeDon(string ngayBatDau, string ngayKetThuc, long idCN, 
+        private async Task<M0304BaoCaoCongTacKeDonResponse> GetBaoCaoCongTacKeDon(string ngayBatDau, string ngayKetThuc, long idCN, long? idKhoHang,
             long? idNhomHang = null, long? idHangHoa = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -127,10 +127,11 @@ namespace C0304BaoCaoCongTacKeDon.Controllers
                 };
             }
             var allData = await _context.BaoCaoCongTacKeDons
-                .FromSqlRaw("EXEC dbo.[S0304_BaoCaoCongTacKeDon] @TuNgay, @DenNgay, @IDCN, @IDNhomHang, @IDHangHoa",
+                .FromSqlRaw("EXEC dbo.[S0304_BaoCaoCongTacKeDon] @TuNgay, @DenNgay, @IDCN, @IDKho, @IDNhomHang, @IDHangHoa",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
+                    new SqlParameter("@IDKho", idKhoHang),
                     new SqlParameter("@IDNhomHang", idNhomHang),
                     new SqlParameter("@IDHangHoa", idHangHoa))
                 .AsNoTracking()

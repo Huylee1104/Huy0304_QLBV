@@ -59,7 +59,10 @@ namespace S0304BangKeThu.Services
                         TotalPages = 0,
                         CurrentPage = page
                     },
-                    DoanhNghiep = null        // không có thông tin doanh nghiệp
+                    DoanhNghiep = null,
+                    TongHoan = 0,
+                    TongHuy = 0,
+                    TongSoTien = 0,
                 };
             }
             var allData = await _context.M0304BangKeThus
@@ -88,6 +91,11 @@ namespace S0304BangKeThu.Services
             };
             session?.SetString("FilteredData", JsonConvert.SerializeObject(sessionData));
 
+            // Tính tổng
+            var allHoan = allData.Sum(x => x.Hoan);
+            var allHuy = allData.Sum(x => x.Huy);
+            var allSoTien = allData.Sum(x => x.SoTien);
+
             return new M0304BangKeThuResponse
             {
                 BangKeThu = new M0304PagedResult<M0304BangKeThu>
@@ -99,7 +107,10 @@ namespace S0304BangKeThu.Services
                     TotalPages = totalPages,
                     CurrentPage = page
                 },
-                DoanhNghiep = doanhNghiep
+                DoanhNghiep = doanhNghiep,
+                TongHoan = allHoan,
+                TongHuy = allHuy,
+                TongSoTien = allSoTien,
             };
         }
         private M0304ThongTinDoanhNghiep GetDoanhNghiepFromRequestOrSession(ExportRequest request, ISession session)

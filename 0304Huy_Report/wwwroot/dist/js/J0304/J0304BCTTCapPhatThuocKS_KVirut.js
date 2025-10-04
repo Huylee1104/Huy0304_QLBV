@@ -73,6 +73,7 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
+    let idKhoHang = $('.tomselect-khoHang').val() || 0;
     let idNhomHang = $('.tomselect-nhomHang').val() || 0;
     let idHangHoa = $('.tomselect-hangHoa').val() || 0;
     if (!isPagination) {
@@ -100,6 +101,7 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
+        idKhoHang: idKhoHang,
         idNhomHang: idNhomHang,
         idHangHoa: idHangHoa,
         page: currentPage,
@@ -149,12 +151,13 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay, idNhomHang, idHangHoa) {
+function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhomHang, idHangHoa) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
+            idKhoHang: idKhoHang || 0,
             idNhomHang: idNhomHang || 0,
             idHangHoa: idHangHoa || 0,
             page: 1,
@@ -180,6 +183,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idNhomHang, idHangHoa) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
+                    idKhoHang: idKhoHang || 0,
                     idNhomHang: idNhomHang || 0,
                     idHangHoa: idHangHoa || 0,
                     page: p,
@@ -239,6 +243,7 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idKhoHang: $('.tomselect-khoHang').val() || 0,
         idNhomHang: $('.tomselect-nhomHang').val() || 0,
         idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
@@ -288,11 +293,12 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idKhoHang = $('.tomselect-khoHang').val() || 0;
     const idNhomHang = $('.tomselect-nhomHang').val() || 0;
     const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idNhomHang, idHangHoa)
+        fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -312,6 +318,7 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idKhoHang: $('.tomselect-khoHang').val() || 0,
         idNHomHang: $('.tomselect-nhomHang').val() || 0,
         idHangHoa: $('.tomselect-hangHoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
@@ -355,11 +362,12 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idKhoHang = $('.tomselect-khoHang').val() || 0;
     const idNhomHang = $('.tomselect-nhomHang').val() || 0;
     const idHangHoa = $('.tomselect-hangHoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idNhomHang, idHangHoa)
+        fetchAllFilteredData(tu, den, idKhoHang, idNhomHang, idHangHoa)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -423,12 +431,12 @@ function updateTable(response) {
                     <td class = "text-center text-nowrap">${item.soBenhAn || item.SoBenhAn || ''}</td>
                     <td class = "text-start text-nowrap">${item.tenBenhNhan || item.TenBenhNhan || ''}</td>
                     <td class = "text-center text-nowrap">${item.namSinh || item.NamSinh || ''}</td>
-                    <td class = "text-start" style = "max-width: 150px;">${item.diaChi || item.DiaChi || ''}</td>
+                    <td class = "text-start text-nowrap">${item.diaChi || item.DiaChi || ''}</td>
                     <td class = "text-start text-nowrap">${item.khoaDieuTri || item.KhoaDieuTri || ''}</td>
                     <td class = "text-center text-nowrap">${item.tenPhongKham || item.TenPhongKham || ''}</td>
                     <td class = "text-center text-nowrap">${item.bacSiKeDon || item.BacSiKeDon || ''}</td>
                     <td class = "text-start text-nowrap">${item.tenThuoc || item.TenThuoc || ''}</td>
-                    <td class = "text-start text-nowrap">${item.tenHoatChat || item.TenHoatChat || ''}</td>
+                    <td class = "text-start text-nowrap text-truncate" style = "max-width: 200px;" title = "${item.tenHoatChat}">${item.tenHoatChat || item.TenHoatChat || ''}</td>
                     <td class = "text-start text-nowrap">${item.hamLuong || item.HamLuong || ''}</td>
                     <td class = "text-start text-nowrap">${item.dvt || item.DVT || ''}</td>
                     <td class = "text-start text-nowrap">${item.duongDung || item.DuongDung || ''}</td>
@@ -436,7 +444,7 @@ function updateTable(response) {
                     <td class = "text-end text-nowrap">${item.soNgay || item.SoNgay || ''}</td>
                     <td class = "text-end text-nowrap">${item.soLuongKeDon || item.SoluongKeDon || ''}</td>
                     <td class = "text-end text-nowrap">${item.soLuongPhat || item.SoLuongPhat || ''}</td>
-                    <td class = "text-start text-nowrap" style = "max-width: 200px;">${item.chanDoan || item.ChanDoan || ''}</td>
+                    <td class = "text-start text-nowrap text-truncate" style = "max-width: 200px;" title = "${item.chanDoan}">${item.chanDoan || item.ChanDoan || ''}</td>
                     
                 </tr>
             `;
@@ -464,6 +472,29 @@ $(document).ready(function () {
 });
 
 // ==================== LOAD COMBOBOX ====================
+$.getJSON("dist/data/json/Dm_KhoHang.json", dataKhoHang => {
+    listKhoHang = dataKhoHang
+        .filter(n =>
+            (n.active === true || n.active === 1)
+        )
+        .map(n => ({
+            ...n,
+            alias: n.viettat?.trim() !== ""
+                ? n.viettat.toUpperCase()
+                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+        }));
+    const configs = [
+        {
+            className: ".tomselect-khoHang",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
+
+    configCb(configs, listKhoHang);
+});
+
 $.getJSON("dist/data/json/Dm_NhomHang.json", dataNhomHang => {
     listNhomHang = dataNhomHang
         .filter(n =>

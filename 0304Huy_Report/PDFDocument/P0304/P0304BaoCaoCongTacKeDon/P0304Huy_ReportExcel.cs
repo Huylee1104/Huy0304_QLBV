@@ -111,7 +111,7 @@ public class P0304BaoCaoCongTacKeDonExcelReportTemplate
                 ws.Cell(currentRow, col++).Value = item.SoLuuTru?? "";
                 ws.Cell(currentRow, col++).Value = item.SoBenhAn?? "";
                 ws.Cell(currentRow, col++).Value = item.KhoaDieuTri?? "";
-                SetMiddle(ws.Cell(currentRow, col++), item.NgayKham?.ToString("dd-MM-yyyy HH:mm") ?? "");
+                SetMiddle(ws.Cell(currentRow, col++), item.NgayKham ?? "");
                 ws.Cell(currentRow, col++).Value = item.TenPhongKham ?? "";
                 ws.Cell(currentRow, col++).Value = item.BacSiKeToa ?? "";
                 ws.Cell(currentRow, col++).Value = item.TenThuoc ?? "";

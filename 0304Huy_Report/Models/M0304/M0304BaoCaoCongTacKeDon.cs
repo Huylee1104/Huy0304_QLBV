@@ -13,7 +13,7 @@ namespace M0304.Models.BaoCaoCongTacKeDon
         public string? SoLuuTru { get; set; }
         public string? SoBenhAn { get; set; }
         public string? KhoaDieuTri { get; set; }
-        public DateTime? NgayKham { get; set; }
+        public string? NgayKham { get; set; }
         public string? TenPhongKham { get; set; }
         public string? BacSiKeToa { get; set; }
         public string? TenThuoc { get; set; }
@@ -21,7 +21,7 @@ namespace M0304.Models.BaoCaoCongTacKeDon
         public int? SoNgay { get; set; }
         public double? SoLuong { get; set; }
         public double? SoLuongPhat { get; set; }
-        public decimal? DonGia { get; set; }
+        public double? DonGia { get; set; }
         public string? ChanDoan { get; set; }
         public string? MucDichXuat { get; set; }
     }
