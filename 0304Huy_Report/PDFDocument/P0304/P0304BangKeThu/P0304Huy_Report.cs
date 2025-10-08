@@ -256,6 +256,8 @@ namespace P0304.PDFDocument
                         var tongHoanAll = _data.Sum(x => x.Hoan ?? 0m);
                         var tongSoTienAll = _data.Sum(x => x.SoTien ?? 0m);
 
+                        var phaiNop = tongSoTienAll- tongHuyAll - tongHoanAll;
+
                         col.Item().EnsureSpace()
                         .Column(cuoi =>
                         {
@@ -294,13 +296,13 @@ namespace P0304.PDFDocument
                             cuoi.Item().Text(text =>
                             {
                                 text.Span("Số tiền phải nộp: ").NormalWeight();
-                                text.Span($"{tongSoTienAll:N0}").Bold();
+                                text.Span($"{phaiNop:N0}").Bold();
                             });
 
                             cuoi.Item().Text(text =>
                             {
                                 text.Span("Bằng chữ: ").NormalWeight();
-                                text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(tongSoTienAll)}").Bold().Italic();
+                                text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu(phaiNop)}").Bold().Italic();
                             });
 
                             cuoi.Item().Row(row =>

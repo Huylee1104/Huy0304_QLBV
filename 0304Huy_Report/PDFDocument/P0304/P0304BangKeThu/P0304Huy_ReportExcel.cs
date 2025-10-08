@@ -206,6 +206,8 @@ public class P0304ExcelReportTemplate
             var tongHoanAll = _data.Sum(x => x.Hoan ?? 0m);
             var tongSoTienAll = _data.Sum(x => x.SoTien ?? 0m);
 
+            var phaiNop = tongSoTienAll - tongHuyAll - tongHoanAll;
+
             var totalRange = ws.Range(currentRow, 2, currentRow, 8);
             totalRange.Merge();
             totalRange.Value = "Tổng cộng";
@@ -232,13 +234,13 @@ public class P0304ExcelReportTemplate
             ws.Range(currentRow, 2, currentRow, 7).Merge();
             var tongSo = ws.Cell(currentRow, 2).GetRichText();
             tongSo.AddText("Số tiền phải nộp: ");
-            tongSo.AddText($"{tongSoTienAll:N0}").SetBold();
+            tongSo.AddText($"{phaiNop:N0}").SetBold();
             currentRow++;
 
             ws.Range(currentRow, 2, currentRow, 7).Merge();
             var tongChu = ws.Cell(currentRow, 2).GetRichText();
             tongChu.AddText("Bằng chữ: ");
-            tongChu.AddText(H0304NumberToTextHelper.ConvertSoThanhChu(tongSoTienAll)).SetItalic().SetBold();
+            tongChu.AddText(H0304NumberToTextHelper.ConvertSoThanhChu(phaiNop)).SetItalic().SetBold();
             currentRow += 2;
 
             ws.Range(currentRow, 8, currentRow + 5, 11).Merge();
