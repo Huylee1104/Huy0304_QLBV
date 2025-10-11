@@ -324,6 +324,10 @@ function doExportPdf(finalData, btnElem) {
         doanhNghiep: window.doanhNghiep || null
     };
 
+    btnElem.disabled = true;
+    btnElem.innerHTML = '<i class="bi bi-hourglass-split"></i> Đang xử lý...';
+
+
     fetch("/bang_ke_thu_ngoai_tru/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
@@ -334,13 +338,19 @@ function doExportPdf(finalData, btnElem) {
             return res.blob();
         })
         .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `BangKeThuNgoaiTru_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
+            const pdfUrl = URL.createObjectURL(blob);
+
+            // Tạo iframe ẩn để mở file PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                const printWindow = iframe.contentWindow;
+                printWindow.focus();
+                printWindow.print();
+            };
         })
         .catch(error => {
             console.error('Error exporting PDF:', error);
@@ -519,8 +529,8 @@ function updateTable(response) {
 
         const totalRowPage = `
         <tr class="fw-bold">
-            <td colspan="3" class="text-end">Tổng trang:</td>
-            <td colspan="4" class="text-end khongapdung"></td>
+            <td colspan="3" class="text-end">Tổng tiền phải nộp:</td>
+            <td colspan="4" class="text-start khongapdung">${formatCurrency(response.tongSoTien - response.tongHuy - response.tongHoan)}</td>
             <td class="text-end khongapdung">${formatCurrency(response.tongHuy || response.TongHuy)}</td>
             <td class="text-end">${formatCurrency(response.tongHoan || response.TongHoan)}</td>
             <td class="text-end">${formatCurrency(response.tongSoTien || response.TongSoTien)}</td>
@@ -531,22 +541,6 @@ function updateTable(response) {
         tbody.append('<tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
-
-// ==================== KHI TẢI TRANG ====================
-$(document).ready(function () {
-    const config = {
-        tuNgay: 'ngayTuNgay', // id ô input
-        denNgay: 'ngayDenNgay',
-        tuNgayIcon: 'ngayTuNgay-icon', // id icon
-        denNgayIcon: 'ngayDenNgay-icon',
-        tuNgayDatepicker: 'ngayTuNgay-datepicker', // id cả cụm datepicker
-        denNgayDatepicker: 'ngayDenNgay-datepicker'
-    };
-
-    initDateInputFormatting(config);
-    initDatePicker(config);
-    initDateRangeConstraint(config);
-});
 
 // ==================== LOAD COMBOBOX ====================
 
@@ -620,3 +614,113 @@ $.getJSON("dist/data/json/DM_HTTT.json", dataHTTT => {
 
     configCb(configs, listLoai);
 })();
+
+const selectorBatDauKetThuc = '#ngayTuNgay, #ngayDenNgay';
+
+$(selectorBatDauKetThuc).datetimepicker({
+    format: 'DD-MM-YYYY HH:mm:ss',
+    locale: 'vi',
+    useCurrent: false,
+    showTodayButton: true,
+    showClear: true,
+    showClose: true,
+    calendarWeeks: false,
+    tooltips: {
+        today: 'Chuyển đến hôm nay',
+        clear: 'Xóa lựa chọn',
+        close: 'Đóng',
+        selectMonth: 'Chọn tháng',
+        prevMonth: 'Tháng trước',
+        nextMonth: 'Tháng sau',
+        selectYear: 'Chọn năm',
+        prevYear: 'Năm trước',
+        nextYear: 'Năm sau',
+        selectTime: 'Chọn giờ'
+    },
+    icons: {
+        time: 'ti ti-clock',
+        date: 'ti ti-calendar-event',
+        up: 'ti ti-chevron-up',
+        down: 'ti ti-chevron-down',
+        previous: 'ti ti-chevron-left',
+        next: 'ti ti-chevron-right',
+        today: '',
+        clear: 'ti ti-trash',
+        close: 'ti ti-x'
+    }
+})
+    .on('dp.show', function () {
+        const $widget = $('.bootstrap-datetimepicker-widget:last');
+        const $input = $(this);
+        const offset = $input.offset();
+        const inputHeight = $input.outerHeight();
+        const widgetHeight = $widget.outerHeight();
+        const widgetWidth = $widget.outerWidth();
+        const winWidth = $(window).width();
+        const winHeight = $(window).height();
+        const scrollTop = $(window).scrollTop();
+
+        $widget.css({
+            'transform': 'scale(0.85)',
+            'transform-origin': 'top center',
+        });
+
+        const scaledHeight = widgetHeight * 0.85;
+        const scaledWidth = widgetWidth * 0.85;
+
+        let left = offset.left + $input.outerWidth() + 10 - 180;
+        let top = offset.top + 40;
+
+        if (left + scaledWidth > winWidth - 10) {
+            left = offset.left - scaledWidth - 10;
+        }
+
+        if (top < scrollTop + 10) {
+            top = offset.top + inputHeight + 10;
+        }
+
+        if (left < 10) left = 10;
+        if (left + scaledWidth > winWidth - 10) {
+            left = winWidth - scaledWidth - 10;
+        }
+        if (top < scrollTop + 10) top = scrollTop + 10;
+        if (top + scaledHeight > scrollTop + winHeight - 10) {
+            top = scrollTop + winHeight - scaledHeight - 10;
+        }
+
+        $widget.appendTo('body').css({
+            position: 'absolute',
+            top: top,
+            left: left,
+            zIndex: 999999
+        }).addClass('active-popup');
+    })
+    .on('dp.hide', function () {
+        $('.bootstrap-datetimepicker-widget')
+            .removeClass('active-popup')
+            .css('transform', '');
+    });
+    Inputmask({
+        alias: "datetime",
+        inputFormat: "dd-mm-yyyy HH:MM:ss",
+        placeholder: "dd-mm-yyyy hh:mm:ss",
+        clearIncomplete: true,
+        showMaskOnHover: false,
+        showMaskOnFocus: true
+    }).mask(selectorBatDauKetThuc);
+
+    const style = document.createElement('style');
+    style.textContent = `
+                #ngayTuNgay,
+                #ngayDenNgay{
+                    background-color: #f8f9fa;
+                    border: 1px solid #ced4da;
+                }
+
+                .bootstrap-datetimepicker-widget {
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+            `;
+document.head.appendChild(style);

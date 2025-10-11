@@ -129,7 +129,7 @@ $('#selectGiaiDoan').change(function () {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const currentQuy = Math.ceil(currentMonth / 3);
-
+    
     // ================== FUNCTION TẠO DROPDOWN ==================
     function createDropdownInput(id, label, values, defaultValue, onSelect, length = 10) {
         const html = `
@@ -298,11 +298,12 @@ $('#selectGiaiDoan').change(function () {
     }
 
     // ================== FORMAT DATE ==================
-    function formatDate(date) {
+    function formatDate(date, isEndDate = false) {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
+        const time = isEndDate ? '23:59:59' : '00:00:00';
+        return `${day}-${month}-${year} ${time}`;
     }
 
     function getMonthDateRange(year, month) {
@@ -333,8 +334,8 @@ $('#selectGiaiDoan').change(function () {
         }
 
         if (selectedValue === 'Nam') {
-            $('#ngayTuNgay').val(`01-01-${year}`);
-            $('#ngayDenNgay').val(`31-12-${year}`);
+            $('#ngayTuNgay').val(`01-01-${year} 00:00:00`);
+            $('#ngayDenNgay').val(`31-12-${year} 23:59:59`);
         }
         else if (selectedValue === 'Quy') {
             let quy = parseInt($('#quyInput').val(), 10);
@@ -345,8 +346,8 @@ $('#selectGiaiDoan').change(function () {
 
             const startMonth = (quy - 1) * 3 + 1;
             const endMonth = startMonth + 2;
-            $('#ngayTuNgay').val(formatDate(new Date(year, startMonth - 1, 1)));
-            $('#ngayDenNgay').val(formatDate(new Date(year, endMonth, 0)));
+            $('#ngayTuNgay').val(formatDate(new Date(year, startMonth - 1, 1), false));
+            $('#ngayDenNgay').val(formatDate(new Date(year, endMonth, 0), true));
         }
         else if (selectedValue === 'Thang') {
             let month = parseInt($('#thangInput').val(), 10);
@@ -356,14 +357,13 @@ $('#selectGiaiDoan').change(function () {
             $('#thangInput').val(month);
 
             const { start, end } = getMonthDateRange(year, month);
-            $('#ngayTuNgay').val(formatDate(start));
-            $('#ngayDenNgay').val(formatDate(end));
+            $('#ngayTuNgay').val(formatDate(start, false));
+            $('#ngayDenNgay').val(formatDate(end, true));
         }
         else if (selectedValue === 'Ngay') {
             const today = new Date(Date.now());
-            const todayStr = formatDate(today);
-            $('#ngayTuNgay').val(todayStr);
-            $('#ngayDenNgay').val(todayStr);
+            $('#ngayTuNgay').val(formatDate(today, false));
+            $('#ngayDenNgay').val(formatDate(today, false));
         }
 
         if (selectedValue === 'Nam' || selectedValue === 'Quy' || selectedValue === 'Thang') {
@@ -372,8 +372,16 @@ $('#selectGiaiDoan').change(function () {
             $('#ngayTuNgay, #ngayDenNgay').prop('disabled', false);
         }
 
-        $('#ngayTuNgay').datepicker('setDate', $('#ngayTuNgay').val());
-        $('#ngayDenNgay').datepicker('setDate', $('#ngayDenNgay').val());
+        // ĐỔI SANG datetimepicker và dùng moment để parse
+        const tuNgayVal = $('#ngayTuNgay').val();
+        const denNgayVal = $('#ngayDenNgay').val();
+
+        if (tuNgayVal) {
+            $('#ngayTuNgay').data("DateTimePicker").date(moment(tuNgayVal, 'DD-MM-YYYY HH:mm:ss'));
+        }
+        if (denNgayVal) {
+            $('#ngayDenNgay').data("DateTimePicker").date(moment(denNgayVal, 'DD-MM-YYYY HH:mm:ss'));
+        }
     }
 
     const startYear = 2000;
