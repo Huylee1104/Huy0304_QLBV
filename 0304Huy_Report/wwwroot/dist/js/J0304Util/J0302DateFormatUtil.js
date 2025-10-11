@@ -302,8 +302,7 @@ $('#selectGiaiDoan').change(function () {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        const time = isEndDate ? '23:59:59' : '00:00:00';
-        return `${day}-${month}-${year} ${time}`;
+        return `${day}-${month}-${year}`;
     }
 
     function getMonthDateRange(year, month) {
@@ -334,8 +333,8 @@ $('#selectGiaiDoan').change(function () {
         }
 
         if (selectedValue === 'Nam') {
-            $('#ngayTuNgay').val(`01-01-${year} 00:00:00`);
-            $('#ngayDenNgay').val(`31-12-${year} 23:59:59`);
+            $('#ngayTuNgay').val(`01-01-${year}`);
+            $('#ngayDenNgay').val(`31-12-${year}`);
         }
         else if (selectedValue === 'Quy') {
             let quy = parseInt($('#quyInput').val(), 10);
