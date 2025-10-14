@@ -345,8 +345,8 @@ $('#selectGiaiDoan').change(function () {
 
             const startMonth = (quy - 1) * 3 + 1;
             const endMonth = startMonth + 2;
-            $('#ngayTuNgay').val(formatDate(new Date(year, startMonth - 1, 1), false));
-            $('#ngayDenNgay').val(formatDate(new Date(year, endMonth, 0), true));
+            $('#ngayTuNgay').val(formatDate(new Date(year, startMonth - 1, 1)));
+            $('#ngayDenNgay').val(formatDate(new Date(year, endMonth, 0)));
         }
         else if (selectedValue === 'Thang') {
             let month = parseInt($('#thangInput').val(), 10);
@@ -356,13 +356,14 @@ $('#selectGiaiDoan').change(function () {
             $('#thangInput').val(month);
 
             const { start, end } = getMonthDateRange(year, month);
-            $('#ngayTuNgay').val(formatDate(start, false));
-            $('#ngayDenNgay').val(formatDate(end, true));
+            $('#ngayTuNgay').val(formatDate(start));
+            $('#ngayDenNgay').val(formatDate(end));
         }
         else if (selectedValue === 'Ngay') {
             const today = new Date(Date.now());
-            $('#ngayTuNgay').val(formatDate(today, false));
-            $('#ngayDenNgay').val(formatDate(today, false));
+            const todayStr = formatDate(today);
+            $('#ngayTuNgay').val(todayStr);
+            $('#ngayDenNgay').val(todayStr);
         }
 
         if (selectedValue === 'Nam' || selectedValue === 'Quy' || selectedValue === 'Thang') {
@@ -371,16 +372,8 @@ $('#selectGiaiDoan').change(function () {
             $('#ngayTuNgay, #ngayDenNgay').prop('disabled', false);
         }
 
-        // ĐỔI SANG datetimepicker và dùng moment để parse
-        const tuNgayVal = $('#ngayTuNgay').val();
-        const denNgayVal = $('#ngayDenNgay').val();
-
-        if (tuNgayVal) {
-            $('#ngayTuNgay').data("DateTimePicker").date(moment(tuNgayVal, 'DD-MM-YYYY HH:mm:ss'));
-        }
-        if (denNgayVal) {
-            $('#ngayDenNgay').data("DateTimePicker").date(moment(denNgayVal, 'DD-MM-YYYY HH:mm:ss'));
-        }
+        $('#ngayTuNgay').datepicker('setDate', $('#ngayTuNgay').val());
+        $('#ngayDenNgay').datepicker('setDate', $('#ngayDenNgay').val());
     }
 
     const startYear = 2000;

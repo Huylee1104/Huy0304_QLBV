@@ -16,6 +16,7 @@ using M0304M.Models.BaoCaoHangHoa;
 using M0304.Models.BCTTCapPhatThuocKS_KVirut;
 using M0304.Models.BaoCaoCongTacKeDon;
 using M0304.Models.ToKhaiChiTietThuPhiLePhi;
+using M0304.Models.BangKeBanLeHangHoaDichVu;
 using Microsoft.EntityFrameworkCore;
 
 namespace C0304.Db.Models
@@ -48,6 +49,7 @@ namespace C0304.Db.Models
         public DbSet<M0304BCTTCapPhatThuocKS_KVirut> BCTTCapPhatThuocKS_KViruts { get; set; }
         public DbSet<M0304BaoCaoCongTacKeDon> BaoCaoCongTacKeDons { get; set; }
         public DbSet<M0304ToKhaiChiTietThuPhiLePhi> ToKhaiChiTietThuPhiLePhis { get; set; }
+        public DbSet<M0304BangKeBanLeHangHoaDichVu> BangKeBanLeHangHoaDichVus { get; set; }
 
 
 
@@ -74,6 +76,7 @@ namespace C0304.Db.Models
             modelBuilder.Entity<M0304BCTTCapPhatThuocKS_KVirut>().HasNoKey();
             modelBuilder.Entity<M0304BaoCaoCongTacKeDon>().HasNoKey();
             modelBuilder.Entity<M0304ToKhaiChiTietThuPhiLePhi>().HasNoKey();
+            modelBuilder.Entity<M0304BangKeBanLeHangHoaDichVu>().HasNoKey();
         }
     }
 }

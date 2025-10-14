@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - _0304Huy_Report</title>
     <!-- CSS Thư viện -->
-    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css")" />
     <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
     <link href="/dist/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
@@ -51,6 +50,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="C0304BCTTCapPhatThuocKS_KVirut" asp-action="Index">BCTT Cap Phat Thuoc</a>
                         </li> *@
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="C0304BangKeBanLeHangHoaDichVu" asp-action="Index">BK Ban Le Hang Hoa Dich Vu</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="C0304ToKhaiChiTietThuPhiLePhi" asp-action="Index">To Khai Chi Tiet</a>
                         </li>
                         <li class="nav-item">
@@ -59,7 +61,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="C0304BCHoaDonDienTuDV" asp-action="Index">BC Hoa Don Dien Tu DV</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="C0304CBaoCaoThuDichVu" asp-action="Index">Bao Cao Thu Dich Vu</a>
                         </li>
                         <li class="nav-item">
@@ -76,7 +78,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="C0304HBCTongSoSIDTheoKhoaPhong" asp-action="Index">Tong SID Theo Khoa Phong</a>
-                        </li>
+                        </li> *@
                     </ul>
                 </div>
             </div>

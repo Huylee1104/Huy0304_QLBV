@@ -308,7 +308,7 @@ $('#btnExportExcel').off('click').on('click', function (e) {
                 btn.prop('disabled', false);
             });
     } else {
-        doExportExcel(window.filteredData, btn, originalHtml);
+        doExportExcel(window.filteredData, btn, originalHtml); 
     }
 });
 
@@ -1073,112 +1073,143 @@ $.getJSON("dist/data/json/DM_HTTT.json", dataHTTT => {
     configCb(configs, listLoai);
 })();
 
-const selectorBatDauKetThuc = '#ngayTuNgay, #ngayDenNgay';
-
-$(selectorBatDauKetThuc).datetimepicker({
-    format: 'DD-MM-YYYY HH:mm:ss',
-    locale: 'vi',
-    useCurrent: false,
-    showTodayButton: true,
-    showClear: true,
-    showClose: true,
-    calendarWeeks: false,
-    tooltips: {
-        today: 'Chuyển đến hôm nay',
-        clear: 'Xóa lựa chọn',
-        close: 'Đóng',
-        selectMonth: 'Chọn tháng',
-        prevMonth: 'Tháng trước',
-        nextMonth: 'Tháng sau',
-        selectYear: 'Chọn năm',
-        prevYear: 'Năm trước',
-        nextYear: 'Năm sau',
-        selectTime: 'Chọn giờ'
-    },
-    icons: {
-        time: 'ti ti-clock',
-        date: 'ti ti-calendar-event',
-        up: 'ti ti-chevron-up',
-        down: 'ti ti-chevron-down',
-        previous: 'ti ti-chevron-left',
-        next: 'ti ti-chevron-right',
-        today: '',
-        clear: 'ti ti-trash',
-        close: 'ti ti-x'
-    }
+document.addEventListener("DOMContentLoaded", function () { 
+    configDateTimeDefault();
 })
-    .on('dp.show', function () {
-        const $widget = $('.bootstrap-datetimepicker-widget:last');
-        const $input = $(this);
-        const offset = $input.offset();
-        const inputHeight = $input.outerHeight();
-        const widgetHeight = $widget.outerHeight();
-        const widgetWidth = $widget.outerWidth();
-        const winWidth = $(window).width();
-        const winHeight = $(window).height();
-        const scrollTop = $(window).scrollTop();
 
-        $widget.css({
-            'transform': 'scale(0.85)',
-            'transform-origin': 'top center',
-        });
-
-        const scaledHeight = widgetHeight * 0.85;
-        const scaledWidth = widgetWidth * 0.85;
-
-        let left = offset.left + $input.outerWidth() + 10 - 180;
-        let top = offset.top + 40;
-
-        if (left + scaledWidth > winWidth - 10) {
-            left = offset.left - scaledWidth - 10;
+$(document).on(
+    "focus",
+    ".input-date-time-default",
+    function () {
+        if ($(this).val() != "") {
+            this.setSelectionRange(0, 2);
         }
-
-        if (top < scrollTop + 10) {
-            top = offset.top + inputHeight + 10;
+    }
+);
+$(document).on(
+    "click",
+    ".input-date-time-default",
+    function () {
+        var index = this.selectionStart;
+        if (index >= 0 && index <= 2) {
+            this.setSelectionRange(0, 2);
+        } else if (index >= 3 && index <= 5) {
+            this.setSelectionRange(3, 5);
+        } else if (index >= 3 && index <= 5) {
+            this.setSelectionRange(3, 5);
+        } else if (index >= 6 && index <= 10) {
+            this.setSelectionRange(6, 10);
+        } else if (index >= 11 && index <= 13) {
+            this.setSelectionRange(11, 13);
+        } else if (index >= 14 && index <= 16) {
+            this.setSelectionRange(14, 16);
         }
-
-        if (left < 10) left = 10;
-        if (left + scaledWidth > winWidth - 10) {
-            left = winWidth - scaledWidth - 10;
+    }
+);
+$(document).on(
+    "input",
+    ".input-date-time-default",
+    function () {
+        if (this.selectionStart == 2) {
+            this.setSelectionRange(3, 5);
         }
-        if (top < scrollTop + 10) top = scrollTop + 10;
-        if (top + scaledHeight > scrollTop + winHeight - 10) {
-            top = scrollTop + winHeight - scaledHeight - 10;
+        if (this.selectionStart == 5) {
+            this.setSelectionRange(6, 10);
         }
+        if (this.selectionStart == 10) {
+            this.setSelectionRange(11, 13);
+        }
+        if (this.selectionStart == 13) {
+            this.setSelectionRange(14, 16);
+        }
+    }
+);
+$(document).on(
+    "keydown",
+    ".input-date-time-default",
+    function (event) {
+        var input = this;
+        if (event.key === "ArrowLeft") {
+            var index = input.selectionStart;
+            if (index === 3) {
+                input.setSelectionRange(0, 2);
+                event.preventDefault();
+            } else if (index === 6) {
+                input.setSelectionRange(3, 5);
+                event.preventDefault();
+            } else if (index === 11) {
+                input.setSelectionRange(6, 10);
+                event.preventDefault();
+            } else if (index === 14) {
+                input.setSelectionRange(11, 13);
+                event.preventDefault();
+            }
+        }
+        if (event.key === "ArrowRight") {
+            var index = input.selectionEnd;
+            if (index === 2) {
+                input.setSelectionRange(3, 5);
+                event.preventDefault();
+            } else if (index === 5) {
+                input.setSelectionRange(6, 10);
+                event.preventDefault();
+            } else if (index === 10) {
+                input.setSelectionRange(11, 13);
+                event.preventDefault();
+            } else if (index === 13) {
+                input.setSelectionRange(14, 16);
+                event.preventDefault();
+            }
+        }
+    }
+);
 
-        $widget.appendTo('body').css({
-            position: 'absolute',
-            top: top,
-            left: left,
-            zIndex: 999999
-        }).addClass('active-popup');
-    })
-    .on('dp.hide', function () {
-        $('.bootstrap-datetimepicker-widget')
-            .removeClass('active-popup')
-            .css('transform', '');
+function configDateTimeDefault() {
+    const now = moment();
+    const startOfToday = moment().startOf('day');
+    const displayFormat = 'DD-MM-YYYY HH:mm';
+
+    $('#ngayTuNgay').val(startOfToday.format(displayFormat));
+    $('#ngayDenNgay').val(now.format(displayFormat));
+
+    $('#ngayTuNgay').datetimepicker({
+        locale: "vi",
+        useStrict: true,
+        defaultDate: startOfToday,
+        format: displayFormat,
+        extraFormats: ["DD-MM-YYYY HH:mm", "DD/MM/YYYY HH:mm"],
+        icons: {
+            date: "ti ti-calendar",
+            up: "ti ti-chevron-up",
+            down: "ti ti-chevron-down",
+            previous: "ti ti-chevron-left",
+            next: "ti ti-chevron-right",
+            time: "ti ti-alarm",
+            close: 'ti ti-x'
+        },
+        keyBinds: { left: null, right: null },
+        sideBySide: true,
+        showClose: true
     });
-    Inputmask({
-        alias: "datetime",
-        inputFormat: "dd-mm-yyyy HH:MM:ss",
-        placeholder: "dd-mm-yyyy hh:mm:ss",
-        clearIncomplete: true,
-        showMaskOnHover: false,
-        showMaskOnFocus: true
-    }).mask(selectorBatDauKetThuc);
 
-    const style = document.createElement('style');
-    style.textContent = `
-                #ngayTuNgay,
-                #ngayDenNgay{
-                    background-color: #f8f9fa;
-                    border: 1px solid #ced4da;
-                }
+    $('#ngayDenNgay').datetimepicker({
+        locale: "vi",
+        useStrict: true,
+        defaultDate: now,
+        format: displayFormat,
+        extraFormats: ["DD-MM-YYYY HH:mm", "DD/MM/YYYY HH:mm"],
+        icons: {
+            date: "ti ti-calendar",
+            up: "ti ti-chevron-up",
+            down: "ti ti-chevron-down",
+            previous: "ti ti-chevron-left",
+            next: "ti ti-chevron-right",
+            time: "ti ti-alarm",
+            close: 'ti ti-x'
+        },
+        keyBinds: { left: null, right: null },
+        sideBySide: true,
+        showClose: true
+    });
+}
 
-                .bootstrap-datetimepicker-widget {
-                    border: 1px solid #ccc;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                }
-            `;
-document.head.appendChild(style);

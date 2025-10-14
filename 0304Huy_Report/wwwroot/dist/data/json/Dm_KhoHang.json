@@ -39,5 +39,12 @@
     "ten": "Kho VTYT",
     "viettat": "KV",
     "active": true
+  },
+  {
+    "id": 14,
+    "ma": "Kho số 3",
+    "ten": "Kho nhà thuốc số 3",
+    "viettat": "KNTS3",
+    "active": true
   }
 ]

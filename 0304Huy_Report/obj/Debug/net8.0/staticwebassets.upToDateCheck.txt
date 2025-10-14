@@ -42,6 +42,7 @@ wwwroot\dist\data\json\HH_DM_HangHoa.json
 wwwroot\dist\img\logo.png
 wwwroot\dist\js\BienChung.js
 wwwroot\dist\js\J0304Util\J0302DateFormatUtil.js
+wwwroot\dist\js\J0304\J0304BangKeThu.js
 wwwroot\dist\js\J0304\J0304BaoCaoCongTacKeDon.js
 wwwroot\dist\js\J0304\J0304BaoCaoSoLuongNhapXuat.js
 wwwroot\dist\js\J0304\J0304BaoCaoThuDichVu.js
@@ -4809,4 +4810,4 @@ wwwroot\dist\lib\bootstrap-icons\icons\youtube.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-in.svg
 wwwroot\dist\lib\bootstrap-icons\icons\zoom-out.svg
 wwwroot\favicon.ico
-wwwroot\dist\js\J0304\J0304BangKeThu.js
+wwwroot\dist\js\J0304\J0304BangKeBanLeHangHoaDichVu.js

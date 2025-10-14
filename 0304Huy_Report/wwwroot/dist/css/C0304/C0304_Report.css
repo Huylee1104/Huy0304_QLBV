@@ -146,7 +146,7 @@ label {
     font-size: 0.8rem;
 }
 
-.datepicker {
+/*.datepicker {
     font-size: 0.9rem;
     transform: scale(1.2);
     transform-origin: top left;
@@ -157,7 +157,7 @@ label {
     z-index: 99999 !important;
     background: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+}*/
 
 input {
     font-size: 1rem !important;
