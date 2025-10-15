@@ -62,7 +62,9 @@ namespace C0304BCHoaDonDienTuDV.Controllers
                     totalRecords = result.BCHoaDonDienTuDV.TotalRecords,
                     totalPages = result.BCHoaDonDienTuDV.TotalPages,
                     currentPage = result.BCHoaDonDienTuDV.CurrentPage,
-                    doanhNghiep = result.DoanhNghiep
+                    doanhNghiep = result.DoanhNghiep,
+                    tongGiaTri = result.TongGiaTri,
+                    tongGiaTriHDDT = result.TongGiaTriHDDT,
                 });
             }
             catch (Exception ex)

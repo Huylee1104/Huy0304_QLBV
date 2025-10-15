@@ -53,7 +53,9 @@ namespace S0304BBCHoaDonDienTuDV.Services
                         TotalPages = 0,
                         CurrentPage = page
                     },
-                    DoanhNghiep = null        // không có thông tin doanh nghiệp
+                    DoanhNghiep = null,
+                    TongGiaTri = 0,
+                    TongGiaTriHDDT = 0
                 };
             }
             var allData = await _context.M0304BBCHoaDonDienTuDVs
@@ -71,7 +73,8 @@ namespace S0304BBCHoaDonDienTuDV.Services
             string message = pagedData.Any()
                 ? $"Tìm thấy {totalRecords} kết quả từ {ngayBatDau} đến {ngayKetThuc}."
                 : $"Không tìm thấy kết quả nào từ {ngayBatDau} đến {ngayKetThuc}.";
-
+            var tongGiaTri = allData.Sum(x => x.GiaTri);
+            var tongGiaTriHDDT = allData.Sum(x => x.GiaTriHDDT);
             var sessionData = new
             {
                 Data = allData,
@@ -91,7 +94,9 @@ namespace S0304BBCHoaDonDienTuDV.Services
                     TotalPages = totalPages,
                     CurrentPage = page
                 },
-                DoanhNghiep = doanhNghiep
+                DoanhNghiep = doanhNghiep,
+                TongGiaTri = tongGiaTri,
+                TongGiaTriHDDT = tongGiaTriHDDT
             };
         }
         private M0304ThongTinDoanhNghiep GetDoanhNghiepFromRequestOrSession(ExportRequest request, ISession session)

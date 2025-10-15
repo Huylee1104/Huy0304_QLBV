@@ -20,28 +20,27 @@
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 65px;
+        min-width: 65px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(3) {
+    .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
         left: 65px; /* bằng đúng width cột 1 */
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        min-width: 135px;
+        min-width: 100px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(6) {
+    .table-wrapper-scroll thead th:nth-child(3) {
         position: sticky;
         top: 0;
-        left: 200px; /* bằng đúng width cột 1 */
+        left: 165px; /* bằng đúng width cột 1 */
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
     }
-
     /* Body - Cố định 2 cột (trừ dòng tổng) */
     .table-wrapper-scroll tbody tr td:nth-child(1) {
         position: sticky;
@@ -49,21 +48,21 @@
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 65px;
+        min-width: 65px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
+    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
         position: sticky;
         left: 65px; /* bằng đúng width cột 1 */
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        min-width: 135px;
+        min-width: 100px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(6):not(.khongapdung) {
+    .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
         position: sticky;
-        left: 200px; /* bằng đúng width cột 1 */
+        left: 165px; /* bằng đúng width cột 1 */
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
@@ -100,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="select-row" id="selectContainer"
+                <div class ="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -134,7 +133,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon2">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -142,7 +141,13 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-                    <label style="padding:0; margin: 5px 0px;">
+
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
+                        <label for="khoa" class="form-label">Khoa</label>
+                        <select class="form-select tomselect-khoa" name="tenKhoa"></select>
+                    </div>
+
+                    <label style="padding:0; margin:0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
                         </button>
@@ -150,10 +155,6 @@
 
                 </div>
                 <div style="padding:0; margin: 5px;" class="row export-buttons">
-                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
-                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
-                    </button>
-
                     <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
                         <i class="bi bi-file-earmark-excel"></i> Xuất Excel
                     </button>
@@ -170,21 +171,31 @@
                 </div>
 
                 <div class="table-wrapper-scroll">
-                    <table style="margin: auto;" cellpadding="8">
+                    <table style="margin: auto; table-layout: fixed;" cellpadding="8">
                         <thead>
                             <tr>
-                                <th class="text-center" style="min-width: 65px;">STT</th>
-                                <th class="text-center text-nowrap">Số chứng từ</th>
-                                <th class="text-center" style="min-width: 135px;">Ngày thu</th>
-                                <th class="text-center text-nowrap">Giá trị</th>
-                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
+                                <th class="text-center text-nowrap">STT</th>
+                                <th class="text-center text-nowrap">Số phiếu</th>
+                                <th class="text-center text-nowrap">Thiết bị</th>
+                                <th class="text-center text-nowrap">Mã y tế</th>
+                                <th class="text-center text-nowrap">Mã đợt</th>
                                 <th class="text-center text-nowrap">Tên bệnh nhân</th>
                                 <th class="text-center text-nowrap">Năm sinh</th>
+                                <th class="text-center text-nowrap">Giới tính</th>
                                 <th class="text-center text-nowrap">Địa chỉ</th>
-                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
-                                <th class="text-center text-nowrap">E_Invoice No</th>
-                                <th class="text-center text-nowrap">Giá trị HDDT</th>
-                                <th class="text-center text-nowrap">Mã tra cứu</th>
+                                <th class="text-center text-nowrap">Tên dịch vụ</th>
+                                <th class="text-center text-nowrap">Đối tượng</th>
+                                <th class="text-center text-nowrap">Phương pháp vô cảm</th>
+                                <th class="text-center text-nowrap">Loại thủ thuật</th>
+                                <th class="text-center text-nowrap">Bác sĩ thực hiện</th>
+                                <th class="text-center text-nowrap">ĐD/KTV</th>
+                                <th class="text-center text-nowrap">Ngày chỉ định</th>
+                                <th class="text-center text-nowrap">Ngày thực hiện</th>
+                                <th class="text-center text-nowrap">Nơi yêu cầu</th>
+                                <th class="text-center text-nowrap">Bác sĩ chỉ định</th>
+                                <th class="text-center text-nowrap">Nơi thực hiện</th>
+                                <th class="text-center text-nowrap">Loại giá</th>
+                                <th class="text-center text-nowrap">Mã hóa đơn</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -213,8 +224,8 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304/J0304BCHoaDonDienTuDV.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304/J0304BaoCaoSoLieuThuThuat.js")" defer asp-append-version="true"></script>
     <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
     }

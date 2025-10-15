@@ -91,17 +91,17 @@ namespace P0304.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
-                            columns.ConstantColumn(55);
                             columns.ConstantColumn(60);
-                            columns.ConstantColumn(65);
-                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(55);
+                            columns.ConstantColumn(52);
                             columns.RelativeColumn(1);
                             columns.ConstantColumn(30);
                             columns.RelativeColumn(2);
                             columns.ConstantColumn(60);
                             columns.ConstantColumn(45);
                             columns.ConstantColumn(65);
-                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(55);
                         });
 
                         table.Header(header =>
@@ -168,7 +168,7 @@ namespace P0304.PDFDocument
                                     columns.ConstantColumn(55);
                                     columns.ConstantColumn(60);
                                     columns.ConstantColumn(65);
-                                    columns.ConstantColumn(45);
+                                    columns.ConstantColumn(52);
                                     columns.RelativeColumn(1);
                                     columns.ConstantColumn(30);
                                     columns.RelativeColumn(2);
@@ -183,9 +183,9 @@ namespace P0304.PDFDocument
                                     cell.Row(row =>
                                     {
                                         CellTong(row.ConstantItem(30)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
                                         CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
+                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(55)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
                                         CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                                         CellTong(row.RelativeItem(1)).AlignCenter().Text("");
                                         CellTong(row.ConstantItem(30)).AlignCenter().Text("");
@@ -193,7 +193,7 @@ namespace P0304.PDFDocument
                                         CellTong(row.ConstantItem(60)).AlignCenter().Text("");
                                         CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                                         CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
-                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
                                     });
                                 });
                             });

@@ -397,25 +397,35 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
-        let tongGiaTri = 0;
-        let tongGiaTriHDDT = 0;
         data.forEach((item, index) => {
-            tongGiaTri += Number(item.giaTri || item.GiaTri || 0);
-            tongGiaTriHDDT += Number(item.giaTriHDDT || item.GiaTriHDDT || 0);
             const stt = (currentPage - 1) * pageSize + index + 1;
             const row = `
                 <tr>
-                    <td class="text-center text-nowrap">${stt}</td>
+                    <td class="text-center" style="width: 65px;">${stt}</td>
                     <td class="text-start text-nowrap">${item.soChungTu || item.SoChungTu || ''}</td>
-                    <td class="text-center text-nowrap">${formatDate(item.ngayThu || item.NgayThu)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(item.giaTri || item.GiaTri || '')}</td>
+                    <td class="text-center" style="width: 135px;">${formatDate(item.ngayThu || item.NgayThu)}</td>
+                    <td class="text-end text-nowrap">
+                        ${(() => {
+                        const val = item.giaTri || item.GiaTri || 0;
+                        return val < 0
+                            ? '(' + formatCurrency(Math.abs(val)) + ')'
+                            : formatCurrency(val);
+                                })()}
+                            </td>
                     <td class="text-start text-nowrap">${item.maBenhNhan || item.MaBenhNhan || ''}</td>
                     <td class="text-start text-nowrap">${item.tenBenhNhan || item.TenBenhNhan || ''}</td>
                     <td class="text-center text-nowrap">${item.namSinh || item.NamSinh || ''}</td>
                     <td class="text-start" style ="min-width: 500px; max-width: 500px;">${item.diaChi || item.DiaChi || ''}</td>
                     <td class="text-center text-nowrap">${formatDate(item.ngayTaoHDDT || item.NgayTaoHDDT)}</td>
                     <td class="text-start text-nowrap">${item.e_InvoiceNo || item.E_InvoiceNo || ''}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(item.giaTriHDDT || item.GiaTriHDDT)}</td>
+                    <td class="text-end text-nowrap">
+                          ${(() => {
+                            const val = item.giaTriHDDT || item.GiaTriHDDT || 0;
+                            return val < 0
+                                ? '(' + formatCurrency(Math.abs(val)) + ')'
+                                : formatCurrency(val);
+                            })()}
+                                </td>
                     <td class="text-start text-nowrap">${item.maTraCuu || item.MaTraCuu || ''}</td>
                 </tr>
             `;
@@ -423,13 +433,27 @@ function updateTable(response) {
         });
         const totalRow = `
                 <tr class="fw-bold">
-                    <td colspan="2" class="text-end text-nowrap">Tổng cộng</td>
-                    <td class="text-center text-nowrap">${formatCurrency(tongGiaTri)}</td>
+                    <td colspan="3" class="text-end text-nowrap">Tổng cộng</td>
+                    <td class="text-end text-nowrap">
+                          ${(() => {
+                                const val = response.tongGiaTri || response.TongGiaTri || 0;
+                                return val < 0
+                                    ? '(' + formatCurrency(Math.abs(val)) + ')'
+                                    : formatCurrency(val);
+                            })()}
+                    </td>
                     <td colspan = "6" class="text-center text-nowrap khongapdung"></td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongGiaTriHDDT)}</td>
-                    <td class="text-center text-nowrap">${''}</td>
+                    <td class="text-end text-nowrap">
+                          ${(() => {
+                                const val = response.tongGiaTriHDDT || response.TongGiaTriHDDT || 0;
+                                return val < 0
+                                    ? '(' + formatCurrency(Math.abs(val)) + ')'
+                                    : formatCurrency(val);
+                            })()}
+                    </td>
+                    <td colspan = "2" class="text-center text-nowrap">${''}</td>
                 </tr>
-            `;
+            `; 
         tbody.append(totalRow);
     } else {
         tbody.append('<tr><td colspan="12" class="text-center">Không có dữ liệu</td></tr>');

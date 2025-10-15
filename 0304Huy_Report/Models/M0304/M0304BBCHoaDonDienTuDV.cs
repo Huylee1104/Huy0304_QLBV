@@ -32,8 +32,10 @@ namespace M0304B.Models.BCHoaDonDienTuDV
 
     public class M0304BBCHoaDonDienTuDVResponse
     {
-        public M0304BPagedResult<M0304BBCHoaDonDienTuDV> BCHoaDonDienTuDV { get; set; }   // danh sách bảng kê thu phân trang
-        public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }    // thông tin doanh nghiệp
+        public M0304BPagedResult<M0304BBCHoaDonDienTuDV> BCHoaDonDienTuDV { get; set; }
+        public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
+        public decimal? TongGiaTri { get; set; } 
+        public decimal? TongGiaTriHDDT { get; set; } 
     }
 
     public class ExportRequest

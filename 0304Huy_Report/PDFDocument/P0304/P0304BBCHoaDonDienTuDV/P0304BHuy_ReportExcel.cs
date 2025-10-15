@@ -120,7 +120,7 @@ public class P0304BExcelReportTemplate
                 SetMiddle(ws.Cell(currentRow, col++), item.SoChungTu ?? "");
                 SetDateCell(ws.Cell(currentRow, col++), item.NgayThu);
                 SetNumberCell(ws.Cell(currentRow, col++), item.GiaTri);
-                SetMiddle(ws.Cell(currentRow, col++), item.MaBenhNhan ?? "");
+                SetMiddleCenter(ws.Cell(currentRow, col++), item.MaBenhNhan ?? "");
                 SetMiddle(ws.Cell(currentRow, col++), item.TenBenhNhan ?? "");
                 SetCenterCell(ws.Cell(currentRow, col++), item.NamSinh?.ToString() ?? "");
 
@@ -240,6 +240,12 @@ public class P0304BExcelReportTemplate
             {
                 cell.Value = value ?? "";
                 cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            }
+            void SetMiddleCenter(IXLCell cell, string? value)
+            {
+                cell.Value = value ?? "";
+                cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             }
         }
     }
