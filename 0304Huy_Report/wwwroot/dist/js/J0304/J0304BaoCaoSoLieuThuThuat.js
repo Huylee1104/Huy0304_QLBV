@@ -73,7 +73,7 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
-    let idKhoa = $('.tomselect-khoHang').val();
+    let idKhoa = $('.tomselect-khoa').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -99,7 +99,7 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
-        idKhoa: idKhoa,
+        idKhoa: idKhoa || 0,
         page: currentPage,
         pageSize: pageSize
     }
@@ -176,7 +176,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoa) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
-                    idKhoa: idKhoa,
+                    idKhoa: idKhoa || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -200,7 +200,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoa) {
 function validateExportDatesAndData() {
     const tuNgay = $('#ngayTuNgay').val();
     const denNgay = $('#ngayDenNgay').val();
-    const idKhoa = $('.tomselect-khoHang').val();
+    const idKhoa = $('.tomselect-khoa').val() || 0;
 
     if (!tuNgay && !denNgay ) {
         if (!window.filteredData || window.filteredData.length === 0) {
@@ -239,7 +239,7 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idKhoa: $('.tomselect-khoHang').val(),
+        idKhoa: $('.tomselect-khoa').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -287,7 +287,7 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idKhoa = $('.tomselect-khoHang').val();
+    const idKhoa = $('.tomselect-khoa').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
         fetchAllFilteredData(tu, den, idKhoa)
@@ -345,75 +345,38 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
-        // Gom nhóm theo công ty
-        const groupedData = {};
-        data.forEach(item => {
-            const congTy = item.congTy || item.CongTy || "Không rõ";
-            if (!groupedData[congTy]) {
-                groupedData[congTy] = [];
-            }
-            groupedData[congTy].push(item);
-        });
-
-        Object.keys(groupedData).forEach(congTy => {
-            // Header công ty
-            const companyRow = `
-            <tr class="fw-bold">
-                <td colspan="15" class="text-center tong-col">${congTy}</td>
-            </tr>`;
-            tbody.append(companyRow);
-
-            // Reset tổng cho công ty này
-            let tongDongGoi = 0;
-            let tongLe = 0;
-            let tongDonGiaDongGoi = 0;
-            let tongDonGiaLe = 0;
-            let tongThanhTien = 0;
-
-            groupedData[congTy].forEach((item, index) => {
-                tongDongGoi += Number(item.slDongGoi || item.SLDongGoi || 0);
-                tongLe += Number(item.slLe || item.SLLe || 0);
-                tongDonGiaDongGoi += Number(item.donGiaDongGoi || item.DonGiaDongGoi || 0);
-                tongDonGiaLe += Number(item.donGiaLe || item.DonGiaLe || 0);
-                tongThanhTien += Number(item.thanhTien || item.ThanhTien || 0);
-                const stt = (currentPage - 1) * pageSize + index + 1;
-
-                const row = `
+        data.forEach((item, index) => {
+            const stt = (currentPage - 1) * pageSize + index + 1;
+            const row = `
                 <tr>
-                    <td class="text-nowrap text-center">${stt}</td>
-                    <td class="text-nowrap text-center">${formatDate(item.ngayHoaDon || item.NgayHoaDon) || ''}</td>
-                    <td class="text-nowrap text-start">${item.soHoaDon || item.SoHoaDon || ''}</td>
-                    <td class="text-nowrap text-center">${formatDate(item.ngayTra || item.NgayTra)}</td>
-                    <td class="text-nowrap text-start">${item.phieuTra || item.PhieuTra || 'Không rõ'}</td>
-                    <td class="text-nowrap text-start">${item.congTy || item.CongTy || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${item.maID || item.MaID || 'Không rõ'}</td>
-                    <td class="text-start" style="min-width: 450px; max-width: 500px;">${item.tenThuoc || item.TenThuoc || 'Không rõ'}</td>
-                    <td class="text-nowrap text-start">${item.quyCach || item.QuyCach || 'Không rõ'}</td>
-                    <td class="text-nowrap text-center">${item.soLo || item.SoLo || 'Không rõ'}</td>
-                    <td class="text-nowrap text-end">${item.slDongGoi || item.SLDongGoi}</td>
-                    <td class="text-nowrap text-end">${item.slLe || item.SLLe}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.donGiaDongGoi || item.DonGiaDongGoi) || 0}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.donGiaLe || item.DonGiaLe) || 0}</td>
-                    <td class="text-nowrap text-end">${formatCurrency(item.thanhTien || item.ThanhTien) || 0}</td>
-                </tr>`;
-                tbody.append(row);
-            });
-
-            // Tổng riêng cho công ty
-            const totalRow = `
-            <tr class="fw-bold table-secondary">
-                <td colspan="3" class="text-end text-nowrap">Tổng cộng: </td>
-                <td colspan="7" class="text-end text-nowrap khongapdung"></td>
-                <td class="text-end text-nowrap khongapdung">${tongDongGoi}</td>
-                <td class="text-end text-nowrap">${tongLe}</td>
-                <td class="text-end text-nowrap">${formatCurrency(tongDonGiaDongGoi)}</td>
-                <td class="text-end text-nowrap">${formatCurrency(tongDonGiaLe)}</td>
-                <td class="text-end text-nowrap">${formatCurrency(tongThanhTien)}</td>
-            </tr>`;
-            tbody.append(totalRow);
+                    <td class = "text-center text-nowrap" >${stt}</td>                    
+                    <td class = "text-center text-nowrap" >${item.maYTe || item.MaYTe || ''}</td>                                      
+                    <td title = "${item.thietBi}" class = "text-start text-truncate" style = "max-width: 150px;">${item.thietBi || ''}</td>                                                                                                           
+                    <td class = "text-center text-nowrap" >${item.maYTe || ''}</td>                                                                                                           
+                    <td class = "text-center text-nowrap" >${item.maDot || ''}</td>                                                                                                           
+                    <td class = "text-start text-nowrap" >${item.tenBenhNhan || ''}</td>                                                                                                           
+                    <td class = "text-center text-nowrap" >${item.namSinh || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.gioiTinh || ''}</td>
+                    <td title = "${item.diaChi}" class = "text-start text-truncate" style = "max-width: 150px;">${item.diaChi || ''}</td>
+                    <td title = "${item.tenDichVu}" class = "text-start text-truncate" style = "max-width: 150px;">${item.tenDichVu || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.doiTuong || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.phuongPhapVoCam || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.loaiThuThuat || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.bacSiThucHien || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.dieuDuong || ''}</td>
+                    <td class = "text-center text-nowrap" >${formatDate(item.ngayChiDinh || '')}</td>
+                    <td class = "text-center text-nowrap" >${formatDate(item.ngayThucHien || '')}</td>
+                    <td class = "text-start text-nowrap" >${item.noiYeuCau || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.bacSiChiDinh || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.noiThucHien || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.loaiGia || ''}</td>
+                    <td class = "text-start text-nowrap" >${item.maHoaDon || ''}</td>
+                </tr>
+            `;
+            tbody.append(row);
         });
     } else {
-        tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="22" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 

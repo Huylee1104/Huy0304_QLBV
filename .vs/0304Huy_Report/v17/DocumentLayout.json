@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Code\\Huy0304_QLBV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304\\p0304baocaosolieuthuthuat\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304\\p0304baocaosolieuthuthuat\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\pdfdocument\\p0304\\p0304bangkebanlehanghoadichvu\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\pdfdocument\\p0304\\p0304bangkebanlehanghoadichvu\\p0304huy_reportexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\views\\v0304\\v0304baocaosolieuthuthuat\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\views\\v0304\\v0304baocaosolieuthuthuat\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\wwwroot\\dist\\js\\j0304\\j0304bangkebanlehanghoadichvu.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\wwwroot\\dist\\js\\j0304\\j0304bangkebanlehanghoadichvu.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|d:\\code\\huy0304_qlbv\\0304huy_report\\controllers\\c0304\\c0304baocaosolieuthuthuat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344E4B70-F19D-4B78-8DD8-005C95D764EE}|0304Huy_Report\\0304Huy_Report.csproj|solutionrelative:0304huy_report\\controllers\\c0304\\c0304baocaosolieuthuthuat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "0304Huy_Report\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAkwGwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-14T02:00:43.06Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "P0304Huy_ReportExcel.cs",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304\\P0304BangKeBanLeHangHoaDichVu\\P0304Huy_ReportExcel.cs",
-              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304\\P0304BangKeBanLeHangHoaDichVu\\P0304Huy_ReportExcel.cs",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304\\P0304BangKeBanLeHangHoaDichVu\\P0304Huy_ReportExcel.cs",
-              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304\\P0304BangKeBanLeHangHoaDichVu\\P0304Huy_ReportExcel.cs",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAAAJwAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T01:35:54.516Z",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Views\\V0304\\V0304BaoCaoSoLieuThuThuat\\Index.cshtml",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Views\\V0304\\V0304BaoCaoSoLieuThuThuat\\Index.cshtml",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Views\\V0304\\V0304BaoCaoSoLieuThuThuat\\Index.cshtml",
+              "RelativeToolTip": "0304Huy_Report\\Views\\V0304\\V0304BaoCaoSoLieuThuThuat\\Index.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAACYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-16T09:47:37.702Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "J0304BangKeBanLeHangHoaDichVu.js",
-              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304\\J0304BangKeBanLeHangHoaDichVu.js",
-              "RelativeDocumentMoniker": "0304Huy_Report\\wwwroot\\dist\\js\\J0304\\J0304BangKeBanLeHangHoaDichVu.js",
-              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\wwwroot\\dist\\js\\J0304\\J0304BangKeBanLeHangHoaDichVu.js",
-              "RelativeToolTip": "0304Huy_Report\\wwwroot\\dist\\js\\J0304\\J0304BangKeBanLeHangHoaDichVu.js",
-              "ViewState": "AgIAAKsBAAAAAAAAAAAAAK0BAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-14T01:34:19.542Z"
+              "Title": "C0304BaoCaoSoLieuThuThuat.cs",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Controllers\\C0304\\C0304BaoCaoSoLieuThuThuat.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\Controllers\\C0304\\C0304BaoCaoSoLieuThuThuat.cs",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\Controllers\\C0304\\C0304BaoCaoSoLieuThuThuat.cs",
+              "RelativeToolTip": "0304Huy_Report\\Controllers\\C0304\\C0304BaoCaoSoLieuThuThuat.cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAAAANIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T09:34:48.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "P0304Huy_ReportExcel.cs",
+              "DocumentMoniker": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304\\P0304BaoCaoSoLieuThuThuat\\P0304Huy_ReportExcel.cs",
+              "RelativeDocumentMoniker": "0304Huy_Report\\PDFDocument\\P0304\\P0304BaoCaoSoLieuThuThuat\\P0304Huy_ReportExcel.cs",
+              "ToolTip": "D:\\Code\\Huy0304_QLBV\\0304Huy_Report\\PDFDocument\\P0304\\P0304BaoCaoSoLieuThuThuat\\P0304Huy_ReportExcel.cs",
+              "RelativeToolTip": "0304Huy_Report\\PDFDocument\\P0304\\P0304BaoCaoSoLieuThuThuat\\P0304Huy_ReportExcel.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAAAHQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T09:35:07.392Z",
+              "EditorCaption": ""
             }
           ]
         }

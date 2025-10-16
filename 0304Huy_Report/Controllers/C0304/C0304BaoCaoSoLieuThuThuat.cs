@@ -131,7 +131,7 @@ namespace C0304BaoCaoSoLieuThuThuat.Controllers
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
-                    new SqlParameter("@IDKho", idKhoa))
+                    new SqlParameter("@IDKhoa", idKhoa))
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -201,7 +201,7 @@ namespace C0304BaoCaoSoLieuThuThuat.Controllers
         private async Task<byte[]> ExportBaoCaoSoLieuThuThuatExcelAsync(ExportRequest request, ISession session)
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
-            var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
+            var logoPath = "";
 
             var data = request.Data ?? new List<M0304BaoCaoSoLieuThuThuat>();
             var document = new P0304BaoCaoSoLieuThuThuatExcelReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);

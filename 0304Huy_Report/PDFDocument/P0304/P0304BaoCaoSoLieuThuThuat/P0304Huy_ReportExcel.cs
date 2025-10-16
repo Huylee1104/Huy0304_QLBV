@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using H0304.NumberToText.Helpers;
 using M0304.Models.BaoCaoSoLieuThuThuat;
 using M0304.Models.ThongTinDoanhNghiep;
@@ -47,26 +48,38 @@ public class P0304BaoCaoSoLieuThuThuatExcelReportTemplate
                 ws.Row(1).AdjustToContents();
             }
 
-            ws.Range(1, 3, 1, 20).Merge();
-            ws.Cell(1, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
-            ws.Cell(1, 3).Style.Font.FontSize = 9;
-            ws.Cell(1, 3).Style.Font.Bold = true;
+            ws.Range(1, 2, 1, 23).Merge();
+            ws.Cell(1, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
+            ws.Cell(1, 2).Style.Font.FontSize = 9;
+            ws.Cell(1, 2).Style.Font.Bold = true;
 
-            ws.Range(2, 3, 2, 20).Merge();
-            ws.Cell(2, 3).Value = _dataDN.TenCSKCB ?? "";
-            ws.Cell(2, 3).Style.Font.FontSize = 9;
-            ws.Cell(2, 3).Style.Font.Bold = true;
+            ws.Range(2, 2, 2, 23).Merge();
+            ws.Cell(2, 2).Value = _dataDN.TenCSKCB ?? "";
+            ws.Cell(2, 2).Style.Font.FontSize = 9;
+            ws.Cell(2, 2).Style.Font.Bold = true;
+
+            var dsKhoa = _data.Where(d => !string.IsNullOrWhiteSpace(d.TenKhoa))
+                  .Select(d => d.TenKhoa)
+                  .Distinct()
+                  .ToList();
+
+            string tenKhoa = dsKhoa.Count == 0 ? "" : dsKhoa.Count == 1 ? dsKhoa.First() : "Tất cả khoa";
+
+            ws.Range(3, 2, 3, 23).Merge();
+            ws.Cell(3, 2).Value = tenKhoa;
+            ws.Cell(3, 2).Style.Font.FontSize = 9;
+            ws.Cell(3, 2).Style.Font.Bold = true;
 
             currentRow += 4;
 
-            ws.Range(currentRow, 2, currentRow, 20).Merge();
-            ws.Cell(currentRow, 2).Value = "BÁO CÁO CÔNG TÁC KÊ ĐƠN";
+            ws.Range(currentRow, 2, currentRow, 15).Merge();
+            ws.Cell(currentRow, 2).Value = "BÁO CÁO SỐ LIỆU THỦ THUẬT";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             currentRow++;
 
-            ws.Range(currentRow, 2, currentRow, 20).Merge();
+            ws.Range(currentRow, 2, currentRow, 15).Merge();
             DateTime dtStart, dtEnd;
             if (DateTime.TryParse(_ngayBatDau, out dtStart) && DateTime.TryParse(_ngayKetThuc, out dtEnd))
             {
@@ -78,19 +91,26 @@ public class P0304BaoCaoSoLieuThuThuatExcelReportTemplate
             }
             ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
             ws.Cell(currentRow, 2).Style.Font.Italic = true;
-            ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             currentRow++;
 
             string[] headers = new string[]
             {
-            "Mã y tế", "Tên bệnh nhân", "Năm sinh", "Giới tính", "Đối tương", "Số lưu trữ", "Số bệnh án", "Khoa điều trị",
-            "Ngày khám", "Tên phòng khám", "Bác sĩ kê toa", "Tên dược đầy đủ", "Tên hoạt chất", "Số ngày", "Số lượng", "Số lượng phát",
-            "Đơn giá", "Chuẩn đoán", "Mục đích xuất"
+            "STT", "Số phiếu", "Thiết bị", "Mã Y Tế", "Mã đợt", "Tên bệnh nhân", "Năm sinh", "Giới tính",
+            "Địa chỉ", "Tên dịch vụ", "Đối tượng", "Phương pháp vô cảm", "Loại thủ thuật", "Bác sĩ thực hiện",
+            "ĐD/KTV", "Ngày chỉ định", "Ngày thực hiện", "Nơi yêu cầu", "BS chỉ định", "Nợi thực hiện", "Loại giá", "Mã hóa đơn"
             };
             for (int i = 0; i < headers.Length; i++)
             {
                 ws.Cell(currentRow, i + 2).Value = headers[i];
+                ws.Cell(currentRow, i + 2).Style.Font.Bold = true;
+                ws.Cell(currentRow, i + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell(currentRow, i + 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            }
+            currentRow++;
+            for (int i = 0; i < headers.Length; i++)
+            {
+                ws.Cell(currentRow, i + 2).Value = i + 1;
                 ws.Cell(currentRow, i + 2).Style.Font.Bold = true;
                 ws.Cell(currentRow, i + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(currentRow, i + 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
@@ -100,90 +120,114 @@ public class P0304BaoCaoSoLieuThuThuatExcelReportTemplate
 
             currentRow++;
 
-            //foreach (var item in _data)
-            //{
-            //    int col = 2;
-            //    SetMiddle(ws.Cell(currentRow, col++), item.MaYTe ?? "");
-            //    ws.Cell(currentRow, col++).Value = item.TenBenhNhan ?? "";
-            //    SetMiddle(ws.Cell(currentRow, col++), item.NamSinh.ToString() ?? "");
-            //    ws.Cell(currentRow, col++).Value = item.GioiTinh?? "";
-            //    ws.Cell(currentRow, col++).Value = item.DoiTuong?? "";
-            //    ws.Cell(currentRow, col++).Value = item.SoLuuTru?? "";
-            //    ws.Cell(currentRow, col++).Value = item.SoBenhAn?? "";
-            //    ws.Cell(currentRow, col++).Value = item.KhoaDieuTri?? "";
-            //    SetMiddle(ws.Cell(currentRow, col++), item.NgayKham ?? "");
-            //    ws.Cell(currentRow, col++).Value = item.TenPhongKham ?? "";
-            //    ws.Cell(currentRow, col++).Value = item.BacSiKeToa ?? "";
-            //    ws.Cell(currentRow, col++).Value = item.TenThuoc ?? "";
+            foreach (var item in _data)
+            {
+                int col = 2;
+                ws.Cell(currentRow, col++).Value= stt++;
+                ws.Cell(currentRow, col++).Value = item.SoPhieu ?? "";
+                var thietBi = item.ThietBi ?? "";
+                var maxLength = 50;
+                var sb = new StringBuilder();
+                var lastBreak = 0;
 
-            //    var hoatChat = item.TenHoatChat ?? "";
-            //    int maxLength = 60;
-            //    var sb = new StringBuilder();
-            //    int lastBreak = 0;
+                while (lastBreak < thietBi.Length)
+                {
+                    if (lastBreak + maxLength >= thietBi.Length)
+                    {
+                        sb.Append(thietBi.Substring(lastBreak));
+                        break;
+                    }
 
-            //    while (lastBreak < hoatChat.Length)
-            //    {
-            //        if (lastBreak + maxLength >= hoatChat.Length)
-            //        {
-            //            sb.Append(hoatChat.Substring(lastBreak));
-            //            break;
-            //        }
+                    int breakIndex = thietBi.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+                    if (breakIndex <= lastBreak)
+                        breakIndex = lastBreak + maxLength;
 
-            //        int breakIndex = hoatChat.LastIndexOf(' ', lastBreak + maxLength, maxLength);
-            //        if (breakIndex <= lastBreak)
-            //            breakIndex = lastBreak + maxLength;
+                    sb.Append(thietBi.Substring(lastBreak, breakIndex - lastBreak));
+                    sb.Append("\n");
+                    lastBreak = breakIndex + 1;
+                }
 
-            //        sb.Append(hoatChat.Substring(lastBreak, breakIndex - lastBreak));
-            //        sb.Append("\n");
-            //        lastBreak = breakIndex + 1;
-            //    }
+                var cell2 = ws.Cell(currentRow, col++);
+                cell2.Value = sb.ToString();
+                cell2.Style.Alignment.WrapText = true;
+                cell2.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                ws.Cell(currentRow, col++).Value = item.MaYTe ?? "";
+                ws.Cell(currentRow, col++).Value = item.MaDot ?? "";
+                ws.Cell(currentRow, col++).Value = item.TenBenhNhan ?? "";
+                SetMiddle(ws.Cell(currentRow, col++), item.NamSinh.ToString() ?? "");
+                SetMiddle(ws.Cell(currentRow, col++), item.GioiTinh ?? "");
+                var diaChi = item.DiaChi ?? "";
+                maxLength = 50;
+                sb = new StringBuilder();
+                lastBreak = 0;
 
-            //    var cell3 = ws.Cell(currentRow, col++);
-            //    cell3.Value = sb.ToString();
-            //    cell3.Style.Alignment.WrapText = true;
-            //    cell3.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                while (lastBreak < diaChi.Length)
+                {
+                    if (lastBreak + maxLength >= diaChi.Length)
+                    {
+                        sb.Append(diaChi.Substring(lastBreak));
+                        break;
+                    }
 
-            //    ws.Cell(currentRow, col++).Value = item.SoNgay ?? 0;
-            //    ws.Cell(currentRow, col++).Value = item.SoLuong ?? 0;
-            //    ws.Cell(currentRow, col++).Value = item.SoLuongPhat ?? 0;
-            //    var cell = ws.Cell(currentRow, col++);cell.Value = item.DonGia ?? 0;cell.Style.NumberFormat.Format = "#,##0";
+                    int breakIndex = diaChi.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+                    if (breakIndex <= lastBreak)
+                        breakIndex = lastBreak + maxLength;
 
-            //    var chanDoan = item.ChanDoan ?? "";
-            //    maxLength = 60;
-            //    sb = new StringBuilder();
-            //    lastBreak = 0;
+                    sb.Append(diaChi.Substring(lastBreak, breakIndex - lastBreak));
+                    sb.Append("\n");
+                    lastBreak = breakIndex + 1;
+                }
 
-            //    while (lastBreak < chanDoan.Length)
-            //    {
-            //        if (lastBreak + maxLength >= chanDoan.Length)
-            //        {
-            //            sb.Append(chanDoan.Substring(lastBreak));
-            //            break;
-            //        }
+                var cell3 = ws.Cell(currentRow, col++);
+                cell3.Value = sb.ToString();
+                cell3.Style.Alignment.WrapText = true;
+                cell3.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                var tenDichVu = item.TenDichVu ?? "";
+                maxLength = 50;
+                sb = new StringBuilder();
+                lastBreak = 0;
 
-            //        int breakIndex = chanDoan.LastIndexOf(' ', lastBreak + maxLength, maxLength);
-            //        if (breakIndex <= lastBreak)
-            //            breakIndex = lastBreak + maxLength;
+                while (lastBreak < tenDichVu.Length)
+                {
+                    if (lastBreak + maxLength >= tenDichVu.Length)
+                    {
+                        sb.Append(tenDichVu.Substring(lastBreak));
+                        break;
+                    }
 
-            //        sb.Append(chanDoan.Substring(lastBreak, breakIndex - lastBreak));
-            //        sb.Append("\n");
-            //        lastBreak = breakIndex + 1;
-            //    }
+                    int breakIndex = tenDichVu.LastIndexOf(' ', lastBreak + maxLength, maxLength);
+                    if (breakIndex <= lastBreak)
+                        breakIndex = lastBreak + maxLength;
 
-            //    var cell2 = ws.Cell(currentRow, col++);
-            //    cell2.Value = sb.ToString();
-            //    cell2.Style.Alignment.WrapText = true;
-            //    cell2.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                    sb.Append(tenDichVu.Substring(lastBreak, breakIndex - lastBreak));
+                    sb.Append("\n");
+                    lastBreak = breakIndex + 1;
+                }
 
-            //    ws.Cell(currentRow, col++).Value = item.MucDichXuat ?? "";
+                var cell4 = ws.Cell(currentRow, col++);
+                cell4.Value = sb.ToString();
+                cell4.Style.Alignment.WrapText = true;
+                cell4.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                ws.Cell(currentRow, col++).Value = item.DoiTuong ?? "";
+                ws.Cell(currentRow, col++).Value = item.PhuongPhapVoCam ?? "";
+                ws.Cell(currentRow, col++).Value = item.LoaiThuThuat ?? "";
+                ws.Cell(currentRow, col++).Value = item.BacSiThucHien ?? "";
+                ws.Cell(currentRow, col++).Value = item.DieuDuong ?? "";
+                SetMiddle(ws.Cell(currentRow, col++), item.NgayChiDinh?.ToString("dd-MM-yyyy") ?? "");
+                SetMiddle(ws.Cell(currentRow, col++), item.NgayThucHien?.ToString("dd-MM-yyyy") ?? "");
+                ws.Cell(currentRow, col++).Value = item.NoiYeuCau ?? "";
+                ws.Cell(currentRow, col++).Value = item.BacSiChiDinh ?? "";
+                ws.Cell(currentRow, col++).Value = item.NoiThucHien?? "";
+                ws.Cell(currentRow, col++).Value = item.LoaiGia ?? "";
+                ws.Cell(currentRow, col++).Value = item.MaHoaDon ?? "";
 
-            //    var rangeRow = ws.Range(currentRow, 2, currentRow, col - 1);
-            //    rangeRow.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-            //    rangeRow.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
-            //    rangeRow.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                var rangeRow = ws.Range(currentRow, 2, currentRow, col - 1);
+                rangeRow.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                rangeRow.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                rangeRow.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-            //    currentRow++;
-            //}
+                currentRow++;
+            }
 
             ws.Columns().AdjustToContents();
             ws.Column(1).Width = 2;

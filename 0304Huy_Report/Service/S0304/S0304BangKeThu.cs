@@ -1,12 +1,13 @@
-﻿using M0304.Models.ThongTinDoanhNghiep;
-using C0304.Db.Models;
+﻿using C0304.Db.Models;
 using M0304.Models.BangKeThu;
+using M0304.Models.ThongTinDoanhNghiep;
 using M0304NhanVien.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using P0304.PDFDocument;
 using QuestPDF.Fluent;
+using System.Linq;
 
 namespace S0304BangKeThu.Services
 {
@@ -160,7 +161,8 @@ namespace S0304BangKeThu.Services
 
             if (idNhanVien != 0)
             {
-                tenNhanVien = allNhanVien.FirstOrDefault(nv => nv.ID == idNhanVien)?.TenNhanVien ?? "Không rõ";
+
+                danhSachNhanVien = allNhanVien.Where(nv => nv.ID == idNhanVien).ToList();
             }
             else
             {

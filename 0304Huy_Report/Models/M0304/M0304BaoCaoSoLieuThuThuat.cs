@@ -5,6 +5,7 @@ namespace M0304.Models.BaoCaoSoLieuThuThuat
 {
     public class M0304BaoCaoSoLieuThuThuat
     {
+        public string? TenKhoa { get; set; }
         public string? SoPhieu { get; set; }
         public string? ThietBi { get; set; }
         public string? MaYTe { get; set; }
