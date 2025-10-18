@@ -14,7 +14,7 @@ public class P0304ExcelReportTemplate
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private string _ngayBatDau;
     private string _ngayKetThuc;
-    private string _tenNhanVien;
+    private string _tenNVDN;
     private string _tenHTTT;
     private readonly string _logoPath;
 
@@ -25,8 +25,8 @@ public class P0304ExcelReportTemplate
         List<M0304BangKeThu> data,
         string ngayBatDau,
         string ngayKetThuc,
+        string tenNVDN,
         string tenHTTT,
-        string tenNhanVien,
         List<M0304NhanVienModel> danhSachNhanVien,
         List<M0304TongTheoQuyenSo> tongTheoQuyenSo,
         M0304ThongTinDoanhNghiep dataDN,
@@ -37,8 +37,8 @@ public class P0304ExcelReportTemplate
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _ngayBatDau = ngayBatDau;
         _ngayKetThuc = ngayKetThuc;
+        _tenNVDN = tenNVDN;
         _tenHTTT = tenHTTT;
-        _tenNhanVien = tenNhanVien;
         _danhSachNhanVien = danhSachNhanVien ?? new List<M0304NhanVienModel>();
         _tongTheoQuyenSo = tongTheoQuyenSo ?? new List<M0304TongTheoQuyenSo>();
         _logoPath = logoPath;
@@ -141,7 +141,7 @@ public class P0304ExcelReportTemplate
                             .Max(d => d.NgayThu);
 
                         ws.Range(currentRow, 2, currentRow, 7).Merge();
-                        ws.Cell(currentRow, 2).Value =$"      {nv.MaNhanVien} - {qs.QuyenSo}";
+                        ws.Cell(currentRow, 2).Value =$"      {nv.MaNhanVien} - {qs.Seri}.{qs.QuyenSo}";
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
                         ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
                         ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
@@ -252,7 +252,7 @@ public class P0304ExcelReportTemplate
 
             rt.AddText($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n");
             rt.AddText("Người lập bảng\n\n\n").SetBold();
-            rt.AddText("Trần Thanh Thảo").SetBold();
+            rt.AddText($"{_tenNVDN}").SetBold();
 
             ws.Cell(currentRow, 8).Style.Alignment.WrapText = true;
             ws.Cell(currentRow, 8).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;

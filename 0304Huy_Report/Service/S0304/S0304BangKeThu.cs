@@ -33,7 +33,7 @@ namespace S0304BangKeThu.Services
             _env = env;
         }
 
-        public async Task<M0304BangKeThuResponse> GetBangKeThu(string ngayBatDau, string ngayKetThuc, long idCN, long? idHTTT = null,
+        public async Task<M0304BangKeThuResponse> GetBangKeThu(string ngayBatDau, string ngayKetThuc, long idCN, string tenNVDN,  long? idHTTT = null,
             long? idNhanVien = null, int? idLoai = null,  int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
@@ -64,6 +64,7 @@ namespace S0304BangKeThu.Services
                     TongHoan = 0,
                     TongHuy = 0,
                     TongSoTien = 0,
+                    TenNVDN = tenNVDN,
                 };
             }
             var allData = await _context.M0304BangKeThus
@@ -112,6 +113,7 @@ namespace S0304BangKeThu.Services
                 TongHoan = allHoan,
                 TongHuy = allHuy,
                 TongSoTien = allSoTien,
+                TenNVDN = tenNVDN,
             };
         }
         private M0304ThongTinDoanhNghiep GetDoanhNghiepFromRequestOrSession(ExportRequest request, ISession session)
@@ -175,6 +177,7 @@ namespace S0304BangKeThu.Services
                 .Select(g => new M0304TongTheoQuyenSo
                 {
                     QuyenSo = g.Key, // g.Key chính là QuyenSo
+                    Seri = g.First().Seri,
                     TongHuy = g.Sum(x => x.Huy ?? 0m),
                     TongHoan = g.Sum(x => x.Hoan ?? 0m),
                     TongSoTien = g.Sum(x => x.SoTien ?? 0m),
@@ -192,8 +195,8 @@ namespace S0304BangKeThu.Services
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
 
             var data = request.Data ?? new List<M0304BangKeThu>();
-            var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate,
-                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
+            var document = new P0304ReportTemplatePDF(data, request.FromDate, request.ToDate, request.TenNVDN,
+                HTTT_NV.tenHTTT, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -205,8 +208,8 @@ namespace S0304BangKeThu.Services
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
 
             var data = request.Data ?? new List<M0304BangKeThu>();
-            var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate,
-                HTTT_NV.tenHTTT, HTTT_NV.tenNhanVien, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
+            var document = new P0304ExcelReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN,
+                HTTT_NV.tenHTTT, HTTT_NV.danhSachNhanVien, HTTT_NV.tongTheoQuyenSo, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;

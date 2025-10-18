@@ -98,6 +98,7 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
+        idNhanVien: idNhanVien,
         page: currentPage,
         pageSize: pageSize
     }
@@ -144,12 +145,13 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay) {
+function fetchAllFilteredData(tuNgay, denNgay, idNhanVien) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
+            idNhanVien: idNhanVien || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -173,6 +175,7 @@ function fetchAllFilteredData(tuNgay, denNgay) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
+                    idNhanVien: idNhanVien || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -230,6 +233,7 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idNhanVien: $('.tomselect-nhanVien').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -277,9 +281,10 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den)
+        fetchAllFilteredData(tu, den, idNhanVien)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -299,6 +304,7 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idNhanVien: $('.tomselect-nhanVien').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
@@ -340,9 +346,10 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den)
+        fetchAllFilteredData(tu, den, idNhanVien)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);

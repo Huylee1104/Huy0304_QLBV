@@ -56,11 +56,11 @@ namespace C0304ToKhaiChiTietThuPhiLePhi.Controllers
         }
 
         [HttpPost("filter")]
-        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idNhanVien = null, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await GetToKhaiChiTietThuPhiLePhi(tuNgay, denNgay, IdChiNhanh, page, pageSize);
+                var result = await GetToKhaiChiTietThuPhiLePhi(tuNgay, denNgay, IdChiNhanh, idNhanVien, page, pageSize);
 
                 if (!result.ToKhaiChiTietThuPhiLePhi.Success)
                 {
@@ -110,7 +110,7 @@ namespace C0304ToKhaiChiTietThuPhiLePhi.Controllers
 
 
         private async Task<M0304ToKhaiChiTietThuPhiLePhiResponse> GetToKhaiChiTietThuPhiLePhi(string ngayBatDau, string ngayKetThuc, long idCN,
-            int page = 1, int pageSize = 20)
+            long? idNhanVien = null, int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
 
@@ -147,6 +147,7 @@ namespace C0304ToKhaiChiTietThuPhiLePhi.Controllers
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN))
+                    //new SqlParameter("@IDNhanVien", idNhanVien))
                 .AsNoTracking()
                 .ToListAsync();
 

@@ -68,6 +68,18 @@ $(document).on('click', '#btnFilter', function (e) {
     filterData();
 });
 
+let tenNVDN = "";
+
+$.getJSON("dist/data/json/Dm_NhanVien.json", data => {
+    const nv = data.find(n => n.id === _idNVDN || n.ID === _idNVDN || n.Id === _idNVDN);
+    if (nv) {
+        tenNVDN = nv.ten || nv.Ten || nv.TenNhanVien || "";
+        console.log("Tên nhân viên:", tenNVDN);
+    } else {
+        console.warn("Không tìm thấy nhân viên có ID =", idNVDN);
+    }
+});
+
 // ==================== LỌC DỮ LIỆU ====================
 let firstLoad = true;
 function filterData(isPagination = false) {
@@ -101,6 +113,7 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
+        TenNVDN: tenNVDN,
         idHTTT: idHTTT,
         idNhanVien: idNhanVien,
         idLoai: idLoai,
@@ -157,6 +170,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien, idLoai) {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
+            TenNVDN: tenNVDN || '',
             idHTTT: idHTTT || 0,
             idNhanVien: idNhanVien || 0,
             idLoai: idLoai || 0,
@@ -183,6 +197,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idHTTT, idNhanVien, idLoai) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
+                    TenNVDN: tenNVDN,
                     idHTTT: idHTTT || 0,
                     idNhanVien: idNhanVien || 0,
                     idLoai: idLoai || 0,
@@ -246,7 +261,8 @@ function doExportExcel(finalData, btn, originalHtml) {
         idHTTT: $('.tomselect-httt').val() || 0,
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
         idLoai: $('.tomselect-loai').val() || 0,
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     $.ajax({
@@ -321,7 +337,8 @@ function doExportPdf(finalData, btnElem) {
         idHTTT: $('.tomselect-httt').val() || 0,
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
         idLoai: $('.tomselect-loai').val() || 0,
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     btnElem.disabled = true;
@@ -484,7 +501,7 @@ function updateTable(response) {
                 const maNV = quyenSoList[0].maNhanVien || quyenSoList[0].MaNhanVien || "";
                 const qsHeaderRow = `
                 <tr class="fw-bold table-light">
-                    <td colspan="3" class="text-start" style="padding-left:40px; border-right: none;">${maNV} - ${quyenSo}</td>
+                    <td colspan="3" class="text-start" style="padding-left:40px; border-right: none;">${maNV} - ${quyenSoList[0].seri || quyenSoList[0].Seri}.${quyenSo}</td>
                     <td colspan="4" class="text-start khongapdung" style="border-left: none"></td>
                     <td class="text-end khongapdung">${formatCurrency(tongHuyQS)}</td>
                     <td class="text-end">${formatCurrency(tongHoanTraQS)}</td>

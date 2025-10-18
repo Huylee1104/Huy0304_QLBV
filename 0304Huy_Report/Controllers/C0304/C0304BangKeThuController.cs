@@ -60,12 +60,12 @@ namespace C0304BangKeThu.Controllers
         }
 
         [HttpPost("filter")]
-        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idHTTT = null,
+        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, string TenNVDN, long? idHTTT = null,
             long? idNhanVien = null, int? idLoai = null, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await _service.GetBangKeThu(tuNgay, denNgay, IdChiNhanh, idHTTT, idNhanVien, idLoai, page, pageSize);
+                var result = await _service.GetBangKeThu(tuNgay, denNgay, IdChiNhanh, TenNVDN, idHTTT, idNhanVien, idLoai, page, pageSize);
 
                 if (!result.BangKeThu.Success)
                 {
@@ -84,7 +84,8 @@ namespace C0304BangKeThu.Controllers
                     doanhNghiep = result.DoanhNghiep,
                     tongHuy = result.TongHuy,
                     tongHoan = result.TongHoan,
-                    tongSoTien = result.TongSoTien
+                    tongSoTien = result.TongSoTien,
+                    tenNVDN = result.TenNVDN,
                 });
             }
             catch (Exception ex)

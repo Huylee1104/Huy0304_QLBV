@@ -18,6 +18,7 @@ namespace M0304.Models.BangKeThu
         public long? IDNhanVien { get; set; }
         public string? MaNhanVien { get; set; }
         public string? TenNhanVien { get; set; }
+        public string? Seri { get; set; }
     }
 
     public class M0304PagedResult<T>
@@ -38,6 +39,7 @@ namespace M0304.Models.BangKeThu
         public decimal? TongHoan { get; set; }
         public decimal? TongHuy { get; set; }
         public decimal? TongSoTien { get; set; }
+        public string TenNVDN { get; set; }
     }
 
     public class ExportRequest
@@ -47,6 +49,7 @@ namespace M0304.Models.BangKeThu
         public string ToDate { get; set; }
         public long? IdHTTT { get; set; }
         public long? IdNhanVien { get; set; }
+        public string? TenNVDN { get; set; }
         public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
     }
 
@@ -67,6 +70,7 @@ namespace M0304.Models.BangKeThu
     public class M0304TongTheoQuyenSo
     {
         public string QuyenSo { get; set; }
+        public string Seri { get; set; }
         public decimal TongHuy { get; set; }
         public decimal TongHoan { get; set; }
         public decimal TongSoTien { get; set; }

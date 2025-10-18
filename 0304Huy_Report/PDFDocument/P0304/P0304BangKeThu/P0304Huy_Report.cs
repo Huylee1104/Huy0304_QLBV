@@ -17,7 +17,7 @@ namespace P0304.PDFDocument
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private string _ngayBatDau;
         private string _ngayKetThuc;
-        private string _tenNhanVien;
+        private string _tenNVDN;
         private string _tenHTTT;
         private readonly string _logoPath;
 
@@ -28,8 +28,8 @@ namespace P0304.PDFDocument
             List<M0304BangKeThu> data,
             string ngayBatDau,
             string ngayKetThuc,
+            string tenNVDN,
             string tenHTTT,
-            string tenNhanVien,
             List<M0304NhanVienModel> danhSachNhanVien,
             List<M0304TongTheoQuyenSo> tongTheoQuyenSo,
             M0304ThongTinDoanhNghiep dataDN,
@@ -40,8 +40,8 @@ namespace P0304.PDFDocument
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _ngayBatDau = ngayBatDau;
             _ngayKetThuc = ngayKetThuc;
+            _tenNVDN = tenNVDN;
             _tenHTTT = tenHTTT;
-            _tenNhanVien = tenNhanVien;
             _danhSachNhanVien = danhSachNhanVien ?? new List<M0304NhanVienModel>();
             _tongTheoQuyenSo = tongTheoQuyenSo ?? new List<M0304TongTheoQuyenSo>();
             _logoPath = logoPath;
@@ -111,7 +111,7 @@ namespace P0304.PDFDocument
                         {
                             columns.ConstantColumn(30);
                             columns.ConstantColumn(50);
-                            columns.RelativeColumn();
+                            columns.RelativeColumn(1);
                             columns.ConstantColumn(70);
                             columns.ConstantColumn(50);
                             columns.ConstantColumn(45);
@@ -161,7 +161,7 @@ namespace P0304.PDFDocument
                                     table.Cell().ColumnSpan(6)
                                         .Element(CellStyleLeft)
                                         .AlignLeft()
-                                        .Text($"      {nv.MaNhanVien} - {qs.QuyenSo}")
+                                        .Text($"      {nv.MaNhanVien} - {qs.Seri}.{qs.QuyenSo}")
                                         .FontSize(9)
                                         .Bold();
 
@@ -313,7 +313,7 @@ namespace P0304.PDFDocument
                                     right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                                     right.Item().AlignCenter().Text("Người lập bảng").Bold();
                                     right.Item().Height(40);
-                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu").Bold();
+                                    right.Item().AlignCenter().Text($"{_tenNVDN}").Bold();
                                 });
                             });
                         });
