@@ -16,12 +16,14 @@ namespace P0304.PDFDocument
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private string _ngayBatDau;
         private string _ngayKetThuc;
+        private string _tenNVDN;
         private readonly string _logoPath;
 
         public P0304BReportTemplatePDF(
             List<M0304BBCHoaDonDienTuDV> data,
             string ngayBatDau,
             string ngayKetThuc,
+            string tenNVDN,
             M0304ThongTinDoanhNghiep dataDN,
             string logoPath = null
         )
@@ -30,6 +32,7 @@ namespace P0304.PDFDocument
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _ngayBatDau = ngayBatDau;
             _ngayKetThuc = ngayKetThuc;
+            _tenNVDN = tenNVDN;
             _logoPath = logoPath;
         }
 
@@ -208,7 +211,7 @@ namespace P0304.PDFDocument
                                     right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
                                     right.Item().AlignCenter().Text("Người lập bảng").Bold();
                                     right.Item().Height(40);
-                                    right.Item().AlignCenter().Text("Trần Thị Hồng Châu");
+                                    right.Item().AlignCenter().Text($"{_tenNVDN}");
                                 });
                             });
                         });

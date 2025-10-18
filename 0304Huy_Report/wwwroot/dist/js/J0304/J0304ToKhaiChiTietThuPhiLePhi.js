@@ -68,6 +68,18 @@ $(document).on('click', '#btnFilter', function (e) {
     filterData();
 });
 
+let tenNVDN = "";
+
+$.getJSON("dist/data/json/Dm_NhanVien.json", data => {
+    const nv = data.find(n => n.id === _idNVDN || n.ID === _idNVDN || n.Id === _idNVDN);
+    if (nv) {
+        tenNVDN = nv.ten || nv.Ten || nv.TenNhanVien || "";
+        console.log("Tên nhân viên:", tenNVDN);
+    } else {
+        console.warn("Không tìm thấy nhân viên có ID =", idNVDN);
+    }
+});
+
 // ==================== LỌC DỮ LIỆU ====================
 let firstLoad = true;
 function filterData(isPagination = false) {
@@ -234,7 +246,8 @@ function doExportExcel(finalData, btn, originalHtml) {
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     $.ajax({
@@ -305,7 +318,8 @@ function doExportPdf(finalData, btnElem) {
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     fetch("/to_khai_chi_tiet_thu_phi_le_phi/export/pdf", {
@@ -318,13 +332,19 @@ function doExportPdf(finalData, btnElem) {
             return res.blob();
         })
         .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `ToKhaiChiTietThuPhiLePhi_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
+            const pdfUrl = URL.createObjectURL(blob);
+
+            // Tạo iframe ẩn để mở file PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                const printWindow = iframe.contentWindow;
+                printWindow.focus();
+                printWindow.print();
+            };
         })
         .catch(error => {
             console.error('Error exporting PDF:', error);
@@ -492,4 +512,30 @@ $(document).ready(function () {
     initDateInputFormatting(config);
     initDatePicker(config);
     initDateRangeConstraint(config);
+});
+
+// ==================== LOAD COMBOBOX ====================
+
+$.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
+    listNhanVien = dataNhanVien
+        .filter(n =>
+            (n.active === true || n.active === 1)
+        )
+        .map(n => ({
+            ...n,
+            alias: n.viettat?.trim() !== ""
+                ? n.viettat.toUpperCase()
+                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+        }));
+    // config cho TomSelect
+    const configs = [
+        {
+            className: ".tomselect-nhanVien",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
+
+    configCb(configs, listNhanVien);
 });

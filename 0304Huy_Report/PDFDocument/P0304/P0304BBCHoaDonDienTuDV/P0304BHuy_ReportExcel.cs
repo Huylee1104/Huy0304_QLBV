@@ -15,12 +15,14 @@ public class P0304BExcelReportTemplate
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private string _ngayBatDau;
     private string _ngayKetThuc;
+    private string _tenNVDN;
     private readonly string _logoPath;
 
     public P0304BExcelReportTemplate(
         List<M0304BBCHoaDonDienTuDV> data,
         string ngayBatDau,
         string ngayKetThuc,
+        string tenNVDN,
         M0304ThongTinDoanhNghiep dataDN,
         string logoPath = null
     )
@@ -29,6 +31,7 @@ public class P0304BExcelReportTemplate
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _ngayBatDau = ngayBatDau;
         _ngayKetThuc = ngayKetThuc;
+        _tenNVDN = tenNVDN;
         _logoPath = logoPath;
     }
 
@@ -184,7 +187,7 @@ public class P0304BExcelReportTemplate
             ws.Cell(currentRow, 10).Value =
                 $"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n" +
                 "Người lập bảng\n\n\n" +
-                "Trần Thanh Thảo";
+                $"{_tenNVDN}";
             ws.Cell(currentRow, 10).Style.Alignment.WrapText = true;
             ws.Cell(currentRow, 10).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(currentRow, 10).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;

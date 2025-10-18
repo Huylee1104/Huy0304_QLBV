@@ -227,7 +227,7 @@ namespace C0304ToKhaiChiTietThuPhiLePhi.Controllers
             var logoPath = "";
 
             var data = request.Data ?? new List<M0304ToKhaiChiTietThuPhiLePhi>();
-            var document = new P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
@@ -239,7 +239,7 @@ namespace C0304ToKhaiChiTietThuPhiLePhi.Controllers
             var logoPath ="";
 
             var data = request.Data ?? new List<M0304ToKhaiChiTietThuPhiLePhi>();
-            var document = new P0304ToKhaiChiTietThuPhiLePhiReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304ToKhaiChiTietThuPhiLePhiReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;

@@ -17,12 +17,14 @@ namespace P0304.PDFDocument.ToKhaiChiTietThuPhiLePhi
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private string _ngayBatDau;
         private string _ngayKetThuc;
+        private string _tenNVDN;
         private readonly string _logoPath;
 
         public P0304ToKhaiChiTietThuPhiLePhiReportTemplate(
             List<M0304ToKhaiChiTietThuPhiLePhi> data,
             string ngayBatDau,
             string ngayKetThuc,
+            string tenNVDN,
             M0304ThongTinDoanhNghiep dataDN,
             string logoPath = null
         )
@@ -31,6 +33,7 @@ namespace P0304.PDFDocument.ToKhaiChiTietThuPhiLePhi
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _ngayBatDau = ngayBatDau;
             _ngayKetThuc = ngayKetThuc;
+            _tenNVDN = tenNVDN;
             _logoPath = logoPath;
         }
 
@@ -177,25 +180,33 @@ namespace P0304.PDFDocument.ToKhaiChiTietThuPhiLePhi
                         table.Cell().AlignLeft().Text("");
 
                         table.Cell().ColumnSpan(8)
-                            .AlignRight()
-                            .PaddingTop(10)
-                            .Element(container =>
+                        .AlignRight()
+                        .PaddingTop(10)
+                        .Element(container =>
+                        {
+                            container.AlignRight().Column(column =>
                             {
-                                container.Column(column =>
-                                {
-                                    column.Item()
-                                        .AlignCenter()
-                                        .Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}")
-                                        .FontSize(9)
-                                        .Italic()
-                                        .Bold();
+                                column.Item()
+                                    .AlignCenter()
+                                    .Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}")
+                                    .FontSize(9)
+                                    .Italic()
+                                    .Bold();
 
-                                    column.Item().AlignCenter().PaddingTop(5)
-                                        .Text("Người lập")
-                                        .Bold()
-                                        .FontSize(9);
-                                });
+                                column.Item()
+                                    .AlignCenter()
+                                    .Text("Người lập bảng")
+                                    .Bold();
+
+                                column.Item()
+                                    .Height(40);
+
+                                column.Item()
+                                    .AlignCenter()
+                                    .Text($"{_tenNVDN}")
+                                    .Bold();
                             });
+                        });
 
                     });
                 });

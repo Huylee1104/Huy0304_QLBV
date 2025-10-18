@@ -320,15 +320,21 @@ function doExportPdf(finalData, btnElem) {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.blob();
     })
-    .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `BaoCaoSoLuong${tenFile}_${requestData.nam}.pdf`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        toastr.success("Xuất PDF thành công");
-    })
+        .then(blob => {
+            const pdfUrl = URL.createObjectURL(blob);
+
+            // Tạo iframe ẩn để mở file PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                const printWindow = iframe.contentWindow;
+                printWindow.focus();
+                printWindow.print();
+            };
+        })
     .catch(error => {
         console.error('Error exporting PDF:', error);
         toastr.error("Xuất PDF thất bại");

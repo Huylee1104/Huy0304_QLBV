@@ -43,6 +43,7 @@ namespace M0304B.Models.BCHoaDonDienTuDV
         public List<M0304BBCHoaDonDienTuDV> Data { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+        public string? TenNVDN { get; set; }
         public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
     }
 }

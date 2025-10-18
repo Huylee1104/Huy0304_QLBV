@@ -121,6 +121,7 @@ public class P0304ExcelReportTemplate
             {
                 foreach (var nv in _danhSachNhanVien)
                 {
+                    // Dòng tiêu đề nhân viên
                     ws.Range(currentRow, 2, currentRow, 11).Merge();
                     ws.Cell(currentRow, 2).Value = $"{nv.TenNhanVien}".ToUpper();
                     ws.Cell(currentRow, 2).Style.Font.Bold = true;
@@ -129,39 +130,58 @@ public class P0304ExcelReportTemplate
                     ws.Range(currentRow, 2, currentRow, 11).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                     currentRow++;
 
+                    // Danh sách quyển sổ mà nhân viên có tham gia
                     var quyenSoList = _tongTheoQuyenSo
                         .Where(q => _data.Any(d => d.IDNhanVien == nv.ID && d.QuyenSo == q.QuyenSo))
                         .ToList();
 
                     foreach (var qs in quyenSoList)
                     {
-
-                        var ngayThu = _data
+                        // Lấy danh sách chi tiết của nhân viên theo quyển sổ
+                        var chiTietNvQs = _data
                             .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
-                            .Max(d => d.NgayThu);
+                            .ToList();
 
+                        // Seri lấy theo dữ liệu nhân viên (nếu null thì fallback về qs.Seri)
+                        var seriForNv = chiTietNvQs.Select(d => d.Seri).FirstOrDefault() ?? qs.Seri ?? "";
+
+                        // Tính tổng riêng cho nhân viên trong quyển sổ
+                        var tongTheoNVvaQS = chiTietNvQs
+                            .GroupBy(x => x.QuyenSo)
+                            .Select(g => new
+                            {
+                                TongHuy = g.Sum(x => x.Huy ?? 0m),
+                                TongHoan = g.Sum(x => x.Hoan ?? 0m),
+                                TongSoTien = g.Sum(x => x.SoTien ?? 0m)
+                            })
+                            .FirstOrDefault() ?? new { TongHuy = 0m, TongHoan = 0m, TongSoTien = 0m };
+
+                        // Ngày thu gần nhất của nhân viên trong quyển sổ này
+                        var ngayThu = chiTietNvQs.Max(d => d.NgayThu);
+
+                        // Dòng tiêu đề quyển sổ cho nhân viên
                         ws.Range(currentRow, 2, currentRow, 7).Merge();
-                        ws.Cell(currentRow, 2).Value =$"      {nv.MaNhanVien} - {qs.Seri}.{qs.QuyenSo}";
+                        ws.Cell(currentRow, 2).Value = $"      {nv.MaNhanVien} - {seriForNv}.{qs.QuyenSo}";
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
                         ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
                         ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
 
-                        ws.Cell(currentRow, 8).Value =$"{ngayThu:dd-MM-yyyy}";
+                        ws.Cell(currentRow, 8).Value = $"{ngayThu:dd-MM-yyyy}";
                         ws.Cell(currentRow, 8).Style.Font.Bold = true;
                         ws.Cell(currentRow, 8).Style.Font.FontSize = 10;
                         AlignCellCenter(ws.Cell(currentRow, 8));
 
-                        ws.Cell(currentRow, 9).Value = qs.TongHuy;
+                        ws.Cell(currentRow, 9).Value = tongTheoNVvaQS.TongHuy;
                         ws.Cell(currentRow, 9).Style.Font.Bold = true;
                         ws.Cell(currentRow, 9).Style.Font.FontSize = 10;
                         AlignCellRight(ws.Cell(currentRow, 9));
 
-                        ws.Cell(currentRow, 10).Value = qs.TongHoan;
+                        ws.Cell(currentRow, 10).Value = tongTheoNVvaQS.TongHoan;
                         ws.Cell(currentRow, 10).Style.Font.Bold = true;
                         ws.Cell(currentRow, 10).Style.Font.FontSize = 10;
                         AlignCellRight(ws.Cell(currentRow, 10));
 
-                        ws.Cell(currentRow, 11).Value = qs.TongSoTien;
+                        ws.Cell(currentRow, 11).Value = tongTheoNVvaQS.TongSoTien;
                         ws.Cell(currentRow, 11).Style.Font.Bold = true;
                         ws.Cell(currentRow, 11).Style.Font.FontSize = 10;
                         AlignCellRight(ws.Cell(currentRow, 11));
@@ -172,11 +192,8 @@ public class P0304ExcelReportTemplate
                         ws.Range(currentRow, 2, currentRow, 11).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                         currentRow++;
 
-                        var chiTiet = _data
-                            .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
-                            .ToList();
-
-                        foreach (var item in chiTiet)
+                        // Ghi chi tiết từng dòng của nhân viên trong quyển sổ này
+                        foreach (var item in chiTietNvQs)
                         {
                             ws.Cell(currentRow, 2).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 2));
                             ws.Cell(currentRow, 3).Value = item.MaYTe ?? ""; AlignCellCenter(ws.Cell(currentRow, 3));
@@ -201,6 +218,7 @@ public class P0304ExcelReportTemplate
                     }
                 }
             }
+
 
             var tongHuyAll = _data.Sum(x => x.Huy ?? 0m);
             var tongHoanAll = _data.Sum(x => x.Hoan ?? 0m);

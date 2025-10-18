@@ -336,13 +336,19 @@ function doExportPdf(finalData, btnElem) {
             return res.blob();
         })
         .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `BangKeBanLeHangHoaDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
+            const pdfUrl = URL.createObjectURL(blob);
+
+            // Tạo iframe ẩn để mở file PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                const printWindow = iframe.contentWindow;
+                printWindow.focus();
+                printWindow.print();
+            };
         })
         .catch(error => {
             console.error('Error exporting PDF:', error);

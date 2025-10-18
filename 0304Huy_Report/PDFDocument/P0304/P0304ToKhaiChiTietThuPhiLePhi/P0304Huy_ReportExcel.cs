@@ -14,12 +14,14 @@ public class P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private string _ngayBatDau;
     private string _ngayKetThuc;
+    private string _tenNVDN;
     private readonly string _logoPath;
 
     public P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate(
         List<M0304ToKhaiChiTietThuPhiLePhi> data,
         string ngayBatDau,
         string ngayKetThuc,
+        string tenNVDN,
         M0304ThongTinDoanhNghiep dataDN,
         string logoPath = null
     )
@@ -28,6 +30,7 @@ public class P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _ngayBatDau = ngayBatDau;
         _ngayKetThuc = ngayKetThuc;
+        _tenNVDN = tenNVDN;
         _logoPath = logoPath;
     }
 
@@ -195,20 +198,14 @@ public class P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate
             ws.Range(currentRow, 2, currentRow, 9).Style.Border.OutsideBorder = XLBorderStyleValues.None;
 
             currentRow++;
-            string ngayThangNam = $"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}";
-            ws.Range(currentRow, 7, currentRow, 9).Merge();
-            ws.Cell(currentRow, 7).Value = ngayThangNam;
+            ws.Range(currentRow, 7, currentRow + 5, 9).Merge();
+            ws.Cell(currentRow, 7).Value =
+                $"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n" +
+                "Người lập bảng\n\n\n" +
+                $"{_tenNVDN}";
+            ws.Cell(currentRow, 7).Style.Alignment.WrapText = true;
             ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(currentRow, 7).Style.Font.Italic = true;
-            ws.Cell(currentRow, 7).Style.Font.Bold = true;
-            ws.Cell(currentRow, 7).Style.Font.FontSize = 10;
-
-            currentRow++;
-            ws.Range(currentRow, 7, currentRow, 9).Merge();
-            ws.Cell(currentRow, 7).Value = "Người lập";
-            ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(currentRow, 7).Style.Font.Bold = true;
-            ws.Cell(currentRow, 7).Style.Font.FontSize = 10;
+            ws.Cell(currentRow, 7).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
             ws.Columns().AdjustToContents();
             ws.Column(1).Width = 2;

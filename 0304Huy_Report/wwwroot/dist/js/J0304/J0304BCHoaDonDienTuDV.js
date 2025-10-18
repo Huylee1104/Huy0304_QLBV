@@ -68,6 +68,18 @@ $(document).on('click', '#btnFilter', function (e) {
     filterData();
 });
 
+let tenNVDN = "";
+
+$.getJSON("dist/data/json/Dm_NhanVien.json", data => {
+    const nv = data.find(n => n.id === _idNVDN || n.ID === _idNVDN || n.Id === _idNVDN);
+    if (nv) {
+        tenNVDN = nv.ten || nv.Ten || nv.TenNhanVien || "";
+        console.log("Tên nhân viên:", tenNVDN);
+    } else {
+        console.warn("Không tìm thấy nhân viên có ID =", idNVDN);
+    }
+});
+
 // ==================== LỌC DỮ LIỆU ====================
 let firstLoad = true;
 function filterData(isPagination = false) {
@@ -230,7 +242,8 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     $.ajax({
@@ -299,7 +312,8 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        doanhNghiep: window.doanhNghiep || null
+        doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     fetch("/bao_cao_hoa_don_dien_tu_dich_vu/export/pdf", {
@@ -312,13 +326,19 @@ function doExportPdf(finalData, btnElem) {
             return res.blob();
         })
         .then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `BaoCaoHoaDonDienTuDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.pdf`;
-            a.click();
-            window.URL.revokeObjectURL(url);
-            toastr.success("Xuất PDF thành công");
+            const pdfUrl = URL.createObjectURL(blob);
+
+            // Tạo iframe ẩn để mở file PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = pdfUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = function () {
+                const printWindow = iframe.contentWindow;
+                printWindow.focus();
+                printWindow.print();
+            };
         })
         .catch(error => {
             console.error('Error exporting PDF:', error);

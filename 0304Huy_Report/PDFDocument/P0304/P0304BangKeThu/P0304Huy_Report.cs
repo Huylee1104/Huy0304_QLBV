@@ -111,7 +111,7 @@ namespace P0304.PDFDocument
                         {
                             columns.ConstantColumn(30);
                             columns.ConstantColumn(50);
-                            columns.RelativeColumn(1);
+                            columns.RelativeColumn();
                             columns.ConstantColumn(70);
                             columns.ConstantColumn(50);
                             columns.ConstantColumn(45);
@@ -154,14 +154,33 @@ namespace P0304.PDFDocument
 
                                 foreach (var qs in quyenSoList)
                                 {
-                                    DateTime? ngayThu = _data
+                                    // Lấy tất cả bản ghi của NV hiện tại trong quyển sổ này
+                                    var chiTietNvQs = _data
                                         .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
-                                        .Max(d => d.NgayThu);
+                                        .ToList();
 
+                                    // Seri thực tế theo NV (nếu có, fallback về qs.Seri)
+                                    var seriForNv = chiTietNvQs.Select(d => d.Seri).FirstOrDefault() ?? qs.Seri ?? "";
+
+                                    // Tổng theo NV cho quyển sổ
+                                    var tongTheoNVvaQS = chiTietNvQs
+                                        .GroupBy(x => x.QuyenSo)
+                                        .Select(g => new
+                                        {
+                                            TongHuy = g.Sum(x => x.Huy ?? 0m),
+                                            TongHoan = g.Sum(x => x.Hoan ?? 0m),
+                                            TongSoTien = g.Sum(x => x.SoTien ?? 0m)
+                                        })
+                                        .FirstOrDefault() ?? new { TongHuy = 0m, TongHoan = 0m, TongSoTien = 0m };
+
+                                    // Ngày thu lớn nhất trong quyển sổ của NV
+                                    DateTime? ngayThu = chiTietNvQs.Max(d => d.NgayThu);
+
+                                    // Header nhóm: Mã NV - Seri.QuyểnSố
                                     table.Cell().ColumnSpan(6)
                                         .Element(CellStyleLeft)
                                         .AlignLeft()
-                                        .Text($"      {nv.MaNhanVien} - {qs.Seri}.{qs.QuyenSo}")
+                                        .Text($"      {nv.MaNhanVien} - {seriForNv}.{qs.QuyenSo}")
                                         .FontSize(9)
                                         .Bold();
 
@@ -175,29 +194,26 @@ namespace P0304.PDFDocument
                                     table.Cell()
                                         .Element(CellStyleNoBorder)
                                         .AlignRight()
-                                        .Text(qs.TongHuy.ToString("N0"))
+                                        .Text(tongTheoNVvaQS.TongHuy.ToString("N0"))
                                         .FontSize(8)
                                         .Bold();
 
                                     table.Cell()
                                         .Element(CellStyleNoBorder)
                                         .AlignRight()
-                                        .Text(qs.TongHoan.ToString("N0"))
+                                        .Text(tongTheoNVvaQS.TongHoan.ToString("N0"))
                                         .FontSize(8)
                                         .Bold();
 
                                     table.Cell()
                                         .Element(CellStyleRight)
                                         .AlignRight()
-                                        .Text(qs.TongSoTien.ToString("N0"))
+                                        .Text(tongTheoNVvaQS.TongSoTien.ToString("N0"))
                                         .FontSize(8)
                                         .Bold();
 
-                                    var chiTiet = _data
-                                        .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
-                                        .ToList();
-
-                                    foreach (var item in chiTiet)
+                                    // Chi tiết từng dòng
+                                    foreach (var item in chiTietNvQs)
                                     {
                                         table.Cell()
                                             .Element(CellStyle)
@@ -251,6 +267,7 @@ namespace P0304.PDFDocument
                                 }
                             }
                         }
+
 
                         var tongHuyAll = _data.Sum(x => x.Huy ?? 0m);
                         var tongHoanAll = _data.Sum(x => x.Hoan ?? 0m);

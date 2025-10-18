@@ -137,7 +137,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
 
             var data = request.Data ?? new List<M0304BBCHoaDonDienTuDV>();
-            var document = new P0304BReportTemplatePDF(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304BReportTemplatePDF(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;
@@ -148,7 +148,7 @@ namespace S0304BBCHoaDonDienTuDV.Services
             var logoPath = Path.Combine(_env.WebRootPath, "dist", "img", "logo.png");
 
             var data = request.Data ?? new List<M0304BBCHoaDonDienTuDV>();
-            var document = new P0304BExcelReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304BExcelReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
