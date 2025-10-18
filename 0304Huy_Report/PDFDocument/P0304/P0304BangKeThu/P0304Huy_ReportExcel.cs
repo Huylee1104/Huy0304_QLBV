@@ -143,7 +143,7 @@ public class P0304ExcelReportTemplate
                             .ToList();
 
                         // Seri lấy theo dữ liệu nhân viên (nếu null thì fallback về qs.Seri)
-                        var seriForNv = chiTietNvQs.Select(d => d.Seri).FirstOrDefault() ?? qs.Seri ?? "";
+                        var seriForNv = qs.Seri ?? "";
 
                         // Tính tổng riêng cho nhân viên trong quyển sổ
                         var tongTheoNVvaQS = chiTietNvQs

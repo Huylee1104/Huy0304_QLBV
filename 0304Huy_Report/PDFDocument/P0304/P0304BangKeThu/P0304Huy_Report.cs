@@ -160,7 +160,7 @@ namespace P0304.PDFDocument
                                         .ToList();
 
                                     // Seri thực tế theo NV (nếu có, fallback về qs.Seri)
-                                    var seriForNv = chiTietNvQs.Select(d => d.Seri).FirstOrDefault() ?? qs.Seri ?? "";
+                                    var seriForNv = qs.Seri ?? "";
 
                                     // Tổng theo NV cho quyển sổ
                                     var tongTheoNVvaQS = chiTietNvQs
