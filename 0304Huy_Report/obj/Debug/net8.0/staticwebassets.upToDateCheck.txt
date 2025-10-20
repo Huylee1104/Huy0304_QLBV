@@ -12,7 +12,7 @@ wwwroot\dist\js\J0304\J0304BangKeThu.js
 wwwroot\dist\js\J0304\J0304BaoCaoSoLuongNhapXuat.js
 wwwroot\dist\js\J0304\J0304BKBienLaiTamUng.js
 wwwroot\dist\js\BienChung.js
-wwwroot\dist\css\C0304\C0304_Report.css
+wwwroot\dist\js\J0304\J0304BangKeBanLeHangHoaDichVu.js
 wwwroot\dist\js\J0304\J0304BCHoaDonDienTuDV.js
 wwwroot\dist\js\site.js
 wwwroot\dist\libs\bootstrap-datepicker\css\bootstrap-datepicker.css
@@ -4809,7 +4809,8 @@ wwwroot\dist\js\J0304\J0304BaoCaoThuDichVu.js
 wwwroot\dist\data\json\HH_DM_HangHoa.json
 wwwroot\dist\js\J0304\J0304PhieuTheoDoiTruyenDich.js
 wwwroot\dist\js\J0304\J0304BKBienLaiHoanUng.js
-wwwroot\dist\js\J0304\J0304BangKeBanLeHangHoaDichVu.js
+wwwroot\dist\css\C0304\C0304_Report.css
 wwwroot\dist\js\J0304Util\J0302DateFormatUtil.js
 wwwroot\dist\js\J0304\J0304BaoCaoSoLieuThuThuat.js
 wwwroot\dist\data\json\DM_Khoa.json
+wwwroot\dist\js\J0304\J0304HoatDongKhamBenh.js

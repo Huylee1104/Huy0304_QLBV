@@ -3,18 +3,6 @@
 }
 
 <style>
-    .datepicker {
-        font-size: 0.9rem;
-        transform: scale(1.2);
-        transform-origin: top left;
-        position: absolute;
-        top: 0;
-        left: 100%;
-        margin-left: 5px;
-        z-index: 99999 !important;
-        background: white;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
     table {
         border-right: 1px solid #ccc !important;
         border-left: 1px solid #ccc !important;
@@ -32,28 +20,27 @@
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        width: 65px;
+        min-width: 65px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(3) {
+    .table-wrapper-scroll thead th:nth-child(2) {
         position: sticky;
         top: 0;
         left: 65px; /* bằng đúng width cột 1 */
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
-        min-width: 135px;
+        min-width: 100px;
     }
 
     .table-wrapper-scroll thead th:nth-child(6) {
         position: sticky;
         top: 0;
-        left: 200px; /* bằng đúng width cột 1 */
+        left: 165px; /* bằng đúng width cột 1 */
         z-index: 25;
         background-color: #f2f2f2;
         border-right: 1px solid #ccc !important;
     }
-
     /* Body - Cố định 2 cột (trừ dòng tổng) */
     .table-wrapper-scroll tbody tr td:nth-child(1) {
         position: sticky;
@@ -61,21 +48,21 @@
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        width: 65px;
+        min-width: 65px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(3):not(.khongapdung) {
+    .table-wrapper-scroll tbody tr td:nth-child(2):not(.khongapdung) {
         position: sticky;
         left: 65px; /* bằng đúng width cột 1 */
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
-        min-width: 135px;
+        min-width: 100px;
     }
 
     .table-wrapper-scroll tbody tr td:nth-child(6):not(.khongapdung) {
         position: sticky;
-        left: 200px; /* bằng đúng width cột 1 */
+        left: 165px; /* bằng đúng width cột 1 */
         z-index: 1;
         background-color: white;
         border-right: 1px solid #ccc !important;
@@ -96,7 +83,7 @@
         background-color: #bae7ff !important;
     }
 </style>
-    <link href="/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<!--Bỏ thuộc tính nowrap !important bên css-->
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -112,7 +99,7 @@
                     </div>
                 </div>
 
-                <div class="select-row" id="selectContainer"
+                <div class ="select-row" id="selectContainer"
                      style="margin: 5px; display: flex; padding:0;justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
                 </div>
 
@@ -146,7 +133,7 @@
                                    value='@DateTime.Now.ToString("dd-MM-yyyy")'
                                    placeholder="dd-mm-yyyy"
                                    autocomplete="off" />
-                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon2">
+                            <span class="input-group-text cursor-pointer datepicker-trigger" id="ngayDenNgay-icon">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6c757d">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
@@ -154,7 +141,8 @@
                         </div>
                         <span class="text-danger"></span>
                     </div>
-                    <label style="padding:0; margin: 5px 0px;">
+
+                    <label style="padding:0; margin:0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
                         </button>
@@ -162,10 +150,6 @@
 
                 </div>
                 <div style="padding:0; margin: 5px;" class="row export-buttons">
-                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
-                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
-                    </button>
-
                     <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
                         <i class="bi bi-file-earmark-excel"></i> Xuất Excel
                     </button>
@@ -183,22 +167,33 @@
 
                 <div class="table-wrapper-scroll">
                     <table style="margin: auto;" cellpadding="8">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="min-width: 65px;">STT</th>
-                                <th class="text-center text-nowrap">Số chứng từ</th>
-                                <th class="text-center" style="min-width: 135px;">Ngày thu</th>
-                                <th class="text-center text-nowrap">Giá trị</th>
-                                <th class="text-center text-nowrap">Mã bệnh nhân</th>
-                                <th class="text-center text-nowrap">Tên bệnh nhân</th>
-                                <th class="text-center text-nowrap">Năm sinh</th>
-                                <th class="text-center text-nowrap">Địa chỉ</th>
-                                <th class="text-center text-nowrap">Ngày tạo HDDT</th>
-                                <th class="text-center text-nowrap">E_Invoice No</th>
-                                <th class="text-center text-nowrap">Giá trị HDDT</th>
-                                <th class="text-center text-nowrap">Mã tra cứu</th>
-                            </tr>
-                        </thead>
+                    <thead>
+                        <tr>
+                            <th rowspan="3">STT</th>
+                            <th rowspan="3">Dịch Vụ</th>
+                            <th colspan="7">Số lần khám</th>
+                            <th rowspan="3" class="text-wrap text-center align-middle" style="max-width: 120px;">Số người bệnh vào viện</th>
+                            <th rowspan="3" class="text-wrap text-center align-middle" style="max-width: 120px;">Số người bệnh chuyển viện</th>
+                            <th colspan="4">Điều trị ngoại trú</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">Tổng số</th>
+                            <th colspan="6">Trong đó</th>
+                            <th rowspan="2">Số người bệnh</th>
+                            <th colspan="2">Trong đó</th>
+                            <th rowspan="2">Số ngày</th>
+                        </tr>
+                        <tr>
+                            <th>YHCT</th>
+                            <th>TE<6 tuổi</th>
+                            <th>Bảo hiểm y tế</th>
+                            <th>Viện phí</th>
+                            <th>Không thu được</th>
+                            <th>Cấp cứu</th>
+                            <th>YHCT</th>
+                            <th>TE<6 tuổi</th>
+                        </tr>
+                    </thead>
                         <tbody>
                         </tbody>
                     </table>
@@ -225,8 +220,8 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304/J0304BCHoaDonDienTuDV.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304/J0304HoatDongKhamBenh.js")" defer asp-append-version="true"></script>
     <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
     }

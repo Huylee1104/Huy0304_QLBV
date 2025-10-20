@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("0304Huy_Report")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+846335cc82b72162e8982f0c54424c94a773c96b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b89058ad73dfc55811a2d2f5ecc5ddad7c77dd7")]
 [assembly: System.Reflection.AssemblyProductAttribute("0304Huy_Report")]
 [assembly: System.Reflection.AssemblyTitleAttribute("0304Huy_Report")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

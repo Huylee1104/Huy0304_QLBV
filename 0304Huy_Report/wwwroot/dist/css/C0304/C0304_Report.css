@@ -44,7 +44,7 @@
     padding: 6px 8px;
     text-align: center;
     font-size: 13px;
-    white-space: nowrap !important;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }

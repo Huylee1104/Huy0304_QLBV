@@ -11,7 +11,6 @@ namespace M0304.Models.BangKeBanLeHangHoaDichVu
         public string? MauSo { get; set; }
         public string? MaSo { get; set; }
         public string? TenNhanVien { get; set; }
-        public string? DiaChi { get; set; }
         public string? TenHangHoa { get; set; }
         public string? DVT { get; set; }
         public double? SoLuong { get; set; }
@@ -41,6 +40,7 @@ namespace M0304.Models.BangKeBanLeHangHoaDichVu
         public List<M0304BangKeBanLeHangHoaDichVu> Data { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+        public long? idNhanVien { get; set; }
         public M0304ThongTinDoanhNghiep DoanhNghiep { get; set; }
     }
 }

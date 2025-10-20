@@ -68,12 +68,13 @@ namespace S0304BangKeThu.Services
                 };
             }
             var allData = await _context.M0304BangKeThus
-                .FromSqlRaw("EXEC dbo.[S0304_BangKeThuNgoaiTru] @TuNgay, @DenNgay, @IDCN, @IDHTTT, @IDNhanVien",
+                .FromSqlRaw("EXEC dbo.[S0304_BangKeThuNgoaiTru] @TuNgay, @DenNgay, @IDCN, @IDHTTT, @IDNhanVien, @Loai",
                     new SqlParameter("@TuNgay", ngayBatDau),
                     new SqlParameter("@DenNgay", ngayKetThuc),
                     new SqlParameter("@IDCN", idCN),
                     new SqlParameter("@IDHTTT", idHTTT),
-                    new SqlParameter("@IDNhanVien", idNhanVien))
+                    new SqlParameter("@IDNhanVien", idNhanVien),
+                    new SqlParameter("@Loai", idLoai))
                 .AsNoTracking()
                 .ToListAsync();
 

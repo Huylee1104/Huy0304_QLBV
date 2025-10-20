@@ -182,6 +182,7 @@ namespace C0304BangKeBanLeHangHoaDichVu.Controllers
                 TongCong = allTongSoTien
             };
         }
+
         private M0304ThongTinDoanhNghiep GetDoanhNghiepFromRequestOrSession(ExportRequest request, ISession session)
         {
             M0304ThongTinDoanhNghiep doanhNghiepObj = null;
@@ -219,9 +220,14 @@ namespace C0304BangKeBanLeHangHoaDichVu.Controllers
         {
             var doanhNghiepObj = GetDoanhNghiepFromRequestOrSession(request, session);
             var logoPath = "";
-
             var data = request.Data ?? new List<M0304BangKeBanLeHangHoaDichVu>();
-            var document = new P0304BangKeBanLeHangHoaDichVuExcelReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var tenNhanVien = "Tất cả";
+            if (request.idNhanVien != 0 && data.Any())
+            {
+                var ten = data[0].TenNhanVien;
+                tenNhanVien = string.IsNullOrWhiteSpace(ten) ? "Tất cả" : ten;
+            }
+            var document = new P0304BangKeBanLeHangHoaDichVuExcelReportTemplate(data, request.FromDate, request.ToDate, tenNhanVien,  doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
@@ -233,7 +239,14 @@ namespace C0304BangKeBanLeHangHoaDichVu.Controllers
             var logoPath ="";
 
             var data = request.Data ?? new List<M0304BangKeBanLeHangHoaDichVu>();
-            var document = new P0304BangKeBanLeHangHoaDichVuReportTemplatePDF(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var tenNhanVien = "Tất cả";
+            if (request.idNhanVien != 0 && data.Any())
+            {
+                var ten = data[0].TenNhanVien;
+                tenNhanVien = string.IsNullOrWhiteSpace(ten) ? "Tất cả" : ten;
+            }
+
+            var document = new P0304BangKeBanLeHangHoaDichVuReportTemplatePDF(data, request.FromDate, request.ToDate, tenNhanVien, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;

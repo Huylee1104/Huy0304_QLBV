@@ -18,12 +18,14 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private string _ngayBatDau;
         private string _ngayKetThuc;
+        private string _tenNhanVien;
         private readonly string _logoPath;
 
         public P0304BangKeBanLeHangHoaDichVuReportTemplatePDF(
             List<M0304BangKeBanLeHangHoaDichVu> data,
             string ngayBatDau,
             string ngayKetThuc,
+            string tenNhanVien,
             M0304ThongTinDoanhNghiep dataDN,
             string logoPath = null
         )
@@ -32,6 +34,7 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _ngayBatDau = ngayBatDau;
             _ngayKetThuc = ngayKetThuc;
+            _tenNhanVien = tenNhanVien;
             _logoPath = logoPath;
         }
 
@@ -106,6 +109,7 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
 
                         });
                     });
+
                     col.Item().AlignLeft().Column(center =>
                     {
                         center.Item()
@@ -115,16 +119,16 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
                     col.Item().AlignLeft().Column(center =>
                     {
                         center.Item()
-                            .Text(text =>
-                            {
-                                text.Span("Họ tên người bán: ").FontSize(10);
-                                text.Span($"{_data[0].TenNhanVien ?? ""}").FontSize(10).Bold();
-                            });
+                        .Text(text =>
+                        {
+                            text.Span("Họ tên người bán: ").FontSize(10);
+                            text.Span(_tenNhanVien).FontSize(10).Bold();
+                        });
                     });
                     col.Item().AlignLeft().Column(center =>
                     {
                         center.Item()
-                            .Text($"Địa chỉ nơi bán: {_data[0].DiaChi}" ?? "")
+                            .Text($"Địa chỉ nơi bán: {_dataDN.DiaChi}" ?? "")
                             .FontSize(10);
                     });
                 });

@@ -73,8 +73,6 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
-    let idKhoHang = $('.tomselect-khoHang').val();
-    let idNhanVien = $('.tomselect-nhanVien').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -82,6 +80,7 @@ function filterData(isPagination = false) {
         toastr.error("Vui lòng chọn từ ngày và đến ngày");
         return;
     }
+
     function parseDMY(s) {
         const p = s.split('-');
         return new Date(p[2], p[1] - 1, p[0]);
@@ -99,18 +98,15 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
-        idKhoHang: idKhoHang,
-        idNhanVien: idNhanVien || 0,
         page: currentPage,
         pageSize: pageSize
     }
     $.ajax({
-        url: '/bang_ke_ban_le_hang_hoa_dich_vu/filter',
+        url: '/hoat_dong_kham_benh/filter',
         type: 'POST',
         data: payload,
         success: function (response) {
             console.log(response);
-            console.log(payload);
             if (response.success) {
                 updateTable(response);
                 window.filteredData = Array.isArray(response.data) ? response.data : (response.data ? [response.data] : []);
@@ -139,7 +135,7 @@ function filterData(isPagination = false) {
 function ajaxFilterRequest(payload) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: '/bang_ke_ban_le_hang_hoa_dich_vu/filter',
+            url: '/hoat_dong_kham_benh/filter',
             type: 'POST',
             data: payload,
             success: function (resp) { resolve(resp); },
@@ -148,14 +144,12 @@ function ajaxFilterRequest(payload) {
     });
 }
 
-function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhanVien) {
+function fetchAllFilteredData(tuNgay, denNgay) {
     return new Promise((resolve, reject) => {
         const basePayload = {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
-            idKhoHang: idKhoHang,
-            idNhanVien: idNhanVien || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -179,8 +173,6 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhanVien) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
-                    idKhoHang: idKhoHang || 0,
-                    idNhanVien: idNhanVien || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -204,10 +196,8 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhanVien) {
 function validateExportDatesAndData() {
     const tuNgay = $('#ngayTuNgay').val();
     const denNgay = $('#ngayDenNgay').val();
-    let khoHang = $('.tomselect-khoHang').val();
-    let nhanVien = $('.tomselect-nhanVien').val();
 
-    if (!tuNgay && !denNgay ) {
+    if (!tuNgay && !denNgay) {
         if (!window.filteredData || window.filteredData.length === 0) {
             toastr.error("Không có dữ liệu để xuất");
             return false;
@@ -218,6 +208,7 @@ function validateExportDatesAndData() {
         toastr.error("Vui lòng chọn cả từ ngày và đến ngày");
         return false;
     }
+
     function parseDMY(s) {
         const parts = s.split('-');
         return new Date(parts[2], parts[1] - 1, parts[0]);
@@ -239,13 +230,11 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idKhoHang: $('.tomselect-khoHang').val() || 0,
-        idNhanVien: $('.tomselect-nhanVien').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
     $.ajax({
-        url: '/bang_ke_ban_le_hang_hoa_dich_vu/export/excel',
+        url: '/hoat_dong_kham_benh/export/excel',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(requestData),
@@ -259,7 +248,7 @@ function doExportExcel(finalData, btn, originalHtml) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `BangKeBanLeHangHoaDichVu_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
+            a.download = `BaoCaoHoatDong_${requestData.fromDate || 'all'}_den_${requestData.toDate || 'now'}.xlsx`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -288,11 +277,9 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idKhoHang = $('.tomselect-khoHang').val();
-    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idKhoHang, idNhanVien)
+        fetchAllFilteredData(tu, den)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -312,12 +299,10 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idKhoHang: $('.tomselect-khoHang').val(),
-        idNhanVien: $('.tomselect-nhanVien').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
 
-    fetch("/bang_ke_ban_le_hang_hoa_dich_vu/export/pdf", {
+    fetch("/hoat_dong_kham_benh/export/pdf", {
         method: "POST",
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf' },
         body: JSON.stringify(requestData)
@@ -361,11 +346,9 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idKhoHang = $('.tomselect-khoHang').val() || 0;
-    const idNhanVien = $('.tomselect-nhanVien').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idKhoHang, idNhanVien)
+        fetchAllFilteredData(tu, den)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -400,6 +383,7 @@ function formatCurrency(value) {
 
 
 // ==================== CẬP NHẬT BẢNG ====================
+
 function updateTable(response) {
     const tbody = $('.container_Team3.right tbody');
     tbody.empty();
@@ -418,37 +402,37 @@ function updateTable(response) {
     } else if (response && response.data) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
-    const rowNhanVien = `
-        <tr>
-            <td colspan = "2" class = "text-start fw-bold">${data[0].tenNhanVien || data[0].TenNhanVien || ''}</td>
-            <td class= "khongapdung" colspan = "4"></td>
-        </tr>
-    `;
-    tbody.append(rowNhanVien);
+
     if (data.length > 0) {
+        let tongSoLuong = 0;
+        let tongHoaDon = 0;
         data.forEach((item, index) => {
             const stt = (currentPage - 1) * pageSize + index + 1;
+            tongSoLuong += Number(item.soLuong || item.SoLuong || 0);
+            tongHoaDon += Number(item.tongHoaDon || item.TongHoaDon || 0);
             const row = `
                 <tr>
-                    <td class = "text-center text-nowrap" style= "width: 65px;" >${stt}</td>                    
-                    <td class = "text-start text-nowrap " >${item.tenHangHoa || item.TenHangHoa || ''}</td>                                      
-                    <td class = "text-center text-nowrap" >${item.dvt || item.DVT || ''}</td>                                      
-                    <td class = "text-center text-nowrap" >${item.soLuong || item.SoLuong || ''}</td>                                                                                                              
-                    <td class = "text-end text-nowrap" >${formatCurrency(item.donGiaBan || item.DonGiaBan || '')}</td>                                                                        
-                    <td class = "text-end text-nowrap" >${formatCurrency(item.thanhTien || item.ThanhTien || '')}</td>                                                                        
+                    <td class = "text-center text-nowrap" style = "width: 65px;">${stt}</td>
+                    <td class = "text-start text-nowrap">${item.nhomDichVu || item.NhomDichVu || ''}</td>
+                    <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
+                    <td class = "text-end text-nowrap">${item.soLuong || item.SoLuong}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
                 </tr>
             `;
             tbody.append(row);
         });
-        const rowTongCong = `
-        <tr class = "fw-bold">
-            <td class = "text-end" colspan = "2">Tổng cộng</td>
-            <td class = "text-end khongapdung" colspan = "4">${formatCurrency(response.allSoTien || response.AllSoTien || '')}</td>
-        </tr>
-    `;
-        tbody.append(rowTongCong);
+
+        const totalRow = `
+                <tr class="fw-bold">
+                    <td colspan = "2" class="text-end text-nowrap">Tổng cộng</td>
+                    <td class="text-start text-nowrap khongapdung"></td>
+                    <td class="text-end text-nowrap">${tongSoLuong}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(tongHoaDon)}</td>
+                </tr>
+            `;
+        tbody.append(totalRow);
     } else {
-        tbody.append('<tr><td colspan="6" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 
@@ -466,51 +450,4 @@ $(document).ready(function () {
     initDateInputFormatting(config);
     initDatePicker(config);
     initDateRangeConstraint(config);
-});
-
-// ==================== LOAD COMBOBOX ====================
-$.getJSON("dist/data/json/Dm_KhoHang.json", dataKhoHang => {
-    listKhoHang = dataKhoHang
-        .filter(n =>
-            (n.active === true || n.active === 1)
-        )
-        .map(n => ({
-            ...n,
-            alias: n.viettat?.trim() !== ""
-                ? n.viettat.toUpperCase()
-                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
-        }));
-    const configs = [
-        {
-            className: ".tomselect-khoHang",
-            dieuKien: function (response) {
-                return response.filter(x => x.id);
-            }
-        }
-    ];
-
-    configCb(configs, listKhoHang);
-});
-
-$.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
-    listNhanVien = dataNhanVien
-        .filter(n =>
-            (n.active === true || n.active === 1)
-        )
-        .map(n => ({
-            ...n,
-            alias: n.viettat?.trim() !== ""
-                ? n.viettat.toUpperCase()
-                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
-        }));
-    const configs = [
-        {
-            className: ".tomselect-nhanVien",
-            dieuKien: function (response) {
-                return response.filter(x => x.id);
-            }
-        }
-    ];
-
-    configCb(configs, listNhanVien);
 });

@@ -135,135 +135,145 @@ namespace P0304.PDFDocument
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số tiền");
                         });
 
+                        var groupedData = _data
+                        .GroupBy(item => item.TenNhanVien?.ToUpper() ?? "Không rõ")
+                        .ToDictionary(
+                            g => g.Key,
+                            g => g.ToList()
+                        );
+
                         int stt = 1;
 
-                        if (_danhSachNhanVien != null && _danhSachNhanVien.Any())
+                        // Step 2: Iterate through each employee
+                        foreach (var nv in groupedData.Keys.OrderBy(k => k))
                         {
-                            foreach (var nv in _danhSachNhanVien)
+                            // Print employee header
+                            table.Cell().ColumnSpan(10)
+                                .Element(CellStyle)
+                                .AlignLeft()
+                                .Text(nv)
+                                .FontSize(8)
+                                .Bold();
+
+                            // Step 3: Group items for this employee by QuyenSo
+                            var itemsForNhanVien = groupedData[nv];
+                            var groupedByQuyenSo = itemsForNhanVien
+                                .GroupBy(item => item.QuyenSo ?? "Không rõ")
+                                .ToDictionary(
+                                    g => g.Key,
+                                    g => g.OrderBy(item => item.QuyenSo ?? "Không rõ", StringComparer.OrdinalIgnoreCase).ToList()
+                                );
+
+                            // Step 4: Iterate through each QuyenSo for this employee
+                            foreach (var quyenSo in groupedByQuyenSo.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase))
                             {
-                                table.Cell().ColumnSpan(10)
-                                    .Element(CellStyle)
+                                var quyenSoList = groupedByQuyenSo[quyenSo];
+                                decimal tongHuyQS = 0m;
+                                decimal tongHoanQS = 0m;
+                                decimal tongSoTienQS = 0m;
+
+                                // Calculate totals for this QuyenSo
+                                foreach (var item in quyenSoList)
+                                {
+                                    tongHuyQS += item.Huy ?? 0m;
+                                    tongHoanQS += item.Hoan ?? 0m;
+                                    tongSoTienQS += item.SoTien ?? 0m;
+                                }
+
+                                // Get MaNhanVien and Seri from the first item
+                                var firstItem = quyenSoList.First();
+                                var maNV = firstItem.MaNhanVien ?? "";
+                                var seri = firstItem.Seri ?? "";
+                                // Get max NgayThu for this QuyenSo (keep as per PDF requirement)
+                                DateTime? ngayThu = quyenSoList.Max(d => d.NgayThu);
+
+                                // Print QuyenSo header
+                                table.Cell().ColumnSpan(6)
+                                    .Element(CellStyleLeft)
                                     .AlignLeft()
-                                    .Text(nv.TenNhanVien?.ToUpper() ?? "")
+                                    .Text($"      {maNV} - {seri}.{quyenSo}")
+                                    .FontSize(9)
+                                    .Bold();
+
+                                table.Cell()
+                                    .Element(CellStyleNoBorder)
+                                    .AlignCenter()
+                                    .Text(ngayThu.HasValue ? ngayThu.Value.ToString("dd-MM-yyyy") : "")
                                     .FontSize(8)
                                     .Bold();
 
-                                var quyenSoList = _tongTheoQuyenSo
-                                    .Where(q => _data.Any(d => d.IDNhanVien == nv.ID && d.QuyenSo == q.QuyenSo))
-                                    .ToList();
+                                table.Cell()
+                                    .Element(CellStyleNoBorder)
+                                    .AlignRight()
+                                    .Text(tongHuyQS.ToString("N0"))
+                                    .FontSize(8)
+                                    .Bold();
 
-                                foreach (var qs in quyenSoList)
+                                table.Cell()
+                                    .Element(CellStyleNoBorder)
+                                    .AlignRight()
+                                    .Text(tongHoanQS.ToString("N0"))
+                                    .FontSize(8)
+                                    .Bold();
+
+                                table.Cell()
+                                    .Element(CellStyleRight)
+                                    .AlignRight()
+                                    .Text(tongSoTienQS.ToString("N0"))
+                                    .FontSize(8)
+                                    .Bold();
+
+                                // Step 5: Print details for each item in this QuyenSo
+                                foreach (var item in quyenSoList)
                                 {
-                                    // Lấy tất cả bản ghi của NV hiện tại trong quyển sổ này
-                                    var chiTietNvQs = _data
-                                        .Where(d => d.IDNhanVien == nv.ID && d.QuyenSo == qs.QuyenSo)
-                                        .ToList();
-
-                                    // Seri thực tế theo NV (nếu có, fallback về qs.Seri)
-                                    var seriForNv = qs.Seri ?? "";
-
-                                    // Tổng theo NV cho quyển sổ
-                                    var tongTheoNVvaQS = chiTietNvQs
-                                        .GroupBy(x => x.QuyenSo)
-                                        .Select(g => new
-                                        {
-                                            TongHuy = g.Sum(x => x.Huy ?? 0m),
-                                            TongHoan = g.Sum(x => x.Hoan ?? 0m),
-                                            TongSoTien = g.Sum(x => x.SoTien ?? 0m)
-                                        })
-                                        .FirstOrDefault() ?? new { TongHuy = 0m, TongHoan = 0m, TongSoTien = 0m };
-
-                                    // Ngày thu lớn nhất trong quyển sổ của NV
-                                    DateTime? ngayThu = chiTietNvQs.Max(d => d.NgayThu);
-
-                                    // Header nhóm: Mã NV - Seri.QuyểnSố
-                                    table.Cell().ColumnSpan(6)
-                                        .Element(CellStyleLeft)
-                                        .AlignLeft()
-                                        .Text($"      {nv.MaNhanVien} - {seriForNv}.{qs.QuyenSo}")
-                                        .FontSize(9)
-                                        .Bold();
-
                                     table.Cell()
-                                        .Element(CellStyleNoBorder)
+                                        .Element(CellStyle)
                                         .AlignCenter()
-                                        .Text(ngayThu.HasValue ? ngayThu.Value.ToString("dd-MM-yyyy") : "")
-                                        .FontSize(8)
-                                        .Bold();
+                                        .Text((stt++).ToString());
 
                                     table.Cell()
-                                        .Element(CellStyleNoBorder)
-                                        .AlignRight()
-                                        .Text(tongTheoNVvaQS.TongHuy.ToString("N0"))
-                                        .FontSize(8)
-                                        .Bold();
+                                        .Element(CellStyle)
+                                        .AlignCenter()
+                                        .Text(item.MaYTe ?? "");
 
                                     table.Cell()
-                                        .Element(CellStyleNoBorder)
-                                        .AlignRight()
-                                        .Text(tongTheoNVvaQS.TongHoan.ToString("N0"))
-                                        .FontSize(8)
-                                        .Bold();
+                                        .Element(CellStyle)
+                                        .Text(item.HoVaTen ?? "");
 
                                     table.Cell()
-                                        .Element(CellStyleRight)
+                                        .Element(CellStyle)
+                                        .AlignCenter()
+                                        .Text(item.QuyenSo ?? "");
+
+                                    table.Cell()
+                                        .Element(CellStyle)
+                                        .AlignCenter()
+                                        .Text(item.SoBienLai ?? "");
+
+                                    table.Cell()
+                                        .Element(CellStyle)
+                                        .AlignCenter()
+                                        .Text(item.Loai ?? "");
+
+                                    table.Cell()
+                                        .Element(CellStyle)
+                                        .AlignCenter()
+                                        .Text(item.NgayThu.HasValue ? item.NgayThu.Value.ToString("dd-MM-yyyy") : "");
+
+                                    table.Cell()
+                                        .Element(CellStyle)
                                         .AlignRight()
-                                        .Text(tongTheoNVvaQS.TongSoTien.ToString("N0"))
-                                        .FontSize(8)
-                                        .Bold();
+                                        .Text(item.Huy.HasValue ? item.Huy.Value.ToString("N0") : "");
 
-                                    // Chi tiết từng dòng
-                                    foreach (var item in chiTietNvQs)
-                                    {
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text((stt++).ToString());
+                                    table.Cell()
+                                        .Element(CellStyle)
+                                        .AlignRight()
+                                        .Text(item.Hoan.HasValue ? item.Hoan.Value.ToString("N0") : "");
 
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text(item.MaYTe ?? "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .Text(item.HoVaTen ?? "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text(item.QuyenSo ?? "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text(item.SoBienLai ?? "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text(item.Loai ?? "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignCenter()
-                                            .Text(item.NgayThu.HasValue ? item.NgayThu.Value.ToString("dd-MM-yyyy") : "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignRight()
-                                            .Text(item.Huy.HasValue ? item.Huy.Value.ToString("N0") : "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignRight()
-                                            .Text(item.Hoan.HasValue ? item.Hoan.Value.ToString("N0") : "");
-
-                                        table.Cell()
-                                            .Element(CellStyle)
-                                            .AlignRight()
-                                            .Text(item.SoTien.HasValue ? item.SoTien.Value.ToString("N0") : "");
-                                    }
+                                    table.Cell()
+                                        .Element(CellStyle)
+                                        .AlignRight()
+                                        .Text(item.SoTien.HasValue ? item.SoTien.Value.ToString("N0") : "");
                                 }
                             }
                         }

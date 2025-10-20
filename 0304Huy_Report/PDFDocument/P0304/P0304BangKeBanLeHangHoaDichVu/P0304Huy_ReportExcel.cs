@@ -13,6 +13,7 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
     private readonly List<M0304BangKeBanLeHangHoaDichVu> _data;
     private string _ngayBatDau;
     private string _ngayKetThuc;
+    private string _tenNhanVien;
     private readonly M0304ThongTinDoanhNghiep _dataDN;
     private readonly string _logoPath;
 
@@ -20,6 +21,7 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
         List<M0304BangKeBanLeHangHoaDichVu> data,
         string ngayBatDau,
         string ngayKetThuc,
+        string tenNhanVien,
         M0304ThongTinDoanhNghiep dataDN,
         string logoPath = null
     )
@@ -27,6 +29,8 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
         _data = data ?? new List<M0304BangKeBanLeHangHoaDichVu>();
         _ngayBatDau = ngayBatDau;
         _ngayKetThuc = ngayKetThuc;
+        _tenNhanVien = tenNhanVien;
+        _dataDN = dataDN;
         _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
         _logoPath = logoPath;
     }
@@ -99,12 +103,12 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
             currentRow++;
 
             ws.Range(currentRow, 2, currentRow, 7).Merge();
-            ws.Cell(currentRow, 2).Value = $"Họ tên người bán: {_data.FirstOrDefault()?.TenNhanVien ?? ""}";
+            ws.Cell(currentRow, 2).Value = $"Họ tên người bán: {_tenNhanVien}";
             ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
             currentRow++;
 
             ws.Range(currentRow, 2, currentRow, 7).Merge();
-            ws.Cell(currentRow, 2).Value = $"Địa chỉ nơi bán: {_data.FirstOrDefault()?.DiaChi ?? ""}";
+            ws.Cell(currentRow, 2).Value = $"Địa chỉ nơi bán: {_dataDN.DiaChi ?? ""}";
             ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
             currentRow += 2;
 
@@ -175,20 +179,20 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
 
             ws.Cell(currentRow, 3).Value = "BAN ĐIỀU HÀNH";
             ws.Cell(currentRow, 3).Style.Font.Bold = true;
-            ws.Cell(currentRow, 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            ws.Cell(currentRow, 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
             ws.Range(currentRow, 4, currentRow, 5).Merge();
             ws.Cell(currentRow, 4).Value = "THỦ QUỸ";
             ws.Cell(currentRow, 4).Style.Font.Bold = true;
-            ws.Cell(currentRow, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            ws.Cell(currentRow, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
             ws.Cell(currentRow, 6).Value = "NGƯỜI BÁN";
             ws.Cell(currentRow, 6).Style.Font.Bold = true;
-            ws.Cell(currentRow, 6).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            ws.Cell(currentRow, 6).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
             ws.Cell(currentRow, 7).Value = "KẾ TOÁN";
             ws.Cell(currentRow, 7).Style.Font.Bold = true;
-            ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
 
             ws.Columns().AdjustToContents();
