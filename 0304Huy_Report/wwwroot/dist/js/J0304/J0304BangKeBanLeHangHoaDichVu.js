@@ -73,7 +73,7 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
-    let idKhoHang = $('.tomselect-khoHang').val();
+    let idKhoHang = $('.tomselect-khoHang').val() || 0;
     let idNhanVien = $('.tomselect-nhanVien').val() || 0;
     if (!isPagination) {
         firstLoad = true;
@@ -99,7 +99,7 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
-        idKhoHang: idKhoHang,
+        idKhoHang: idKhoHang || 0,
         idNhanVien: idNhanVien || 0,
         page: currentPage,
         pageSize: pageSize
@@ -154,7 +154,7 @@ function fetchAllFilteredData(tuNgay, denNgay, idKhoHang, idNhanVien) {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
-            idKhoHang: idKhoHang,
+            idKhoHang: idKhoHang || 0,
             idNhanVien: idNhanVien || 0,
             page: 1,
             pageSize: pageSize
@@ -288,7 +288,7 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
-    const idKhoHang = $('.tomselect-khoHang').val();
+    const idKhoHang = $('.tomselect-khoHang').val() || 0;
     const idNhanVien = $('.tomselect-nhanVien').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
@@ -312,7 +312,7 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
-        idKhoHang: $('.tomselect-khoHang').val(),
+        idKhoHang: $('.tomselect-khoHang').val() || 0,
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
         doanhNghiep: window.doanhNghiep || null
     };
@@ -465,7 +465,7 @@ $(document).ready(function () {
 $.getJSON("dist/data/json/Dm_KhoHang.json", dataKhoHang => {
     listKhoHang = dataKhoHang
         .filter(n =>
-            (n.active === true || n.active === 1)
+            ((n.active === true || n.active === 1) && Number(n.idchinhanh) === Number(_idcn))
         )
         .map(n => ({
             ...n,
