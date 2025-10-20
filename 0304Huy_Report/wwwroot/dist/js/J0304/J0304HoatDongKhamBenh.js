@@ -375,9 +375,9 @@ function formatDate(dateString) {
 }
 
 function formatCurrency(value) {
-    return (value || 0.00).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+    return (value || 0).toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
     });
 }
 
@@ -404,35 +404,50 @@ function updateTable(response) {
     }
 
     if (data.length > 0) {
-        let tongSoLuong = 0;
-        let tongHoaDon = 0;
-        data.forEach((item, index) => {
-            const stt = (currentPage - 1) * pageSize + index + 1;
-            tongSoLuong += Number(item.soLuong || item.SoLuong || 0);
-            tongHoaDon += Number(item.tongHoaDon || item.TongHoaDon || 0);
-            const row = `
-                <tr>
-                    <td class = "text-center text-nowrap" style = "width: 65px;">${stt}</td>
-                    <td class = "text-start text-nowrap">${item.nhomDichVu || item.NhomDichVu || ''}</td>
-                    <td class = "text-start" style = "min-width: 500px; max-width: 600px;">${item.dichVu || item.DichVu || ''}</td>
-                    <td class = "text-end text-nowrap">${item.soLuong || item.SoLuong}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.tongHoaDon || item.TongHoaDon || '')}</td>
-                </tr>
-            `;
-            tbody.append(row);
-        });
-
         const totalRow = `
                 <tr class="fw-bold">
                     <td colspan = "2" class="text-end text-nowrap">Tổng cộng</td>
                     <td class="text-start text-nowrap khongapdung"></td>
-                    <td class="text-end text-nowrap">${tongSoLuong}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(tongHoaDon)}</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allTongSo || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allYHCT || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allTreEmDuoi6 || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allBHYT || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allVienPhi || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allKhongThuDuoc || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allSoNguoiVaoVien || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allSoNguoiChuyenVien || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allSoNguoiBenh || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allNTYHCT || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allNTTreEmDuoi6 || '') }</td>
+                    <td class="text-end text-nowrap">${formatCurrency(response.allSoNgay || '') }</td>
                 </tr>
             `;
         tbody.append(totalRow);
+        data.forEach((item, index) => {
+            const stt = (currentPage - 1) * pageSize + index + 1;
+            const row = `
+                <tr>
+                    <td class = "text-center text-nowrap" style = "width: 65px;">${stt}</td>
+                    <td class = "text-start text-nowrap">${item.dichVu || item.DichVu || ''}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.tongSo || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.yHocCoTruyen || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.treEmDuoi6Tuoi || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.bhyt || item.BHYT || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.vienPhi || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.khongThuDuoc || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.capCuu || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.soNguoiVaoVien || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.soNguoiChuyenVien || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.ntSoNguoiBenh || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.ntYHocCoTruyen || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.ntTreEmDuoi6Tuoi || '')}</td>
+                    <td class = "text-end text-nowrap">${formatCurrency(item.ntSoNgay || '')}</td>
+                </tr>
+            `;
+            tbody.append(row);
+        });
     } else {
-        tbody.append('<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>');
+        tbody.append('<tr><td colspan="15" class="text-center">Không có dữ liệu</td></tr>');
     }
 }
 

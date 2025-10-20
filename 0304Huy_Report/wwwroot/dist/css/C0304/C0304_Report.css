@@ -92,7 +92,7 @@
 
 .table-wrapper-scroll thead tr:nth-child(2) th {
     top: 30px; /* đúng bằng chiều cao dòng 1 */
-    background-color: white !important;
+    background-color: white;
 }
 
 .column-toggle-dropdown:hover .dropdown-menu {

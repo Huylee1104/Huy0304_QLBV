@@ -153,7 +153,7 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Tên hàng hóa dịch vụ");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("ĐVT");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Số lượng");
-                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Đơn vị bán");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Đơn giá bán");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Thành tiền bán");
                         });
 

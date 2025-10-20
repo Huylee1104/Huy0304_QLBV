@@ -56,11 +56,11 @@ namespace C0304HoatDongKhamBenh.Controllers
         }
 
         [HttpPost("filter")]
-        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, long? idNhanVien = null, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> FilterByDay(string tuNgay, string denNgay, long IdChiNhanh, int page = 1, int pageSize = 20)
         {
             try
             {
-                var result = await GetHoatDongKhamBenh(tuNgay, denNgay, IdChiNhanh, idNhanVien, page, pageSize);
+                var result = await GetHoatDongKhamBenh(tuNgay, denNgay, IdChiNhanh, page, pageSize);
 
                 if (!result.HoatDongKhamBenh.Success)
                 {
@@ -121,7 +121,7 @@ namespace C0304HoatDongKhamBenh.Controllers
 
 
         private async Task<M0304HoatDongKhamBenhResponse> GetHoatDongKhamBenh(string ngayBatDau, string ngayKetThuc, long idCN,
-            long? idNhanVien = null, int page = 1, int pageSize = 20)
+             int page = 1, int pageSize = 20)
         {
             var doanhNghiep = await _thongTinDoanhNghiepService.GetThongTinDoanhNghiep(idCN);
 

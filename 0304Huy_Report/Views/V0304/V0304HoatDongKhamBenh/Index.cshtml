@@ -23,7 +23,7 @@
         min-width: 65px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(2) {
+    .table-wrapper-scroll thead th:nth-child(2):not(.khongapdung) {
         position: sticky;
         top: 0;
         left: 65px; /* bằng đúng width cột 1 */
@@ -33,14 +33,6 @@
         min-width: 100px;
     }
 
-    .table-wrapper-scroll thead th:nth-child(6) {
-        position: sticky;
-        top: 0;
-        left: 165px; /* bằng đúng width cột 1 */
-        z-index: 25;
-        background-color: #f2f2f2;
-        border-right: 1px solid #ccc !important;
-    }
     /* Body - Cố định 2 cột (trừ dòng tổng) */
     .table-wrapper-scroll tbody tr td:nth-child(1) {
         position: sticky;
@@ -60,14 +52,6 @@
         min-width: 100px;
     }
 
-    .table-wrapper-scroll tbody tr td:nth-child(6):not(.khongapdung) {
-        position: sticky;
-        left: 165px; /* bằng đúng width cột 1 */
-        z-index: 1;
-        background-color: white;
-        border-right: 1px solid #ccc !important;
-    }
-
     /* Hover cho dữ liệu thường */
     .table-wrapper-scroll tbody tr:hover td {
         background-color: #bae7ff !important;
@@ -84,6 +68,9 @@
     }
 </style>
 <!--Bỏ thuộc tính nowrap !important bên css-->
+    <link rel="stylesheet" href="@Url.Content("~/dist/libs/bootstrap-icons/font/bootstrap-icons.css")" />
+    <link href="/dist/libs/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="/dist/css/toastr.min.css?1684106062" rel="stylesheet" />
     <div class="card p-1">
         <div class="container_Team3">
             <div class="container_Team3 left">
@@ -150,8 +137,8 @@
 
                 </div>
                 <div style="padding:0; margin: 5px;" class="row export-buttons">
-                    <button id="btnExportExcel" class="btn btn-outline-success mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
-                        <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+                    <button id="btnExportPDF" class="btn btn-outline-danger mb-3" @((ViewBag.quyenVaiTro != null && ViewBag.quyenVaiTro.Xuat) ? "" : "disabled")>
+                        <i class="bi bi-file-earmark-pdf"></i> Xuất PDF
                     </button>
                 </div>
             </div>
@@ -177,16 +164,16 @@
                             <th colspan="4">Điều trị ngoại trú</th>
                         </tr>
                         <tr>
-                            <th rowspan="2">Tổng số</th>
-                            <th colspan="6">Trong đó</th>
-                            <th rowspan="2">Số người bệnh</th>
-                            <th colspan="2">Trong đó</th>
-                            <th rowspan="2">Số ngày</th>
+                            <th class="khongapdung" style="background-color: #f2f2f2 !important; z-index: 21" rowspan="2">Tổng số</th>
+                            <th class="khongapdung" style="background-color: #f2f2f2 !important;" colspan="6">Trong đó</th>
+                            <th class="khongapdung" style="background-color: #f2f2f2 !important;" rowspan="2">Số người bệnh</t>
+                            <th class="khongapdung" style="background-color: #f2f2f2 !important;" colspan="2">Trong đó</th>
+                            <th class="khongapdung" style="background-color: #f2f2f2 !important;" rowspan="2">Số ngày</th>
                         </tr>
                         <tr>
-                            <th>YHCT</th>
-                            <th>TE<6 tuổi</th>
-                            <th>Bảo hiểm y tế</th>
+                            <th class="khongapdung" style="z-index: 21">YHCT</th>
+                            <th class="khongapdung">TE<6 tuổi</th>
+                            <th class="khongapdung">Bảo hiểm y tế</th>
                             <th>Viện phí</th>
                             <th>Không thu được</th>
                             <th>Cấp cứu</th>
@@ -222,6 +209,10 @@
         </div>
     </div>
     @section Scripts {
+    <script src="~/dist/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js" defer></script>
+    <script src="~/dist/libs/bootstrap-datepicker/locales/bootstrap-datepicker.vi.min.js" defer></script>
+    <script src="~/dist/libs/toast/toastr.min.js" defer></script>
+    <script src="@Url.Content("~/dist/js/BienChung.js")" defer asp-append-version="true"></script>
     <script src="@Url.Content("~/dist/js/J0304/J0304HoatDongKhamBenh.js")" defer asp-append-version="true"></script>
     <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
     }

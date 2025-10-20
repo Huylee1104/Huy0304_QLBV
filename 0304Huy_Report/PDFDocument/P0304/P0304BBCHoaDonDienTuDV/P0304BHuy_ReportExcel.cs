@@ -52,32 +52,32 @@ public class P0304BExcelReportTemplate
                 ws.Row(1).AdjustToContents();
             }
 
-            ws.Range(1, 3, 1, 13).Merge();
+            ws.Range(1, 3, 1, 14).Merge();
             ws.Cell(1, 3).Value = _dataDN.TenCSKCB ?? "";
             ws.Cell(1, 2).Style.Font.FontSize = 9;
 
-            ws.Range(2, 3, 2, 13).Merge();
+            ws.Range(2, 3, 2, 14).Merge();
             ws.Cell(2, 3).Value = _dataDN.TenCoQuanChuyenMon ?? "";
             ws.Cell(2, 3).Style.Font.FontSize = 9;
 
-            ws.Range(3, 3, 3, 13).Merge();
+            ws.Range(3, 3, 3, 14).Merge();
             ws.Cell(3, 3).Value = _dataDN.DiaChi ?? "";
             ws.Cell(3, 3).Style.Font.FontSize = 9;
 
-            ws.Range(4, 3, 4, 13).Merge();
+            ws.Range(4, 3, 4, 14).Merge();
             ws.Cell(4, 3).Value = _dataDN.DienThoai ?? "";
             ws.Cell(4, 3).Style.Font.FontSize = 9;
 
             currentRow += 5;
 
-            ws.Range(currentRow, 2, currentRow, 13).Merge();
+            ws.Range(currentRow, 2, currentRow, 14).Merge();
             ws.Cell(currentRow, 2).Value = "BÁO CÁO HÓA ĐƠN ĐIỆN TỬ DỊCH VỤ";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             currentRow++;
 
-            ws.Range(currentRow, 2, currentRow, 13).Merge();
+            ws.Range(currentRow, 2, currentRow, 14).Merge();
             DateTime dtStart, dtEnd;
             if (DateTime.TryParse(_ngayBatDau, out dtStart) && DateTime.TryParse(_ngayKetThuc, out dtEnd))
             {
@@ -94,7 +94,7 @@ public class P0304BExcelReportTemplate
             string[] headers = new string[]
             {
             "STT", "Số chứng từ", "Ngày thu", "Giá trị", "Mã bệnh nhân",
-            "Tên bệnh nhân", "Năm sinh", "Địa chỉ", "Ngày tạo HDDT", "E_InvoiceNo", "Giá trị HDDT", "Mã truy cứu"
+            "Tên bệnh nhân", "Năm sinh", "Địa chỉ", "Ngày tạo HDDT", "E_InvoiceNo", "Giá trị HDDT", "Ngày hủy HDDT", "Mã truy cứu"
             };
             for (int i = 0; i < headers.Length; i++)
             {
@@ -157,6 +157,7 @@ public class P0304BExcelReportTemplate
                 SetDateCell(ws.Cell(currentRow, col++), item.NgayTaoHDDT);
                 SetCenterCell(ws.Cell(currentRow, col++), item.E_InvoiceNo);
                 SetNumberCell(ws.Cell(currentRow, col++), item.GiaTriHDDT);
+                SetDateCell(ws.Cell(currentRow, col++), item.NgayHuyHD);
                 SetCenterCell(ws.Cell(currentRow, col++), item.MaTraCuu);
                 currentRow++;
             }
@@ -177,13 +178,13 @@ public class P0304BExcelReportTemplate
             int firstRow = 8;
             int lastRow = currentRow;
             int firstCol = 2;
-            int lastCol = 13;
+            int lastCol = 14;
 
             var fullRange = ws.Range(firstRow, firstCol, lastRow, lastCol);
             fullRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
 
             currentRow++;
-            ws.Range(currentRow, 10, currentRow + 5, 13).Merge();
+            ws.Range(currentRow, 10, currentRow + 5, 14).Merge();
             ws.Cell(currentRow, 10).Value =
                 $"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}\n" +
                 "Người lập bảng\n\n\n" +

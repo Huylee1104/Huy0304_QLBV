@@ -94,17 +94,18 @@ namespace P0304.PDFDocument
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(30);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(60);
                             columns.ConstantColumn(55);
+                            columns.ConstantColumn(55);
+                            columns.ConstantColumn(50);
                             columns.ConstantColumn(52);
                             columns.RelativeColumn(1);
                             columns.ConstantColumn(30);
                             columns.RelativeColumn(2);
-                            columns.ConstantColumn(60);
-                            columns.ConstantColumn(45);
-                            columns.ConstantColumn(65);
                             columns.ConstantColumn(55);
+                            columns.ConstantColumn(45);
+                            columns.ConstantColumn(60);
+                            columns.ConstantColumn(55);
+                            columns.ConstantColumn(50);
                         });
 
                         table.Header(header =>
@@ -120,6 +121,7 @@ namespace P0304.PDFDocument
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Ngày tạo HDDT");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("E_InvoiceNo");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Giá trị HDDT");
+                            header.Cell().Element(CellStyleHeader).AlignCenter().Text("Ngày hủy HDDT");
                             header.Cell().Element(CellStyleHeader).AlignCenter().Text("Mã truy cứu");
                         });
 
@@ -136,6 +138,7 @@ namespace P0304.PDFDocument
                         table.Cell().Element(CellStyle).AlignCenter().Text("10");
                         table.Cell().Element(CellStyle).AlignCenter().Text("11");
                         table.Cell().Element(CellStyle).AlignCenter().Text("12");
+                        table.Cell().Element(CellStyle).AlignCenter().Text("13");
 
                         int stt = 1;
                         foreach (var item in _data)
@@ -150,7 +153,8 @@ namespace P0304.PDFDocument
                             table.Cell().Element(CellStyle).AlignLeft().Text(item.DiaChi ?? string.Empty);           
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayTaoHDDT?.ToString("dd-MM-yyyy")); 
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.E_InvoiceNo?.ToString() ?? "");  
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.GiaTriHDDT?.ToString("N0") ?? "0"); 
+                            table.Cell().Element(CellStyle).AlignRight().Text(item.GiaTriHDDT?.ToString("N0") ?? "0");
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.NgayHuyHD?.ToString("dd-MM-yyyy"));
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.MaTraCuu?.ToString() ?? "");     
 
                             stt++;
@@ -169,34 +173,36 @@ namespace P0304.PDFDocument
                                 {
                                     columns.ConstantColumn(30);
                                     columns.ConstantColumn(55);
-                                    columns.ConstantColumn(60);
-                                    columns.ConstantColumn(65);
+                                    columns.ConstantColumn(55);
+                                    columns.ConstantColumn(50);
                                     columns.ConstantColumn(52);
                                     columns.RelativeColumn(1);
                                     columns.ConstantColumn(30);
                                     columns.RelativeColumn(2);
+                                    columns.ConstantColumn(55);
+                                    columns.ConstantColumn(45);
                                     columns.ConstantColumn(60);
-                                    columns.ConstantColumn(45);
-                                    columns.ConstantColumn(65);
-                                    columns.ConstantColumn(45);
+                                    columns.ConstantColumn(55);
+                                    columns.ConstantColumn(50);
                                 });
 
-                                table.Cell().ColumnSpan(12).Border(1).Element(cell =>
+                                table.Cell().ColumnSpan(13).Border(1).Element(cell =>
                                 {
                                     cell.Row(row =>
                                     {
                                         CellTong(row.ConstantItem(30)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(55)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
+                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(50)).AlignRight().Text($"{tongGiaTri:N0}").Bold();
                                         CellTong(row.ConstantItem(45)).AlignCenter().Text("");
                                         CellTong(row.RelativeItem(1)).AlignCenter().Text("");
                                         CellTong(row.ConstantItem(30)).AlignCenter().Text("");
                                         CellTong(row.RelativeItem(2)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(60)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
-                                        CellTong(row.ConstantItem(65)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
                                         CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(45)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(60)).AlignRight().Text($"{tongGiaTriHDDT:N0}").Bold();
+                                        CellTong(row.ConstantItem(55)).AlignCenter().Text("");
+                                        CellTong(row.ConstantItem(50)).AlignCenter().Text("");
                                     });
                                 });
                             });
@@ -232,20 +238,20 @@ namespace P0304.PDFDocument
         static IContainer CellStyleHeader(IContainer container) =>
             container
                 .Border(1)
-                .Padding(4)
+                .Padding(2)
                 .AlignMiddle()
                 .DefaultTextStyle(x => x.SemiBold().FontSize(10));
 
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
-                .Padding(4)
+                .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(9));
+                .DefaultTextStyle(x => x.FontSize(8));
         static IContainer CellTong(IContainer container) =>
             container
-                .Padding(4)
+                .Padding(2)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(9));
+                .DefaultTextStyle(x => x.FontSize(8));
     }
 }

@@ -418,13 +418,6 @@ function updateTable(response) {
     } else if (response && response.data) {
         data = Array.isArray(response.data) ? response.data : [response.data];
     }
-    const rowNhanVien = `
-        <tr>
-            <td colspan = "2" class = "text-start fw-bold">${data[0].tenNhanVien || data[0].TenNhanVien || ''}</td>
-            <td class= "khongapdung" colspan = "4"></td>
-        </tr>
-    `;
-    tbody.append(rowNhanVien);
     if (data.length > 0) {
         data.forEach((item, index) => {
             const stt = (currentPage - 1) * pageSize + index + 1;
@@ -445,7 +438,7 @@ function updateTable(response) {
             <td class = "text-end" colspan = "2">Tổng cộng</td>
             <td class = "text-end khongapdung" colspan = "4">${formatCurrency(response.allSoTien || response.AllSoTien || '')}</td>
         </tr>
-    `;
+        `;
         tbody.append(rowTongCong);
     } else {
         tbody.append('<tr><td colspan="6" class="text-center">Không có dữ liệu</td></tr>');

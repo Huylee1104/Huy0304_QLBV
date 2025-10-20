@@ -18,6 +18,7 @@ namespace M0304B.Models.BCHoaDonDienTuDV
         public string? E_InvoiceNo { get; set; }
         public decimal? GiaTriHDDT { get; set; }
         public string? MaTraCuu { get; set; }
+        public DateTime? NgayHuyHD { get; set; }
     }
 
     public class M0304BPagedResult<T>

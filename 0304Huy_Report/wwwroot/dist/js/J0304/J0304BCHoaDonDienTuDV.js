@@ -446,6 +446,7 @@ function updateTable(response) {
                                 : formatCurrency(val);
                             })()}
                                 </td>
+                    <td class="text-center text-nowrap">${formatDate(item.ngayHuyHD || item.NgayHuyHD)}</td>
                     <td class="text-start text-nowrap">${item.maTraCuu || item.MaTraCuu || ''}</td>
                 </tr>
             `;
