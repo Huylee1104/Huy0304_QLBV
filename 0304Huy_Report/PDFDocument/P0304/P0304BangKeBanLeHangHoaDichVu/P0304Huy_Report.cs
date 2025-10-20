@@ -163,20 +163,20 @@ namespace P0304.PDFDocument.BangKeBanLeHangHoaDichVu
                             table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString()); 
                             table.Cell().Element(CellStyle).AlignLeft().Text(item.TenHangHoa ?? string.Empty);
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.DVT ?? string.Empty);
-                            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuong?.ToString("N0") ?? "0");
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.DonGiaBan?.ToString("N0") ?? "0");  
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.ThanhTien?.ToString("N0") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuong?.ToString("N2") ?? "0");
+                            table.Cell().Element(CellStyle).AlignRight().Text(item.DonGiaBan?.ToString("N2") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignRight().Text(item.ThanhTien?.ToString("N2") ?? "0");  
                             stt++;
                         }
 
                         double tongHoaDon = _data.Sum(x => x.ThanhTien ?? 0);
 
                         table.Cell().ColumnSpan(5).Border(1).Element(CellTong).AlignRight().Text("Tổng cộng").Bold();
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{tongHoaDon:N0}").Bold();
+                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{tongHoaDon:N2}").Bold();
                         table.Cell().ColumnSpan(6).Border(1).Element(CellTong).Text(text =>
                         {
                             text.Span("Số tiền bằng chữ: ").Bold();
-                            text.Span($"{H0304NumberToTextHelper.ConvertSoThanhChu((decimal)tongHoaDon)}").Bold();
+                            text.Span($"{H0304NumberToTextHelper.chuyenDoiSoTienThanhChu2(tongHoaDon.ToString())}").Bold();
                         });
                     });
                     col.Item().PaddingTop(10).Row(row =>

@@ -134,9 +134,9 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
                 SetMiddle(ws.Cell(currentRow, col++), stt.ToString());
                 ws.Cell(currentRow, col++).Value = item.TenHangHoa ?? "";
                 SetMiddle(ws.Cell(currentRow, col++), item.DVT ?? "");
-                SetMiddle(ws.Cell(currentRow, col++), item.SoLuong?.ToString("N0") ?? "0");
-                ws.Cell(currentRow, col++).SetValue(item.DonGiaBan?.ToString("N0") ?? "0").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-                ws.Cell(currentRow, col++).SetValue(item.ThanhTien?.ToString("N0") ?? "0").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                SetMiddle(ws.Cell(currentRow, col++), item.SoLuong?.ToString("N2") ?? "0");
+                ws.Cell(currentRow, col++).SetValue(item.DonGiaBan?.ToString("N2") ?? "0").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                ws.Cell(currentRow, col++).SetValue(item.ThanhTien?.ToString("N2") ?? "0").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
 
                 var rangeRow = ws.Range(currentRow, 2, currentRow, col - 1);
                 rangeRow.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
@@ -155,7 +155,7 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             ws.Cell(currentRow, 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
 
-            ws.Cell(currentRow, 7).SetValue(tongHoaDon.ToString("N0"));
+            ws.Cell(currentRow, 7).SetValue(tongHoaDon.ToString("N2"));
             ws.Cell(currentRow, 7).Style.Font.Bold = true;
             ws.Cell(currentRow, 7).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             ws.Cell(currentRow, 7).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
@@ -164,7 +164,7 @@ public class P0304BangKeBanLeHangHoaDichVuExcelReportTemplate
             ws.Range(currentRow, 2, currentRow, 7).Merge();
             var tongChu = ws.Cell(currentRow, 2).GetRichText();
             tongChu.AddText("Số tiền bằng chữ: ").SetBold();
-            tongChu.AddText(H0304NumberToTextHelper.ConvertSoThanhChu((decimal)tongHoaDon)).SetBold();
+            tongChu.AddText(H0304NumberToTextHelper.chuyenDoiSoTienThanhChu2(tongHoaDon.ToString())).SetBold();
             ws.Range(currentRow, 2, currentRow, 7).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
             currentRow += 2;
 
