@@ -74,7 +74,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
             // Nhóm dữ liệu theo IdKhoa, TenKhoa
             var group = _data.GroupBy(x => new { x.IdKhoa, x.TenKhoa }).Select(g => new
             {
-                TenKhoa = g.Key.TenKhoa,
+                tenKhoa = g.Key.TenKhoa,
                 Items = g.ToList()
             }).ToList();
 
@@ -90,7 +90,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
             {
                 // Dòng tiêu đề cho từng khoa
                 ws.Range(currentRow, 2, currentRow, 8).Merge();
-                ws.Cell(currentRow, 2).Value = khoa.TenKhoa;
+                ws.Cell(currentRow, 2).Value = khoa.tenKhoa;
                 ws.Cell(currentRow, 2).Style.Font.Bold = true;
                 ws.Cell(currentRow, 2).Style.Font.FontSize = 11;
                 ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
@@ -120,7 +120,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
                     {
                         ws.Cell(currentRow, col).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                         ws.Cell(currentRow, col).Style.Alignment.Horizontal =
-                            col == 3 ? XLAlignmentHorizontalValues.Left : XLAlignmentHorizontalValues.Center;
+                            col == 3 ? XLAlignmentHorizontalValues.Left : XLAlignmentHorizontalValues.Right;
                     }
 
                     ws.Cell(currentRow, 4).Style.NumberFormat.Format = "#,##0";
@@ -134,7 +134,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
 
                 // Tổng từng khoa
                 ws.Range(currentRow, 2, currentRow, 3).Merge();
-                ws.Cell(currentRow, 2).Value = "Tổng " + khoa.TenKhoa;
+                ws.Cell(currentRow, 2).Value = "";
                 ws.Cell(currentRow, 2).Style.Font.Bold = true;
                 ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
 
@@ -149,7 +149,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
                     ws.Cell(currentRow, col).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                     ws.Cell(currentRow, col).Style.Font.Bold = true;
                     ws.Cell(currentRow, col).Style.NumberFormat.Format = "#,##0";
-                    ws.Cell(currentRow, col).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    ws.Cell(currentRow, col).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
                 }
 
                 currentRow++;
@@ -157,7 +157,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
 
             // Tổng cuối bảng
             ws.Range(currentRow, 2, currentRow, 3).Merge();
-            ws.Cell(currentRow, 2).Value = "Tổng cộng";
+            ws.Cell(currentRow, 2).Value = "";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
 
@@ -172,7 +172,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
                 ws.Cell(currentRow, col).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 ws.Cell(currentRow, col).Style.Font.Bold = true;
                 ws.Cell(currentRow, col).Style.NumberFormat.Format = "#,##0";
-                ws.Cell(currentRow, col).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell(currentRow, col).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             }
 
             ws.Columns().AdjustToContents();

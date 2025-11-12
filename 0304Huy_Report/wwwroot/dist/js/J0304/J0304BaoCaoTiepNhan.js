@@ -437,7 +437,7 @@ function updateTable(response) {
         const groupedData = {};
         data.forEach(item => {
             const id = item.idKhoa || 0;
-            const ten = item.tenkhoa || "Không rõ";
+            const ten = item.tenKhoa || "Không rõ";
             const key = `${id}-${ten}`;
 
             if (!groupedData[key]) {
@@ -453,7 +453,7 @@ function updateTable(response) {
         Object.keys(groupedData).forEach(key => {
             const group = groupedData[key];
             const items = group.items;
-
+            console.log(group);
             // Header nhân viên
             let tongLuot = 0;
             let tongNam = 0;
@@ -496,24 +496,22 @@ function updateTable(response) {
             const totalRow = `
             <tr class="fw-bold table-secondary">
                 <td colspan = "2" class="text-end text-nowrap"></td>
-                <td class="text-end text-nowrap">${formatCurrency(tongLuot)}</td>
+                <td class="text-end text-nowrap khongapdung">${formatCurrency(tongLuot)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongNam)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongNu)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongBHYT)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(tongKhongBHYT)}</td>
-                <td></td>
             </tr>`;
             tbody.append(totalRow);
         });
         const total = `
             <tr class="fw-bold table-secondary">
                 <td colspan = "2" class="text-end text-nowrap"></td>
-                <td class="text-end text-nowrap">${formatCurrency(response.tongTiepNhan)}</td>
+                <td class="text-end text-nowrap khongapdung">${formatCurrency(response.tongTiepNhan)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(response.tongNam)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(response.tongNu)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(response.tongCoBHYT)}</td>
                 <td class="text-end text-nowrap">${formatCurrency(response.tongKhongBHYT)}</td>
-                <td></td>
             </tr>`;
         tbody.append(total);
     } else {

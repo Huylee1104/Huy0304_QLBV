@@ -137,28 +137,28 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
                             {
                                 table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString());
                                 table.Cell().Element(CellStyle).AlignLeft().Text(item.TenPhongBenh ?? string.Empty);
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuotTiepNhan?.ToString("N0") ?? "0"); tongLuotKhoa+= item.SoLuotTiepNhan ?? 0;
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuongNam?.ToString("N0") ?? "0"); tongNamKhoa+= item.SoLuongNam ?? 0;
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuongNu?.ToString("N0") ?? "0"); tongNuKhoa+= item.SoLuongNu ?? 0;
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.CoBHYT?.ToString("N0") ?? "0"); tongBHYTKhoa+= item.CoBHYT ?? 0;
-                                table.Cell().Element(CellStyle).AlignCenter().Text(item.KhongBHYT?.ToString("N0") ?? "0"); tongKhongBHYTKhoa+= item.KhongBHYT ?? 0;
+                                table.Cell().Element(CellStyle).AlignRight().Text(item.SoLuotTiepNhan?.ToString("N0") ?? "0"); tongLuotKhoa+= item.SoLuotTiepNhan ?? 0;
+                                table.Cell().Element(CellStyle).AlignRight().Text(item.SoLuongNam?.ToString("N0") ?? "0"); tongNamKhoa+= item.SoLuongNam ?? 0;
+                                table.Cell().Element(CellStyle).AlignRight().Text(item.SoLuongNu?.ToString("N0") ?? "0"); tongNuKhoa+= item.SoLuongNu ?? 0;
+                                table.Cell().Element(CellStyle).AlignRight().Text(item.CoBHYT?.ToString("N0") ?? "0"); tongBHYTKhoa+= item.CoBHYT ?? 0;
+                                table.Cell().Element(CellStyle).AlignRight().Text(item.KhongBHYT?.ToString("N0") ?? "0"); tongKhongBHYTKhoa+= item.KhongBHYT ?? 0;
                                 stt++;
                             }
 
                             table.Cell().ColumnSpan(2).Border(1).Element(CellStyle).AlignLeft().Text("").Bold();
-                            table.Cell().Border(1).Element(CellStyle).AlignLeft().Text(tongLuotKhoa.ToString("N2")).Bold();
-                            table.Cell().Border(1).Element(CellStyle).AlignLeft().Text(tongNamKhoa.ToString("N2")).Bold();
-                            table.Cell().Border(1).Element(CellStyle).AlignLeft().Text(tongNuKhoa.ToString("N2")).Bold();
-                            table.Cell().Border(1).Element(CellStyle).AlignLeft().Text(tongBHYTKhoa.ToString("N2")).Bold();
-                            table.Cell().Border(1).Element(CellStyle).AlignLeft().Text(tongKhongBHYTKhoa.ToString("N2")).Bold();
+                            table.Cell().Border(1).Element(CellStyle).AlignRight().Text(tongLuotKhoa.ToString("N0")).Bold();
+                            table.Cell().Border(1).Element(CellStyle).AlignRight().Text(tongNamKhoa.ToString("N0")).Bold();
+                            table.Cell().Border(1).Element(CellStyle).AlignRight().Text(tongNuKhoa.ToString("N0")).Bold();
+                            table.Cell().Border(1).Element(CellStyle).AlignRight().Text(tongBHYTKhoa.ToString("N0")).Bold();
+                            table.Cell().Border(1).Element(CellStyle).AlignRight().Text(tongKhongBHYTKhoa.ToString("N0")).Bold();
                         }
 
                         table.Cell().ColumnSpan(2).Border(1).Element(CellStyle).AlignRight().Text("").Bold();
-                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongLuot:N2}").Bold();
-                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongNam:N2}").Bold();
-                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongNu:N2}").Bold();
-                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongBHYT:N2}").Bold();
-                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongKhongBHYT:N2}").Bold();
+                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongLuot:N0}").Bold();
+                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongNam:N0}").Bold();
+                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongNu:N0}").Bold();
+                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongBHYT:N0}").Bold();
+                        table.Cell().Border(1).Element(CellStyle).AlignRight().Text($"{tongKhongBHYT:N0}").Bold();
                     });
                 });
 
