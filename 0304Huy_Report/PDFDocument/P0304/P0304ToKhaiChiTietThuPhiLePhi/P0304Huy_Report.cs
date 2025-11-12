@@ -158,7 +158,7 @@ namespace P0304.PDFDocument.ToKhaiChiTietThuPhiLePhi
                                     foreach (var item in loaiGroup.ChiTiet)
                                     {
                                         table.Cell().Element(CellStyle).AlignCenter().Text((stt++).ToString()).Bold();
-                                        table.Cell().Element(CellStyle).AlignLeft().Text(item.QuyenSo ?? "");
+                                        table.Cell().Element(CellStyle).AlignLeft().Text(item.SeriVaQuyen ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLan_soBLHDthu ?? "");
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuongHDSuDung?.ToString("N0") ?? "").Bold();
                                         table.Cell().Element(CellStyle).AlignCenter().Text(item.TongSoTien?.ToString("N0") ?? "");
@@ -173,10 +173,10 @@ namespace P0304.PDFDocument.ToKhaiChiTietThuPhiLePhi
                         var tongHuy = _data.Sum(x => x.Huy_Hoan ?? 0);
                         var tongThucThu = _data.Sum(x => x.SoTienThucThu ?? 0);
 
-                        table.Cell().ColumnSpan(4).PaddingRight(3).AlignRight().Text("Tổng cộng:").Bold();
-                        table.Cell().AlignCenter().PaddingRight(3).Text(tongTien.ToString("N0")).Bold();
-                        table.Cell().AlignCenter().PaddingRight(3).Text(tongHuy.ToString("N0")).Bold();
-                        table.Cell().AlignRight().PaddingRight(3).Text(tongThucThu.ToString("N0")).Bold();
+                        table.Cell().ColumnSpan(4).PaddingRight(3).PaddingTop(3).AlignRight().Text("Tổng cộng:").Bold();
+                        table.Cell().AlignCenter().PaddingRight(3).PaddingTop(3).Text(tongTien.ToString("N0")).Bold();
+                        table.Cell().AlignCenter().PaddingRight(3).PaddingTop(3).Text(tongHuy.ToString("N0")).Bold();
+                        table.Cell().AlignRight().PaddingRight(3).PaddingTop(3).Text(tongThucThu.ToString("N0")).Bold();
                         table.Cell().AlignLeft().Text("");
 
                         table.Cell().ColumnSpan(8)

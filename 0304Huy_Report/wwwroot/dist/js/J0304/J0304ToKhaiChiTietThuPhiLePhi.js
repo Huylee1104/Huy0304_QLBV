@@ -85,6 +85,9 @@ let firstLoad = true;
 function filterData(isPagination = false) {
     let tuNgay = $('#ngayTuNgay').val();
     let denNgay = $('#ngayDenNgay').val();
+    let idHTTT = $('.tomselect-httt').val() || 0;
+    let idNhanVien = $('.tomselect-nhanVien').val() || 0;
+    let idLoai = $('.tomselect-loai').val() || 0;
     if (!isPagination) {
         firstLoad = true;
     }
@@ -110,7 +113,9 @@ function filterData(isPagination = false) {
         tuNgay: tuNgay,
         denNgay: denNgay,
         IdChiNhanh: _idcn,
+        idHTTT: idHTTT,
         idNhanVien: idNhanVien,
+        idLoai: idLoai,
         page: currentPage,
         pageSize: pageSize
     }
@@ -163,7 +168,9 @@ function fetchAllFilteredData(tuNgay, denNgay, idNhanVien) {
             tuNgay: tuNgay || '',
             denNgay: denNgay || '',
             IdChiNhanh: _idcn || 0,
+            idHTTT: idHTTT || 0,
             idNhanVien: idNhanVien || 0,
+            idLoai: idLoai || 0,
             page: 1,
             pageSize: pageSize
         };
@@ -187,7 +194,9 @@ function fetchAllFilteredData(tuNgay, denNgay, idNhanVien) {
                     tuNgay: tuNgay || '',
                     denNgay: denNgay || '',
                     IdChiNhanh: _idcn,
+                    idHTTT: idHTTT || 0,
                     idNhanVien: idNhanVien || 0,
+                    idLoai: idLoai || 0,
                     page: p,
                     pageSize: pageSize
                 };
@@ -245,7 +254,9 @@ function doExportExcel(finalData, btn, originalHtml) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idHTTT: $('.tomselect-httt').val() || 0,
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
+        idLoai: $('.tomselect-loai').val() || 0,
         doanhNghiep: window.doanhNghiep || null,
         TenNVDN: tenNVDN,
     };
@@ -294,10 +305,12 @@ $('#btnExportExcel').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idHTTT = $('.tomselect-httt').val() || 0;
     const idNhanVien = $('.tomselect-nhanVien').val() || 0;
+    const idLoai = $('.tomselect-loai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idNhanVien)
+        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
             .then(allData => {
                 window.filteredData = allData;
                 doExportExcel(allData, btn, originalHtml);
@@ -317,7 +330,9 @@ function doExportPdf(finalData, btnElem) {
         data: finalData,
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
+        idHTTT: $('.tomselect-httt').val() || 0,
         idNhanVien: $('.tomselect-nhanVien').val() || 0,
+        idLoai: $('.tomselect-loai').val() || 0,
         doanhNghiep: window.doanhNghiep || null,
         TenNVDN: tenNVDN,
     };
@@ -366,10 +381,12 @@ $('#btnExportPDF').off('click').on('click', function (e) {
 
     const tu = $('#ngayTuNgay').val();
     const den = $('#ngayDenNgay').val();
+    const idHTTT = $('.tomselect-httt').val() || 0;
     const idNhanVien = $('.tomselect-nhanVien').val() || 0;
+    const idLoai = $('.tomselect-loai').val() || 0;
 
     if (!window.filteredData || (totalRecords && window.filteredData.length < totalRecords)) {
-        fetchAllFilteredData(tu, den, idNhanVien)
+        fetchAllFilteredData(tu, den, idHTTT, idNhanVien, idLoai)
             .then(allData => {
                 window.filteredData = allData;
                 doExportPdf(allData, btn);
@@ -461,7 +478,7 @@ function updateTable(response) {
                     const row = `
                     <tr>
                         <td class="text-center text-nowrap fw-bold" style="width: 65px;">${stt++}</td>
-                        <td class="text-start text-nowrap">${item.quyenSo || item.QuyenSo || ''}</td>
+                        <td class="text-start text-nowrap">${item.seriVaQuyen || item.SeriVaQuyen || ''}</td>
                         <td class="text-center text-nowrap">${item.soLan_soBLHDthu || item.SoLan_soBLHDthu || ''}</td>
                         <td class="text-center text-nowrap fw-bold">${item.soLuongHDSuDung || item.SoLuongHDSuDung || ''}</td>
                         <td class="text-center text-nowrap">${formatCurrency(item.tongSoTien || item.TongSoTien || 0)}</td>
@@ -539,3 +556,94 @@ $.getJSON("dist/data/json/Dm_NhanVien.json", dataNhanVien => {
 
     configCb(configs, listNhanVien);
 });
+
+$.getJSON("dist/data/json/DM_HTTT.json", dataHTTT => {
+    listHTTT = dataHTTT
+        .filter(n =>
+            (n.active === true || n.active === 1)
+        )
+        .map(n => ({
+            ...n,
+            alias: n.viettat?.trim() !== ""
+                ? n.viettat.toUpperCase()
+                : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+        }));
+    // config cho TomSelect
+    const configs = [
+        {
+            className: ".tomselect-httt",
+            dieuKien: function (response) {
+                return response.filter(x => x.id);
+            }
+        }
+    ];
+
+    configCb(configs, listHTTT);
+});
+
+// ============== TOM SELECT ======================
+function configCb2(configs, dataSource) {
+    configs.forEach(cfg => {
+        let result = cfg.dieuKien ? cfg.dieuKien(dataSource) : dataSource;
+
+        // Lấy element
+        let el = document.querySelector(cfg.className);
+        if (!el) return;
+
+        // Nếu đã có TomSelect rồi thì clear + add lại options
+        if (el.tomselect) {
+            el.tomselect.clearOptions();
+            el.tomselect.addOptions(result);
+            el.tomselect.refreshOptions(false);
+        } else {
+            // Nếu chưa có thì init mới
+            new TomSelect(cfg.className, {
+                options: result,
+                valueField: "id",
+                labelField: "ten",
+                searchField: ["ten", "alias"],
+                placeholder: cfg.placeholder,
+                maxItems: 1,
+                render: {
+                    option: function (data, escape) {
+                        return `
+                            <div class="border-0" style="display:flex; justify-content:space-between; width:100%; border: none !important">
+                                <span>${escape(data.ten)}</span>
+                                <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
+                            </div>`;
+                    },
+                    item: function (data, escape) {
+                        return `
+                            <div class="border-0" style="display:flex; justify-content:space-between; width:100%; border: none !important;">
+                                <span>${escape(data.ten)}</span>
+                                <span style="color:gray; font-size:10px; margin-left:10px;">${escape(data.viettat || "")}</span>
+                            </div>`;
+                    }
+                }
+            });
+        }
+    });
+}
+
+(function () {
+    const dataLoai = [
+        { id: 1, ten: "DV kỹ thuật", viettat: "DVKT" },
+        { id: 2, ten: "Thuốc", viettat: "T" }
+    ];
+
+    const listLoai = dataLoai.map(n => ({
+        ...n,
+        alias: n.viettat?.trim() !== ""
+            ? n.viettat.toUpperCase()
+            : n.ten.trim().split(/\s+/).map(w => w.charAt(0).toUpperCase()).join("")
+    }));
+
+    const configs = [
+        {
+            className: ".tomselect-loai",
+            dieuKien: response => response.filter(x => x.id)
+        }
+    ];
+
+    configCb(configs, listLoai);
+})();

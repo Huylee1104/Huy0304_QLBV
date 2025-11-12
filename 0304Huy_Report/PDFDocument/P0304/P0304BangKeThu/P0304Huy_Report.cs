@@ -158,14 +158,14 @@ namespace P0304.PDFDocument
                             // Step 3: Group items for this employee by QuyenSo
                             var itemsForNhanVien = groupedData[nv];
                             var groupedByQuyenSo = itemsForNhanVien
-                                .GroupBy(item => item.QuyenSo ?? "Không rõ")
+                                .GroupBy(item => new {item.QuyenSo, item.Seri, item.MaNhanVien})
                                 .ToDictionary(
                                     g => g.Key,
-                                    g => g.OrderBy(item => item.QuyenSo ?? "Không rõ", StringComparer.OrdinalIgnoreCase).ToList()
+                                    g => g.OrderBy(item => item.QuyenSo  ?? "Không rõ", StringComparer.OrdinalIgnoreCase).ToList()
                                 );
 
                             // Step 4: Iterate through each QuyenSo for this employee
-                            foreach (var quyenSo in groupedByQuyenSo.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase))
+                            foreach (var quyenSo in groupedByQuyenSo.Keys.OrderBy(k => k.QuyenSo, StringComparer.OrdinalIgnoreCase))
                             {
                                 var quyenSoList = groupedByQuyenSo[quyenSo];
                                 decimal tongHuyQS = 0m;
@@ -191,7 +191,7 @@ namespace P0304.PDFDocument
                                 table.Cell().ColumnSpan(6)
                                     .Element(CellStyleLeft)
                                     .AlignLeft()
-                                    .Text($"      {maNV} - {seri}.{quyenSo}")
+                                    .Text($"      {maNV} - {seri}.{quyenSo.QuyenSo}")
                                     .FontSize(9)
                                     .Bold();
 

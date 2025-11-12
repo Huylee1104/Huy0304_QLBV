@@ -140,14 +140,14 @@ public class P0304ExcelReportTemplate
                 // Step 3: Group items for this employee by QuyenSo
                 var itemsForNhanVien = groupedData[nv];
                 var groupedByQuyenSo = itemsForNhanVien
-                    .GroupBy(item => item.QuyenSo ?? "Không rõ")
+                    .GroupBy(item => new { item.QuyenSo, item.Seri, item.MaNhanVien })
                     .ToDictionary(
                         g => g.Key,
                         g => g.OrderBy(item => item.QuyenSo ?? "Không rõ", StringComparer.OrdinalIgnoreCase).ToList()
                     );
 
                 // Step 4: Iterate through each QuyenSo for this employee
-                foreach (var quyenSo in groupedByQuyenSo.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase))
+                foreach (var quyenSo in groupedByQuyenSo.Keys.OrderBy(k => k.QuyenSo, StringComparer.OrdinalIgnoreCase))
                 {
                     var quyenSoList = groupedByQuyenSo[quyenSo];
                     decimal tongHuyQS = 0m;
@@ -170,7 +170,7 @@ public class P0304ExcelReportTemplate
 
                     // Print QuyenSo header
                     ws.Range(currentRow, 2, currentRow, 7).Merge();
-                    ws.Cell(currentRow, 2).Value = $"      {maNV} - {seri}.{quyenSo}";
+                    ws.Cell(currentRow, 2).Value = $"      {maNV} - {seri}.{quyenSo.QuyenSo}";
                     ws.Cell(currentRow, 2).Style.Font.Bold = true;
                     ws.Cell(currentRow, 2).Style.Font.FontSize = 10;
                     ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;

@@ -218,7 +218,7 @@ input {
     align-items: center;
     padding-right: 30px;
     flex-wrap: nowrap;
-    margin: 20px auto;
+    margin: 0px auto;
     font-size: 1rem;
     gap: 10px;
     min-height: 50px; 

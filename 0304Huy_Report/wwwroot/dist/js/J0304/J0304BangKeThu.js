@@ -468,13 +468,8 @@ function updateTable(response) {
 
             const groupedByQuyenSo = {};
             itemsForNhanVien
-                .sort((a, b) => {
-                    const qsA = (a.quyenSo || a.QuyenSo || "").toString();
-                    const qsB = (b.quyenSo || b.QuyenSo || "").toString();
-                    return qsA.localeCompare(qsB, 'vi', { sensitivity: 'base' });
-                })
                 .forEach(item => {
-                    const quyenSo = item.quyenSo || item.QuyenSo || "Không rõ";
+                    const quyenSo = `${item.quyenSo}_${item.maNhanVien}_${item.seri || item.Seri}`|| "Không rõ";
                     if (!groupedByQuyenSo[quyenSo]) groupedByQuyenSo[quyenSo] = [];
                     groupedByQuyenSo[quyenSo].push(item);
                 });
@@ -501,7 +496,7 @@ function updateTable(response) {
                 const maNV = quyenSoList[0].maNhanVien || quyenSoList[0].MaNhanVien || "";
                 const qsHeaderRow = `
                 <tr class="fw-bold table-light">
-                    <td colspan="3" class="text-start" style="padding-left:40px; border-right: none;">${maNV} - ${quyenSoList[0].seri || quyenSoList[0].Seri}.${quyenSo}</td>
+                    <td colspan="3" class="text-start" style="padding-left:40px; border-right: none;">${maNV} - ${quyenSoList[0].seri || quyenSoList[0].Seri}.${quyenSoList[0].quyenSo}</td>
                     <td colspan="4" class="text-start khongapdung" style="border-left: none"></td>
                     <td class="text-end khongapdung">${formatCurrency(tongHuyQS)}</td>
                     <td class="text-end">${formatCurrency(tongHoanTraQS)}</td>

@@ -147,7 +147,7 @@ public class P0304ToKhaiChiTietThuPhiLePhiExcelReportTemplate
                     {
                         ws.Cell(currentRow, 2).Value = stt++; AlignCellCenter(ws.Cell(currentRow, 2));
                         ws.Cell(currentRow, 2).Style.Font.Bold = true;
-                        ws.Cell(currentRow, 3).Value = item.QuyenSo ?? "";
+                        ws.Cell(currentRow, 3).Value = item.SeriVaQuyen ?? "";
                         ws.Cell(currentRow, 4).Value = item.SoLan_soBLHDthu ?? ""; AlignCellCenter(ws.Cell(currentRow, 4));
                         ws.Cell(currentRow, 5).Value = item.SoLuongHDSuDung ?? 0; AlignCellCenter(ws.Cell(currentRow, 5));
                         ws.Cell(currentRow, 5).Style.Font.Bold = true;

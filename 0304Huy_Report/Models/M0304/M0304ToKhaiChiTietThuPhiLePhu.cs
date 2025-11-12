@@ -8,6 +8,7 @@ namespace M0304.Models.ToKhaiChiTietThuPhiLePhi
     {
         public string? QuyenSo { get; set; }
         public string? LoaiHoaDon { get; set; }
+        public string? SeriVaQuyen { get; set; }
         public string? SoLan_soBLHDthu { get; set; }
         public int? SoLuongHDSuDung { get; set; }
         public double? TongSoTien { get; set; }

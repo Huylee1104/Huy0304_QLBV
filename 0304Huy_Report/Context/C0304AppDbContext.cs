@@ -19,6 +19,9 @@ using M0304.Models.ToKhaiChiTietThuPhiLePhi;
 using M0304.Models.HoatDongKhamBenh;
 using M0304.Models.BangKeBanLeHangHoaDichVu;
 using M0304.Models.BaoCaoSoLieuThuThuat;
+using M0304.Models.BaoCaoChiDinhCLS_Phong_BS;
+using M0304.Models.BaoCaoTiepNhan;
+using M0304.Models.BCThongKeTheoMaBenhICD;
 using Microsoft.EntityFrameworkCore;
 
 namespace C0304.Db.Models
@@ -54,6 +57,9 @@ namespace C0304.Db.Models
         public DbSet<M0304HoatDongKhamBenh> HoatDongKhamBenhs { get; set; }
         public DbSet<M0304BangKeBanLeHangHoaDichVu> BangKeBanLeHangHoaDichVus { get; set; }
         public DbSet<M0304BaoCaoSoLieuThuThuat> BaoCaoSoLieuThuThuats { get; set; }
+        public DbSet<M0304BaoCaoTiepNhan> BaoCaoTiepNhans { get; set; }
+        public DbSet<M0304BaoCaoChiDinhCLS_Phong_BS> BaoCaoChiDinhCLS_Phong_BSs { get; set; }
+        public DbSet<M0304BCThongKeTheoMaBenhICD> BCThongKeTheoMaBenhICDs { get; set; }
 
 
 
@@ -83,6 +89,10 @@ namespace C0304.Db.Models
             modelBuilder.Entity<M0304HoatDongKhamBenh>().HasNoKey();
             modelBuilder.Entity<M0304BangKeBanLeHangHoaDichVu>().HasNoKey();
             modelBuilder.Entity<M0304BaoCaoSoLieuThuThuat>().HasNoKey();
+            modelBuilder.Entity<M0304BaoCaoTiepNhan>().HasNoKey();
+            modelBuilder.Entity<M0304BaoCaoChiDinhCLS_Phong_BS>().HasNoKey();
+            modelBuilder.Entity<M0304BaoCaoSoLieuThuThuat>().HasNoKey();
+            modelBuilder.Entity<M0304BCThongKeTheoMaBenhICD>().HasNoKey();
         }
     }
 }

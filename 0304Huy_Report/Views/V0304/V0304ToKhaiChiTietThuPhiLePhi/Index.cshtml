@@ -126,6 +126,16 @@
                         <select class="form-select tomselect-nhanVien" name="tenNhanVien"></select>
                     </div>
 
+                    <div style="width: 100%;padding:0; margin: 5px 0px;" class="mb-1">
+                        <label for="HTTT" class="form-label">HTTT</label>
+                        <select class="form-select tomselect-httt" name="tenHTTT"></select>
+                    </div>
+
+                    <div style="width: 100%;padding:0;margin:0px;" class="mb-1">
+                        <label for="Loai" class="form-label">Loại</label>
+                        <select class="form-select tomselect-loai" name="tenLoai"></select>
+                    </div>
+
                     <label style="padding:0; margin: 5px 0px;">
                         <button id="btnFilter" class="btn btn-outline-primary mb-3">
                             <i class="bi bi-funnel"></i> Lọc danh sách
@@ -195,6 +205,6 @@
         </div>
     </div>    
 @section Scripts {
-    <script src="@Url.Content("~/dist/js/J0304/J0304ToKhaiChiTietThuPhiLePhi.js")" defer></script>
     <script src="@Url.Content("~/dist/js/J0304Util/J0302DateFormatUtil.js")" defer asp-append-version="true"></script>
+    <script src="@Url.Content("~/dist/js/J0304/J0304ToKhaiChiTietThuPhiLePhi.js")" defer></script>
 }
