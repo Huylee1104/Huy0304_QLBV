@@ -235,7 +235,7 @@ namespace C0304BCThongKeTheoMaBenhICD.Controllers
             var logoPath = "";
 
             var data = request.Data ?? new List<M0304BCThongKeTheoMaBenhICD>();
-            var document = new P0304BCThongKeTheoMaBenhICDExcelReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304BCThongKeTheoMaBenhICDExcelReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var excelBytes = document.GenerateExcel();
             return excelBytes;
@@ -247,7 +247,7 @@ namespace C0304BCThongKeTheoMaBenhICD.Controllers
             var logoPath ="";
 
             var data = request.Data ?? new List<M0304BCThongKeTheoMaBenhICD>();
-            var document = new P0304BCThongKeTheoMaBenhICDReportTemplate(data, request.FromDate, request.ToDate, doanhNghiepObj, logoPath);
+            var document = new P0304BCThongKeTheoMaBenhICDReportTemplate(data, request.FromDate, request.ToDate, request.TenNVDN, doanhNghiepObj, logoPath);
 
             var pdfBytes = document.GeneratePdf();
             return pdfBytes;

@@ -57,15 +57,13 @@ namespace P0304.PDFDocument.BaoCaoChiDinhCLS_Phong_BS
                             }
                             else
                             {
-                                left.ConstantItem(40).AlignMiddle().Text("No Logo");
+                                left.ConstantItem(40).AlignMiddle().Text("");
                             }
 
                             left.RelativeItem().Column(info =>
                             {
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
                                 info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -82,7 +80,8 @@ namespace P0304.PDFDocument.BaoCaoChiDinhCLS_Phong_BS
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(9);
+                            .FontSize(9)
+                            .Bold();
                     });
                 });
 
@@ -92,9 +91,9 @@ namespace P0304.PDFDocument.BaoCaoChiDinhCLS_Phong_BS
                     {
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.ConstantColumn(30);
-                            columns.ConstantColumn(120);
-                            columns.ConstantColumn(120);
+                            columns.ConstantColumn(40);
+                            columns.ConstantColumn(100);
+                            columns.ConstantColumn(100);
                             columns.RelativeColumn();
                             columns.ConstantColumn(100);
                             columns.ConstantColumn(80);
@@ -129,13 +128,13 @@ namespace P0304.PDFDocument.BaoCaoChiDinhCLS_Phong_BS
                             stt++;
                         }
 
-                        var TongLuot = _data.Sum(x => x.SoLuot ?? 0);
-                        var TongDonGia = _data.Sum(x => x.DonGia ?? 0);
+                        //var TongLuot = _data.Sum(x => x.SoLuot ?? 0);
+                        //var TongDonGia = _data.Sum(x => x.DonGia ?? 0);
 
-                        table.Cell().ColumnSpan(4).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
+                        //table.Cell().ColumnSpan(4).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
                          
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongDonGia:N2}").Bold(); 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongLuot:N0}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongDonGia:N2}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongLuot:N0}").Bold(); 
                     });
                 });
 

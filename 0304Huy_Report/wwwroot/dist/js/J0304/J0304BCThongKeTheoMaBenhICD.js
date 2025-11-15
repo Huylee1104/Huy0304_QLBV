@@ -243,6 +243,7 @@ function doExportExcel(finalData, btn, originalHtml) {
         fromDate: $('#ngayTuNgay').val(),
         toDate: $('#ngayDenNgay').val(),
         doanhNghiep: window.doanhNghiep || null,
+        TenNVDN: tenNVDN,
     };
 
     $.ajax({
@@ -423,13 +424,13 @@ function updateTable(response) {
             const row = `
                 <tr>
                     <td class = "text-center text-nowrap" style = "width: 65px;">${stt}</td>
-                    <td class = "text-start text-nowrap">${item.tenICD || ''}</td>
-                    <td class = "text-start" style = "min-width: 200px; max-width: 400px;">${item.tenBenh|| ''}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.soLuotTiepNhan || 0)}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.soLuongNam || 0)}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.soLuongNu || 0)}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.coBHYT || 0)}</td>
-                    <td class = "text-end text-nowrap">${formatCurrency(item.khongBHYT || 0)}</td>
+                    <td class = "text-center text-nowrap">${item.tenICD || ''}</td>
+                    <td title = "${item.tenBenh}" class = "text-start text-truncate" style = "min-width: 200px; max-width: 400px;">${item.tenBenh|| ''}</td>
+                    <td class = "text-center text-nowrap">${formatCurrency(item.soLuotTiepNhan || 0)}</td>
+                    <td class = "text-center text-nowrap">${formatCurrency(item.soLuongNam || 0)}</td>
+                    <td class = "text-center text-nowrap">${formatCurrency(item.soLuongNu || 0)}</td>
+                    <td class = "text-center text-nowrap">${formatCurrency(item.coBHYT || 0)}</td>
+                    <td class = "text-center text-nowrap">${formatCurrency(item.khongBHYT || 0)}</td>
                 </tr>
             `;
             tbody.append(row);
@@ -438,11 +439,11 @@ function updateTable(response) {
         const totalRow = `
                 <tr class="fw-bold">
                     <td colspan = "3" class="text-end text-nowrap">Tổng cộng</td>
-                    <td class="text-end text-nowrap">${formatCurrency(response.tongTiepNhan)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(response.tongNam)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(response.tongNu)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(response.tongCoBHYT)}</td>
-                    <td class="text-end text-nowrap">${formatCurrency(response.tongKhongBHYT)}</td>
+                    <td class="text-center text-nowrap">${formatCurrency(response.tongTiepNhan)}</td>
+                    <td class="text-center text-nowrap">${formatCurrency(response.tongNam)}</td>
+                    <td class="text-center text-nowrap">${formatCurrency(response.tongNu)}</td>
+                    <td class="text-center text-nowrap">${formatCurrency(response.tongCoBHYT)}</td>
+                    <td class="text-center text-nowrap">${formatCurrency(response.tongKhongBHYT)}</td>
                 </tr>
             `;
         tbody.append(totalRow);

@@ -42,17 +42,26 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
             ws.Range(1, 2, 1, 8).Merge();
             ws.Cell(1, 2).Value = _dataDN.TenCSKCB ?? "";
             ws.Cell(1, 2).Style.Font.FontSize = 9;
+            ws.Cell(1, 2).Style.Font.Bold = true;
 
             ws.Range(2, 2, 2, 8).Merge();
             ws.Cell(2, 2).Value = _dataDN.TenCoQuanChuyenMon ?? "";
             ws.Cell(2, 2).Style.Font.FontSize = 9;
+            ws.Cell(2, 2).Style.Font.Bold = true;
 
             currentRow += 3;
 
             // Tiêu đề chính
-            ws.Cell(currentRow, 2).Value = "BÁO CÁO THEO KHOA PHÒNG";
+            ws.Cell(currentRow, 2).Value = "BÁO CÁO TIẾP NHẬN";
             ws.Cell(currentRow, 2).Style.Font.Bold = true;
             ws.Cell(currentRow, 2).Style.Font.FontSize = 14;
+            ws.Range(currentRow, 2, currentRow, 8).Merge();
+            ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            currentRow++;
+            ws.Cell(currentRow, 2).Value = $"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}";
+            ws.Cell(currentRow, 2).Style.Font.Bold = true;
+            ws.Cell(currentRow, 2).Style.Font.FontSize = 9;
             ws.Range(currentRow, 2, currentRow, 8).Merge();
             ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             currentRow += 2;
@@ -90,7 +99,7 @@ public class P0304BaoCaoTiepNhanExcelReportTemplate
             {
                 // Dòng tiêu đề cho từng khoa
                 ws.Range(currentRow, 2, currentRow, 8).Merge();
-                ws.Cell(currentRow, 2).Value = khoa.tenKhoa;
+                ws.Cell(currentRow, 2).Value = khoa.tenKhoa.Trim();
                 ws.Cell(currentRow, 2).Style.Font.Bold = true;
                 ws.Cell(currentRow, 2).Style.Font.FontSize = 11;
                 ws.Cell(currentRow, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;

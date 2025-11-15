@@ -17,12 +17,14 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
         private readonly M0304ThongTinDoanhNghiep _dataDN;
         private string _ngayBatDau;
         private string _ngayKetThuc;
+        private string _tenNVDN;
         private readonly string _logoPath;
 
         public P0304BCThongKeTheoMaBenhICDReportTemplate(
             List<M0304BCThongKeTheoMaBenhICD> data,
             string ngayBatDau,
             string ngayKetThuc,
+            string tenNVDN,
             M0304ThongTinDoanhNghiep dataDN,
             string logoPath = null
         )
@@ -31,6 +33,7 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
             _dataDN = dataDN ?? new M0304ThongTinDoanhNghiep();
             _ngayBatDau = ngayBatDau;
             _ngayKetThuc = ngayKetThuc;
+            _tenNVDN = tenNVDN;
             _logoPath = logoPath;
         }
 
@@ -57,15 +60,13 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
                             }
                             else
                             {
-                                left.ConstantItem(40).AlignMiddle().Text("No Logo");
+                                left.ConstantItem(40).AlignMiddle().Text("");
                             }
 
                             left.RelativeItem().Column(info =>
                             {
                                 info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
                                 info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DiaChi ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.DienThoai ?? "").FontSize(8).Bold();
                             });
                         });
                     });
@@ -74,15 +75,16 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
                     {
                         center.Item()
                             .AlignCenter()
-                            .Text("BÁO CÁO TỔNG HỢP SỐ LIỆU KHÁM BỆNH THEO NHIỀU TIÊU CHÍ")
+                            .Text("BÁO CÁO TỔNG HỢP SỐ LIỆU KHÁM BỆNH THEO NHIỀU TIÊU CHÍ".ToUpper())
                             .Bold()
                             .FontSize(12);
 
+
                         center.Item()
-                            .Width(250)
                             .AlignCenter()
-                            .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(9);
+                            .Text($"TỪ NGÀY {_ngayBatDau} ĐẾN NGÀY {_ngayKetThuc}")
+                            .FontSize(9)
+                            .Bold();
                     });
                 });
 
@@ -104,31 +106,48 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
 
                         table.Header(header =>
                         {
-                            header.Cell().Row(1).Column(1).Element(CellStyleHeader).AlignCenter().Text("STT");
-                            header.Cell().Row(1).Column(2).Element(CellStyleHeader).AlignCenter().Text("ICD");
-                            header.Cell().Row(1).Column(3).Element(CellStyleHeader).AlignCenter().Text("Tên bệnh");
-                            header.Cell().Row(1).Column(4).Element(CellStyleHeader).AlignCenter().Text("Tổng số");
+                            // ==== DÒNG 1 ====
+                            header.Cell().Row(1).Column(1).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("STT");
 
-                            header.Cell().Row(1).Column(5).ColumnSpan(2).Element(CellStyleHeader).AlignCenter().Text("Giới tính");
+                            header.Cell().Row(1).Column(2).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("ICD");
 
-                            header.Cell().Row(1).Column(7).Element(CellStyleHeader).AlignCenter().Text("Có BHYT");
-                            header.Cell().Row(1).Column(8).Element(CellStyleHeader).AlignCenter().Text("Không BHYT");
+                            header.Cell().Row(1).Column(3).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("Tên bệnh");
 
-                            header.Cell().Row(2).Column(5).Element(CellStyleHeader).AlignCenter().Text("Nam");
-                            header.Cell().Row(2).Column(6).Element(CellStyleHeader).AlignCenter().Text("Nữ");
+                            header.Cell().Row(1).Column(4).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("Tổng số");
+
+                            // Gộp 2 cột cho "Giới tính"
+                            header.Cell().Row(1).Column(5).ColumnSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("Giới tính");
+
+                            header.Cell().Row(1).Column(7).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("Có BHYT");
+
+                            header.Cell().Row(1).Column(8).RowSpan(2)
+                                .Element(CellStyleHeader).AlignCenter().Text("Không BHYT");
+
+                            // ==== DÒNG 2 ====
+                            header.Cell().Row(2).Column(5)
+                                .Element(CellStyleHeader).AlignCenter().Text("Nam");
+
+                            header.Cell().Row(2).Column(6)
+                                .Element(CellStyleHeader).AlignCenter().Text("Nữ");
                         });
 
                         int stt = 1;
                         foreach (var item in _data)
                         {
                             table.Cell().Element(CellStyle).AlignCenter().Text(stt.ToString()); 
-                            table.Cell().Element(CellStyle).AlignLeft().Text(item.TenICD ?? string.Empty);
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.TenICD ?? string.Empty);
                             table.Cell().Element(CellStyle).AlignLeft().Text(item.TenBenh ?? string.Empty);
                             table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuotTiepNhan?.ToString("N0") ?? "0");
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.SoLuongNam?.ToString("N0") ?? "0");  
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.SoLuongNu?.ToString("N0") ?? "0");  
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.CoBHYT?.ToString("N0") ?? "0");  
-                            table.Cell().Element(CellStyle).AlignRight().Text(item.KhongBHYT?.ToString("N0") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuongNam?.ToString("N0") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.SoLuongNu?.ToString("N0") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.CoBHYT?.ToString("N0") ?? "0");  
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.KhongBHYT?.ToString("N0") ?? "0");  
                             stt++;
                         }
 
@@ -138,13 +157,31 @@ namespace P0304.PDFDocument.BCThongKeTheoMaBenhICD
                         var TongBHYT = _data.Sum(x => x.CoBHYT ?? 0);
                         var TongKhongBHYT = _data.Sum(x => x.KhongBHYT ?? 0);
 
-                        table.Cell().ColumnSpan(3).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
-                         
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongLuot:N0}").Bold(); 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongNam:N0}").Bold(); 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongNu:N0}").Bold(); 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongBHYT:N0}").Bold(); 
-                        table.Cell().Border(1).Element(CellTong).AlignRight().Text($"{TongKhongBHYT:N0}").Bold(); 
+                        //table.Cell().ColumnSpan(3).Border(1).Element(CellTong).AlignCenter().Text("Tổng cộng").Bold();
+
+                        //table.Cell().Border(1).Element(CellTong).AlignCenter().Text($"{TongLuot:N0}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignCenter().Text($"{TongNam:N0}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignCenter().Text($"{TongNu:N0}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignCenter().Text($"{TongBHYT:N0}").Bold(); 
+                        //table.Cell().Border(1).Element(CellTong).AlignCenter().Text($"{TongKhongBHYT:N0}").Bold(); 
+                        col.Item().EnsureSpace()
+                        .Column(cuoi =>
+                        {
+                            cuoi.Spacing(5);
+                            cuoi.Item().Height(1);
+
+                            cuoi.Item().Row(row =>
+                            {
+                                row.RelativeItem().Text("");
+                                row.ConstantItem(200).Column(right =>
+                                {
+                                    right.Item().AlignCenter().Text($"Ngày {DateTime.Now:dd} Tháng {DateTime.Now:MM} Năm {DateTime.Now:yyyy}");
+                                    right.Item().AlignCenter().Text("Người lập báo cáo");
+                                    right.Item().Height(40);
+                                    right.Item().AlignCenter().Text($"{_tenNVDN}");
+                                });
+                            });
+                        });
                     });
                 });
 

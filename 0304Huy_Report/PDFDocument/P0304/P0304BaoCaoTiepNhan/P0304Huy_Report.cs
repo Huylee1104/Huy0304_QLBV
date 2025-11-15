@@ -43,7 +43,7 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
             {
                 page.Size(PageSizes.A4);
                 page.Margin(15);
-                page.DefaultTextStyle(x => x.FontSize(8));
+                page.DefaultTextStyle(x => x.FontSize(10));
 
                 page.Header().ShowOnce().Column(col =>
                 {
@@ -62,8 +62,8 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
 
                             left.RelativeItem().Column(info =>
                             {
-                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(8).Bold();
-                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(8).Bold();
+                                info.Item().Text(_dataDN.TenCoQuanChuyenMon ?? "").FontSize(10).Bold();
+                                info.Item().Text(_dataDN.TenCSKCB ?? "").FontSize(10).Bold();
                             });
                         });
                     });
@@ -71,6 +71,7 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
                     col.Item().AlignCenter().Column(center =>
                     {
                         center.Item()
+                            .PaddingTop(5)
                             .AlignCenter()
                             .Text("BÁO CÁO TIẾP NHẬN")
                             .Bold()
@@ -80,7 +81,7 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
                             .Width(250)
                             .AlignCenter()
                             .Text($"Từ ngày {_ngayBatDau} đến ngày {_ngayKetThuc}")
-                            .FontSize(8).Bold().Italic();
+                            .FontSize(10).Bold();
                     });
                 });
 
@@ -131,7 +132,7 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
                             var tongNuKhoa = 0;
                             var tongBHYTKhoa = 0;
                             var tongKhongBHYTKhoa = 0;
-                            table.Cell().ColumnSpan(7).Border(1).Element(CellStyle).AlignLeft().Text(khoa.TenKhoa).Bold();
+                            table.Cell().ColumnSpan(7).Border(1).Element(CellStyle).AlignLeft().Text(khoa.TenKhoa.Trim()).Bold();
 
                             foreach (var item in khoa.Items)
                             {
@@ -179,13 +180,13 @@ namespace P0304.PDFDocument.BaoCaoTiepNhan
                 .Border(1)
                 .Padding(3)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.SemiBold().FontSize(8));
+                .DefaultTextStyle(x => x.SemiBold().FontSize(11));
 
         static IContainer CellStyle(IContainer container) =>
             container
                 .Border(1)
                 .Padding(3)
                 .AlignMiddle()
-                .DefaultTextStyle(x => x.FontSize(7));
+                .DefaultTextStyle(x => x.FontSize(10));
     }
 }
